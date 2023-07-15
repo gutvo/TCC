@@ -1,0 +1,25 @@
+printWidth: define a largura máxima da linha de código formatada. O padrão é 80 caracteres.
+
+tabWidth: define o número de espaços para uma tabulação. O padrão é 2 espaços.
+
+useTabs: define se deve usar tabulação em vez de espaços. O padrão é false.
+
+semi: define se deve imprimir ponto e vírgula no final de cada instrução. O padrão é true.
+
+singleQuote: define se deve usar aspas simples ou duplas para strings. O padrão é false (ou seja, aspas duplas).
+
+jsxSingleQuote: define se as strings JSX devem usar aspas simples ou duplas. O padrão é false.
+
+quoteProps: define quando as propriedades de um objeto devem ser citadas. Os valores possíveis são "as-needed" (o padrão), "consistent", "preserve" ou "always".
+
+trailingComma: define se deve imprimir vírgula após o último elemento em arrays e objetos com várias linhas. Os valores possíveis são "none", "es5", ou "all". O padrão é "none".
+
+bracketSpacing: define se deve adicionar espaços entre chaves em objetos literais. O padrão é true.
+
+jsxBracketSameLine: define se a abertura de chaves em JSX deve estar na mesma linha da tag de abertura. O padrão é false.
+
+arrowParens: define quando os parênteses devem ser adicionados ao redor do parâmetro de uma arrow function. Os valores possíveis são "avoid" (o padrão) ou "always".
+
+proseWrap: define como o Prettier deve lidar com textos longos. Os valores possíveis são "always", "never", ou "preserve". O padrão é "preserve".
+
+htmlWhitespaceSensitivity: define a sensibilidade do Prettier à sensibilidade ao espaço em branco em HTML. Os valores possíveis são "css", "strict", ou "ignore". O padrão é "css".
