@@ -3,27 +3,40 @@ import { Animal } from "../../models/animal";
 import path from "path";
 import fs from "fs";
 
+export interface animalData {
+  id: number;
+  name: string;
+  race: string;
+  color: string;
+  sex: "Macho" | "Fêmea";
+  description: string;
+  type: "Cachorro" | "Peixe" | "Gato" | "Outros";
+  birthday: number;
+  image: boolean;
+  imageData: FileList;
+}
+
 const Create = async (req: Request, res: Response) => {
   try {
-    const imagemBase64 = req.body.imagem as string;
+    const data: animalData = req.body.data;
 
     const animal = Animal.build({
-      name: req.body.name,
-      race: req.body.race,
-      color: req.body.color,
-      sex: req.body.sex,
-      type: req.body.type,
-      description: req.body.description,
-      birthday: req.body.birthday,
-      image: imagemBase64 ? true : false,
+      name: data.name,
+      race: data.race,
+      color: data.color,
+      sex: data.sex,
+      type: data.type,
+      description: data.description,
+      birthday: data.birthday,
+      image: data.image,
     });
 
     await animal.save();
 
-    if (imagemBase64) {
+    if (data.image) {
       const imagePath = `pet${animal.id}.jpg`;
 
-      const imageBuffer = Buffer.from(imagemBase64, "base64");
+      const imageBuffer = Buffer.from("imagesData", "base64");
 
       const destinationPath = path.join(
         __dirname,

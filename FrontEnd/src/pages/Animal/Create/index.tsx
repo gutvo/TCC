@@ -10,19 +10,20 @@ import {
 } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
-// import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from 'react-toastify'
-import axios from 'axios'
-interface NewAnimalFormData {
+import { useDispatch } from 'react-redux'
+import { actions } from '@redux/animals/slice'
+
+interface newAnimalFormData {
   name: string
   race: string
   color: string
   sex: 'Macho' | 'Fêmea'
   description: string
-  type: 'Cachorro' | 'Peixe' | 'Gato' | 'outros'
-  birthday: string
-  image: FileList | null
+  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
+  birthday: Date
+  image: boolean | string
+  imagesData: FileList
 }
 
 const newAnimalFormValidationSchema = zod.object({
@@ -38,50 +39,52 @@ const newAnimalFormValidationSchema = zod.object({
     zod.literal('Cachorro'),
     zod.literal('Peixe'),
     zod.literal('Gato'),
-    zod.literal('outros'),
+    zod.literal('Outros'),
   ]),
-  birthday: zod
-    .string()
-    .refine(
-      (value) => !isNaN(parseFloat(value)),
-      'O preço deve ser um número válido',
-    ),
-  image: zod.instanceof(FileList).nullable(),
+  birthday: zod.date(),
+  imagesData: zod.instanceof(FileList),
+  image: zod.union([zod.string(), zod.boolean()]),
 })
 
 type Animal = zod.infer<typeof newAnimalFormValidationSchema>
 
-export function CadastroAnimal() {
-  // const navigate = useNavigate()
-  const newAnimalForm = useForm<Animal>({
-    resolver: zodResolver(newAnimalFormValidationSchema),
-  })
+export default function CreateAnimal() {
+  const dispatch = useDispatch()
+  const { createAnimalRequest } = actions
+
   const {
     handleSubmit,
     register,
+
     formState: { errors },
-  } = newAnimalForm
-  async function handleAddProduct(data: NewAnimalFormData) {
-    try {
-      // const response = await addProduct(data)
-      // toast.success(response.message)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 500) {
-          toast.error(error.response.data.message)
-        }
-      }
-    }
+    // reset,
+    watch,
+  } = useForm<Animal>({
+    resolver: zodResolver(newAnimalFormValidationSchema),
+  })
+
+  const imageBoolean = !!watch('imagesData')?.length
+  function handleAddProduct(data: newAnimalFormData) {
+    dispatch(createAnimalRequest(data))
+    // reset()
   }
+
   return (
     <Box>
       <Typography sx={{ textAlign: 'center' }} variant="h3" fontWeight={'bold'}>
         Formulário de cadastro de animais
       </Typography>
       <form
+        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >
+        <TextField
+          {...register('image', { required: true })}
+          value={imageBoolean}
+          style={{ display: 'none' }}
+        />
+
         <TextField
           error={!!errors.name?.message}
           helperText={errors.name?.message}
@@ -157,28 +160,27 @@ export function CadastroAnimal() {
           fullWidth
           {...register('description', { required: true })}
         />
-
         <TextField
-          type="text"
+          type="date"
           error={!!errors.birthday?.message}
           helperText={errors.birthday?.message}
           color="info"
           label="Data de Nascimento"
           variant="outlined"
           fullWidth
-          {...register('birthday', { required: true })}
+          {...register('birthday', { required: true, valueAsDate: true })}
         />
         <TextField
           type="file"
-          error={!!errors.image?.message}
-          helperText={errors.image?.message}
+          error={!!errors.imagesData?.message}
+          helperText={errors.imagesData?.message}
           color="info"
           variant="outlined"
           fullWidth
-          {...register('image')}
+          {...register('imagesData')}
         />
         <Button variant="contained" color="success" type="submit" fullWidth>
-          Cadastrar
+          Cadastrar Animal
         </Button>
       </form>
     </Box>

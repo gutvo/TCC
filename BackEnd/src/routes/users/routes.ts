@@ -1,8 +1,8 @@
 import { Router } from "express";
 import Create from "../../controllers/users/create";
-import signInUser from "../../controllers/users/signIn";
+import login from "../../controllers/users/login";
 import createUserValidation from "../../validations/users/create";
-import userSignInValidation from "../../validations/users/signIn";
+import userLoginValidation from "../../validations/users/login";
 import updateUserValidation from "../../validations/users/update";
 import encryptPassword from "../../controllers/users/encrypt";
 import validateToken from "../../validations/token/token";
@@ -19,6 +19,6 @@ userRoutes
   .delete(validateToken, deleteShowUserValidation, Delete)
   .get(deleteShowUserValidation, validateToken, Show);
 
-userRoutes.route("/user/signin").post(userSignInValidation, signInUser);
+userRoutes.route("/user/login").post(userLoginValidation, login);
 
 export default userRoutes;

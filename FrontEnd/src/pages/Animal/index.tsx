@@ -15,11 +15,12 @@ import {
   Box,
 } from '@mui/material'
 import { RootState } from '../../redux/store'
+import { NavLink } from 'react-router-dom'
 
 // eslint-disable-next-line no-redeclare
-export function Animal() {
+export default function ListAnimal() {
   const dispatch = useDispatch()
-  const { getAnimalRequest } = actions
+  const { listAnimalRequest } = actions
   const { list, pagination, loading } = useSelector(
     (state: RootState) => state.animals,
   )
@@ -28,8 +29,8 @@ export function Animal() {
   const [offset, setOffset] = useState(0)
 
   useEffect(() => {
-    dispatch(getAnimalRequest(limit, offset))
-  }, [dispatch, limit, offset, getAnimalRequest])
+    dispatch(listAnimalRequest(limit, offset))
+  }, [dispatch, limit, offset, listAnimalRequest])
   return (
     <Box>
       {loading ? (
@@ -59,41 +60,48 @@ export function Animal() {
               <Grid container spacing={6}>
                 {list.map((animal) => (
                   <Grid item key={animal.id}>
-                    <Card
-                      sx={{
-                        width: '20rem',
-                        height: '28rem',
-                        borderRadius: 3,
-                        ':hover': {
-                          transform: 'scale(1.06)',
-                          transition: '400ms',
-                        },
-                      }}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          height={'250'}
-                          src={
-                            animal.image
-                              ? `data:image/jpeg;base64,${animal.image}`
-                              : isNotFound
-                          }
-                          alt={animal.type}
-                        />
-                        <CardContent sx={{ height: '100%' }}>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {animal.name}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {animal.description}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
+                    <NavLink to={`/Animal/${animal.id}`}>
+                      <Card
+                        sx={{
+                          width: '20rem',
+                          height: '28rem',
+                          borderRadius: 3,
+                          ':hover': {
+                            transform: 'scale(1.06)',
+                            transition: '400ms',
+                          },
+                        }}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            component="img"
+                            height={'250'}
+                            src={
+                              animal.image
+                                ? `data:image/jpeg;base64,${animal.image}`
+                                : isNotFound
+                            }
+                            alt={animal.type}
+                          />
+                          <CardContent sx={{ height: '100%' }}>
+                            <Typography
+                              gutterBottom
+                              variant="h5"
+                              component="div"
+                            >
+                              {animal.name}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {animal.description}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    </NavLink>
                   </Grid>
                 ))}
               </Grid>
+
               <Pagination
                 boundaryCount={1}
                 sx={{
@@ -113,7 +121,9 @@ export function Animal() {
                 }}
               />
             </Box>
-          ) : null}
+          ) : (
+            <Typography>Nenhum animal foi encontrado</Typography>
+          )}
         </>
       )}
     </Box>

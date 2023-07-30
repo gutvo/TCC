@@ -1,8 +1,8 @@
-import * as yup from "yup";
+import zod, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
 
-const animalSchema = yup.object().shape({
-  id: yup.number().required("ID é obrigatório"),
+const animalSchema = zod.object({
+  id: zod.number({required_error:'ID é obrigatório'}),
 });
 
 const deleteValidator = async (
@@ -11,10 +11,16 @@ const deleteValidator = async (
   next: NextFunction
 ) => {
   try {
-    await animalSchema.validate(req.body);
+    await animalSchema.parseAsync(req.body);
+
     return next();
   } catch (error) {
-    return res.status(400).json(error);
+    if (error instanceof ZodError) {
+      const errorMessage = error.errors[0]?.message || "Erro na validação";
+      return res.status(400).json({ message: errorMessage });
+    } else {
+      return res.status(500).json({ message: "Erro no servidor:" + error });
+    }
   }
 };
 

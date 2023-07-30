@@ -16,9 +16,9 @@ const animalRoutes = Router();
 animalRoutes
   .route("/animal")
   .get(listAnimal)
-  .post(/*validateToken,*/ createValidation, upload.single("image"), Create)
-  .delete(/*validateToken,*/ deleteValidator, Delete)
-  .put(/*validateToken,*/ updateValidation, Update);
+  .post(validateToken, createValidation, upload.single("imagesData"), Create)
+  .delete(validateToken, deleteValidator, Delete)
+  .put(validateToken, updateValidation, Update);
 
 animalRoutes.route("/animal/:id").get(Show);
 

@@ -1,36 +1,39 @@
-import * as yup from "yup";
+import zod, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
 
 const getFormatedDate = (currentDate: String) => {
   return currentDate.split("/").reverse().join("-");
 };
 
-const animalSchema = yup.object().shape({
-  name: yup.string().required("O nome é obrigatório"),
-  race: yup.string().required("A raça é obrigatória"),
-  color: yup.string().required("A Cor é obrigatória"),
-  type: yup
+const animalSchema = zod.object({
+  name: zod.string({ required_error: "O nome é obrigatório" }),
+  race: zod.string({ required_error: "A raça é obrigatória" }),
+  color: zod.string({ required_error: "A Cor é obrigatória" }),
+  sex: zod.union([zod.literal("Macho"), zod.literal("Fêmea")]),
+  description: zod
     .string()
-    .oneOf(
-      ["Cachorro", "Peixe", "Gato", "Outros"],
-      "Os valores do tipo devem ser apenas Chachorro, Peixe, Gato, Outros"
-    )
-    .required("O tipo é obrigatório"),
-  sex: yup
-    .string()
-    .oneOf(
-      ["Macho", "Fêmea"],
-      "Os valores do sexo devem ser apenas Macho ou Fêmea"
-    )
-    .required("O sexo é obrigatório"),
-  birthday: yup
-    .date()
-    .min(getFormatedDate("01/01/1900"), "O ano deve ser maior que 1900")
-    .max(
-      getFormatedDate(new Date().toLocaleDateString()),
-      "Não coloque uma data futura"
-    )
-    .required("A data de nascimento é obrigatória"),
+    .min(2, "A raça é obrigatório")
+    .max(255, "Não passe do Limite de 255 caracteres"),
+  type: zod.union([
+    zod.literal("Cachorro"),
+    zod.literal("Peixe"),
+    zod.literal("Gato"),
+    zod.literal("Outros"),
+  ]),
+  birthday: zod.string().refine(
+    (value) => {
+      return !isNaN(new Date(value).getTime());
+    },
+    {
+      message: "Data incorreta",
+      path: ["birthday"],
+    }
+  ),
+  // imagesData: zod.union([zod.instanceof(FileList), zod.string()]).nullable(),
+  image: zod.boolean().refine((value) => typeof value === "boolean", {
+    message: "O campo image deve ser um valor booleano",
+    path: ["image"],
+  }),
 });
 
 const createValidation = async (
@@ -39,10 +42,17 @@ const createValidation = async (
   next: NextFunction
 ) => {
   try {
-    await animalSchema.validate(req.body);
+    console.log(req.body);
+    await animalSchema.parseAsync(req.body);
+
     return next();
   } catch (error) {
-    return res.status(400).json(error);
+    if (error instanceof ZodError) {
+      const errorMessage = error.errors[0]?.message || "Erro na validação";
+      return res.status(400).json({ message: errorMessage });
+    } else {
+      return res.status(500).json({ message: "Erro no servidor:" + error });
+    }
   }
 };
 

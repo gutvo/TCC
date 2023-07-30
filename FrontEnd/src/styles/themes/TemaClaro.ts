@@ -10,7 +10,6 @@ const temaClaro = createTheme({
     primary: {
       main: grey[200], // cor do container
       dark: grey[50],
-      contrastText: red.A700,
     },
     error: {
       main: red.A700,

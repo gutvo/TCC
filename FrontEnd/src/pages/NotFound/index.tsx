@@ -1,11 +1,13 @@
-import { Titulo } from './styles'
+import { Typography } from '@mui/material'
 
 export function NotFound() {
-	return (
-		<div>
-			<div className="container">
-				<Titulo>Página Não Encontrada</Titulo>
-			</div>
-		</div>
-	)
+  return (
+    <div>
+      <div className="container">
+        <Typography variant="h2" align="center" color="error">
+          Página Não Encontrada
+        </Typography>
+      </div>
+    </div>
+  )
 }
