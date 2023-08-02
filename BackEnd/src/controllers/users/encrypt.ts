@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import bcrypt from "bcrypt";
+import { encrypt } from "../../functions";
 
 const encryptPassword = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -9,11 +9,5 @@ const encryptPassword = (req: Request, res: Response, next: NextFunction) => {
     res.status(500).json(error);
   }
 };
-
-function encrypt(password: string) {
-  const saltRounds = 14;
-  const salt = bcrypt.genSaltSync(saltRounds);
-  return bcrypt.hashSync(password, salt);
-}
 
 export default encryptPassword;

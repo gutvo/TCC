@@ -10,6 +10,7 @@ import Update from "../../controllers/users/update";
 import Delete from "../../controllers/users/delete";
 import deleteShowUserValidation from "../../validations/users/deteleShow";
 import Show from "../../controllers/users/show";
+import refleshToken from "../../controllers/users/refleshToken";
 const userRoutes = Router();
 
 userRoutes
@@ -18,6 +19,8 @@ userRoutes
   .put(validateToken, updateUserValidation, encryptPassword, Update)
   .delete(validateToken, deleteShowUserValidation, Delete)
   .get(deleteShowUserValidation, validateToken, Show);
+
+userRoutes.post("/refleshtoken", refleshToken);
 
 userRoutes.route("/user/login").post(userLoginValidation, login);
 

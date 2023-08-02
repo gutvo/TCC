@@ -3,14 +3,13 @@ import { User } from "../../models/user";
 
 const Create = async (req: Request, res: Response) => {
   try {
-    const {email,password,name}=req.body
-
+    const { email, password, name } = req.body;
     const [user, created] = await User.findOrCreate({
       where: { email },
       defaults: {
         email,
         name,
-        password
+        password,
       },
     });
     if (!created) {
@@ -21,7 +20,7 @@ const Create = async (req: Request, res: Response) => {
       .status(201)
       .json({ message: "O usuário foi cadastrado com sucesso", data: user });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json(error);
   }
 };

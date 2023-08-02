@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { sequelize } from "../migrations/mysql";
 
-export interface animalData extends Model {
+export interface AnimalData extends Model {
   id: number;
   name: string;
   race: string;
@@ -13,7 +13,7 @@ export interface animalData extends Model {
   image: boolean;
 }
 
-export const Animal = sequelize.define<animalData>(
+export const Animal = sequelize.define<AnimalData>(
   "animalData",
   {
     id: {
@@ -52,4 +52,4 @@ export const Animal = sequelize.define<animalData>(
   }
 );
 
-sequelize.sync();
+// sequelize.sync();

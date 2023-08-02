@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '../../redux/animals/slice'
-import isNotFound from '../../images/isNotFound.jpg'
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../redux/animals/slice";
+import isNotFound from "../../images/isNotFound.jpg";
 import {
   Card,
   CardActionArea,
@@ -13,36 +13,36 @@ import {
   Input,
   CircularProgress,
   Box,
-} from '@mui/material'
-import { RootState } from '../../redux/store'
-import { NavLink } from 'react-router-dom'
+} from "@mui/material";
+import { RootState } from "../../redux/store";
+import { NavLink } from "react-router-dom";
 
 // eslint-disable-next-line no-redeclare
 export default function ListAnimal() {
-  const dispatch = useDispatch()
-  const { listAnimalRequest } = actions
+  const dispatch = useDispatch();
+  const { listAnimalRequest } = actions;
   const { list, pagination, loading } = useSelector(
-    (state: RootState) => state.animals,
-  )
-  const [filter, setFilter] = useState('')
-  const [limit] = useState(4)
-  const [offset, setOffset] = useState(0)
+    (state: RootState) => state.animals
+  );
+  const [filter, setFilter] = useState("");
+  const [limit] = useState(4);
+  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    dispatch(listAnimalRequest(limit, offset))
-  }, [dispatch, limit, offset, listAnimalRequest])
+    dispatch(listAnimalRequest(offset, limit));
+  }, [dispatch, limit, offset, listAnimalRequest]);
   return (
     <Box>
       {loading ? (
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            height: '100vh',
-            justifyContent: 'center',
+            display: "flex",
+            alignItems: "center",
+            height: "100vh",
+            justifyContent: "center",
           }}
         >
-          <CircularProgress color="error" size={'10rem'} />
+          <CircularProgress color="error" size={"10rem"} />
         </Box>
       ) : (
         <>
@@ -52,9 +52,9 @@ export default function ListAnimal() {
                 type="text"
                 value={filter}
                 onChange={(event) => {
-                  setFilter(event.target.value)
+                  setFilter(event.target.value);
                 }}
-                sx={{ marginBottom: '2rem' }}
+                sx={{ marginBottom: "2rem" }}
                 fullWidth
               />
               <Grid container spacing={6}>
@@ -63,19 +63,19 @@ export default function ListAnimal() {
                     <NavLink to={`/Animal/${animal.id}`}>
                       <Card
                         sx={{
-                          width: '20rem',
-                          height: '28rem',
+                          width: "20rem",
+                          height: "28rem",
                           borderRadius: 3,
-                          ':hover': {
-                            transform: 'scale(1.06)',
-                            transition: '400ms',
+                          ":hover": {
+                            transform: "scale(1.06)",
+                            transition: "400ms",
                           },
                         }}
                       >
                         <CardActionArea>
                           <CardMedia
                             component="img"
-                            height={'250'}
+                            height={"250"}
                             src={
                               animal.image
                                 ? `data:image/jpeg;base64,${animal.image}`
@@ -83,7 +83,7 @@ export default function ListAnimal() {
                             }
                             alt={animal.type}
                           />
-                          <CardContent sx={{ height: '100%' }}>
+                          <CardContent sx={{ height: "100%" }}>
                             <Typography
                               gutterBottom
                               variant="h5"
@@ -105,9 +105,9 @@ export default function ListAnimal() {
               <Pagination
                 boundaryCount={1}
                 sx={{
-                  display: 'flex',
-                  height: '100%',
-                  justifyContent: 'center',
+                  display: "flex",
+                  height: "100%",
+                  justifyContent: "center",
                   paddingTop: 4,
                 }}
                 page={Math.ceil(offset / limit) + 1}
@@ -117,7 +117,7 @@ export default function ListAnimal() {
                 variant="outlined"
                 size="large"
                 onChange={(_, value) => {
-                  setOffset(value * limit - limit)
+                  setOffset(value * limit - limit);
                 }}
               />
             </Box>
@@ -127,5 +127,5 @@ export default function ListAnimal() {
         </>
       )}
     </Box>
-  )
+  );
 }

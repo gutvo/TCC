@@ -1,15 +1,56 @@
-import axios from 'axios'
-import { Animal } from '@redux/animals/reducers'
+import axios from "axios";
+// import { Animal } from "@redux/animals/reducers";
+import { UserData } from "@redux/users/reducers";
 
-const token = localStorage.getItem('token')
-const baseURL = import.meta.env.VITE_LINK as string
+interface refleshTokenDTO {
+  data: {
+    data: UserData;
+    token: string;
+  };
+}
+
+const baseURL = import.meta.env.VITE_LINK as string;
 
 export const api = axios.create({
   baseURL,
   headers: {
-    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json",
   },
-})
+});
+
+api.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+
+    config.headers.Authorization = `Bearer ${token}`;
+
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  function (response) {
+    console.log("passou");
+    return response;
+  },
+  async function (error) {
+    if (axios.isAxiosError(error) && error.response?.status.valueOf() === 401) {
+      const data: UserData = JSON.parse(localStorage.getItem("user") || "");
+      const user: refleshTokenDTO = await api.post("/refleshtoken", {
+        email: data.email,
+        password: data.password,
+      });
+      console.log(user);
+      localStorage.setItem("token", user.data.token);
+    } else {
+      console.log("Outro erro");
+    }
+  }
+);
 
 // export async function getAnimalImage(animal: AnimalData[]) {
 //   const result: AnimalData[] = animal
@@ -109,50 +150,50 @@ export const api = axios.create({
 //   }
 // }
 
-export async function addAnimal(data: Animal) {
-  try {
-    // Juntando os dados para envio
-    const formData = new FormData()
-    formData.append('type', data.type)
-    formData.append('color', data.color)
-    formData.append('name', data.name)
-    formData.append('description', data.description)
-    formData.append('race', data.race)
-    formData.append('birthday', data.birthday.toISOString())
-    formData.append('sex', data.sex)
-    formData.append('image', data.image.toString())
+// export async function addAnimal(data: Animal) {
+//   try {
+//     // Juntando os dados para envio
+//     const formData = new FormData()
+//     formData.append('type', data.type)
+//     formData.append('color', data.color)
+//     formData.append('name', data.name)
+//     formData.append('description', data.description)
+//     formData.append('race', data.race)
+//     formData.append('birthday', data.birthday.toISOString())
+//     formData.append('sex', data.sex)
+//     formData.append('image', data.image.toString())
 
-    // verifica se tem uma imagem
-    if (data.imagesData?.length === 1) {
-      // converte a imagem para base64
-      const base64Imagem = await readFileAsBase64(data.imagesData[0])
-      formData.append('imageData', base64Imagem)
-    } else {
-      const response = await api.post('/animal', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      return response
-    }
-  } catch (error) {
-    console.log(error)
-    return error
-  }
-}
+//     // verifica se tem uma imagem
+//     if (data.imagesData?.length === 1) {
+//       // converte a imagem para base64
+//       const base64Imagem = await readFileAsBase64(data.imagesData[0])
+//       formData.append('imageData', base64Imagem)
+//     } else {
+//       const response = await api.post('/animal', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       })
+//       return response
+//     }
+//   } catch (error) {
+//     console.log(error)
+//     return error
+//   }
+// }
 
-function readFileAsBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      const base64String = reader.result as string
-      const base64Data = base64String.split(',')[1]
-      resolve(base64Data)
-      console.log(base64Data)
-    }
-    reader.onerror = (error) => {
-      reject(error)
-    }
-    reader.readAsDataURL(file)
-  })
-}
+// function readFileAsBase64(file: File): Promise<string> {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader()
+//     reader.onloadend = () => {
+//       const base64String = reader.result as string
+//       const base64Data = base64String.split(',')[1]
+//       resolve(base64Data)
+//       console.log(base64Data)
+//     }
+//     reader.onerror = (error) => {
+//       reject(error)
+//     }
+//     reader.readAsDataURL(file)
+//   })
+// }

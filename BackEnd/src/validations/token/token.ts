@@ -8,15 +8,13 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
       : null;
     token;
     if (!token) {
-      res.status(401).json({ message: "sem token de autorização" });
-    }else{
+      res.status(401).json({ message: "Sem token de autorização" });
+    } else {
       jwt.verify(token, process.env.TOKEN_SECRET as string);
       return next();
     }
-
-
   } catch (error) {
-    res.status(500).json(error);
+    res.status(401).json("Erro na autenticação");
   }
 };
 export default validateToken;

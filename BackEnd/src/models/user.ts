@@ -1,14 +1,14 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../migrations/mysql";
 
-export interface Usuario extends Model {
+export interface UserData extends Model {
   id: number;
   name: string;
   email: string;
   password: string;
 }
 
-export const User = sequelize.define<Usuario>(
+export const User = sequelize.define<UserData>(
   "userData",
   {
     id: {
@@ -32,7 +32,8 @@ export const User = sequelize.define<Usuario>(
     timestamps: false,
   }
 );
-//sequelize.sync();
+
+// sequelize.sync();
 
 /*
 export const User = {

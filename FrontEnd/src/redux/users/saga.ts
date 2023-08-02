@@ -1,83 +1,85 @@
-import { put, takeLatest, all } from 'redux-saga/effects'
-import { actions } from './slice'
-import { UserData, loginProps } from './reducers'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import { api } from '../../services/api'
+import { put, takeLatest, all } from "redux-saga/effects";
+import { actions } from "./slice";
+import { UserData, loginProps } from "./reducers";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { api } from "../../services/api";
 
 export interface loginDTO {
   data: {
-    data: UserData
-    message: string
-    token: string
-  }
+    data: UserData;
+    message: string;
+    token: string;
+  };
 }
 
 interface createUserDTO {
   data: {
-    message: string
-  }
+    message: string;
+  };
 }
 
 interface createAction {
-  type: typeof actions.createUserRequest.type
+  type: typeof actions.createUserRequest.type;
   payload: {
-    data: UserData
-  }
+    data: UserData;
+  };
 }
 
 interface loginAction {
-  type: typeof actions.loginRequest.type
+  type: typeof actions.loginRequest.type;
   payload: {
-    data: loginProps
-  }
+    data: loginProps;
+  };
 }
 
 function* create({ payload }: createAction) {
-  const { createUserFailure, createUserSuccess } = actions
-  const { email, password, name } = payload.data
+  const { createUserFailure, createUserSuccess } = actions;
+  const { email, password, name } = payload.data;
 
   try {
-    const user: createUserDTO = yield api.post('/user', {
+    const user: createUserDTO = yield api.post("/user", {
       email,
       password,
       name,
-    })
+    });
 
-    yield put(createUserSuccess())
+    yield put(createUserSuccess());
 
-    toast.success(user.data.message)
+    toast.success(user.data.message);
   } catch (error) {
-    yield put(createUserFailure())
+    yield put(createUserFailure());
 
     if (axios.isAxiosError(error) && error.response) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
   }
 }
 
 function* login({ payload }: loginAction) {
-  const { loginFailure, loginSuccess } = actions
-  const { email, password } = payload.data
+  const { loginFailure, loginSuccess } = actions;
+  const { email, password } = payload.data;
   try {
-    const user: loginDTO = yield api.post('/user/login', {
+    const user: loginDTO = yield api.post("/user/login", {
       email,
       password,
-    })
+    });
 
-    yield localStorage.setItem('token', user.data.token)
-    yield put(loginSuccess(user.data))
+    yield localStorage.setItem("token", user.data.token);
+    yield localStorage.setItem("user", JSON.stringify(user.data.data));
 
-    toast.success(user.data.message)
+    yield put(loginSuccess(user.data));
+
+    toast.success(user.data.message);
   } catch (error) {
-    yield put(loginFailure())
+    yield put(loginFailure());
 
     if (axios.isAxiosError(error) && error.response) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
     }
   }
 }
 export default all([
-  takeLatest('users/createUserRequest', create),
-  takeLatest('users/loginRequest', login),
-])
+  takeLatest("users/createUserRequest", create),
+  takeLatest("users/loginRequest", login),
+]);

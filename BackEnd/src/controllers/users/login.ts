@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../../models/user";
 import jwt from "jsonwebtoken";
+import { encrypt } from "../../functions";
 
 const login = async (req: Request, res: Response) => {
   try {
@@ -11,20 +12,24 @@ const login = async (req: Request, res: Response) => {
     const result = await User.findOne({ where: { email } });
 
     if (!result) {
-      return res.status(404).json({message:"Email não encontrado"});
+      return res.status(404).json({ message: "Email não encontrado" });
     }
 
     const comparation = await bcrypt.compare(password, result.password);
-    
+
     if (!comparation) {
-      return res.status(400).json({message:"Senha incorreta"});
+      return res.status(400).json({ message: "Senha incorreta" });
     }
-    const token = generateAccessToken(email, password);
+    const encryptPassword = encrypt(password);
+    const token = generateAccessToken(email, encryptPassword);
 
-    res.json({ message: "Usuario logado com sucesso",data:result , token: token });
+    res.json({
+      message: "Usuario logado com sucesso",
+      data: result,
+      token: token,
+    });
   } catch (error) {
-
-    res.status(500).json(error);
+    res.status(500).json({ message: "Erro no servidor" });
   }
 };
 

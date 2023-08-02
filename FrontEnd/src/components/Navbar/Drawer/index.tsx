@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Button,
   Collapse,
@@ -6,20 +6,27 @@ import {
   List,
   ListItemButton,
   ListItemText,
-} from '@mui/material'
+  Box,
+  Typography,
+} from "@mui/material";
 import {
   DarkMode,
   ExpandLess,
   ExpandMore,
   LightMode,
-} from '@mui/icons-material'
-import { ListItem } from './ListItem'
+} from "@mui/icons-material";
+import { ListItem } from "./ListItem";
+
+interface navbarItensDataProps {
+  path: string;
+  label: string;
+}
 
 interface drawerListProps {
-  drawerOpen: boolean
-  toggleDrawer: () => void
-  handleThemeChange: () => void
-  theme: boolean
+  drawerOpen: boolean;
+  toggleDrawer: () => void;
+  handleThemeChange: () => void;
+  theme: boolean;
 }
 
 export function DrawerList({
@@ -28,32 +35,56 @@ export function DrawerList({
   handleThemeChange,
   theme,
 }: drawerListProps) {
-  const [openAnimalList, setOpenAnimalList] = useState(false)
+  const [openAnimalList, setOpenAnimalList] = useState(false);
+
+  const navbarItensData: navbarItensDataProps[] = [
+    {
+      path: "/",
+      label: "Home",
+    },
+    { path: "/ongs", label: "Instituições" },
+    {
+      path: "/chat",
+      label: "Chat",
+    },
+  ];
+
   return (
     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+      <Typography
+        textAlign="center"
+        fontSize="2rem"
+        fontWeight="bold"
+        marginTop={3}
+      >
+        Menu
+      </Typography>
       <List
         sx={{
-          width: '40vw',
-          height: '100%',
-          textAlign: 'center',
+          width: "40vw",
+          height: "100%",
+          textAlign: "center",
         }}
       >
-        <ListItem toggleDrawer={toggleDrawer} path="/" label="home" />
+        {navbarItensData.map((item) => {
+          return (
+            <ListItem
+              key={item.path}
+              toggleDrawer={toggleDrawer}
+              path={item.path}
+              label={item.label}
+            />
+          );
+        })}
 
-        <ListItem
-          toggleDrawer={toggleDrawer}
-          path="/ongs"
-          label="Instituições"
-        />
-        <ListItem toggleDrawer={toggleDrawer} path="/chat" label="Chat" />
         <ListItemButton
           onClick={() => {
-            setOpenAnimalList(!openAnimalList)
+            setOpenAnimalList(!openAnimalList);
           }}
         >
           <ListItemText
             primary="Animal"
-            primaryTypographyProps={{ style: { fontSize: '1.35rem' } }}
+            primaryTypographyProps={{ style: { fontSize: "1.35rem" } }}
           />
           {openAnimalList ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
@@ -74,16 +105,24 @@ export function DrawerList({
             />
           </List>
         </Collapse>
-
+      </List>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "end",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
         <Button
+          sx={{ width: "80%", marginBottom: "1rem" }}
           size="large"
-          sx={{ width: '80%', marginTop: 1 }}
           variant="contained"
           onClick={handleThemeChange}
         >
           {theme ? <DarkMode /> : <LightMode />}
         </Button>
-      </List>
+      </Box>
     </Drawer>
-  )
+  );
 }

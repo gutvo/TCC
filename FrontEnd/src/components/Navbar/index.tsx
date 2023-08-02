@@ -1,25 +1,25 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { AppBar, Button, Toolbar, Box, IconButton } from '@mui/material'
-import { Menu } from '@mui/icons-material'
-import { DrawerList } from './Drawer'
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { AppBar, Toolbar, Box, IconButton } from "@mui/material";
+import { Menu } from "@mui/icons-material";
+import { DrawerList } from "./Drawer";
+import { blue } from "@mui/material/colors";
 
 interface HeaderProps {
-  handleThemeChange: () => void
-  theme: boolean
+  handleThemeChange: () => void;
+  theme: boolean;
 }
 
 export function Navbar({ handleThemeChange, theme }: HeaderProps) {
-  const [drawerOpen, setDrawerOpen] = useState(false)
-  const navigation = useNavigate()
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
-    setDrawerOpen(!drawerOpen)
-  }
+    setDrawerOpen(!drawerOpen);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ fontSize: '5rem' }}>
+      <AppBar position="static" sx={{ fontSize: "5rem" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -28,25 +28,36 @@ export function Navbar({ handleThemeChange, theme }: HeaderProps) {
             sx={{ marginRight: 2 }}
             onClick={toggleDrawer}
           >
-            <Menu sx={{ width: '2rem', height: '2rem' }} />
+            <Menu sx={{ width: "2rem", height: "2rem" }} />
           </IconButton>
-          <Box display="flex" justifyContent="flex-end" width="100%">
-            <Button
-              color="inherit"
-              onClick={() => {
-                navigation('/cadastro')
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            alignItems="center"
+            width="100%"
+            gap={3}
+          >
+            <NavLink
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                color: blue[500],
               }}
+              to="/cadastro"
             >
-              Sign in
-            </Button>
-            <Button
-              onClick={() => {
-                navigation('/login')
+              Cadastrar-se
+            </NavLink>
+            <NavLink
+              style={{
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                color: blue[500],
               }}
+              to="/login"
               color="inherit"
             >
               Login
-            </Button>
+            </NavLink>
           </Box>
         </Toolbar>
       </AppBar>
@@ -57,5 +68,5 @@ export function Navbar({ handleThemeChange, theme }: HeaderProps) {
         toggleDrawer={toggleDrawer}
       />
     </Box>
-  )
+  );
 }

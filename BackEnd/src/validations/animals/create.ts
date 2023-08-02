@@ -42,8 +42,7 @@ const createValidation = async (
   next: NextFunction
 ) => {
   try {
-    console.log(req.body);
-    await animalSchema.parseAsync(req.body);
+    await animalSchema.parseAsync(req.body.data);
 
     return next();
   } catch (error) {
