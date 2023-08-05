@@ -2,11 +2,11 @@ import { Outlet } from "react-router-dom";
 import { Container, ThemeProvider, Box } from "@mui/material";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import darkTheme from "@themes/darkTheme";
-import lightTheme from "@themes/lightTheme";
-import { Alert } from "@components/Alert";
-import { Navbar } from "@components/Navbar";
-import { Footer } from "@components/Footer";
+import darkTheme from "@Themes/darkTheme";
+import lightTheme from "@Themes/lightTheme";
+import { Alert } from "@Components/Alert";
+import { Navbar } from "@Components/Navbar";
+import { Footer } from "@Components/Footer";
 
 export function DefaultLayout() {
   const [theme, setTheme] = useState(false);

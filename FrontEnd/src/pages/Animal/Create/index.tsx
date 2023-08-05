@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
-import { actions } from "@redux/animals/slice";
+import { actions } from "@Redux/animals/slice";
 
 interface newAnimalFormData {
   name: string;

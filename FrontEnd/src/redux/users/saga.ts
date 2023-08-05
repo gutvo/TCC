@@ -66,14 +66,18 @@ function* login({ payload }: loginAction) {
     });
 
     yield localStorage.setItem("token", user.data.token);
-    yield localStorage.setItem("user", JSON.stringify(user.data.data));
-
+    yield localStorage.setItem(
+      "user",
+      JSON.stringify({
+        email: user.data.data.email,
+        password: user.data.data.password,
+      })
+    );
     yield put(loginSuccess(user.data));
 
     toast.success(user.data.message);
   } catch (error) {
     yield put(loginFailure());
-
     if (axios.isAxiosError(error) && error.response) {
       toast.error(error.response.data.message);
     }

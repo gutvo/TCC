@@ -1,26 +1,28 @@
-import { Typography, Box, TextField, Button } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
+import { Typography, Box, TextField, Button } from "@mui/material";
+import { useForm } from "react-hook-form";
+import * as zod from "zod";
 // import { useNavigate } from 'react-router-dom'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useDispatch } from 'react-redux'
-import { actions } from '@redux/users/slice'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "@Redux/users/slice";
+import { RootState } from "@Redux/store";
 
 interface loginFormData {
-  email: string
-  password: string
+  email: string;
+  password: string;
 }
 
 const userFormDataSchema = zod.object({
-  email: zod.string().email('Precisa ser um email válido'),
+  email: zod.string().email("Precisa ser um email válido"),
   password: zod.string(),
-})
+});
 
-type User = zod.infer<typeof userFormDataSchema>
+type User = zod.infer<typeof userFormDataSchema>;
 
 export function Login() {
-  const dispatch = useDispatch()
-  const { loginRequest } = actions
+  const { loading } = useSelector((state: RootState) => state.users);
+  const dispatch = useDispatch();
+  const { loginRequest } = actions;
 
   const {
     handleSubmit,
@@ -28,10 +30,10 @@ export function Login() {
     formState: { errors },
   } = useForm<User>({
     resolver: zodResolver(userFormDataSchema),
-  })
+  });
 
   function handleLogin(data: loginFormData) {
-    dispatch(loginRequest(data))
+    dispatch(loginRequest(data));
   }
 
   return (
@@ -40,7 +42,7 @@ export function Login() {
         Login
       </Typography>
       <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+        style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
         onSubmit={handleSubmit(handleLogin)}
       >
         <TextField
@@ -51,7 +53,7 @@ export function Login() {
           type="email"
           placeholder="Digite o seu email."
           fullWidth
-          {...register('email', { required: true })}
+          {...register("email", { required: true })}
         />
         <TextField
           error={!!errors.password?.message}
@@ -61,12 +63,18 @@ export function Login() {
           type="password"
           placeholder="Digite a sua senha."
           fullWidth
-          {...register('password', { required: true })}
+          {...register("password", { required: true })}
         />
-        <Button variant="contained" color="secondary" type="submit" fullWidth>
+        <Button
+          disabled={loading}
+          variant="contained"
+          color="secondary"
+          type="submit"
+          fullWidth
+        >
           Logar
         </Button>
       </form>
     </Box>
-  )
+  );
 }

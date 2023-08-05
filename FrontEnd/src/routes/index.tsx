@@ -1,14 +1,14 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import { DefaultLayout } from '../layouts/DefaultLayout/index'
-import { Home } from '@pages/Home'
-import { NotFound } from '@pages/NotFound'
-import { Chat } from '@pages/Chat'
-import { Ong } from '@pages/Organization'
-import { SignIn } from '@pages/User/SignIn'
-import { Login } from '@pages/User/Login'
-import ListAnimal from '@pages/Animal/index'
-import CreateAnimal from '@pages/Animal/Create'
-import ShowAnimal from '@pages/Animal/Show'
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { DefaultLayout } from "../layouts/DefaultLayout/index";
+import { Home } from "@Pages/Home";
+import { NotFound } from "@Pages/NotFound";
+import { Chat } from "@Pages/Chat";
+import { Ong } from "@Pages/Organization";
+import { SignIn } from "@Pages/User/SignIn";
+import { Login } from "@Pages/User/Login";
+import ListAnimal from "@Pages/Animal/index";
+import CreateAnimal from "@Pages/Animal/Create";
+import ShowAnimal from "@Pages/Animal/Show";
 
 function MainRoutes() {
   return (
@@ -33,7 +33,7 @@ function MainRoutes() {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default MainRoutes
+export default MainRoutes;

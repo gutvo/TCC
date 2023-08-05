@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../redux/animals/slice";
-import isNotFound from "../../images/isNotFound.jpg";
+import { actions } from "@Redux/animals/slice";
+import isNotFound from "@Images/isNotFound.jpg";
 import {
   Card,
   CardActionArea,
@@ -14,10 +14,9 @@ import {
   CircularProgress,
   Box,
 } from "@mui/material";
-import { RootState } from "../../redux/store";
+import { RootState } from "@Redux/store";
 import { NavLink } from "react-router-dom";
 
-// eslint-disable-next-line no-redeclare
 export default function ListAnimal() {
   const dispatch = useDispatch();
   const { listAnimalRequest } = actions;

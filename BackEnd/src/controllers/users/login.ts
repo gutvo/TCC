@@ -20,7 +20,9 @@ const login = async (req: Request, res: Response) => {
     if (!comparation) {
       return res.status(400).json({ message: "Senha incorreta" });
     }
+
     const encryptPassword = encrypt(password);
+
     const token = generateAccessToken(email, encryptPassword);
 
     res.json({
