@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import { Animal } from "../../models/animal";
 import path from "path";
 import fs from "fs";
+import { Ong } from "../../models/users/ongs";
 
-export interface animalData {
-  id: number;
+interface animalData {
   name: string;
   race: string;
   color: string;
@@ -14,26 +14,26 @@ export interface animalData {
   birthday: number;
   image: boolean;
   imageData: FileList;
+  ongId:number
 }
 
 const Create = async (req: Request, res: Response) => {
   try {
-    const data: animalData = req.body.data;
+    const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
 
-    const animal = Animal.build({
-      name: data.name,
-      race: data.race,
-      color: data.color,
-      sex: data.sex,
-      type: data.type,
-      description: data.description,
-      birthday: data.birthday,
-      image: data.image,
+    const animal = await Animal.create({
+      name,
+      race,
+      color,
+      sex,
+      type,
+      description,
+      birthday,
+      image,
+      ongId,
     });
 
-    await animal.save();
-
-    if (data.image) {
+    if (image) {
       const imagePath = `pet${animal.id}.jpg`;
 
       const imageBuffer = Buffer.from("imagesData", "base64");

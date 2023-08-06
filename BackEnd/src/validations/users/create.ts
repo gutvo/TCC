@@ -8,6 +8,15 @@ const userSchemas = zod.object({
   password: zod
     .string({ required_error: "A senha é obrigatória" })
     .min(8, "tem que ter no minímo 8 caracteres"),
+    ongData:zod.object({
+      road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+      neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+      city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+      CEP: zod
+        .string({ invalid_type_error: 'CEP inválido' })
+        .min(8, 'CEP inválido')
+        .max(9, 'CEP inválido'),
+    }).nullable()
 });
 
 const refleshTokenValidation = async (

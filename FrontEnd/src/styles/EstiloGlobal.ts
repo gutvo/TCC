@@ -7,20 +7,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: 0;
   }
   body {
     font-family: 'Roboto', sans-serif;
   }
-
-
-
-h1{
-  text-align: center;
-  margin: 1rem 0;
-}
-
-
-
 `
 
 export default GlobalStyle

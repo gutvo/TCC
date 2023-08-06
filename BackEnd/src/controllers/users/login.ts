@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import { User } from "../../models/user";
+import { User } from "../../models/users/user";
 import jwt from "jsonwebtoken";
 import { encrypt } from "../../functions";
 
@@ -9,7 +9,7 @@ const login = async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const result = await User.findOne({ where: { email } });
+    const result = await User.findOne({ where: { email },include:{association:'ongData'}  });
 
     if (!result) {
       return res.status(404).json({ message: "Email não encontrado" });

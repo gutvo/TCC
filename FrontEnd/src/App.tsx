@@ -5,10 +5,12 @@ import MainRoutes from './routes'
 
 function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <MainRoutes />
+    <>
       <GlobalStyle />
-    </ThemeProvider>
+      <ThemeProvider theme={defaultTheme}>
+        <MainRoutes />
+      </ThemeProvider>
+    </>
   )
 }
 export default App

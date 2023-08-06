@@ -1,41 +1,25 @@
-import { grey, lightBlue, red } from "@mui/material/colors";
-import { createTheme } from "@mui/material/styles";
+import { grey, lightBlue } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles'
 
 const temaClaro = createTheme({
-  palette: {
-    info: {
-      main: grey.A700,
-      light: grey[900],
-    },
-    primary: {
-      main: grey[200], // cor do container
-      dark: grey[50],
-    },
-    error: {
-      main: red.A700,
-    },
-    secondary: {
-      main: lightBlue.A700,
-    },
-  },
   components: {
     MuiPagination: {
       styleOverrides: {
         root: {
-          "& .MuiPaginationItem-root": {
+          '& .MuiPaginationItem-root': {
             color: lightBlue.A700,
             backgroundColor: grey[50],
-            "&:hover": {
+            '&:hover': {
               color: grey[50],
               backgroundColor: grey[500],
             },
-            "&.MuiPaginationItem-ellipsis": {
-              background: "none",
+            '&.MuiPaginationItem-ellipsis': {
+              background: 'none',
               color: lightBlue.A700,
             },
           },
           ul: {
-            "& .Mui-selected ": {
+            '& .Mui-selected ': {
               color: grey[50],
               backgroundColor: lightBlue.A700,
             },
@@ -44,6 +28,6 @@ const temaClaro = createTheme({
       },
     },
   },
-});
+})
 
-export default temaClaro;
+export default temaClaro

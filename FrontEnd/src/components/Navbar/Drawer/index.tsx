@@ -1,32 +1,16 @@
-import { useState } from "react";
-import {
-  Button,
-  Collapse,
-  Drawer,
-  List,
-  ListItemButton,
-  ListItemText,
-  Box,
-  Typography,
-} from "@mui/material";
-import {
-  DarkMode,
-  ExpandLess,
-  ExpandMore,
-  LightMode,
-} from "@mui/icons-material";
-import { ListItem } from "./ListItem";
-
-interface navbarItensDataProps {
-  path: string;
-  label: string;
-}
+import { Button, Drawer, Box, Typography } from '@mui/material'
+import { DarkMode, LightMode, Edit } from '@mui/icons-material'
+import { ListDrawer } from './List'
+import { UserData } from '@Redux/users/reducers'
+import userIsNotFound from '@Images/userNotFound.png'
+import { NavLink } from 'react-router-dom'
 
 interface drawerListProps {
-  drawerOpen: boolean;
-  toggleDrawer: () => void;
-  handleThemeChange: () => void;
-  theme: boolean;
+  drawerOpen: boolean
+  toggleDrawer: () => void
+  handleThemeChange: () => void
+  theme: boolean
+  data: UserData | null
 }
 
 export function DrawerList({
@@ -34,95 +18,96 @@ export function DrawerList({
   toggleDrawer,
   handleThemeChange,
   theme,
+  data,
 }: drawerListProps) {
-  const [openAnimalList, setOpenAnimalList] = useState(false);
-
-  const navbarItensData: navbarItensDataProps[] = [
-    {
-      path: "/",
-      label: "Home",
-    },
-    { path: "/ongs", label: "Instituições" },
-    {
-      path: "/chat",
-      label: "Chat",
-    },
-  ];
-
   return (
     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-      <Typography
-        textAlign="center"
-        fontSize="2rem"
-        fontWeight="bold"
-        marginTop={3}
-      >
-        Menu
-      </Typography>
-      <List
-        sx={{
-          width: "40vw",
-          height: "100%",
-          textAlign: "center",
-        }}
-      >
-        {navbarItensData.map((item) => {
-          return (
-            <ListItem
-              key={item.path}
-              toggleDrawer={toggleDrawer}
-              path={item.path}
-              label={item.label}
-            />
-          );
-        })}
-
-        <ListItemButton
-          onClick={() => {
-            setOpenAnimalList(!openAnimalList);
-          }}
+      {data ? (
+        <Box
+          flex={1}
+          justifyContent="center"
+          textAlign="center"
+          borderBottom={1}
+          paddingBottom={1}
         >
-          <ListItemText
-            primary="Animal"
-            primaryTypographyProps={{ style: { fontSize: "1.35rem" } }}
-          />
-          {openAnimalList ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
+          <Box
+            component={NavLink}
+            to="/usuario"
+            sx={{
+              '&:hover': {
+                '.profileImage': {
+                  filter: 'brightness(0.7)',
+                },
+                '.iconProfile': {
+                  opacity: 0.8,
+                },
+              },
+            }}
+          >
+            <Box
+              className="profileImage"
+              sx={{
+                position: 'relative',
+                width: '8rem',
+                height: '8rem',
+                display: 'inline-block',
+              }}
+            >
+              <Edit
+                color="primary"
+                fontSize="large"
+                className="iconProfile"
+                sx={{
+                  position: 'absolute',
+                  opacity: 0,
+                  top: '60%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                }}
+              />
+              <Box
+                component="img"
+                src={userIsNotFound}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  marginTop: '1rem',
+                }}
+                alt="Foto de usuário"
+              />
+            </Box>
+            <Typography
+              sx={{ textDecoration: 'none' }}
+              fontSize="1rem"
+              fontWeight="bold"
+              color="seagreen"
+            >
+              Bem vindo {data.name && data.name.split(' ')[0]}!!
+            </Typography>
+          </Box>
+        </Box>
+      ) : null}
 
-        <Collapse in={openAnimalList} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem
-              paddinLeft
-              toggleDrawer={toggleDrawer}
-              path="/animal/cadastrar"
-              label="Cadastrar"
-            />
-            <ListItem
-              paddinLeft
-              toggleDrawer={toggleDrawer}
-              path="/animal"
-              label="Lista"
-            />
-          </List>
-        </Collapse>
-      </List>
+      <ListDrawer toggleDrawer={toggleDrawer} />
+
       <Box
         sx={{
-          display: "flex",
-          alignItems: "end",
-          justifyContent: "center",
-          height: "100%",
+          display: 'flex',
+          alignItems: 'end',
+          justifyContent: 'center',
+          height: '100%',
         }}
       >
         <Button
-          sx={{ width: "80%", marginBottom: "1rem" }}
+          sx={{ width: '80%', marginBottom: '1rem' }}
           size="large"
           variant="contained"
+          color="warning"
           onClick={handleThemeChange}
         >
           {theme ? <DarkMode /> : <LightMode />}
         </Button>
       </Box>
     </Drawer>
-  );
+  )
 }

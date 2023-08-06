@@ -1,11 +1,15 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../migrations/mysql";
+import { sequelize } from "../../migrations/mysql";
+
+import {Ong}from './ongs'
+import { Animal } from "../animal";
 
 export interface UserData extends Model {
   id: number;
-  name: string;
+  name:String
   email: string;
   password: string;
+  ongId:number|null
 }
 
 export const User = sequelize.define<UserData>(
@@ -18,13 +22,16 @@ export const User = sequelize.define<UserData>(
     },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
     },
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
   },
   {
@@ -33,12 +40,10 @@ export const User = sequelize.define<UserData>(
   }
 );
 
-// sequelize.sync();
+User.hasOne(Ong, { constraints: true, foreignKey: 'userId', as: 'ongData' });
+Ong.hasOne(User);
+Ong.hasMany(Animal, { constraints: true, foreignKey: 'ongId', as: 'animalData' })
+Animal.belongsTo(Ong)
 
-/*
-export const User = {
-  getUser: (id: number): Usuario | undefined => {
-    return data.find((user) => user.id === id)
-  },
-}
-*/
+// sequelize.sync({force:true});
+// sequelize.sync();

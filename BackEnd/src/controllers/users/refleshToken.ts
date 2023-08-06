@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../../models/user";
+import { User } from "../../models/users/user";
 import { generateAccessToken } from "../../functions";
 
 const refleshToken = async (req: Request, res: Response) => {

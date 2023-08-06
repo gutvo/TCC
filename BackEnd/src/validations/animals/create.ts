@@ -1,10 +1,6 @@
 import zod, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
 
-const getFormatedDate = (currentDate: String) => {
-  return currentDate.split("/").reverse().join("-");
-};
-
 const animalSchema = zod.object({
   name: zod.string({ required_error: "O nome é obrigatório" }),
   race: zod.string({ required_error: "A raça é obrigatória" }),
@@ -12,7 +8,6 @@ const animalSchema = zod.object({
   sex: zod.union([zod.literal("Macho"), zod.literal("Fêmea")]),
   description: zod
     .string()
-    .min(2, "A raça é obrigatório")
     .max(255, "Não passe do Limite de 255 caracteres"),
   type: zod.union([
     zod.literal("Cachorro"),

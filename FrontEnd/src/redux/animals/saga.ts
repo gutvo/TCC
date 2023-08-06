@@ -1,82 +1,82 @@
-import { put, takeLatest, all } from "redux-saga/effects";
-import { actions } from "./slice";
-import { /* getAnimalImage */ api } from "../../services/api";
-import { Animal } from "./reducers";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { FetchAction, createAction, showAction } from "./actions";
+import { put, takeLatest, all } from 'redux-saga/effects'
+import { actions } from './slice'
+import { /* getAnimalImage */ api } from '../../services/backendApi'
+import { AnimalData } from './reducers'
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { FetchAction, createAction, showAction } from './actions'
 
 interface fetchAnimalDTO {
   data: {
-    data: Animal[];
+    data: AnimalData[]
     pagination: {
-      offset: number;
-      limit: number;
-      count: number;
-    };
-  };
+      offset: number
+      limit: number
+      count: number
+    }
+  }
 }
 interface showAnimalDTO {
-  data: Animal;
+  data: AnimalData
 }
 
 interface createAnimalDTO {
   data: {
-    message: string;
-  };
+    message: string
+  }
 }
 
 function* fetchAnimals({ payload }: FetchAction) {
-  const { listAnimalFailure, listAnimalSuccess } = actions;
-  const { limit, offset } = payload;
+  const { listAnimalFailure, listAnimalSuccess } = actions
+  const { limit, offset, ongId } = payload
   try {
-    const animals: fetchAnimalDTO = yield api.get("/animal", {
+    const animals: fetchAnimalDTO = yield api.get('/animal', {
       params: {
         offset,
         limit,
+        ongId,
       },
-    });
-    const result = animals.data;
-    yield put(listAnimalSuccess(result.data, result.pagination));
+    })
+    const result = animals.data
+    yield put(listAnimalSuccess(result.data, result.pagination))
   } catch (error) {
-    yield put(listAnimalFailure());
+    yield put(listAnimalFailure())
   }
 }
 
 function* createAnimal({ payload }: createAction) {
-  const { createAnimalSuccess, createtAnimalFailure } = actions;
-  const { data } = payload;
+  const { createAnimalSuccess, createtAnimalFailure } = actions
+  const { data } = payload
 
-  data.image = Boolean(data.image);
-
+  console.log(data.image)
   try {
-    const response: createAnimalDTO = yield api.post("/animal", {
+    const response: createAnimalDTO = yield api.post('/animal', {
       data,
-    });
+    })
 
     /*    const response: createAnimalDTO = yield call(addAnimal, data) */
-    yield put(createAnimalSuccess());
-    toast.success(response.data.message);
+    yield put(createAnimalSuccess())
+    toast.success(response.data.message)
   } catch (error) {
-    yield put(createtAnimalFailure());
+    yield put(createtAnimalFailure())
     if (axios.isAxiosError(error) && error.response) {
-      toast.error(error.response.data.message);
+      toast.error(error.response.data.message)
     }
   }
 }
 
 function* showAnimal({ payload }: showAction) {
-  const { showAnimalSuccess, showAnimalFailure } = actions;
+  const { showAnimalSuccess, showAnimalFailure } = actions
   try {
-    const response: showAnimalDTO = yield api.get(`animal/${payload.id}`);
-    yield put(showAnimalSuccess(response.data));
+    const response: showAnimalDTO = yield api.get(`animal/${payload.id}`)
+    yield put(showAnimalSuccess(response.data))
   } catch (error) {
-    yield put(showAnimalFailure());
+    yield put(showAnimalFailure())
   }
 }
 
 export default all([
-  takeLatest("animals/listAnimalRequest", fetchAnimals),
-  takeLatest("animals/createAnimalRequest", createAnimal),
-  takeLatest("animals/showAnimalRequest", showAnimal),
-]);
+  takeLatest('animals/listAnimalRequest', fetchAnimals),
+  takeLatest('animals/createAnimalRequest', createAnimal),
+  takeLatest('animals/showAnimalRequest', showAnimal),
+])

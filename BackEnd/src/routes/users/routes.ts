@@ -8,19 +8,20 @@ import encryptPassword from "../../controllers/users/encrypt";
 import validateToken from "../../validations/token/token";
 import Update from "../../controllers/users/update";
 import Delete from "../../controllers/users/delete";
-import deleteShowUserValidation from "../../validations/users/deteleShow";
+import deleteUserValidation from "../../validations/users/deteleShow";
 import Show from "../../controllers/users/show";
 import refleshToken from "../../controllers/users/refleshToken";
 import refleshTokenValidation from "../../validations/users/create";
+import showUserValidation from "../../validations/users/show";
 
 const userRoutes = Router();
 
 userRoutes
   .route("/user")
   .post(createUserValidation, encryptPassword, Create)
-  .put(validateToken, updateUserValidation, encryptPassword, Update)
-  .delete(validateToken, deleteShowUserValidation, Delete)
-  .get(deleteShowUserValidation, validateToken, Show);
+  .put(validateToken, updateUserValidation, Update)
+  .delete(validateToken, deleteUserValidation, Delete)
+  .get(showUserValidation, validateToken, Show);
 
 userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 

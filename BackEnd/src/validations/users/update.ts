@@ -2,10 +2,19 @@ import zod, { ZodError } from 'zod'
 import { Request, Response, NextFunction } from "express";
 
 const validator = zod.object({
-  id: zod.number({required_error:'ID é obrigatório'}),
   name: zod.string({required_error:'Nome é obrigatório'}),
   email: zod.string({required_error:'E-mail é obrigatório'}).email("E-mail inválido"),
-  password: zod.string({required_error:'Senha é obrigatória'}).min(8, "a senha precisa ter no mínimo 8 caracteres"),
+  ongData: zod
+      .object({
+        road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+        neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+        city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+        CEP: zod
+          .string({ invalid_type_error: 'CEP inválido' })
+          .min(8, 'CEP inválido')
+          .max(9, 'CEP inválido'),
+      })
+      .nullable(),
 });
 
 const updateUserValidation = async (

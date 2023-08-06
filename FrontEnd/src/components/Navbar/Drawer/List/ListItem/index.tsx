@@ -16,6 +16,7 @@ export function ListItem({
 }: listItemProps) {
   return (
     <ListItemButton
+      sx={{ paddingX: '1.5rem' }}
       content="button"
       color="primary"
       component={NavLink}

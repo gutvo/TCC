@@ -1,21 +1,21 @@
-import { Box, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { actions } from "@Redux/animals/slice";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@Redux/store";
+import { Box, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import { actions } from '@Redux/animals/slice'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@Redux/store'
 
 export default function ShowAnimal() {
-  const dispatch = useDispatch();
-  const { Animalid } = useParams();
-  const { showAnimalRequest } = actions;
-  const data = useSelector((state: RootState) => state.animals.animalData);
+  const dispatch = useDispatch()
+  const { Animalid } = useParams()
+  const { showAnimalRequest } = actions
+  const data = useSelector((state: RootState) => state.animals.animalData)
 
   useEffect(() => {
     if (Animalid) {
-      dispatch(showAnimalRequest(parseInt(Animalid)));
+      dispatch(showAnimalRequest(parseInt(Animalid)))
     }
-  }, [showAnimalRequest, dispatch, Animalid]);
+  }, [showAnimalRequest, dispatch, Animalid])
   return (
     <Box>
       {data ? (
@@ -28,5 +28,5 @@ export default function ShowAnimal() {
         <Typography>Animal não encontrado</Typography>
       )}
     </Box>
-  );
+  )
 }

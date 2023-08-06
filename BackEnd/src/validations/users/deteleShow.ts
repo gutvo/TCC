@@ -5,7 +5,7 @@ const validator = zod.object({
   id: zod.number({required_error:'ID é obrigatório'})
 });
 
-const deleteShowUserValidation = async (
+const deleteUserValidation = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -23,4 +23,4 @@ const deleteShowUserValidation = async (
   }
 };
 
-export default deleteShowUserValidation;
+export default deleteUserValidation;

@@ -1,5 +1,5 @@
-import { grey, red } from "@mui/material/colors";
-import { createTheme } from "@mui/material/styles";
+import { grey, red } from '@mui/material/colors'
+import { createTheme } from '@mui/material/styles'
 
 const temaEscuro = createTheme({
   palette: {
@@ -23,20 +23,20 @@ const temaEscuro = createTheme({
     MuiPagination: {
       styleOverrides: {
         root: {
-          "& .MuiPaginationItem-root": {
+          '& .MuiPaginationItem-root': {
             color: red.A700,
             backgroundColor: grey[50],
-            "&:hover": {
+            '&:hover': {
               color: grey[50],
               backgroundColor: grey[500],
             },
-            "&.MuiPaginationItem-ellipsis": {
-              background: "none",
+            '&.MuiPaginationItem-ellipsis': {
+              background: 'none',
               color: red.A700,
             },
           },
           ul: {
-            "& .Mui-selected ": {
+            '& .Mui-selected ': {
               color: grey[50],
               backgroundColor: red.A700,
             },
@@ -45,6 +45,6 @@ const temaEscuro = createTheme({
       },
     },
   },
-});
+})
 
-export default temaEscuro;
+export default temaEscuro

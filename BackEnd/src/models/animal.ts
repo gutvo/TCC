@@ -11,6 +11,7 @@ export interface AnimalData extends Model {
   type: "Cachorro" | "Peixe" | "Gato" | "Outros";
   birthday: number;
   image: boolean;
+  ongId:number
 }
 
 export const Animal = sequelize.define<AnimalData>(
@@ -51,5 +52,3 @@ export const Animal = sequelize.define<AnimalData>(
     timestamps: false,
   }
 );
-
-// sequelize.sync();
