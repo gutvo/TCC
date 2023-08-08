@@ -7,7 +7,7 @@ const refleshToken = async (req: Request, res: Response) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const result = await User.findOne({ where: { email } });
+    const result = await User.findOne({ where: { email,password } });
 
     if (!result) {
       return res.status(404).json({ message: "Email não encontrado" });

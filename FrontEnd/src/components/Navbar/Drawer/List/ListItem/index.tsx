@@ -1,12 +1,6 @@
+import { listItemProps } from '@Interfaces/components/Navbar'
 import { ListItemButton, ListItemText } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-
-interface listItemProps {
-  toggleDrawer: () => void
-  label: string
-  path: string
-  paddinLeft?: boolean
-}
 
 export function ListItem({
   label,

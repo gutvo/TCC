@@ -1,31 +1,18 @@
 import { put, takeLatest, all } from 'redux-saga/effects'
 import { actions } from './slice'
-import { UserData } from './reducers'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { api } from '../../services/backendApi'
-import { createAction, loginAction, showAction, updateAction } from './actions'
-
-export interface loginDTO {
-  data: {
-    data: UserData
-    message: string
-    token: string
-  }
-}
-interface createUserDTO {
-  data: {
-    message: string
-  }
-}
-
-interface showUserDTO {
-  data: UserData
-}
-
-interface updateUserDTO {
-  data: { data: UserData; message: string }
-}
+import { api } from '@Services/backendApi'
+import {
+  createAction,
+  createUserDTO,
+  loginAction,
+  loginDTO,
+  showAction,
+  showUserDTO,
+  updateAction,
+  updateUserDTO,
+} from '@Types/redux/users'
 
 function* create({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions

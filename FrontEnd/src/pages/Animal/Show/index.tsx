@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 
-export default function ShowAnimal() {
+export function ShowAnimal() {
   const dispatch = useDispatch()
   const { Animalid } = useParams()
   const { showAnimalRequest } = actions

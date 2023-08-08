@@ -13,6 +13,8 @@ export default defineConfig({
       '@Redux': path.resolve(__dirname, 'src/redux'),
       '@Images': path.resolve(__dirname, 'src/images'),
       '@Services': path.resolve(__dirname, 'src/services'),
+      '@Interfaces': path.resolve(__dirname, 'src/interfaces'),
+      '@Validations': path.resolve(__dirname, 'src/validations'),
     },
   },
   server: {
@@ -20,10 +22,3 @@ export default defineConfig({
     host: true,
   },
 })
-/*
-      "@Themes/*": ["./*"],
-      "@Components/*": ["./components/*"],
-      "@Pages/*": ["./pages/*"],
-      "@Redux/*": ["./redux/*"],
-      "@Images/*": ["./images/*"]
-*/

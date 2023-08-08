@@ -1,30 +1,16 @@
 import { put, takeLatest, all } from 'redux-saga/effects'
 import { actions } from './slice'
-import { /* getAnimalImage */ api } from '../../services/backendApi'
-import { AnimalData } from './reducers'
+import { api } from '@Services/backendApi'
+import {
+  createAnimalDTO,
+  fetchAnimalDTO,
+  showAnimalDTO,
+  FetchAction,
+  createAction,
+  showAction,
+} from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { FetchAction, createAction, showAction } from './actions'
-
-interface fetchAnimalDTO {
-  data: {
-    data: AnimalData[]
-    pagination: {
-      offset: number
-      limit: number
-      count: number
-    }
-  }
-}
-interface showAnimalDTO {
-  data: AnimalData
-}
-
-interface createAnimalDTO {
-  data: {
-    message: string
-  }
-}
 
 function* fetchAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions

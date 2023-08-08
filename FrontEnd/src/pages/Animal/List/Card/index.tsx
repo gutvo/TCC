@@ -1,5 +1,5 @@
 import isNotFound from '@Images/isNotFound.jpg'
-import { AnimalData } from '@Redux/animals/reducers'
+import { CardAnimalProps } from '@Interfaces/pages/animals'
 import {
   Card,
   CardActionArea,
@@ -9,10 +9,6 @@ import {
   Typography,
 } from '@mui/material'
 import { NavLink } from 'react-router-dom'
-
-interface CardAnimalProps {
-  data: AnimalData[]
-}
 
 export function CardAnimal({ data }: CardAnimalProps) {
   return (

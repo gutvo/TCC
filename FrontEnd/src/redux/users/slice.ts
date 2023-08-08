@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { InitialState, reducers } from './reducers'
+import { reducers } from './reducers'
+import { InitialState } from '@Types/redux/users'
 
 const isLogged = !!localStorage.getItem('user')
 

@@ -9,48 +9,15 @@ import {
   MenuItem,
 } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
 import { RootState } from '@Redux/store'
 import { useEffect } from 'react'
+import { newAnimalFormData } from '@Interfaces/pages/animals'
+import { CreateAnimal, newAnimalFormSchema } from '@Validations/animals/create'
 
-interface newAnimalFormData {
-  ongId: number
-  name: string
-  race: string
-  color: string
-  sex: 'Macho' | 'Fêmea'
-  description: string
-  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: Date
-  image: boolean
-  imagesData: FileList
-}
-
-const newAnimalFormValidationSchema = zod.object({
-  ongId: zod.number(),
-  name: zod.string().min(2, 'O nome é obrigatório'),
-  race: zod.string().min(2, 'A raça é obrigatório'),
-  color: zod.string().min(2, 'A color é obrigatório'),
-  sex: zod.union([zod.literal('Macho'), zod.literal('Fêmea')]),
-  description: zod.string().max(255, 'Não passe do Limite de 255 caracteres'),
-
-  type: zod.union([
-    zod.literal('Cachorro'),
-    zod.literal('Peixe'),
-    zod.literal('Gato'),
-    zod.literal('Outros'),
-  ]),
-  birthday: zod.date(),
-  imagesData: zod.instanceof(FileList),
-  image: zod.boolean(),
-})
-
-type Animal = zod.infer<typeof newAnimalFormValidationSchema>
-
-export default function CreateAnimal() {
+export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
   const {
     handleSubmit,
@@ -58,8 +25,8 @@ export default function CreateAnimal() {
     setValue,
     formState: { errors },
     watch,
-  } = useForm<Animal>({
-    resolver: zodResolver(newAnimalFormValidationSchema),
+  } = useForm<CreateAnimal>({
+    resolver: zodResolver(newAnimalFormSchema),
   })
 
   const { data } = useSelector((state: RootState) => state.users)

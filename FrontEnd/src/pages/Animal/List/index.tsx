@@ -5,7 +5,7 @@ import { Pagination, Typography, CircularProgress, Box } from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from './Card'
 
-export default function ListAnimal() {
+export function ListAnimal() {
   const dispatch = useDispatch()
   const { listAnimalRequest } = actions
   const { list, pagination, loading } = useSelector(

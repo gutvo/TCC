@@ -1,17 +1,9 @@
 import { Button, Drawer, Box, Typography } from '@mui/material'
 import { DarkMode, LightMode, Edit } from '@mui/icons-material'
 import { ListDrawer } from './List'
-import { UserData } from '@Redux/users/reducers'
 import userIsNotFound from '@Images/userNotFound.png'
 import { NavLink } from 'react-router-dom'
-
-interface drawerListProps {
-  drawerOpen: boolean
-  toggleDrawer: () => void
-  handleThemeChange: () => void
-  theme: boolean
-  data: UserData | null
-}
+import { drawerListProps } from '@Interfaces/components/Navbar'
 
 export function DrawerList({
   drawerOpen,

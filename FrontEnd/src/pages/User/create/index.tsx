@@ -2,11 +2,12 @@ import { Box, Button, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
-import { NewUserFormData, UserForm } from './form/index'
+import { UserForm } from './form/index'
+import { NewUserFormData } from '@Interfaces/pages/users'
 
 export function SignIn() {
-  const dispatch = useDispatch()
   const { createUserRequest } = actions
+  const dispatch = useDispatch()
 
   function handleAddUser(data: NewUserFormData) {
     dispatch(createUserRequest(data))

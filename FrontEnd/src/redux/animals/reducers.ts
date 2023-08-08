@@ -1,29 +1,9 @@
+import {
+  AnimalData,
+  InitialStateProps,
+  PaginationProps,
+} from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
-
-export interface Pagination {
-  offset: number
-  limit: number
-  count: number
-}
-
-export interface AnimalData {
-  id?: number
-  name: string
-  race: string
-  color: string
-  sex: 'Macho' | 'Fêmea'
-  description: string
-  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: Date
-  image: boolean | string
-}
-
-export interface InitialStateProps {
-  loading: boolean
-  list: AnimalData[]
-  animalData: AnimalData | null
-  pagination: Pagination
-}
 
 export const reducers = {
   // List
@@ -39,14 +19,17 @@ export const reducers = {
   listAnimalSuccess: {
     reducer: (
       state: InitialStateProps,
-      action: PayloadAction<{ data: AnimalData[]; pagination: Pagination }>,
+      action: PayloadAction<{
+        data: AnimalData[]
+        pagination: PaginationProps
+      }>,
     ) => {
       const { data, pagination } = action.payload
       state.pagination = pagination
       state.list = data
       state.loading = false
     },
-    prepare: (data: AnimalData[], pagination: Pagination) => {
+    prepare: (data: AnimalData[], pagination: PaginationProps) => {
       return { payload: { data, pagination } }
     },
   },

@@ -6,15 +6,13 @@ import { DrawerList } from './Drawer'
 import { RootState } from '@Redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
+import { NavbarProps } from '@Interfaces/components/Navbar'
 
-interface HeaderProps {
-  handleThemeChange: () => void
-  theme: boolean
-}
-
-export function Navbar({ handleThemeChange, theme }: HeaderProps) {
+export function Navbar({ handleThemeChange, theme }: NavbarProps) {
   const dispatch = useDispatch()
+
   const { showUserRequest, logout } = actions
+
   const { data, isLogged } = useSelector((state: RootState) => state.users)
 
   const user = localStorage.getItem('user')

@@ -1,23 +1,12 @@
 import { Typography, Box, TextField, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/users/slice'
 import { RootState } from '@Redux/store'
-
-interface loginFormData {
-  email: string
-  password: string
-}
-
-const userFormDataSchema = zod.object({
-  email: zod.string().email('Precisa ser um email válido'),
-  password: zod.string(),
-})
-
-type User = zod.infer<typeof userFormDataSchema>
+import { loginFormData } from '@Interfaces/pages/users'
+import { LoginUser, loginFormDataSchema } from '@Validations/users/login'
 
 export function Login() {
   const { loading } = useSelector((state: RootState) => state.users)
@@ -28,8 +17,8 @@ export function Login() {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<User>({
-    resolver: zodResolver(userFormDataSchema),
+  } = useForm<LoginUser>({
+    resolver: zodResolver(loginFormDataSchema),
   })
 
   function handleLogin(data: loginFormData) {

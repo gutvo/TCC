@@ -39,6 +39,12 @@
       ],
       "@Services/*": [
         "./services/*"
+      ],
+      "@Interfaces/*":[
+        "./interfaces/*"
+      ],
+      "@Validations/*":[
+        "./validations/*"
       ]
     }
   },

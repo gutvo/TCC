@@ -2,11 +2,12 @@ import { RootState } from '@Redux/store'
 import { Box, Grid, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import userNotFound from '@Images/userNotFound.png'
-import { ProfileForm, ProfileFormData } from './formProfile'
+import { ProfileForm } from './updateForm'
 import { actions } from '@Redux/users/slice'
 import { useState } from 'react'
+import { ProfileFormData } from '@Interfaces/pages/users'
 
-export default function ShowUser() {
+export function ShowUser() {
   const { updateUserRequest } = actions
   const { data } = useSelector((state: RootState) => state.users)
   const dispatch = useDispatch()

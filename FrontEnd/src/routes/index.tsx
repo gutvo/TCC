@@ -7,10 +7,10 @@ import { Chat } from '@Pages/Chat'
 import { Ong } from '@Pages/Organization'
 import { SignIn } from '@Pages/User/create'
 import { Login } from '@Pages/User/Login'
-import ListAnimal from '@Pages/Animal/List/index'
-import CreateAnimal from '@Pages/Animal/Create'
-import ShowAnimal from '@Pages/Animal/Show'
-import ShowUser from '@Pages/User/show'
+import { ListAnimal } from '@Pages/Animal/List/index'
+import { CreateAnimalForm } from '@Pages/Animal/Create'
+import { ShowAnimal } from '@Pages/Animal/Show'
+import { ShowUser } from '@Pages/User/show'
 
 function MainRoutes() {
   return (
@@ -20,7 +20,7 @@ function MainRoutes() {
           {/* Animal */}
           <Route path="/animal/:Animalid" element={<ShowAnimal />} />
           <Route path="/animal" element={<ListAnimal />} />
-          <Route path="/animal/cadastrar" element={<CreateAnimal />} />
+          <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
 
           {/* User */}
           <Route path="/login" element={<Login />} />

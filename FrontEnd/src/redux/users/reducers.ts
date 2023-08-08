@@ -1,39 +1,12 @@
-import { NewUserFormData } from '@Pages/User/create/form'
-import { ProfileFormData } from '@Pages/User/show/formProfile'
+import { NewUserFormData, ProfileFormData } from '@Interfaces/pages/users'
+import {
+  InitialState,
+  UserData,
+  loginData,
+  loginProps,
+} from '@Interfaces/redux/users'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { NavigateFunction } from 'react-router-dom'
-
-interface ongData {
-  id: number
-  road: string
-  neighborhood: string
-  city: string
-  CEP: string
-}
-
-export interface UserData {
-  id: number
-  name: string
-  email: string
-  password: string
-  ongData: ongData | null
-}
-
-export interface loginDTO {
-  data: UserData
-  token: string
-}
-
-export interface loginProps {
-  email: string
-  password: string
-}
-
-export interface InitialState {
-  loading: boolean
-  data: UserData | null
-  isLogged: boolean
-}
 
 export const reducers = {
   // create
@@ -64,14 +37,14 @@ export const reducers = {
   loginSuccess: {
     reducer: (
       state: InitialState,
-      action: PayloadAction<{ response: loginDTO }>,
+      action: PayloadAction<{ response: loginData }>,
     ) => {
       const { data } = action.payload.response
       state.data = data
       state.isLogged = true
       state.loading = false
     },
-    prepare: (response: loginDTO) => {
+    prepare: (response: loginData) => {
       return { payload: { response } }
     },
   },

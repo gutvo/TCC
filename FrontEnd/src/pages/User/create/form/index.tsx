@@ -1,60 +1,10 @@
 import { Box, TextField, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
 import { ChangeEvent } from 'react'
-
-interface ongData {
-  road: string
-  neighborhood: string
-  city: string
-  CEP: string
-}
-interface ViaCepDTO {
-  logradouro: string
-  complemento: string
-  bairro: string
-  localidade: string
-  uf: String
-}
-
-export interface NewUserFormData {
-  name: string
-  email: string
-  password: string
-  confirmPassword: string
-  ongData: ongData | null
-}
-
-interface UserFormProps {
-  handleAddUser: (data: NewUserFormData) => void
-  isOng: boolean
-}
-const newUserFormValidationSchema = zod
-  .object({
-    name: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-    email: zod.string().email('Precisa ser um email válido'),
-    password: zod.string().min(8, 'tem que ter no minímo 8 caracteres'),
-    confirmPassword: zod.string().min(8, 'tem que ter no minímo 8 caracteres'),
-    ongData: zod
-      .object({
-        road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-        neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-        city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-        CEP: zod
-          .string({ invalid_type_error: 'CEP inválido' })
-          .min(8, 'CEP inválido')
-          .max(9, 'CEP inválido'),
-      })
-      .nullable(),
-  })
-  .refine((data) => data.confirmPassword === data.password, {
-    message: 'As senhas não batem',
-    path: ['confirmPassword'],
-  })
-
-type User = zod.infer<typeof newUserFormValidationSchema>
+import { UserFormProps, ViaCepDTO } from '@Interfaces/pages/users'
+import { CreateUser, newUserFormSchema } from '@Validations/users/create'
 
 export function UserForm({ handleAddUser, isOng }: UserFormProps) {
   const {
@@ -62,8 +12,8 @@ export function UserForm({ handleAddUser, isOng }: UserFormProps) {
     register,
     setValue,
     formState: { errors },
-  } = useForm<User>({
-    resolver: zodResolver(newUserFormValidationSchema),
+  } = useForm<CreateUser>({
+    resolver: zodResolver(newUserFormSchema),
   })
 
   async function getInformation(

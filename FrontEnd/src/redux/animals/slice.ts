@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { InitialStateProps, reducers } from './reducers'
+import { reducers } from './reducers'
+import { InitialStateProps } from '@Interfaces/redux/animals'
 
 const initialState: InitialStateProps = {
   loading: false,

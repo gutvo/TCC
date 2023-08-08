@@ -10,10 +10,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { ListItem } from './ListItem/index'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-
-interface ListDrawerProps {
-  toggleDrawer: () => void
-}
+import { ListDrawerProps } from '@Interfaces/components/Navbar'
 
 export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
   const [openAnimalList, setOpenAnimalList] = useState(false)

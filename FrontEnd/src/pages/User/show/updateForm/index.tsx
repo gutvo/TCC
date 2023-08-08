@@ -1,55 +1,10 @@
 import { Box, TextField, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
 import { ChangeEvent, useEffect } from 'react'
-import { UserData } from '@Redux/users/reducers'
-
-interface ongData {
-  road: string
-  neighborhood: string
-  city: string
-  CEP: string
-}
-interface ViaCepDTO {
-  logradouro: string
-  complemento: string
-  bairro: string
-  localidade: string
-  uf: String
-}
-
-export interface ProfileFormData {
-  name: string
-  email: string
-  ongData: ongData | null
-}
-
-interface ProfileFormProps {
-  data: UserData
-  handleUpdateUser: (data: ProfileFormData) => void
-  editable: boolean
-  setEditable: (data: boolean) => void
-}
-
-const newUserFormValidationSchema = zod.object({
-  name: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-  email: zod.string().email('Precisa ser um email válido'),
-  ongData: zod
-    .object({
-      road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-      neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-      city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-      CEP: zod
-        .string({ invalid_type_error: 'CEP inválido' })
-        .min(8, 'CEP inválido')
-        .max(9, 'CEP inválido'),
-    })
-    .nullable(),
-})
-
-type User = zod.infer<typeof newUserFormValidationSchema>
+import { ProfileFormProps, ViaCepDTO } from '@Interfaces/pages/users'
+import { UserUpdate, updateUserFormSchema } from '@Validations/users/update'
 
 export function ProfileForm({
   data,
@@ -62,8 +17,8 @@ export function ProfileForm({
     register,
     setValue,
     formState: { errors },
-  } = useForm<User>({
-    resolver: zodResolver(newUserFormValidationSchema),
+  } = useForm<UserUpdate>({
+    resolver: zodResolver(updateUserFormSchema),
   })
 
   async function getInformation(

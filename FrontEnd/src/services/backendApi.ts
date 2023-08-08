@@ -1,18 +1,10 @@
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios'
-import { UserData } from '@Redux/users/reducers'
 import { toast } from 'react-toastify'
 import { redirect } from 'react-router-dom'
-
-interface refleshTokenDTO {
-  data: {
-    data: UserData
-    token: string
-  }
-}
-interface LocalStorageProps {
-  email: string
-  password: string
-}
+import {
+  LocalStorageProps,
+  refleshTokenDTO,
+} from '@Interfaces/services/Services'
 
 const baseURL = import.meta.env.VITE_LINK as string
 
@@ -24,7 +16,6 @@ export const api = axios.create({
 })
 
 // Interceptors
-
 // Request
 
 api.interceptors.request.use(
