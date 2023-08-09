@@ -18,13 +18,18 @@ function MainRoutes() {
       <Routes>
         <Route path="/" element={<DefaultLayout />}>
           {/* Animal */}
+
           <Route path="/animal/:Animalid" element={<ShowAnimal />} />
+
           <Route path="/animal" element={<ListAnimal />} />
+
           <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
 
           {/* User */}
+
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />
+
           <Route path="/usuario" element={<ShowUser />} />
 
           <Route path="/chat" element={<Chat />} />
@@ -32,6 +37,7 @@ function MainRoutes() {
           <Route path="/ongs" element={<Ong />} />
 
           <Route path="/" element={<Home />} />
+
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

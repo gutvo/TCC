@@ -1,17 +1,11 @@
-import {
-  Box,
-  TextField,
-  Button,
-  InputAdornment,
-  IconButton,
-} from '@mui/material'
+import { Box, TextField, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
-import { ChangeEvent, useState } from 'react'
-import { UserFormProps, ViaCepDTO } from '@Interfaces/pages/users'
+import { ChangeEvent } from 'react'
 import { CreateUser, newUserFormSchema } from '@Validations/users/create'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { UserFormProps, ViaCepDTO } from '@Interfaces/pages/users'
+import { TextFieldPassword } from '@Components/TextFieldPassword'
 
 export function UserForm({ handleAddUser, isOng }: UserFormProps) {
   const {
@@ -22,8 +16,6 @@ export function UserForm({ handleAddUser, isOng }: UserFormProps) {
   } = useForm<CreateUser>({
     resolver: zodResolver(newUserFormSchema),
   })
-  const [passwordVisible1, setPasswordVisible1] = useState(true)
-  const [passwordVisible2, setPasswordVisible2] = useState(true)
 
   async function getInformation(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -66,53 +58,21 @@ export function UserForm({ handleAddUser, isOng }: UserFormProps) {
           fullWidth
           {...register('email', { required: true })}
         />
-        <TextField
-          error={!!errors.password?.message}
-          InputLabelProps={{ shrink: true }}
-          helperText={errors.password?.message}
-          color="info"
+
+        <TextFieldPassword
+          errors={errors.password}
           label="Senha"
-          type="password"
+          name="password"
           placeholder="Digite o sua Senha."
-          fullWidth
-          {...register('password', { required: true })}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    setPasswordVisible1(!passwordVisible1)
-                  }}
-                >
-                  {passwordVisible1 ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          register={register}
         />
-        <TextField
-          error={!!errors.confirmPassword?.message}
-          InputLabelProps={{ shrink: true }}
-          helperText={errors.confirmPassword?.message}
-          color="info"
+
+        <TextFieldPassword
+          errors={errors.confirmPassword}
           label="Confirmação de senha"
-          type={passwordVisible2 ? 'password' : 'text'}
-          placeholder="Digite novamente a sua senha."
-          fullWidth
-          {...register('confirmPassword', { required: true })}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => {
-                    setPasswordVisible2(!passwordVisible2)
-                  }}
-                >
-                  {passwordVisible2 ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          name="confirmPassword"
+          placeholder="Digite novamente a sua senha"
+          register={register}
         />
 
         {isOng ? (

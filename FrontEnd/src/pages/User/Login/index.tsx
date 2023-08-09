@@ -7,6 +7,7 @@ import { actions } from '@Redux/users/slice'
 import { RootState } from '@Redux/store'
 import { loginFormData } from '@Interfaces/pages/users'
 import { LoginUser, loginFormDataSchema } from '@Validations/users/login'
+import { TextFieldPassword } from '@Components/TextFieldPassword'
 
 export function Login() {
   const { loading } = useSelector((state: RootState) => state.users)
@@ -35,6 +36,7 @@ export function Login() {
         onSubmit={handleSubmit(handleLogin)}
       >
         <TextField
+          InputLabelProps={{ shrink: true }}
           error={!!errors.email?.message}
           helperText={errors.email?.message}
           color="info"
@@ -44,15 +46,13 @@ export function Login() {
           fullWidth
           {...register('email', { required: true })}
         />
-        <TextField
-          error={!!errors.password?.message}
-          helperText={errors.password?.message}
-          color="info"
+
+        <TextFieldPassword
+          errors={errors.password}
           label="Senha"
-          type="password"
-          placeholder="Digite a sua senha."
-          fullWidth
-          {...register('password', { required: true })}
+          name="password"
+          placeholder="Digite a sua senha"
+          register={register}
         />
         <Button disabled={loading} variant="contained" type="submit" fullWidth>
           Logar
