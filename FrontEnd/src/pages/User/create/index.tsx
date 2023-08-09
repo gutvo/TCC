@@ -29,7 +29,6 @@ export function SignIn() {
       >
         <Button
           disabled={!isOng}
-          color="secondary"
           onClick={() => {
             setIsOng(!isOng)
           }}
@@ -39,7 +38,6 @@ export function SignIn() {
           Usuário
         </Button>
         <Button
-          color="secondary"
           disabled={isOng}
           onClick={() => {
             setIsOng(!isOng)
