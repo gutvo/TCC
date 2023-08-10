@@ -1,11 +1,11 @@
-import { Box, TextField, Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
 import { ChangeEvent } from 'react'
-import { CreateUser, newUserFormSchema } from '@Validations/users/create'
+import { CreateUser, newUserFormSchema } from './validations'
 import { UserFormProps, ViaCepDTO } from '@Interfaces/pages/users'
-import { TextFieldPassword } from '@Components/TextFieldPassword'
+import { TextFieldStyled } from '@Components/TextFieldStyled'
 
 export function UserForm({ handleAddUser, isOng }: UserFormProps) {
   const {
@@ -36,95 +36,77 @@ export function UserForm({ handleAddUser, isOng }: UserFormProps) {
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         onSubmit={handleSubmit(handleAddUser)}
       >
-        <TextField
-          error={!!errors.name?.message}
-          helperText={errors.name?.message}
-          InputLabelProps={{ shrink: true }}
-          color="info"
+        <TextFieldStyled
+          errors={errors.name}
           label="Nome"
-          type="text"
           placeholder="Digite o seu nome."
-          fullWidth
           {...register('name', { required: true })}
         />
-        <TextField
-          error={!!errors.email?.message}
-          InputLabelProps={{ shrink: true }}
-          helperText={errors.email?.message}
-          color="info"
+        <TextFieldStyled
+          errors={errors.email}
           label="Email"
-          type="email"
+          customType="email"
           placeholder="Digite o seu email."
-          fullWidth
           {...register('email', { required: true })}
         />
 
-        <TextFieldPassword
+        <TextFieldStyled
           errors={errors.password}
           label="Senha"
-          name="password"
-          placeholder="Digite o sua Senha."
-          register={register}
+          customType="password"
+          isPassword
+          placeholder="Digite a sua senha."
+          {...register('password', { required: true })}
         />
 
-        <TextFieldPassword
+        <TextFieldStyled
           errors={errors.confirmPassword}
           label="Confirmação de senha"
-          name="confirmPassword"
-          placeholder="Digite novamente a sua senha"
-          register={register}
+          customType="password"
+          isPassword
+          placeholder="Digite novamente a sua senha."
+          {...register('confirmPassword', { required: true })}
         />
 
         {isOng ? (
           <>
-            <TextField
-              error={!!errors.ongData?.CEP?.message}
-              InputLabelProps={{ shrink: true }}
-              helperText={errors.ongData?.CEP?.message}
-              color="info"
+            <TextFieldStyled
+              errors={errors.ongData?.CEP}
               label="CEP"
-              type="text"
-              placeholder="Digite a cidade."
+              placeholder="Digite o CEP."
               {...register('ongData.CEP', {
                 required: true,
                 onChange: getInformation,
               })}
             />
             <Box>
-              <TextField
-                error={!!errors.ongData?.city?.message}
-                InputLabelProps={{ shrink: true }}
-                helperText={errors.ongData?.road?.message}
-                color="info"
+              <TextFieldStyled
+                errors={errors.ongData?.road}
                 label="Rua"
-                type="text"
                 sx={{ width: '68%', marginRight: '2%' }}
-                placeholder="Digite a rua."
+                placeholder="Digite a sua rua."
                 {...register('ongData.road', {
                   required: true,
                 })}
               />
-              <TextField
-                error={!!errors.ongData?.city?.message}
-                InputLabelProps={{ shrink: true }}
-                helperText={errors.ongData?.city?.message}
-                color="info"
+              <TextFieldStyled
+                errors={errors.ongData?.city}
                 label="Cidade"
                 sx={{ width: '30%' }}
-                type="text"
-                placeholder="Digite a cidade."
-                {...register('ongData.city', { required: true })}
+                placeholder="Digite a sua cidade."
+                {...register('ongData.city', {
+                  required: true,
+                })}
               />
             </Box>
-            <TextField
-              error={!!errors.ongData?.neighborhood?.message}
-              InputLabelProps={{ shrink: true }}
-              helperText={errors.ongData?.neighborhood?.message}
-              color="info"
+
+            <TextFieldStyled
+              errors={errors.ongData?.neighborhood}
               label="Bairro"
-              type="text"
-              placeholder="Digite o bairro."
-              {...register('ongData.neighborhood', { required: true })}
+              placeholder="Digite o seu bairro."
+              {...register('ongData.neighborhood', {
+                required: true,
+              })}
             />
           </>
         ) : (
