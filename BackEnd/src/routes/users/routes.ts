@@ -8,7 +8,7 @@ import encryptPassword from "../../controllers/users/encrypt";
 import validateToken from "../../validations/token/token";
 import Update from "../../controllers/users/update";
 import Delete from "../../controllers/users/delete";
-import deleteUserValidation from "../../validations/users/deteleShow";
+import deleteUserValidation from "../../validations/users/detele";
 import Show from "../../controllers/users/show";
 import refleshToken from "../../controllers/users/refleshToken";
 import refleshTokenValidation from "../../validations/users/create";

@@ -40,7 +40,7 @@ export const User = sequelize.define<UserData>(
   }
 );
 
-User.hasOne(Ong, { constraints: true, foreignKey: 'userId', as: 'ongData' });
+User.hasOne(Ong, { constraints: true, foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' });
 Ong.hasOne(User);
 Ong.hasMany(Animal, { constraints: true, foreignKey: 'ongId', as: 'animalData' })
 Animal.belongsTo(Ong)

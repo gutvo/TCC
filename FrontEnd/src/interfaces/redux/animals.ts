@@ -1,6 +1,6 @@
-// Reducers
-
 import { actions } from '@Redux/animals/slice'
+
+// Reducers
 
 export interface PaginationProps {
   offset: number

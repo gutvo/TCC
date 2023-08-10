@@ -20,12 +20,12 @@ export function ShowUser() {
   return (
     <Box>
       {data ? (
-        <Grid container>
-          <Grid item textAlign="center" lg={5} xs={12} marginBottom={4}>
+        <Grid container gap={10}>
+          <Grid item textAlign="center" lg={4} xs={12} marginBottom={4}>
             <img
               src={userNotFound}
               alt="Imagem do usuário"
-              style={{ width: '20rem' }}
+              style={{ width: '100%' }}
             />
           </Grid>
 

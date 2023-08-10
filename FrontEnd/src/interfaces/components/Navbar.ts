@@ -1,6 +1,7 @@
 import { UserData } from '@Interfaces/redux/users'
 
 // Navbar
+
 export interface NavbarProps {
   handleThemeChange: () => void
   theme: boolean

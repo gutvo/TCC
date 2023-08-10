@@ -105,4 +105,20 @@ export const reducers = {
   updateUserFailure: (state: InitialState) => {
     state.loading = false
   },
+
+  deleteUserRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (email: string, id: number, navigation: NavigateFunction) => {
+      return { payload: { email, id, navigation } }
+    },
+  },
+  deleteUserSuccess: (state: InitialState) => {
+    state.loading = false
+  },
+
+  deleteUserFailure: (state: InitialState) => {
+    state.loading = false
+  },
 }

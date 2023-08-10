@@ -1,9 +1,9 @@
-import { NewUserFormData } from '@Pages/User/create/form'
+import { NewUserFormData, ProfileFormData } from '@Interfaces/pages/users'
 import { actions } from '@Redux/users/slice'
-import { ProfileFormData } from '@Types/pages/users'
 import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
+
 export interface ongData {
   id: number
   road: string
@@ -61,6 +61,10 @@ export interface updateUserDTO {
   data: { data: UserData; message: string }
 }
 
+export interface deleteDTO {
+  data: { message: string }
+}
+
 // -------------------------------------------
 // actions
 
@@ -90,6 +94,15 @@ export interface loginAction {
   type: typeof actions.loginRequest.type
   payload: {
     data: loginProps
+    navigation: NavigateFunction
+  }
+}
+
+export interface deleteActions {
+  type: typeof actions.deleteUserRequest.type
+  payload: {
+    id: number
+    email: string
     navigation: NavigateFunction
   }
 }

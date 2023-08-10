@@ -2,7 +2,8 @@ import zod, { ZodError } from 'zod'
 import { Request, Response, NextFunction } from "express";
 
 const validator = zod.object({
-  id: zod.number({required_error:'ID é obrigatório'})
+  id: zod.string({required_error:'ID é obrigatório'}),
+  email: zod.string({required_error:'O email é obrigatório'})
 });
 
 const deleteUserValidation = async (
@@ -11,7 +12,7 @@ const deleteUserValidation = async (
   next: NextFunction
 ) => {
   try {
-    await validator.parseAsync(req.body);
+    await validator.parseAsync(req.query);
     return next();
   } catch (error) {
     if (error instanceof ZodError) {

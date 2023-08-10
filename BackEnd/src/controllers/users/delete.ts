@@ -3,13 +3,15 @@ import { User } from "../../models/users/user";
 
 const Delete = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const {id,email} = req.query;
+    
 
-    const result = await User.findOne({ where: { id } });
+    const result = await User.findOne({ where: { id,email } });
 
     if (!result) {
       return res.status(404).json({ message: "O usuário não foi encotrado" });
     }
+
     result.destroy();
     res.json({ message: "O usuário foi deletado com sucesso" });
   } catch (error) {

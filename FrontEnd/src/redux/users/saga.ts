@@ -6,13 +6,15 @@ import { api } from '@Services/backendApi'
 import {
   createAction,
   createUserDTO,
+  deleteActions,
+  deleteDTO,
   loginAction,
   loginDTO,
   showAction,
   showUserDTO,
   updateAction,
   updateUserDTO,
-} from '@Types/redux/users'
+} from '@Interfaces/redux/users'
 
 function* create({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions
@@ -113,9 +115,32 @@ function* login({ payload }: loginAction) {
   }
 }
 
+function* exclude({ payload }: deleteActions) {
+  const { deleteUserFailure, deleteUserSuccess, logout } = actions
+  const { email, id, navigation } = payload
+  try {
+    const user: deleteDTO = yield api.delete('/user', {
+      params: {
+        email,
+        id,
+      },
+    })
+    yield put(deleteUserSuccess())
+    yield put(logout())
+    navigation('/')
+    toast.success(user.data.message)
+  } catch (error) {
+    yield put(deleteUserFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest('users/createUserRequest', create),
   takeLatest('users/updateUserRequest', update),
   takeLatest('users/loginRequest', login),
   takeLatest('users/showUserRequest', show),
+  takeLatest('users/deleteUserRequest', exclude),
 ])

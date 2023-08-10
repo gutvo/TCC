@@ -2,10 +2,11 @@ import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { ProfileFormProps, ViaCepDTO } from '@Interfaces/pages/users'
 import { UserUpdate, updateUserFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
+import { DeleteDialog } from './DeleteDialog'
 
 export function ProfileForm({
   data,
@@ -21,6 +22,8 @@ export function ProfileForm({
   } = useForm<UserUpdate>({
     resolver: zodResolver(updateUserFormSchema),
   })
+
+  const [dialogIsVisible, setDialogIsVisible] = useState(false)
 
   async function getInformation(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -44,6 +47,12 @@ export function ProfileForm({
 
   return (
     <Box>
+      {dialogIsVisible ? (
+        <DeleteDialog
+          dialogIsVisible={dialogIsVisible}
+          setDialogIsVisible={setDialogIsVisible}
+        />
+      ) : null}
       <form
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         onSubmit={handleSubmit(handleUpdateUser)}
@@ -147,6 +156,16 @@ export function ProfileForm({
           </Button>
         )}
       </form>
+      <Button
+        disabled={dialogIsVisible}
+        onClick={() => {
+          setDialogIsVisible(true)
+        }}
+        sx={{ marginTop: 1 }}
+        color="error"
+      >
+        Deletar Conta
+      </Button>
     </Box>
   )
 }

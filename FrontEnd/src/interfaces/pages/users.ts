@@ -19,6 +19,7 @@ export interface ViaCepDTO {
 
 // -------------------------------------------
 // show
+
 // Form Profile
 
 export interface ProfileFormData {
@@ -32,6 +33,13 @@ export interface ProfileFormProps {
   handleUpdateUser: (data: ProfileFormData) => void
   editable: boolean
   setEditable: (data: boolean) => void
+}
+
+// Delete Dialog
+
+export interface DeleteDialogProps {
+  dialogIsVisible: boolean
+  setDialogIsVisible: (choice: boolean) => void
 }
 
 // -------------------------------------------
