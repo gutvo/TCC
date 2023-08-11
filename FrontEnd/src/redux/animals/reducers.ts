@@ -59,8 +59,8 @@ export const reducers = {
     reducer: (state: InitialStateProps) => {
       state.loading = true
     },
-    prepare: (id: number) => {
-      return { payload: { id } }
+    prepare: (id: string, ongId: number | undefined) => {
+      return { payload: { id, ongId } }
     },
   },
   showAnimalSuccess: {

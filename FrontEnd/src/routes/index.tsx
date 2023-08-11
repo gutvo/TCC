@@ -19,9 +19,9 @@ function MainRoutes() {
         <Route path="/" element={<DefaultLayout />}>
           {/* Animal */}
 
-          <Route path="/animal/:Animalid" element={<ShowAnimal />} />
+          <Route path="/animal" element={<ShowAnimal />} />
 
-          <Route path="/animal" element={<ListAnimal />} />
+          <Route path="/animals" element={<ListAnimal />} />
 
           <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
 

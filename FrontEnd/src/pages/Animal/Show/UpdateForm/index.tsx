@@ -13,35 +13,27 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
 import { RootState } from '@Redux/store'
-import { useEffect } from 'react'
-import { newAnimalFormData } from '@Interfaces/pages/animals'
-import { CreateAnimal, newAnimalFormSchema } from './validations'
+import { UpdateAnimalFormData } from '@Interfaces/pages/animals'
+import { UpdateAnimal, updateAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 
-export function CreateAnimalForm() {
+export function FormAnimal() {
   const { createAnimalRequest } = actions
   const {
     handleSubmit,
     register,
-    setValue,
     formState: { errors },
     watch,
-  } = useForm<CreateAnimal>({
-    resolver: zodResolver(newAnimalFormSchema),
+  } = useForm<UpdateAnimal>({
+    resolver: zodResolver(updateAnimalFormSchema),
   })
 
   const { data } = useSelector((state: RootState) => state.users)
   const dispatch = useDispatch()
   const imageBoolean = !!watch('imagesData')?.length
-  function handleAddProduct(data: newAnimalFormData) {
+  function handleAddProduct(data: UpdateAnimalFormData) {
     dispatch(createAnimalRequest(data))
   }
-
-  useEffect(() => {
-    if (data) {
-      setValue('ongId', data.id)
-    }
-  }, [setValue, data])
 
   return (
     <Box>
@@ -53,14 +45,6 @@ export function CreateAnimalForm() {
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >
-        <input
-          type="number"
-          style={{ display: 'none' }}
-          {...register('ongId', {
-            required: true,
-            valueAsNumber: true,
-          })}
-        />
         <input
           type="checkbox"
           style={{ display: 'none' }}

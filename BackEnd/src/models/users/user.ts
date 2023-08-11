@@ -40,10 +40,12 @@ export const User = sequelize.define<UserData>(
   }
 );
 
-User.hasOne(Ong, { constraints: true, foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' });
-Ong.hasOne(User);
-Ong.hasMany(Animal, { constraints: true, foreignKey: 'ongId', as: 'animalData' })
+User.hasOne(Ong, {  foreignKey: 'userId', as: 'ongData', onDelete:'CASCADE' });
+Ong.belongsTo(User,{onDelete:'CASCADE'});
+
+Ong.hasMany(Animal, {  foreignKey: 'ongId', as: 'animalData', onDelete:'CASCADE'})
 Animal.belongsTo(Ong)
 
+
 // sequelize.sync({force:true});
-// sequelize.sync();
+//sequelize.sync();

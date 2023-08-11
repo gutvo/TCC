@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { Animal } from "../../models/animal";
 import path from "path";
 import fs from "fs";
-import { Ong } from "../../models/users/ongs";
 
 interface animalData {
   name: string;
@@ -20,7 +19,6 @@ interface animalData {
 const Create = async (req: Request, res: Response) => {
   try {
     const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
-
     const animal = await Animal.create({
       name,
       race,
@@ -30,9 +28,9 @@ const Create = async (req: Request, res: Response) => {
       description,
       birthday,
       image,
-      ongId,
+      ongId
     });
-
+    console.log(animal)
     if (image) {
       const imagePath = `pet${animal.id}.jpg`;
 
@@ -48,8 +46,8 @@ const Create = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "Animal Cadastrado com sucesso" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+
+    res.status(500).json({message: 'Erro no servidor'});
   }
 };
 

@@ -14,8 +14,8 @@ export const reducers = {
     reducer: (state: InitialState) => {
       state.loading = true
     },
-    prepare: (data: NewUserFormData) => {
-      return { payload: { data } }
+    prepare: (data: NewUserFormData, navigation: NavigateFunction) => {
+      return { payload: { data, navigation } }
     },
   },
   createUserSuccess: (state: InitialState) => {

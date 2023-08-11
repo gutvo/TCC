@@ -50,7 +50,7 @@ export function Login() {
           {...register('password', { required: true })}
         />
         <Button disabled={loading} variant="contained" type="submit" fullWidth>
-          Logar
+          {loading ? 'Logando...' : 'Logar'}
         </Button>
       </form>
     </Box>

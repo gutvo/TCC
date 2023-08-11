@@ -34,13 +34,11 @@ function* createAnimal({ payload }: createAction) {
   const { createAnimalSuccess, createtAnimalFailure } = actions
   const { data } = payload
 
-  console.log(data.image)
   try {
     const response: createAnimalDTO = yield api.post('/animal', {
       data,
     })
 
-    /*    const response: createAnimalDTO = yield call(addAnimal, data) */
     yield put(createAnimalSuccess())
     toast.success(response.data.message)
   } catch (error) {

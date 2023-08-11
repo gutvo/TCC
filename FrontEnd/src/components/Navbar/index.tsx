@@ -39,7 +39,6 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="menu"
             sx={{ marginRight: 2 }}
             onClick={toggleDrawer}
           >

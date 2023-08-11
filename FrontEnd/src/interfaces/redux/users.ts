@@ -72,6 +72,7 @@ export interface createAction {
   type: typeof actions.createUserRequest.type
   payload: {
     data: NewUserFormData
+    navigation: NavigateFunction
   }
 }
 

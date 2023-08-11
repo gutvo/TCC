@@ -2,15 +2,17 @@ import { Box, Button, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
-import { UserForm } from './form/index'
+import { UserForm } from './UserForm/index'
 import { NewUserFormData } from '@Interfaces/pages/users'
+import { useNavigate } from 'react-router-dom'
+import { OngForm } from './OngForm'
 
 export function SignIn() {
   const { createUserRequest } = actions
   const dispatch = useDispatch()
-
+  const navigation = useNavigate()
   function handleAddUser(data: NewUserFormData) {
-    dispatch(createUserRequest(data))
+    dispatch(createUserRequest(data, navigation))
   }
 
   const [isOng, setIsOng] = useState(false)
@@ -48,7 +50,11 @@ export function SignIn() {
           Organização
         </Button>
       </Box>
-      <UserForm handleAddUser={handleAddUser} isOng={isOng} />
+      {isOng ? (
+        <OngForm handleAddUser={handleAddUser} />
+      ) : (
+        <UserForm handleAddUser={handleAddUser} />
+      )}
     </Box>
   )
 }

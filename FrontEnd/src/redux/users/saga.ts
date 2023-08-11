@@ -19,6 +19,7 @@ import {
 function* create({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions
   const { email, password, name, ongData } = payload.data
+  const { navigation } = payload
 
   try {
     const user: createUserDTO = yield api.post('/user', {
@@ -30,10 +31,11 @@ function* create({ payload }: createAction) {
 
     yield put(createUserSuccess())
 
+    navigation('/login')
+
     toast.success(user.data.message)
   } catch (error) {
     yield put(createUserFailure())
-
     if (axios.isAxiosError(error) && error.response) {
       toast.error(error.response.data.message)
     }

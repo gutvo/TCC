@@ -22,4 +22,16 @@ export interface newAnimalFormData {
 }
 
 // -------------------------------------------
-// Create
+// Update
+
+export interface UpdateAnimalFormData {
+  name: string
+  race: string
+  color: string
+  sex: 'Macho' | 'Fêmea'
+  description: string
+  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
+  birthday: Date
+  image: boolean
+  imagesData: FileList
+}

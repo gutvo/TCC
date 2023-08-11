@@ -15,7 +15,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
     <Grid container spacing={6} justifyContent="center">
       {data.map((animal) => (
         <Grid item key={animal.id}>
-          <NavLink to={`/Animal/${animal.id}`}>
+          <NavLink to={`/Animal`} state={{ id: animal.id }}>
             <Card
               sx={{
                 width: '20rem',

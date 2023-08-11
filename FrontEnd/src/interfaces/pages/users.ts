@@ -61,9 +61,7 @@ export interface NewUserFormData {
   ongData: ongData | null
 }
 
-export interface UserFormProps {
+export interface CreateFormProps {
   handleAddUser: (data: NewUserFormData) => void
-  isOng: boolean
 }
-
 // -------------------------------------------

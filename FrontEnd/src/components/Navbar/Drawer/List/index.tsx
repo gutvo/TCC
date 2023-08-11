@@ -66,7 +66,7 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
                 <ListItem
                   paddinLeft
                   toggleDrawer={toggleDrawer}
-                  path="/animal"
+                  path="/animals"
                   label="Lista"
                 />
               </List>

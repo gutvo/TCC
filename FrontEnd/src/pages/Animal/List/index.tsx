@@ -13,7 +13,7 @@ export function ListAnimal() {
   )
   const { data } = useSelector((state: RootState) => state.users)
 
-  const [limit] = useState(4)
+  const [limit] = useState(9)
   const [offset, setOffset] = useState(0)
   const ongId = (data && data.ongData?.id) || null
   useEffect(() => {
@@ -57,7 +57,9 @@ export function ListAnimal() {
               />
             </Box>
           ) : (
-            <Typography>Nenhum animal foi encontrado</Typography>
+            <Typography color="error" variant="h3" textAlign="center">
+              Nenhum animal foi encontrado.
+            </Typography>
           )}
         </>
       )}
