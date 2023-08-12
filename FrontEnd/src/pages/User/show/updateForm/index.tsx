@@ -7,6 +7,8 @@ import { ProfileFormProps, ViaCepDTO } from '@Interfaces/pages/users'
 import { UserUpdate, updateUserFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
+import { useSelector } from 'react-redux'
+import { RootState } from '@Redux/store'
 
 export function ProfileForm({
   data,
@@ -22,6 +24,8 @@ export function ProfileForm({
   } = useForm<UserUpdate>({
     resolver: zodResolver(updateUserFormSchema),
   })
+
+  const loading = useSelector((state: RootState) => state.users.loading)
 
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
 
@@ -132,7 +136,7 @@ export function ProfileForm({
               color="success"
               type="submit"
             >
-              Salvar
+              {loading ? 'Salvando...' : 'Salvar'}
             </Button>
             <Button
               sx={{ width: '48%' }}

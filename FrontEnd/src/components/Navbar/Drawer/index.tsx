@@ -14,7 +14,12 @@ export function DrawerList({
 }: drawerListProps) {
   return (
     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-      <Box width="15rem">
+      <Box
+        width="15rem"
+        display="flex"
+        flexDirection="column"
+        minHeight="100vh"
+      >
         {data ? (
           <Box
             flex={1}
@@ -88,11 +93,10 @@ export function DrawerList({
             display: 'flex',
             alignItems: 'end',
             justifyContent: 'center',
-            height: '100%',
           }}
         >
           <Button
-            sx={{ width: '80%', marginBottom: '1rem' }}
+            sx={{ width: '80%', marginBottom: '1rem', alignItems: 'end' }}
             size="large"
             variant="contained"
             color="warning"

@@ -22,7 +22,7 @@ export function DefaultLayout() {
       <Container
         sx={{
           paddingY: '2rem',
-          minHeight: '100vh',
+          minHeight: '90vh',
           backgroundColor: choiceTheme.palette.background.default,
         }}
       >

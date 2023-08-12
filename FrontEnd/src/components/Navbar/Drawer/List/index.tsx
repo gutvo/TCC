@@ -52,7 +52,7 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
                 primary="Animal"
                 primaryTypographyProps={{ style: { fontSize: '1.35rem' } }}
               />
-              {openAnimalList ? <ExpandLess /> : <ExpandMore />}
+              {openAnimalList ? <ExpandMore /> : <ExpandLess />}
             </ListItemButton>
 
             <Collapse in={openAnimalList} timeout="auto" unmountOnExit>
@@ -75,7 +75,7 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
         ) : (
           <ListItem
             toggleDrawer={toggleDrawer}
-            path={'/animal'}
+            path={'/animals'}
             label={'Lista de Animais'}
           />
         )}

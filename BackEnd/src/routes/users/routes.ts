@@ -21,7 +21,7 @@ userRoutes
   .post(createUserValidation, encryptPassword, Create)
   .put(validateToken, updateUserValidation, Update)
   .delete(validateToken, deleteUserValidation, Delete)
-  .get(showUserValidation, validateToken, Show);
+  .get(validateToken, showUserValidation, Show);
 
 userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 

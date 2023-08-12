@@ -59,7 +59,7 @@ export interface FetchAction {
   payload: {
     offset: number
     limit: number
-    ongId: number
+    ongId: number | null
   }
 }
 

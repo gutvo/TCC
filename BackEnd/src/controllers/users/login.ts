@@ -24,9 +24,10 @@ const login = async (req: Request, res: Response) => {
     const encryptPassword = encrypt(password);
 
     const token = generateAccessToken(email, encryptPassword);
-
+    
+    const name =result.name.split(' ')[0]
     res.json({
-      message: "Usuario logado com sucesso",
+      message: `Bem vindo ${name}!`,
       data: result,
       token: token,
     });

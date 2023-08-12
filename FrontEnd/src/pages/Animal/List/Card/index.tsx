@@ -15,7 +15,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
     <Grid container spacing={6} justifyContent="center">
       {data.map((animal) => (
         <Grid item key={animal.id}>
-          <NavLink to={`/Animal`} state={{ id: animal.id }}>
+          <NavLink to={`/animal`} state={{ id: animal.id }}>
             <Card
               sx={{
                 width: '20rem',
@@ -38,7 +38,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
                   }
                   alt="Imagem do animal"
                 />
-                <CardContent sx={{ height: '100%' }}>
+                <CardContent sx={{ height: '10.375rem' }}>
                   <Typography
                     gutterBottom
                     variant="h6"

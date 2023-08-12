@@ -48,4 +48,4 @@ Animal.belongsTo(Ong)
 
 
 // sequelize.sync({force:true});
-//sequelize.sync();
+// sequelize.sync();

@@ -21,7 +21,7 @@ export function ShowUser() {
     <Box>
       {data ? (
         <Grid container gap={10}>
-          <Grid item textAlign="center" lg={4} xs={12} marginBottom={4}>
+          <Grid item lg={4} xs={12} marginBottom={4}>
             <img
               src={userNotFound}
               alt="Imagem do usuário"

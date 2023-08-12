@@ -15,7 +15,7 @@ export function ListAnimal() {
 
   const [limit] = useState(9)
   const [offset, setOffset] = useState(0)
-  const ongId = (data && data.ongData?.id) || null
+  const ongId = data?.ongData ? data.ongData?.id : null
   useEffect(() => {
     dispatch(listAnimalRequest(offset, limit, ongId))
   }, [dispatch, limit, offset, listAnimalRequest, ongId])

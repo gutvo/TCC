@@ -1,7 +1,7 @@
 import React, { forwardRef, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
-  CircularProgress,
+  // CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
@@ -59,17 +59,17 @@ export const TextFieldStyled = forwardRef<
           type={customType}
           {...rest}
           inputRef={ref}
-          InputProps={{
-            endAdornment: (
-              <>
-                {loading ? (
-                  <InputAdornment position="end">
-                    <CircularProgress />
-                  </InputAdornment>
-                ) : null}
-              </>
-            ),
-          }}
+          // InputProps={{
+          //   endAdornment: (
+          //     <>
+          //       {loading ? (
+          //         <InputAdornment position="end">
+          //           <CircularProgress />
+          //         </InputAdornment>
+          //       ) : null}
+          //     </>
+          //   ),
+          // }})
         />
       )}
     </>
