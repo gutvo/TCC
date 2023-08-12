@@ -1,17 +1,26 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { actions } from '@Redux/animals/slice'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { FormAnimal } from './UpdateForm'
-import { ArrowBack } from '@mui/icons-material'
+import { ArrowBack, Delete } from '@mui/icons-material'
+import { DeleteAnimalDialog } from './deleteDialog'
 
 export function ShowAnimal() {
   const { id } = useLocation().state
   const { showAnimalRequest } = actions
 
-  const { animalData } = useSelector((state: RootState) => state.animals)
+  const { animalData, loading } = useSelector(
+    (state: RootState) => state.animals,
+  )
+
+  const [dialogIsVisible, setDialogIsVisible] = useState(false)
+
+  function handleChangeVisibleDialog() {
+    setDialogIsVisible(!dialogIsVisible)
+  }
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -25,29 +34,52 @@ export function ShowAnimal() {
   }, [showAnimalRequest, dispatch, id, data])
   return (
     <Box>
-      <Button
-        onClick={() => {
-          navigate(-1)
-        }}
-      >
-        <ArrowBack fontSize="large" />
-      </Button>
       {animalData ? (
         <>
           {data?.ongData ? (
             <Box>
-              <Typography
-                sx={{ textAlign: 'center' }}
-                variant="h3"
-                fontWeight={'bold'}
+              {dialogIsVisible ? (
+                <DeleteAnimalDialog
+                  id={animalData.id}
+                  dialogIsVisible={dialogIsVisible}
+                  setDialogIsVisible={handleChangeVisibleDialog}
+                  name={animalData.name}
+                />
+              ) : null}
+              <Box
                 marginBottom={2}
+                display="flex"
+                width="100%"
+                justifyContent="space-between"
               >
-                Formulário de cadastro de animais
-              </Typography>
-              <FormAnimal animalData={animalData} />
+                <Button
+                  onClick={() => {
+                    navigate(-1)
+                  }}
+                >
+                  <ArrowBack fontSize="large" />
+                </Button>
+                <Button color="error" onClick={handleChangeVisibleDialog}>
+                  <Delete fontSize="large" />
+                </Button>
+              </Box>
+
+              <Box>
+                <FormAnimal loading={loading} animalData={animalData} />
+              </Box>
             </Box>
           ) : (
             <Box>
+              <Box>
+                <Button
+                  sx={{ marginBottom: 2 }}
+                  onClick={() => {
+                    navigate(-1)
+                  }}
+                >
+                  <ArrowBack fontSize="large" />
+                </Button>
+              </Box>
               <Typography variant="h3">Animal:</Typography>
               <Typography>{animalData.id}</Typography>
               <Typography>{animalData.name}</Typography>

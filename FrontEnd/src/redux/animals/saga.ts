@@ -8,9 +8,11 @@ import {
   FetchAction,
   createAction,
   showAction,
+  updateAnimalDTO,
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { deleteActions, updateAction } from '@Interfaces/redux/users'
 
 function* fetchAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions
@@ -32,7 +34,7 @@ function* fetchAnimals({ payload }: FetchAction) {
 
 function* createAnimal({ payload }: createAction) {
   const { createAnimalSuccess, createtAnimalFailure } = actions
-  const { data } = payload
+  const { data, navigation } = payload
 
   try {
     const response: createAnimalDTO = yield api.post('/animal', {
@@ -40,6 +42,7 @@ function* createAnimal({ payload }: createAction) {
     })
 
     yield put(createAnimalSuccess())
+    navigation('/animals')
     toast.success(response.data.message)
   } catch (error) {
     yield put(createtAnimalFailure())
@@ -59,8 +62,50 @@ function* showAnimal({ payload }: showAction) {
   }
 }
 
+function* updateAnimal({ payload }: updateAction) {
+  const { updateAnimalSuccess, updateAnimalFailure } = actions
+  const { data } = payload
+
+  try {
+    const response: updateAnimalDTO = yield api.put('/animal', {
+      data,
+    })
+
+    yield put(updateAnimalSuccess(response.data.data))
+    toast.success(response.data.message)
+  } catch (error) {
+    yield put(updateAnimalFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
+function* deleteAnimal({ payload }: deleteActions) {
+  const { deleteAnimalSuccess, deleteAnimalFailure } = actions
+  const { id, navigation } = payload
+  try {
+    const response: updateAnimalDTO = yield api.delete('/animal', {
+      params: { id },
+    })
+
+    yield put(deleteAnimalSuccess())
+
+    navigation('/animals')
+
+    toast.success(response.data.message)
+  } catch (error) {
+    yield put(deleteAnimalFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest('animals/listAnimalRequest', fetchAnimals),
   takeLatest('animals/createAnimalRequest', createAnimal),
   takeLatest('animals/showAnimalRequest', showAnimal),
+  takeLatest('animals/updateAnimalRequest', updateAnimal),
+  takeLatest('animals/deleteAnimalRequest', deleteAnimal),
 ])

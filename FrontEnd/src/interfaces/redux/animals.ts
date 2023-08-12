@@ -1,4 +1,5 @@
 import { actions } from '@Redux/animals/slice'
+import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
 
@@ -9,7 +10,7 @@ export interface PaginationProps {
 }
 
 export interface AnimalData {
-  id?: number
+  id: number
   name: string
   race: string
   color: string
@@ -51,6 +52,13 @@ export interface createAnimalDTO {
   }
 }
 
+export interface updateAnimalDTO {
+  data: {
+    data: AnimalData
+    message: string
+  }
+}
+
 // -------------------------------------------
 // actions
 
@@ -67,6 +75,7 @@ export interface createAction {
   type: typeof actions.createAnimalRequest.type
   payload: {
     data: AnimalData
+    navigation: NavigateFunction
   }
 }
 
@@ -75,5 +84,12 @@ export interface showAction {
   payload: {
     id: number
     ongId: number
+  }
+}
+
+export interface updateAction {
+  type: typeof actions.updateAnimalRequest.type
+  payload: {
+    data: AnimalData
   }
 }

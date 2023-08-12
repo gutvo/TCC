@@ -17,6 +17,7 @@ import { useEffect } from 'react'
 import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { CreateAnimal, newAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
+import { useNavigate } from 'react-router-dom'
 
 export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
@@ -31,10 +32,14 @@ export function CreateAnimalForm() {
   })
 
   const { data } = useSelector((state: RootState) => state.users)
+
   const dispatch = useDispatch()
+  const navigation = useNavigate()
+
   const imageBoolean = !!watch('imagesData')?.length
+
   function handleAddProduct(data: newAnimalFormData) {
-    dispatch(createAnimalRequest(data))
+    dispatch(createAnimalRequest(data, navigation))
   }
 
   useEffect(() => {
@@ -49,7 +54,11 @@ export function CreateAnimalForm() {
         Formulário de cadastro de animais
       </Typography>
       <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem',
+        }}
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >

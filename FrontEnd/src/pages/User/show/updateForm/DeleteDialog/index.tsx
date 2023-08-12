@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/users/slice'
 import { RootState } from '@Redux/store'
 import { useNavigate } from 'react-router-dom'
-import { DeleteDialogProps } from '@Interfaces/pages/users'
+import { DeleteUserDialogProps } from '@Interfaces/pages/users'
 
 export function DeleteDialog({
   dialogIsVisible,
   setDialogIsVisible,
-}: DeleteDialogProps) {
+}: DeleteUserDialogProps) {
   const { deleteUserRequest } = actions
   const dispatch = useDispatch()
   const navigation = useNavigate()

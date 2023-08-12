@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import path from "path";
 import { Animal } from "../../models/animal";
+import { message } from "../../dictionary";
 
 const showImageAnimal = async (req: Request, res: Response) => {
   try {
@@ -10,10 +11,10 @@ const showImageAnimal = async (req: Request, res: Response) => {
     if (!result) {
       return res
         .status(404)
-        .json({ message: "Não foi possível encontrado o animal" });
+        .json({ message: message.animalNotFound });
     }
     if (!result.image) {
-      return res.status(404).json({ message: "O animal não tem imagem" });
+      return res.status(404).json({ message: message.showAnimalImageNotFound });
     }
 
     const imagePath = path.join(
@@ -26,7 +27,7 @@ const showImageAnimal = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({message:message.serverError});
   }
 };
 

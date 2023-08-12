@@ -2,7 +2,7 @@ import zod, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
 
 const animalSchema = zod.object({
-  id: zod.number({required_error:'ID é obrigatório'}),
+  id: zod.string({required_error:'ID é obrigatório'}),
 });
 
 const deleteValidator = async (
@@ -11,7 +11,8 @@ const deleteValidator = async (
   next: NextFunction
 ) => {
   try {
-    await animalSchema.parseAsync(req.body);
+    
+    await animalSchema.parseAsync(req.query);
 
     return next();
   } catch (error) {

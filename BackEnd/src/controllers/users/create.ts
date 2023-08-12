@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../../models/users/user";
 import { Ong } from "../../models/users/ongs";
+import { message } from "../../dictionary";
 
 const Create = async (req: Request, res: Response) => {
   try {
@@ -39,10 +40,10 @@ const Create = async (req: Request, res: Response) => {
     }
       res
         .status(201)
-        .json({ message: `${ongData?'A organização':'O usuário'} foi cadastrado com sucesso`, data: result });
+        .json({ message: ongData?message.createOngSuccess:message.userNotFound, data: result });
   } catch (error) {
     console.log(error)
-    return res.status(500).json(error);
+    return res.status(500).json({message: message.serverError});
   }
 };
 

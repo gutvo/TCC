@@ -1,9 +1,11 @@
+import { newAnimalFormData } from '@Interfaces/pages/animals'
 import {
   AnimalData,
   InitialStateProps,
   PaginationProps,
 } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { NavigateFunction } from 'react-router-dom'
 
 export const reducers = {
   // List
@@ -43,8 +45,8 @@ export const reducers = {
     reducer: (state: InitialStateProps) => {
       state.loading = true
     },
-    prepare: (data: AnimalData) => {
-      return { payload: { data } }
+    prepare: (data: newAnimalFormData, navigation: NavigateFunction) => {
+      return { payload: { data, navigation } }
     },
   },
   createAnimalSuccess: (state: InitialStateProps) => {
@@ -76,6 +78,47 @@ export const reducers = {
     },
   },
   showAnimalFailure: (state: InitialStateProps) => {
+    state.loading = false
+  },
+
+  // Update
+  updateAnimalRequest: {
+    reducer: (state: InitialStateProps) => {
+      state.loading = true
+    },
+    prepare: (data: AnimalData) => {
+      return { payload: { data } }
+    },
+  },
+  updateAnimalSuccess: {
+    reducer: (
+      state: InitialStateProps,
+      action: PayloadAction<{ data: AnimalData }>,
+    ) => {
+      state.animalData = action.payload.data
+      state.loading = false
+    },
+    prepare: (data: AnimalData) => {
+      return { payload: { data } }
+    },
+  },
+  updateAnimalFailure: (state: InitialStateProps) => {
+    state.loading = false
+  },
+  // Delete
+  deleteAnimalRequest: {
+    reducer: (state: InitialStateProps) => {
+      state.loading = true
+    },
+    prepare: (id: number, navigation: NavigateFunction) => {
+      return { payload: { id, navigation } }
+    },
+  },
+  deleteAnimalSuccess: (state: InitialStateProps) => {
+    state.animalData = null
+    state.loading = false
+  },
+  deleteAnimalFailure: (state: InitialStateProps) => {
     state.loading = false
   },
 }

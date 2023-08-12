@@ -37,7 +37,7 @@ export interface ProfileFormProps {
 
 // Delete Dialog
 
-export interface DeleteDialogProps {
+export interface DeleteUserDialogProps {
   dialogIsVisible: boolean
   setDialogIsVisible: (choice: boolean) => void
 }

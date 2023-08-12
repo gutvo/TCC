@@ -7,7 +7,7 @@ export function Footer() {
     <Box
       bgcolor={theme.palette.primary.main}
       color="white"
-      height="5rem"
+      height="4rem"
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -21,13 +21,13 @@ export function Footer() {
               textDecoration: 'underline',
             },
           }}
-          variant="h6"
+          variant="subtitle1"
         >
           Dar feedback
         </Typography>
       </NavLink>
 
-      <Typography variant="h6">
+      <Typography variant="subtitle1">
         Site feito por{' '}
         <Box
           component={NavLink}

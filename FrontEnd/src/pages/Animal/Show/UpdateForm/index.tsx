@@ -19,10 +19,12 @@ import { AnimalData } from '@Interfaces/redux/animals'
 
 interface FormAnimalProps {
   animalData: AnimalData
+  loading: boolean
 }
 
-export function FormAnimal({ animalData }: FormAnimalProps) {
-  const { createAnimalRequest } = actions
+export function FormAnimal({ animalData, loading }: FormAnimalProps) {
+  const { updateAnimalRequest } = actions
+
   const {
     handleSubmit,
     register,
@@ -45,16 +47,25 @@ export function FormAnimal({ animalData }: FormAnimalProps) {
   const dispatch = useDispatch()
 
   const imageBoolean = !!watch('imagesData')?.length
-  function handleAddProduct(data: UpdateAnimalFormData) {
-    dispatch(createAnimalRequest(data))
+
+  function handleUpdateProduct(data: UpdateAnimalFormData) {
+    dispatch(updateAnimalRequest(data))
   }
 
   return (
     <form
-      style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.5rem',
+      }}
       encType="multipart/form-data"
-      onSubmit={handleSubmit(handleAddProduct)}
+      onSubmit={handleSubmit(handleUpdateProduct)}
     >
+      <input
+        style={{ display: 'none' }}
+        {...register('id', { required: true, value: animalData.id })}
+      />
       <input
         type="checkbox"
         style={{ display: 'none' }}
@@ -150,8 +161,14 @@ export function FormAnimal({ animalData }: FormAnimalProps) {
         customType="file"
         {...register('imagesData')}
       />
-      <Button variant="contained" color="success" type="submit" fullWidth>
-        Cadastrar Animal
+      <Button
+        disabled={loading}
+        variant="contained"
+        color="primary"
+        type="submit"
+        fullWidth
+      >
+        {loading ? 'Atualizando...' : 'Atualizar'}
       </Button>
     </form>
   )

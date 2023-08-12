@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Animal } from "../../models/animal";
 import path from "path";
 import fs from "fs";
+import { message } from "../../dictionary";
 
 interface animalData {
   name: string;
@@ -30,7 +31,6 @@ const Create = async (req: Request, res: Response) => {
       image,
       ongId
     });
-    console.log(animal)
     if (image) {
       const imagePath = `pet${animal.id}.jpg`;
 
@@ -44,10 +44,10 @@ const Create = async (req: Request, res: Response) => {
       fs.writeFileSync(destinationPath, imageBuffer);
     }
 
-    res.status(201).json({ message: "Animal Cadastrado com sucesso" });
+    res.status(201).json({ message: message.createAnimalSuccess});
   } catch (error) {
 
-    res.status(500).json({message: 'Erro no servidor'});
+    res.status(500).json({message: message.serverError});
   }
 };
 

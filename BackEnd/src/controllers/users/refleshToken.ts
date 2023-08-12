@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../../models/users/user";
 import { generateAccessToken } from "../../functions";
+import { message } from "../../dictionary";
 
 const refleshToken = async (req: Request, res: Response) => {
   try {
@@ -21,7 +22,7 @@ const refleshToken = async (req: Request, res: Response) => {
       token: token,
     });
   } catch (error) {
-    res.status(500).json({ message: "Erro no servidor" });
+    res.status(500).json({ message: message.serverError });
   }
 };
 

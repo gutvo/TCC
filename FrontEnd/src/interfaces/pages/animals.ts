@@ -35,3 +35,14 @@ export interface UpdateAnimalFormData {
   image: boolean
   imagesData: FileList
 }
+
+// -------------------------------------------
+
+// Delete Dialog
+
+export interface DeleteAnimalDialogProps {
+  dialogIsVisible: boolean
+  setDialogIsVisible: () => void
+  name: string
+  id: number
+}

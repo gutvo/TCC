@@ -103,7 +103,6 @@ export interface deleteActions {
   type: typeof actions.deleteUserRequest.type
   payload: {
     id: number
-    email: string
     navigation: NavigateFunction
   }
 }

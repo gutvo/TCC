@@ -2,21 +2,22 @@ import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import { Animal } from "../../models/animal";
+import { message } from "../../dictionary";
 
 const Delete = async (req: Request, res: Response) => {
   try {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const result = await Animal.findOne({
       where: { id },
     });
 
     if (!result) {
-      return res.status(404).json({ message: "Animal não encontrado" });
+      return res.status(404).json({ message: message.animalNotFound});
     }
 
     if (result.image) {
-      const imagePath = `pet${req.body.id}.jpg`;
+      const imagePath = `pet${id}.jpg`;
       const destinationPath = path.join(
         __dirname,
         `../../images/animals/${imagePath}`
@@ -28,9 +29,9 @@ const Delete = async (req: Request, res: Response) => {
       });
     }
     result.destroy();
-    return res.json("O animal foi deletado com sucesso!");
+    return res.json({message: message.deleteAnimalSuccess});
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({message: message.serverError});
   }
 };
 

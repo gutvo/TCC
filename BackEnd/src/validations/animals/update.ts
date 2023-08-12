@@ -21,7 +21,15 @@ const animalSchema = zod.object({
     zod.literal("Gato"),
     zod.literal("Outros"),
   ]),
-  birthday: zod.date(),
+  birthday: zod.string().refine(
+    (value) => {
+      return !isNaN(new Date(value).getTime());
+    },
+    {
+      message: "Data incorreta",
+      path: ["birthday"],
+    }
+  ),
   // imagesData: zod.union([zod.instanceof(FileList), zod.string()]).nullable(),
   image: zod.boolean().refine((value) => typeof value === "boolean", {
     message: "O campo image deve ser um valor booleano",
@@ -35,7 +43,7 @@ const updateValidation = async (
   next: NextFunction
 ) => {
   try {
-    await animalSchema.parseAsync(req.body);
+    await animalSchema.parseAsync(req.body.data);
 
     return next();
   } catch (error) {
