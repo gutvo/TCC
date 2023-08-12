@@ -33,13 +33,17 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
         }}
       >
         <ListItem toggleDrawer={toggleDrawer} path="/" label="Home" />
-        <ListItem
-          toggleDrawer={toggleDrawer}
-          path="/ongs"
-          label="Organizações"
-        />
+
         {data ? (
           <ListItem toggleDrawer={toggleDrawer} path="/chat" label="Chat" />
+        ) : null}
+
+        {!data?.ongData ? (
+          <ListItem
+            toggleDrawer={toggleDrawer}
+            path="/ongs"
+            label="Organizações"
+          />
         ) : null}
         {isLogged && data?.ongData ? (
           <>
@@ -75,8 +79,8 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
         ) : (
           <ListItem
             toggleDrawer={toggleDrawer}
-            path={'/animals'}
-            label={'Lista de Animais'}
+            path="/animals"
+            label="Lista de Animais"
           />
         )}
       </List>

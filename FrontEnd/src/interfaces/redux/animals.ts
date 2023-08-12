@@ -1,6 +1,7 @@
+import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { actions } from '@Redux/animals/slice'
 import { NavigateFunction } from 'react-router-dom'
-
+import { UseFormReset } from 'react-hook-form'
 // Reducers
 
 export interface PaginationProps {
@@ -74,8 +75,8 @@ export interface FetchAction {
 export interface createAction {
   type: typeof actions.createAnimalRequest.type
   payload: {
-    data: AnimalData
-    navigation: NavigateFunction
+    data: newAnimalFormData
+    reset: UseFormReset<newAnimalFormData>
   }
 }
 
@@ -84,6 +85,14 @@ export interface showAction {
   payload: {
     id: number
     ongId: number
+  }
+}
+
+export interface deleteActions {
+  type: typeof actions.deleteAnimalRequest.type
+  payload: {
+    email: number
+    navigation: NavigateFunction
   }
 }
 

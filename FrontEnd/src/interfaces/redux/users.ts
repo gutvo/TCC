@@ -4,6 +4,14 @@ import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
 
+interface userOngData {
+  id: number
+  name: string
+  email: string
+  password: string
+  userData: { name: string; email: string }
+}
+
 export interface ongData {
   id: number
   road: string
@@ -33,6 +41,7 @@ export interface loginProps {
 export interface InitialState {
   loading: boolean
   data: UserData | null
+  ongList: userOngData[]
   isLogged: boolean
 }
 
@@ -63,6 +72,19 @@ export interface updateUserDTO {
 
 export interface deleteDTO {
   data: { message: string }
+}
+
+export interface OngDataDTO {
+  data: userOngData
+}
+
+export interface listOngDTO {
+  data: {
+    data: {
+      rows: userOngData[]
+      count: number
+    }
+  }
 }
 
 // -------------------------------------------
@@ -103,6 +125,15 @@ export interface deleteActions {
   type: typeof actions.deleteUserRequest.type
   payload: {
     id: number
+    email: number
     navigation: NavigateFunction
+  }
+}
+
+export interface listOngActions {
+  type: typeof actions.listOngRequest.type
+  payload: {
+    offset: number
+    limit: number
   }
 }

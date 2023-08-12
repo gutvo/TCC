@@ -7,6 +7,7 @@ const isLogged = !!localStorage.getItem('user')
 const initialState: InitialState = {
   loading: false,
   data: null,
+  ongList: [],
   isLogged,
 }
 

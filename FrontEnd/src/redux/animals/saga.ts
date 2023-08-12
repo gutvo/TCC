@@ -34,7 +34,7 @@ function* fetchAnimals({ payload }: FetchAction) {
 
 function* createAnimal({ payload }: createAction) {
   const { createAnimalSuccess, createtAnimalFailure } = actions
-  const { data, navigation } = payload
+  const { data, reset } = payload
 
   try {
     const response: createAnimalDTO = yield api.post('/animal', {
@@ -42,7 +42,7 @@ function* createAnimal({ payload }: createAction) {
     })
 
     yield put(createAnimalSuccess())
-    navigation('/animals')
+    reset()
     toast.success(response.data.message)
   } catch (error) {
     yield put(createtAnimalFailure())
@@ -103,9 +103,9 @@ function* deleteAnimal({ payload }: deleteActions) {
 }
 
 export default all([
-  takeLatest('animals/listAnimalRequest', fetchAnimals),
-  takeLatest('animals/createAnimalRequest', createAnimal),
-  takeLatest('animals/showAnimalRequest', showAnimal),
-  takeLatest('animals/updateAnimalRequest', updateAnimal),
-  takeLatest('animals/deleteAnimalRequest', deleteAnimal),
+  takeLatest(actions.listAnimalRequest.type, fetchAnimals),
+  takeLatest(actions.createAnimalRequest.type, createAnimal),
+  takeLatest(actions.showAnimalRequest.type, showAnimal),
+  takeLatest(actions.updateAnimalRequest.type, updateAnimal),
+  takeLatest(actions.deleteAnimalRequest.type, deleteAnimal),
 ])

@@ -10,7 +10,7 @@ import {
 
 import { FieldError } from 'react-hook-form'
 
-interface TextFieldPasswordProps extends Omit<TextFieldProps, 'type'> {
+export interface StyledTextFieldProps extends Omit<TextFieldProps, 'type'> {
   errors: FieldError | undefined
   isPassword?: boolean
   customType?: React.InputHTMLAttributes<HTMLInputElement>['type']
@@ -19,7 +19,7 @@ interface TextFieldPasswordProps extends Omit<TextFieldProps, 'type'> {
 
 export const TextFieldStyled = forwardRef<
   HTMLInputElement,
-  TextFieldPasswordProps
+  StyledTextFieldProps
 >(function TextFieldPassword(
   { errors, isPassword, customType = 'text', loading, ...rest },
   ref,

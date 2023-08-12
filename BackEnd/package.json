@@ -24,7 +24,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.1.0",
     "@types/bcrypt": "^5.0.0",

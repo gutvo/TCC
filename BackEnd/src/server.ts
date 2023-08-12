@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import path from "path";
 import MainRoutes from "./routes/index";
 import cors from "cors";
-
 dotenv.config();
 
 const server = express();

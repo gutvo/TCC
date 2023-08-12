@@ -1,5 +1,4 @@
 import { Router } from "express";
-import upload from "../../multer/config";
 import showImageAnimal from "../../controllers/animals/showImage";
 import listAnimal from "../../controllers/animals/list";
 import Create from "../../controllers/animals/create";
@@ -16,7 +15,7 @@ const animalRoutes = Router();
 animalRoutes
   .route("/animal")
   .get(listAnimal)
-  .post(validateToken, createValidation, upload.single("imagesData"), Create)
+  .post(validateToken, createValidation, Create)
   .delete(validateToken, deleteValidator, Delete)
   .put(validateToken, updateValidation, Update);
 

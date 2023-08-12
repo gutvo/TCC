@@ -1,9 +1,9 @@
-import { HomeContainer } from './styles'
+import { Box } from '@mui/material'
 
 export function Home() {
   return (
-    <HomeContainer className="container">
+    <Box>
       <h1>Página Home</h1>
-    </HomeContainer>
+    </Box>
   )
 }

@@ -6,6 +6,7 @@ import {
 } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { NavigateFunction } from 'react-router-dom'
+import { UseFormReset } from 'react-hook-form'
 
 export const reducers = {
   // List
@@ -45,8 +46,11 @@ export const reducers = {
     reducer: (state: InitialStateProps) => {
       state.loading = true
     },
-    prepare: (data: newAnimalFormData, navigation: NavigateFunction) => {
-      return { payload: { data, navigation } }
+    prepare: (
+      data: newAnimalFormData,
+      reset: UseFormReset<newAnimalFormData>,
+    ) => {
+      return { payload: { data, reset } }
     },
   },
   createAnimalSuccess: (state: InitialStateProps) => {

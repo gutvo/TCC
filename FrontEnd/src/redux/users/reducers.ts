@@ -2,6 +2,7 @@ import { NewUserFormData, ProfileFormData } from '@Interfaces/pages/users'
 import {
   InitialState,
   UserData,
+  listOngDTO,
   loginData,
   loginProps,
 } from '@Interfaces/redux/users'
@@ -119,6 +120,31 @@ export const reducers = {
   },
 
   deleteUserFailure: (state: InitialState) => {
+    state.loading = false
+  },
+  // List Ongs
+  listOngRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (offset: number, limit: number) => {
+      return { payload: { offset, limit } }
+    },
+  },
+  listOngSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{ data: listOngDTO }>,
+    ) => {
+      state.ongList = action.payload.data.data.data.rows
+      state.loading = false
+    },
+    prepare: (data: listOngDTO) => {
+      return { payload: { data } }
+    },
+  },
+
+  listOngFailure: (state: InitialState) => {
     state.loading = false
   },
 }

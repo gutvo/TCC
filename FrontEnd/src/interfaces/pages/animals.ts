@@ -18,13 +18,14 @@ export interface newAnimalFormData {
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   birthday: Date
   image: boolean
-  imagesData: FileList
+  imageData: FileList
 }
 
 // -------------------------------------------
 // Update
 
 export interface UpdateAnimalFormData {
+  id: number
   name: string
   race: string
   color: string
@@ -33,7 +34,7 @@ export interface UpdateAnimalFormData {
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   birthday: Date
   image: boolean
-  imagesData: FileList
+  imageData: File
 }
 
 // -------------------------------------------

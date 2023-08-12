@@ -17,7 +17,6 @@ import { useEffect } from 'react'
 import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { CreateAnimal, newAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
-import { useNavigate } from 'react-router-dom'
 
 export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
@@ -25,6 +24,7 @@ export function CreateAnimalForm() {
     handleSubmit,
     register,
     setValue,
+    reset,
     formState: { errors },
     watch,
   } = useForm<CreateAnimal>({
@@ -34,25 +34,28 @@ export function CreateAnimalForm() {
   const { data } = useSelector((state: RootState) => state.users)
 
   const dispatch = useDispatch()
-  const navigation = useNavigate()
 
-  const imageBoolean = !!watch('imagesData')?.length
+  const imageBoolean = !!watch('imageData')?.length
 
   function handleAddProduct(data: newAnimalFormData) {
-    dispatch(createAnimalRequest(data, navigation))
+    dispatch(createAnimalRequest(data, reset))
   }
 
   useEffect(() => {
     if (data) {
       setValue('ongId', data.id)
     }
-  }, [setValue, data])
+    if (imageBoolean) {
+      setValue('image', imageBoolean)
+    }
+  }, [setValue, data, imageBoolean])
 
   return (
-    <Box>
-      <Typography sx={{ textAlign: 'center' }} variant="h3" fontWeight={'bold'}>
+    <>
+      <Typography sx={{ textAlign: 'center' }} variant="h4" fontWeight={'bold'}>
         Formulário de cadastro de animais
       </Typography>
+
       <form
         style={{
           display: 'flex',
@@ -63,19 +66,10 @@ export function CreateAnimalForm() {
         onSubmit={handleSubmit(handleAddProduct)}
       >
         <input
-          type="number"
-          style={{ display: 'none' }}
-          {...register('ongId', {
-            required: true,
-            valueAsNumber: true,
-          })}
-        />
-        <input
           type="checkbox"
           style={{ display: 'none' }}
           {...register('image', {
             required: true,
-            value: Boolean(imageBoolean === true),
           })}
         />
 
@@ -163,12 +157,15 @@ export function CreateAnimalForm() {
           errors={errors.description}
           label="Imagem"
           customType="file"
-          {...register('imagesData')}
+          {...register('imageData')}
+          size="medium"
+          inputProps={{ accept: 'image/*' }}
         />
+
         <Button variant="contained" color="success" type="submit" fullWidth>
           Cadastrar Animal
         </Button>
       </form>
-    </Box>
+    </>
   )
 }

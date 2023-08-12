@@ -14,7 +14,7 @@ export const newAnimalFormSchema = zod.object({
     zod.literal('Outros'),
   ]),
   birthday: zod.date(),
-  imagesData: zod.instanceof(FileList),
+  imageData: zod.instanceof(FileList),
   image: zod.boolean(),
 })
 

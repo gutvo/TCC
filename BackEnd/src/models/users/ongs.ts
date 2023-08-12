@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../migrations/mysql";
 
-interface OngData extends Model {
+export interface OngData extends Model {
     id:number
     road: string;
     neighborhood: string;
@@ -11,7 +11,7 @@ interface OngData extends Model {
 
 }
 
-export const Ong = sequelize.define<OngData>('ong', {
+export const Ong = sequelize.define<OngData>('ongData', {
       id: {
         primaryKey: true,
         type: DataTypes.INTEGER,

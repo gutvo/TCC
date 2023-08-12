@@ -13,6 +13,7 @@ import Show from "../../controllers/users/show";
 import refleshToken from "../../controllers/users/refleshToken";
 import refleshTokenValidation from "../../validations/users/create";
 import showUserValidation from "../../validations/users/show";
+import listOng from "../../controllers/ongs/list";
 
 const userRoutes = Router();
 
@@ -22,6 +23,8 @@ userRoutes
   .put(validateToken, updateUserValidation, Update)
   .delete(validateToken, deleteUserValidation, Delete)
   .get(validateToken, showUserValidation, Show);
+
+  userRoutes.get('/ong',listOng)
 
 userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 

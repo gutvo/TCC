@@ -8,6 +8,8 @@ import {
   createUserDTO,
   deleteActions,
   deleteDTO,
+  listOngActions,
+  listOngDTO,
   loginAction,
   loginDTO,
   showAction,
@@ -16,7 +18,7 @@ import {
   updateUserDTO,
 } from '@Interfaces/redux/users'
 
-function* create({ payload }: createAction) {
+function* createUser({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions
   const { email, password, name, ongData } = payload.data
   const { navigation } = payload
@@ -42,7 +44,7 @@ function* create({ payload }: createAction) {
   }
 }
 
-function* update({ payload }: updateAction) {
+function* updateUser({ payload }: updateAction) {
   const { updateUserSuccess, updateUserFailure } = actions
   const { setEditable } = payload
   const { email, name, ongData } = payload.data
@@ -65,7 +67,7 @@ function* update({ payload }: updateAction) {
   }
 }
 
-function* show({ payload }: showAction) {
+function* showUser({ payload }: showAction) {
   const { showUserSuccess, showUserFailure, logout } = actions
   const { email } = payload
   try {
@@ -87,7 +89,7 @@ function* show({ payload }: showAction) {
   }
 }
 
-function* login({ payload }: loginAction) {
+function* loginUser({ payload }: loginAction) {
   const { loginFailure, loginSuccess } = actions
   const { navigation } = payload
   const { email, password } = payload.data
@@ -110,6 +112,7 @@ function* login({ payload }: loginAction) {
     navigation('/')
     toast.success(user.data.message)
   } catch (error) {
+    console.log(error)
     yield put(loginFailure())
     if (axios.isAxiosError(error) && error.response) {
       toast.error(error.response.data.message)
@@ -117,7 +120,7 @@ function* login({ payload }: loginAction) {
   }
 }
 
-function* exclude({ payload }: deleteActions) {
+function* deleteUser({ payload }: deleteActions) {
   const { deleteUserFailure, deleteUserSuccess, logout } = actions
   const { email, id, navigation } = payload
   try {
@@ -138,11 +141,27 @@ function* exclude({ payload }: deleteActions) {
     }
   }
 }
+function* listOng({ payload }: listOngActions) {
+  const { listOngFailure, listOngSuccess } = actions
+  const { offset, limit } = payload
+  try {
+    const list: listOngDTO = yield api.get('/ong', {
+      params: { offset, limit },
+    })
+    yield put(listOngSuccess(list))
+  } catch (error) {
+    yield put(listOngFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
 
 export default all([
-  takeLatest('users/createUserRequest', create),
-  takeLatest('users/updateUserRequest', update),
-  takeLatest('users/loginRequest', login),
-  takeLatest('users/showUserRequest', show),
-  takeLatest('users/deleteUserRequest', exclude),
+  takeLatest(actions.createUserRequest.type, createUser),
+  takeLatest(actions.updateUserRequest.type, updateUser),
+  takeLatest(actions.loginRequest.type, loginUser),
+  takeLatest(actions.showUserRequest.type, showUser),
+  takeLatest(actions.deleteUserRequest.type, deleteUser),
+  takeLatest(actions.listOngRequest.type, listOng),
 ])

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { User } from "../../models/users/user";
-import { Ong } from "../../models/users/ongs";
 import { message } from "../../dictionary";
 
 const Create = async (req: Request, res: Response) => {
@@ -28,9 +27,7 @@ const Create = async (req: Request, res: Response) => {
       }, {
         include: [{ association: User.associations.ongData }]
       });
-      const ong = await Ong.findOne({where:{userId:result.id}})
-      result.ongId = ong?.id||null
-      result.save();
+
     } else {
       result = await User.create({
         email,

@@ -20,6 +20,7 @@ interface animalData {
 const Create = async (req: Request, res: Response) => {
   try {
     const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
+
     const animal = await Animal.create({
       name,
       race,
