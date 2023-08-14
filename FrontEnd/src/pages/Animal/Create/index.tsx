@@ -17,6 +17,7 @@ import { useEffect } from 'react'
 import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { CreateAnimal, newAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
+import { DropZone } from '@Components/DropZone'
 
 export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
@@ -65,6 +66,7 @@ export function CreateAnimalForm() {
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >
+        <DropZone />
         <input
           type="checkbox"
           style={{ display: 'none' }}
