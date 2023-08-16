@@ -11,7 +11,7 @@ import {
 import { FieldError } from 'react-hook-form'
 
 export interface StyledTextFieldProps extends Omit<TextFieldProps, 'type'> {
-  errors: FieldError | undefined
+  errors?: FieldError
   isPassword?: boolean
   customType?: React.InputHTMLAttributes<HTMLInputElement>['type']
   loading?: boolean

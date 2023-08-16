@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   Typography,
   Box,
@@ -13,11 +14,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
 import { RootState } from '@Redux/store'
-import { useEffect } from 'react'
+
 import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { CreateAnimal, newAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
-import { DropZone } from '@Components/DropZone'
+import { TextFieldImage } from '@Components/TextFieldImage'
 
 export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
@@ -25,18 +26,19 @@ export function CreateAnimalForm() {
     handleSubmit,
     register,
     setValue,
+    getValues,
     reset,
     formState: { errors },
-    watch,
   } = useForm<CreateAnimal>({
     resolver: zodResolver(newAnimalFormSchema),
   })
 
   const { data } = useSelector((state: RootState) => state.users)
+  const [haveImage, setHaveImage] = useState(false)
 
   const dispatch = useDispatch()
 
-  const imageBoolean = !!watch('imageData')?.length
+  const ongID = getValues('ongId')
 
   function handleAddProduct(data: newAnimalFormData) {
     dispatch(createAnimalRequest(data, reset))
@@ -46,10 +48,10 @@ export function CreateAnimalForm() {
     if (data) {
       setValue('ongId', data.id)
     }
-    if (imageBoolean) {
-      setValue('image', imageBoolean)
+    if (haveImage) {
+      setValue('image', haveImage)
     }
-  }, [setValue, data, imageBoolean])
+  }, [setValue, data, haveImage, ongID])
 
   return (
     <>
@@ -66,7 +68,14 @@ export function CreateAnimalForm() {
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >
-        <DropZone />
+        <Box alignItems="center">
+          <TextFieldImage
+            register={register}
+            name="imageData"
+            setHaveImage={setHaveImage}
+          />
+        </Box>
+
         <input
           type="checkbox"
           style={{ display: 'none' }}
@@ -153,15 +162,6 @@ export function CreateAnimalForm() {
           label="Data de Nascimento"
           fullWidth
           {...register('birthday', { required: true, valueAsDate: true })}
-        />
-
-        <TextFieldStyled
-          errors={errors.description}
-          label="Imagem"
-          customType="file"
-          {...register('imageData')}
-          size="medium"
-          inputProps={{ accept: 'image/*' }}
         />
 
         <Button variant="contained" color="success" type="submit" fullWidth>

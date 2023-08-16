@@ -20,6 +20,7 @@ export interface AnimalData {
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   birthday: Date
   image: boolean | string
+  imageData: File | null
 }
 
 export interface InitialStateProps {

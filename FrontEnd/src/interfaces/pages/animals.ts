@@ -34,7 +34,7 @@ export interface UpdateAnimalFormData {
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   birthday: Date
   image: boolean
-  imageData: File
+  imageData: FileList
 }
 
 // -------------------------------------------

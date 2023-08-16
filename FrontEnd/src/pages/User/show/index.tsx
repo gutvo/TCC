@@ -25,7 +25,7 @@ export function ShowUser() {
             <img
               src={userNotFound}
               alt="Imagem do usuário"
-              style={{ width: '100%' }}
+              style={{ width: '20rem', height: '20rem' }}
             />
           </Grid>
 
