@@ -18,9 +18,10 @@ export function CardAnimal({ data }: CardAnimalProps) {
           <NavLink to={`/animal`} state={{ id: animal.id }}>
             <Card
               sx={{
-                width: '20rem',
-                height: '26rem',
-                borderRadius: 3,
+                width: '14rem',
+                height: '22rem',
+                borderRadius: 1,
+                margin: 'auto',
                 ':hover': {
                   transform: 'scale(1.06)',
                   transition: '400ms',
@@ -30,7 +31,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  height={'250'}
+                  height="186"
                   src={
                     animal.image
                       ? `data:image/jpeg;base64,${animal.image}`
@@ -38,25 +39,20 @@ export function CardAnimal({ data }: CardAnimalProps) {
                   }
                   alt="Imagem do animal"
                 />
-                <CardContent sx={{ height: '10.375rem' }}>
+                <CardContent sx={{ height: '10.375rem', overflow: 'hidden' }}>
                   <Typography
                     gutterBottom
-                    variant="h6"
+                    variant="subtitle1"
                     fontWeight="bold"
                     component="div"
                   >
                     {animal.name}
                   </Typography>
-
-                  <Typography color="text.secondary">
-                    Tipo: {animal.type}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Raça: {animal.race}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    Sexo: {animal.sex}
-                  </Typography>
+                  {animal.description ? (
+                    <Typography>{animal.description}</Typography>
+                  ) : (
+                    <Typography color="red">Sem descrição</Typography>
+                  )}
                 </CardContent>
               </CardActionArea>
             </Card>

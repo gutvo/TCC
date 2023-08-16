@@ -3,6 +3,7 @@ import * as zod from 'zod'
 export const newAnimalFormSchema = zod.object({
   ongId: zod.number(),
   name: zod.string().min(2, 'O nome é obrigatório'),
+  // .max(24, 'Não pode passar de 24 caracteres'),
   race: zod.string().min(2, 'A raça é obrigatório'),
   color: zod.string().min(2, 'A color é obrigatório'),
   sex: zod.union([zod.literal('Macho'), zod.literal('Fêmea')]),
