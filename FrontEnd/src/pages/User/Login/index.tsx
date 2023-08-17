@@ -1,4 +1,4 @@
-import { Typography, Box, Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -8,6 +8,7 @@ import { RootState } from '@Redux/store'
 import { loginFormData } from '@Interfaces/pages/users'
 import { LoginUser, loginFormDataSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
+import { Helmet } from 'react-helmet-async'
 
 export function Login() {
   const { loading } = useSelector((state: RootState) => state.users)
@@ -26,9 +27,11 @@ export function Login() {
 
   return (
     <Box>
-      <Typography textAlign="center" variant="h3">
+      <Helmet title="Login" />
+
+      {/* <Typography textAlign="center" variant="h3">
         Login
-      </Typography>
+      </Typography> */}
       <form
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         onSubmit={handleSubmit(handleLogin)}

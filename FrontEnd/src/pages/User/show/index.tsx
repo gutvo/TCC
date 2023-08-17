@@ -6,6 +6,7 @@ import { ProfileForm } from './updateForm'
 import { actions } from '@Redux/users/slice'
 import { useState } from 'react'
 import { ProfileFormData } from '@Interfaces/pages/users'
+import { Helmet } from 'react-helmet-async'
 
 export function ShowUser() {
   const { updateUserRequest } = actions
@@ -19,6 +20,8 @@ export function ShowUser() {
   }
   return (
     <Box>
+      <Helmet title="Perfil" />
+
       {data ? (
         <Grid container gap={10}>
           <Grid item lg={4} xs={12} marginBottom={4}>

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
@@ -6,6 +6,7 @@ import { UserForm } from './UserForm/index'
 import { NewUserFormData } from '@Interfaces/pages/users'
 import { useNavigate } from 'react-router-dom'
 import { OngForm } from './OngForm'
+import { Helmet } from 'react-helmet-async'
 
 export function SignIn() {
   const { createUserRequest } = actions
@@ -18,9 +19,11 @@ export function SignIn() {
   const [isOng, setIsOng] = useState(false)
   return (
     <Box>
-      <Typography variant="h3" textAlign="center">
+      <Helmet title="Cadastro de Conta" />
+
+      {/* <Typography variant="h3" textAlign="center">
         Cadastro de {isOng ? 'Organização' : 'Usuário'}
-      </Typography>
+      </Typography> */}
       <Box
         display="flex"
         flexDirection="row"

@@ -3,6 +3,7 @@ import { RootState } from '@Redux/store'
 import { Box, Typography, CircularProgress } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/users/slice'
+import { Helmet } from 'react-helmet-async'
 
 export function Ong() {
   const dispatch = useDispatch()
@@ -15,6 +16,8 @@ export function Ong() {
 
   return (
     <Box>
+      <Helmet title="Lista das Organizações" />
+
       {loading ? (
         <Box>
           <CircularProgress />

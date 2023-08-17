@@ -7,6 +7,7 @@ import { RootState } from '@Redux/store'
 import { FormAnimal } from './UpdateForm'
 import { ArrowBack, Delete } from '@mui/icons-material'
 import { DeleteAnimalDialog } from './deleteDialog'
+import { Helmet } from 'react-helmet-async'
 
 export function ShowAnimal() {
   const { id } = useLocation().state
@@ -34,6 +35,8 @@ export function ShowAnimal() {
   }, [showAnimalRequest, dispatch, id, data])
   return (
     <Box>
+      <Helmet title={`Pet ` + animalData?.name} />
+
       {animalData ? (
         <>
           {data?.ongData ? (

@@ -7,6 +7,7 @@ import { RootState } from '@Redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
 import { NavbarProps } from '@Interfaces/components/Navbar'
+import { DictionaryPaths } from './DictionaryPaths'
 
 export function Navbar({ handleThemeChange, theme }: NavbarProps) {
   const dispatch = useDispatch()
@@ -34,7 +35,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
   }, [isLogged, showUserRequest, email, dispatch, flag])
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ fontSize: '5rem' }}>
+      <AppBar position="static" sx={{ fontSize: '5rem' }} elevation={0}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -44,6 +45,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
           >
             <Menu sx={{ width: '2rem', height: '2rem' }} />
           </IconButton>
+          <DictionaryPaths />
           <Box
             display="flex"
             justifyContent="flex-end"

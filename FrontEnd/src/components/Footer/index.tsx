@@ -16,7 +16,7 @@ export function Footer() {
       <NavLink to="">
         <Typography
           sx={{
-            color: '#fff200',
+            color: '#ffff00',
             ':hover': {
               textDecoration: 'underline',
             },
@@ -35,7 +35,7 @@ export function Footer() {
           to="https://github.com/gutvo"
           rel="noreferrer"
           sx={{
-            color: '#fff200',
+            color: '#ffff00',
             ':hover': {
               textDecoration: 'underline',
             },

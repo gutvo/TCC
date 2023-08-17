@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import {
-  Typography,
   Box,
   TextField,
   Button,
@@ -19,6 +18,7 @@ import { newAnimalFormData } from '@Interfaces/pages/animals'
 import { CreateAnimal, newAnimalFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { TextFieldImage } from '@Components/TextFieldImage'
+import { Helmet } from 'react-helmet-async'
 
 export function CreateAnimalForm() {
   const { createAnimalRequest } = actions
@@ -35,7 +35,6 @@ export function CreateAnimalForm() {
 
   const { data } = useSelector((state: RootState) => state.users)
   const [haveImage, setHaveImage] = useState(false)
-
   const dispatch = useDispatch()
 
   const ongID = getValues('ongId')
@@ -55,9 +54,7 @@ export function CreateAnimalForm() {
 
   return (
     <>
-      <Typography sx={{ textAlign: 'center' }} variant="h4" fontWeight={'bold'}>
-        Formulário de cadastro de animais
-      </Typography>
+      <Helmet title="Cadastro de animais" />
 
       <form
         style={{
@@ -68,7 +65,7 @@ export function CreateAnimalForm() {
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleAddProduct)}
       >
-        <Box alignItems="center">
+        <Box display="flex" justifyContent="center">
           <TextFieldImage
             register={register}
             name="imageData"

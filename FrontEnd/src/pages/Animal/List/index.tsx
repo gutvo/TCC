@@ -4,6 +4,7 @@ import { actions } from '@Redux/animals/slice'
 import { Pagination, Typography, CircularProgress, Box } from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from './Card'
+import { Helmet } from 'react-helmet-async'
 
 export function ListAnimal() {
   const dispatch = useDispatch()
@@ -21,6 +22,8 @@ export function ListAnimal() {
   }, [dispatch, limit, offset, listAnimalRequest, ongId])
   return (
     <Box>
+      <Helmet title="Lista de Animais" />
+
       {loading ? (
         <Box
           sx={{

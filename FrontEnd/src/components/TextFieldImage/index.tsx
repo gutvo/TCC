@@ -34,7 +34,7 @@ export function TextFieldImage({
       }}
     >
       <Box
-        sx={{ borderRadius: 2 }}
+        sx={{ borderRadius: 1 }}
         component="img"
         src={imageUrl || ImageNotFound}
         onClick={() => document.getElementById('imageData')?.click()}
