@@ -19,7 +19,7 @@ const userSchemas = zod.object({
     }).nullable()
 });
 
-const refleshTokenValidation = async (
+const createUserValidation = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -37,4 +37,4 @@ const refleshTokenValidation = async (
   }
 };
 
-export default refleshTokenValidation;
+export default createUserValidation;

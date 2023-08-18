@@ -24,7 +24,14 @@ export function ShowUser() {
 
       {data ? (
         <Grid container gap={10}>
-          <Grid item lg={4} xs={12} marginBottom={4}>
+          <Grid
+            display="flex"
+            alignItems="start"
+            justifyContent="center"
+            item
+            lg={4}
+            xs={12}
+          >
             <img
               src={userNotFound}
               alt="Imagem do usuário"

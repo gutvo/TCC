@@ -20,7 +20,7 @@ export function DefaultLayout() {
       <Navbar handleThemeChange={handleThemeChange} theme={theme} />
 
       <Container
-        maxWidth="md"
+        maxWidth="lg"
         sx={{
           paddingY: '2rem',
           minHeight: '90vh',

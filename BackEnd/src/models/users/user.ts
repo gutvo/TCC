@@ -47,5 +47,5 @@ Ong.hasMany(Animal, {  foreignKey: 'ongId', onDelete:'CASCADE',})
 Animal.belongsTo(Ong,{  foreignKey: 'ongId'})
 
 
-// sequelize.sync({force:true});
+//sequelize.sync({force:true});
 //sequelize.sync();

@@ -11,9 +11,9 @@ import Delete from "../../controllers/users/delete";
 import deleteUserValidation from "../../validations/users/detele";
 import Show from "../../controllers/users/show";
 import refleshToken from "../../controllers/users/refleshToken";
-import refleshTokenValidation from "../../validations/users/create";
 import showUserValidation from "../../validations/users/show";
 import listOng from "../../controllers/ongs/list";
+import refleshTokenValidation from "../../validations/token/refleshToken";
 
 const userRoutes = Router();
 

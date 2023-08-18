@@ -18,7 +18,6 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
 
   const user = localStorage.getItem('user')
   const email = user ? JSON.parse(user).email : null
-
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   const [flag, setFlag] = useState(true)

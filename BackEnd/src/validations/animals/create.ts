@@ -37,6 +37,7 @@ const createValidation = async (
   next: NextFunction
 ) => {
   try {
+    
     await animalSchema.parseAsync(req.body.data);
 
     return next();
@@ -45,7 +46,7 @@ const createValidation = async (
       const errorMessage = error.errors[0]?.message || "Erro na validação";
       return res.status(400).json({ message: errorMessage });
     } else {
-      return res.status(500).json({ message: "Erro no servidor:" + error });
+      return res.status(500).json({ message: "Erro no servidor:" });
     }
   }
 };

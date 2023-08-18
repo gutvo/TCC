@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import zod, { ZodError } from "zod";
 
 const tokenSchemas = zod.object({
-  name: zod.string({ required_error: "O nome é Obrigatório" }),
   email: zod
     .string({ required_error: "O Email é Obrigatório" })
     .email("Precisa ser um email válido"),
@@ -11,11 +10,9 @@ const tokenSchemas = zod.object({
     .min(8, "tem que ter no minímo 8 caracteres"),
 });
 
-const validateToken = (req: Request, res: Response, next: NextFunction) => {
+const refleshTokenValidation = (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body);
     tokenSchemas.parseAsync(req.body);
-    console.log("passou");
     next();
   } catch (error) {
     if (error instanceof ZodError) {
@@ -24,8 +21,8 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
 
       return res.status(400).json({ message: errorMessage });
     } else {
-      return res.status(500).json({ message: "Erro no servidor:" + error });
+      return res.status(500).json({ message: "Erro no servidor:" });
     }
   }
 };
-export default validateToken;
+export default refleshTokenValidation;
