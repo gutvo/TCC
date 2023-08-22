@@ -25,7 +25,7 @@ const animalSchema = zod.object({
     }
   ),
   // imagesData: zod.union([zod.instanceof(FileList), zod.string()]).nullable(),
-  image: zod.boolean().refine((value) => typeof value === "boolean", {
+image: zod.string().refine((value) => value === "true"||"false", {
     message: "O campo image deve ser um valor booleano",
     path: ["image"],
   }),
@@ -37,7 +37,7 @@ const createValidation = async (
   next: NextFunction
 ) => {
   try {
-    
+    console.log(req.body.data.imageData[0])
     await animalSchema.parseAsync(req.body.data);
 
     return next();

@@ -11,7 +11,7 @@ const baseURL = import.meta.env.VITE_LINK as string
 export const api = axios.create({
   baseURL,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
   },
 })
 

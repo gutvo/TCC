@@ -9,13 +9,18 @@ import deleteValidator from "../../validations/animals/delete";
 import Show from "../../controllers/animals/show";
 import updateValidation from "../../validations/animals/update";
 import Update from "../../controllers/animals/update";
+import upload from "../../multer/config";
 
 const animalRoutes = Router();
 
 animalRoutes
   .route("/animal")
   .get(listAnimal)
-  .post(validateToken, createValidation, Create)
+  .post(validateToken, upload.array('imageData'),function uploadFiles(req, res,next) {
+    // console.log(req.body);
+    // console.log(req.files);
+    next()
+}, createValidation,Create)
   .delete(validateToken, deleteValidator, Delete)
   .put(validateToken, updateValidation, Update);
 
