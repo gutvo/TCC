@@ -2,7 +2,7 @@ import zod, { ZodError } from 'zod'
 import { Request, Response, NextFunction } from "express";
 
 const loginUserSchema = zod.object({
-  email: zod.string({required_error:'E-mail é obrigatóri'}).email("E-mail inválido"),
+  email: zod.string({required_error:'E-mail é obrigatório'}).email("E-mail inválido"),
   password: zod
     .string({required_error:'Senha é obrigatória'})
     .min(8, "a senha precisa ter no mínimo 8 caracteres"),

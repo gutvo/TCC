@@ -32,7 +32,6 @@ export function CreateAnimalForm() {
   } = useForm<CreateAnimal>({
     resolver: zodResolver(newAnimalFormSchema),
   })
-  console.log(getValues('imageData'))
 
   const { data } = useSelector((state: RootState) => state.users)
   const [haveImage, setHaveImage] = useState(false)

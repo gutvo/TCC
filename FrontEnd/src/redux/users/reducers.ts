@@ -38,15 +38,23 @@ export const reducers = {
   loginSuccess: {
     reducer: (
       state: InitialState,
-      action: PayloadAction<{ response: loginData }>,
+      action: PayloadAction<{ response: loginData; token: string }>,
     ) => {
-      const { data } = action.payload.response
+      const { data, token } = action.payload.response
       state.data = data
       state.isLogged = true
       state.loading = false
+      localStorage.setItem('token', token)
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          email: data.email,
+          password: data.password,
+        }),
+      )
     },
-    prepare: (response: loginData) => {
-      return { payload: { response } }
+    prepare: (response: loginData, token: string) => {
+      return { payload: { response, token } }
     },
   },
   loginFailure: (state: InitialState) => {

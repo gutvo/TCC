@@ -12,15 +12,15 @@ interface animalData {
   description: string;
   type: "Cachorro" | "Peixe" | "Gato" | "Outros";
   birthday: number;
-  image: boolean;
-  imageData: FileList;
+  image: boolean|string;
+  imageData: File;
   ongId:number
 }
 
 const Create = async (req: Request, res: Response) => {
   try {
     const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
-    console.log(req.body.data)
+    console.log(req.body)
     const animal = await Animal.create({
       name,
       race,
@@ -29,20 +29,23 @@ const Create = async (req: Request, res: Response) => {
       type,
       description,
       birthday,
-      image,
+      image:'false',
       ongId
     });
-    if (image) {
+
+    const imageData = req.body.imageAnimal
+
+    if (imageData) {
+
       const imagePath = `pet${animal.id}.jpg`;
 
-      const imageBuffer = Buffer.from("imagesData", "base64");
+      const imageBuffer = Buffer.from("imageData", "base64");
 
       const destinationPath = path.join(
         __dirname,
         `../../images/animals/${imagePath}`
       );
-
-      fs.writeFileSync(destinationPath, imageBuffer);
+      fs.writeFileSync(destinationPath,imageBuffer);
     }
 
     res.status(201).json({ message: message.createAnimalSuccess});

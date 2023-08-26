@@ -18,7 +18,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
           <NavLink to={`/animal`} state={{ id: animal.id }}>
             <Card
               sx={{
-                width: '14rem',
+                width: '18rem',
                 height: '22rem',
                 borderRadius: 1,
                 margin: 'auto',
