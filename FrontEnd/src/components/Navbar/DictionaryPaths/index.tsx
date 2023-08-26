@@ -21,6 +21,7 @@ export function DictionaryPaths() {
       title: 'Lista das Organizações',
       path: '/ongs',
     },
+    { title: 'Organização', path: '/ong' },
   ]
   const titleFromHelmet = titles.filter((item) => item.path === locations)
   return (

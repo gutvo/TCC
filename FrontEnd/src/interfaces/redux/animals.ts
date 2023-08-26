@@ -23,7 +23,7 @@ export interface AnimalData {
   imageData: FileList
 }
 
-export interface InitialStateProps {
+export interface InitialState {
   loading: boolean
   list: AnimalData[]
   animalData: AnimalData | null

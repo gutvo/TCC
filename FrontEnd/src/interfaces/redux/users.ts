@@ -4,11 +4,12 @@ import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
 
-interface userOngData {
+export interface userOngData {
   id: number
-  name: string
-  email: string
-  password: string
+  road: string
+  neighborhood: string
+  city: string
+  CEP: string
   userData: { name: string; email: string }
 }
 
@@ -78,15 +79,6 @@ export interface OngDataDTO {
   data: userOngData
 }
 
-export interface listOngDTO {
-  data: {
-    data: {
-      rows: userOngData[]
-      count: number
-    }
-  }
-}
-
 // -------------------------------------------
 // actions
 
@@ -127,13 +119,5 @@ export interface deleteActions {
     id: number
     email: number
     navigation: NavigateFunction
-  }
-}
-
-export interface listOngActions {
-  type: typeof actions.listOngRequest.type
-  payload: {
-    offset: number
-    limit: number
   }
 }

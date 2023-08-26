@@ -46,18 +46,20 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
 
   const dispatch = useDispatch()
 
-  const imageBoolean = !!watch('imagesData')?.length
+  const imageBoolean = !!watch('imageData')?.length
 
   function handleUpdateProduct(data: UpdateAnimalFormData) {
     dispatch(updateAnimalRequest(data))
   }
 
   return (
-    <form
-      style={{
+    <Box
+      component="form"
+      sx={{
         display: 'flex',
         flexDirection: 'column',
         gap: '1.5rem',
+        paddingX: '1rem',
       }}
       encType="multipart/form-data"
       onSubmit={handleSubmit(handleUpdateProduct)}
@@ -159,7 +161,7 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
         errors={errors.description}
         label="Imagem"
         customType="file"
-        {...register('imagesData')}
+        {...register('imageData')}
       />
       <Button
         disabled={loading}
@@ -170,6 +172,6 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
       >
         {loading ? 'Atualizando...' : 'Atualizar'}
       </Button>
-    </form>
+    </Box>
   )
 }

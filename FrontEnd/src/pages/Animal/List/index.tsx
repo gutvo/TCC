@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
-import { Pagination, Typography, CircularProgress, Box } from '@mui/material'
+import {
+  Pagination,
+  Typography,
+  CircularProgress,
+  Box,
+  Grid,
+} from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from './Card'
 import { Helmet } from 'react-helmet-async'
@@ -9,6 +15,7 @@ import { Helmet } from 'react-helmet-async'
 export function ListAnimal() {
   const dispatch = useDispatch()
   const { listAnimalRequest } = actions
+
   const { list, pagination, loading } = useSelector(
     (state: RootState) => state.animals,
   )
@@ -47,7 +54,11 @@ export function ListAnimal() {
         <>
           {list.length ? (
             <Box>
-              <CardAnimal data={list} />
+              <Grid container spacing={2} justifyContent="center">
+                {list.map((item) => (
+                  <CardAnimal key={item.id} data={item} />
+                ))}
+              </Grid>
               <Pagination
                 boundaryCount={1}
                 sx={{

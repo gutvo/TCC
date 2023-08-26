@@ -8,8 +8,6 @@ import {
   createUserDTO,
   deleteActions,
   deleteDTO,
-  listOngActions,
-  listOngDTO,
   loginAction,
   loginDTO,
   showAction,
@@ -132,21 +130,6 @@ function* deleteUser({ payload }: deleteActions) {
     }
   }
 }
-function* listOng({ payload }: listOngActions) {
-  const { listOngFailure, listOngSuccess } = actions
-  const { offset, limit } = payload
-  try {
-    const list: listOngDTO = yield api.get('/ong', {
-      params: { offset, limit },
-    })
-    yield put(listOngSuccess(list))
-  } catch (error) {
-    yield put(listOngFailure())
-    if (axios.isAxiosError(error) && error.response) {
-      toast.error(error.response.data.message)
-    }
-  }
-}
 
 export default all([
   takeLatest(actions.createUserRequest.type, createUser),
@@ -154,5 +137,4 @@ export default all([
   takeLatest(actions.loginRequest.type, loginUser),
   takeLatest(actions.showUserRequest.type, showUser),
   takeLatest(actions.deleteUserRequest.type, deleteUser),
-  takeLatest(actions.listOngRequest.type, listOng),
 ])

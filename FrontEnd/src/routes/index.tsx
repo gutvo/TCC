@@ -4,13 +4,14 @@ import { DefaultLayout } from '../layouts/DefaultLayout/index'
 import { Home } from '@Pages/Home'
 import { NotFound } from '@Pages/NotFound'
 import { Chat } from '@Pages/Chat'
-import { Ong } from '@Pages/Organization'
+import { ListOng } from '@Pages/Organization/List'
 import { SignIn } from '@Pages/User/create'
 import { Login } from '@Pages/User/Login'
 import { ListAnimal } from '@Pages/Animal/List/index'
 import { CreateAnimalForm } from '@Pages/Animal/Create'
 import { ShowAnimal } from '@Pages/Animal/Show'
 import { ShowUser } from '@Pages/User/show'
+import { ShowOng } from '@Pages/Organization/Show'
 
 function MainRoutes() {
   return (
@@ -34,7 +35,11 @@ function MainRoutes() {
 
           <Route path="/chat" element={<Chat />} />
 
-          <Route path="/ongs" element={<Ong />} />
+          {/* Ong */}
+
+          <Route path="/ongs" element={<ListOng />} />
+
+          <Route path="/ong" element={<ShowOng />} />
 
           <Route path="/" element={<Home />} />
 

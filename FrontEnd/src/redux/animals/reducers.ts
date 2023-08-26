@@ -1,7 +1,7 @@
 import { newAnimalFormData } from '@Interfaces/pages/animals'
 import {
   AnimalData,
-  InitialStateProps,
+  InitialState,
   PaginationProps,
 } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -11,7 +11,7 @@ import { UseFormReset } from 'react-hook-form'
 export const reducers = {
   // List
   listAnimalRequest: {
-    reducer: (state: InitialStateProps) => {
+    reducer: (state: InitialState) => {
       state.loading = true
     },
     prepare: (offset: number, limit: number, ongId: number | null) => {
@@ -21,7 +21,7 @@ export const reducers = {
 
   listAnimalSuccess: {
     reducer: (
-      state: InitialStateProps,
+      state: InitialState,
       action: PayloadAction<{
         data: AnimalData[]
         pagination: PaginationProps
@@ -32,20 +32,19 @@ export const reducers = {
       state.pagination = pagination
       state.list = data
       state.loading = false
-      console.log(state.pagination.offset)
     },
     prepare: (data: AnimalData[], pagination: PaginationProps) => {
       return { payload: { data, pagination } }
     },
   },
 
-  listAnimalFailure: (state: InitialStateProps) => {
+  listAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
 
   // Create
   createAnimalRequest: {
-    reducer: (state: InitialStateProps) => {
+    reducer: (state: InitialState) => {
       state.loading = true
     },
     prepare: (
@@ -55,16 +54,16 @@ export const reducers = {
       return { payload: { data, reset } }
     },
   },
-  createAnimalSuccess: (state: InitialStateProps) => {
+  createAnimalSuccess: (state: InitialState) => {
     state.loading = false
   },
-  createtAnimalFailure: (state: InitialStateProps) => {
+  createtAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
 
   // Show
   showAnimalRequest: {
-    reducer: (state: InitialStateProps) => {
+    reducer: (state: InitialState) => {
       state.loading = true
     },
     prepare: (id: string, ongId: number | undefined) => {
@@ -73,7 +72,7 @@ export const reducers = {
   },
   showAnimalSuccess: {
     reducer: (
-      state: InitialStateProps,
+      state: InitialState,
       action: PayloadAction<{ data: AnimalData }>,
     ) => {
       state.animalData = action.payload.data
@@ -83,13 +82,13 @@ export const reducers = {
       return { payload: { data } }
     },
   },
-  showAnimalFailure: (state: InitialStateProps) => {
+  showAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
 
   // Update
   updateAnimalRequest: {
-    reducer: (state: InitialStateProps) => {
+    reducer: (state: InitialState) => {
       state.loading = true
     },
     prepare: (data: AnimalData) => {
@@ -98,7 +97,7 @@ export const reducers = {
   },
   updateAnimalSuccess: {
     reducer: (
-      state: InitialStateProps,
+      state: InitialState,
       action: PayloadAction<{ data: AnimalData }>,
     ) => {
       state.animalData = action.payload.data
@@ -108,23 +107,23 @@ export const reducers = {
       return { payload: { data } }
     },
   },
-  updateAnimalFailure: (state: InitialStateProps) => {
+  updateAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
   // Delete
   deleteAnimalRequest: {
-    reducer: (state: InitialStateProps) => {
+    reducer: (state: InitialState) => {
       state.loading = true
     },
     prepare: (id: number, navigation: NavigateFunction) => {
       return { payload: { id, navigation } }
     },
   },
-  deleteAnimalSuccess: (state: InitialStateProps) => {
+  deleteAnimalSuccess: (state: InitialState) => {
     state.animalData = null
     state.loading = false
   },
-  deleteAnimalFailure: (state: InitialStateProps) => {
+  deleteAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
 }
