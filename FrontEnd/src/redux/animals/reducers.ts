@@ -28,9 +28,11 @@ export const reducers = {
       }>,
     ) => {
       const { data, pagination } = action.payload
+
       state.pagination = pagination
       state.list = data
       state.loading = false
+      console.log(state.pagination.offset)
     },
     prepare: (data: AnimalData[], pagination: PaginationProps) => {
       return { payload: { data, pagination } }

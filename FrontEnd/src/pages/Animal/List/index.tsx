@@ -14,12 +14,20 @@ export function ListAnimal() {
   )
   const { data } = useSelector((state: RootState) => state.users)
 
-  const [limit] = useState(9)
-  const [offset, setOffset] = useState(0)
+  const [limit] = useState(pagination.limit)
+  const [offset, setOffset] = useState(pagination.offset)
+
   const ongId = data?.ongData ? data.ongData?.id : null
   useEffect(() => {
     dispatch(listAnimalRequest(offset, limit, ongId))
   }, [dispatch, limit, offset, listAnimalRequest, ongId])
+
+  useEffect(() => {
+    if (!list.length && offset) {
+      setOffset(offset - limit)
+    }
+  }, [list, offset, limit])
+
   return (
     <Box>
       <Helmet title="Lista de Animais" />

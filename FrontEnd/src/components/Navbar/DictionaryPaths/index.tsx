@@ -24,7 +24,7 @@ export function DictionaryPaths() {
   ]
   const titleFromHelmet = titles.filter((item) => item.path === locations)
   return (
-    <Typography width="100%" variant="h6" noWrap fontWeight="bold">
+    <Typography width="60%" variant="h6" noWrap fontWeight="bold">
       {titleFromHelmet[0].title}
     </Typography>
   )

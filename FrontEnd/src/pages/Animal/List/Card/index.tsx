@@ -1,4 +1,4 @@
-import isNotFound from '@Images/isNotFound.jpg'
+import isNotFound from '@Images/dog.jpg'
 import { CardAnimalProps } from '@Interfaces/pages/animals'
 import {
   Card,
@@ -12,14 +12,14 @@ import { NavLink } from 'react-router-dom'
 
 export function CardAnimal({ data }: CardAnimalProps) {
   return (
-    <Grid container spacing={6} justifyContent="center">
+    <Grid container spacing={1} justifyContent="center">
       {data.map((animal) => (
         <Grid item key={animal.id}>
           <NavLink to={`/animal`} state={{ id: animal.id }}>
             <Card
               sx={{
-                width: '18rem',
-                height: '22rem',
+                width: '17.4rem',
+                height: '19rem',
                 borderRadius: 1,
                 margin: 'auto',
                 ':hover': {
@@ -39,9 +39,8 @@ export function CardAnimal({ data }: CardAnimalProps) {
                   }
                   alt="Imagem do animal"
                 />
-                <CardContent sx={{ height: '10.375rem', overflow: 'hidden' }}>
+                <CardContent sx={{ height: '10.375rem' }}>
                   <Typography
-                    gutterBottom
                     variant="subtitle1"
                     fontWeight="bold"
                     component="div"
@@ -49,7 +48,18 @@ export function CardAnimal({ data }: CardAnimalProps) {
                     {animal.name}
                   </Typography>
                   {animal.description ? (
-                    <Typography>{animal.description}</Typography>
+                    <Typography
+                      sx={{
+                        height: '100%',
+                        overflow: 'hidden',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: 'vertical',
+                        wordBreak: 'break-all',
+                      }}
+                    >
+                      {animal.description}
+                    </Typography>
                   ) : (
                     <Typography color="red">Sem descrição</Typography>
                   )}

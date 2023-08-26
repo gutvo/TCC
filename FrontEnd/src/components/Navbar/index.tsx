@@ -50,12 +50,12 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
             justifyContent="flex-end"
             alignItems="center"
             width="100%"
-            gap={3}
+            gap={2}
           >
             {isLogged ? (
               <NavLink
                 style={{
-                  fontSize: '1.25rem',
+                  fontSize: '1.1rem',
                   fontWeight: 'bold',
                   color: 'white',
                 }}
@@ -71,7 +71,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
               <>
                 <NavLink
                   style={{
-                    fontSize: '1.25rem',
+                    fontSize: '1.1rem',
                     fontWeight: 'bold',
                     color: 'white',
                   }}
@@ -81,7 +81,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
                 </NavLink>
                 <NavLink
                   style={{
-                    fontSize: '1.25rem',
+                    fontSize: '1.1rem',
                     fontWeight: 'bold',
                     color: 'white',
                   }}

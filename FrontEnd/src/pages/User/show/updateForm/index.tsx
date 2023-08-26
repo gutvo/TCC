@@ -9,6 +9,7 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
+import userNotFound from '@Images/userNotFound.png'
 
 export function ProfileForm({
   data,
@@ -61,6 +62,14 @@ export function ProfileForm({
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         onSubmit={handleSubmit(handleUpdateUser)}
       >
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <img
+            src={userNotFound}
+            alt="Imagem do usuário"
+            style={{ width: '20rem', height: '20rem' }}
+          />
+        </Box>
+
         <TextFieldStyled
           errors={errors.name}
           label="Nome"
