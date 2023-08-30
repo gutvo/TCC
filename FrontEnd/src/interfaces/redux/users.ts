@@ -76,7 +76,7 @@ export interface deleteDTO {
 }
 
 export interface OngDataDTO {
-  data: userOngData
+  data: { data: userOngData }
 }
 
 // -------------------------------------------

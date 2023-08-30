@@ -11,7 +11,9 @@ export const message={
 
     userNotFound:'A conta não foi encotrada.',
 
-    createOngSuccess:'Sua conta foi cadastrada com sucesso!',
+    createUserSuccess:'A conta foi cadastrada com sucesso!',
+    createOngSuccess:'A Organização foi cadastrada com sucesso!',
+
 
     deleteUserSuccess:'Sua conta foi deletado com sucesso!',
 

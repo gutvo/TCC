@@ -6,6 +6,7 @@ import {
   InputAdornment,
   TextField,
   TextFieldProps,
+  useTheme,
 } from '@mui/material'
 
 import { FieldError } from 'react-hook-form'
@@ -25,13 +26,17 @@ export const TextFieldStyled = forwardRef<
   ref,
 ) {
   const [passwordVisible, setPasswordVisible] = useState(false)
+  const theme = useTheme()
   return (
     <>
       {isPassword ? (
         <TextField
           error={!!errors?.message}
-          InputLabelProps={{ shrink: true }}
           helperText={errors?.message}
+          sx={{
+            backgroundColor: theme.palette.background.default,
+            borderRadius: 1,
+          }}
           color="info"
           {...rest}
           inputRef={ref}
@@ -52,8 +57,11 @@ export const TextFieldStyled = forwardRef<
         />
       ) : (
         <TextField
+          sx={{
+            backgroundColor: theme.palette.background.default,
+            borderRadius: 1,
+          }}
           error={!!errors?.message}
-          InputLabelProps={{ shrink: true }}
           helperText={errors?.message}
           color="info"
           type={customType}

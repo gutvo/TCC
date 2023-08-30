@@ -5,6 +5,7 @@ import { InitialState } from '@Interfaces/redux/ongs'
 const initialState: InitialState = {
   loading: false,
   data: null,
+  ongData: null,
 }
 
 const sliceUser = createSlice({

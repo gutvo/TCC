@@ -1,18 +1,15 @@
 import { Request,Response } from "express";
 import { Ong } from "../../models/users/ongs";
-import { Op } from "sequelize";
+// import { Op } from "sequelize";
 import { User } from "../../models/users/user";
 
 
 const showOng = async(req:Request,res:Response)=>{
     const id = parseInt(req.query.id as string)
-
+    console.log(id)
 
     const response = await Ong.findOne({
         where: {
-          userId: {
-            [Op.not]: null,
-          },
           id
         },
         include: [{
@@ -21,7 +18,6 @@ const showOng = async(req:Request,res:Response)=>{
             attributes:['name','email']
           }],
       });
-      
     return res.json({data:response})
 }
 

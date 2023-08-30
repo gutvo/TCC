@@ -37,9 +37,8 @@ const Create = async (req: Request, res: Response) => {
     }
       res
         .status(201)
-        .json({ message: ongData?message.createOngSuccess:message.userNotFound, data: result });
+        .json({ message: ongData?message.createOngSuccess:message.createUserSuccess, data: result });
   } catch (error) {
-    console.log(error)
     return res.status(500).json({message: message.serverError});
   }
 };

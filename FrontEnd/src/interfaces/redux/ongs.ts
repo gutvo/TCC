@@ -12,6 +12,7 @@ export interface userOngData {
 export interface InitialState {
   loading: boolean
   data: userOngData[] | null
+  ongData: userOngData | null
 }
 
 export interface listOngDTO {
@@ -31,5 +32,12 @@ export interface listActions {
   payload: {
     offset: number
     limit: number
+  }
+}
+
+export interface showActions {
+  type: typeof actions.listOngRequest.type
+  payload: {
+    id: number
   }
 }

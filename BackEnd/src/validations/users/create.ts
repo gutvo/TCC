@@ -25,7 +25,6 @@ const createUserValidation = async (
   next: NextFunction
 ) => {
   try {
-    await userSchemas.parseAsync(req.body);
     return next();
   } catch (error) {
     if (error instanceof ZodError) {
