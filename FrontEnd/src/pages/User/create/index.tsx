@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
@@ -21,9 +21,9 @@ export function SignIn() {
     <Box>
       <Helmet title="Cadastro de Conta" />
 
-      {/* <Typography variant="h3" textAlign="center">
+      <Typography variant="h3" textAlign="center">
         Cadastro de {isOng ? 'Organização' : 'Usuário'}
-      </Typography> */}
+      </Typography>
       <Box
         display="flex"
         flexDirection="row"

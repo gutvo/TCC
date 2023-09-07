@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { api } from '@Services/backendApi'
 import {
+  CityDTO,
   createAction,
   createUserDTO,
   deleteActions,
@@ -97,7 +98,16 @@ function* loginUser({ payload }: loginAction) {
       password,
     })
 
-    yield put(loginSuccess(user.data, user.data.token))
+    localStorage.setItem('token', user.data.token)
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        email: user.data.data.email,
+        password: user.data.data.password,
+      }),
+    )
+
+    yield put(loginSuccess(user.data))
 
     navigation('/')
     toast.success(user.data.message)
@@ -131,10 +141,24 @@ function* deleteUser({ payload }: deleteActions) {
   }
 }
 
+function* getCitys() {
+  const { listCitySuccess, listCityFailure } = actions
+  try {
+    const result: CityDTO = yield api.get('/city')
+    yield put(listCitySuccess(result.data))
+  } catch (error) {
+    yield put(listCityFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest(actions.createUserRequest.type, createUser),
   takeLatest(actions.updateUserRequest.type, updateUser),
   takeLatest(actions.loginRequest.type, loginUser),
   takeLatest(actions.showUserRequest.type, showUser),
   takeLatest(actions.deleteUserRequest.type, deleteUser),
+  takeLatest(actions.listCityRequest.type, getCitys),
 ])

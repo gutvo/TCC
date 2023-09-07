@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
-import { Animal } from "../../models/animal";
+import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
 
 const Delete = async (req: Request, res: Response) => {

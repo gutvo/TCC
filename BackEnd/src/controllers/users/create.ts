@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../../models/users/user";
 import { message } from "../../dictionary";
+import { City } from "../../models/citys/city";
 
 const Create = async (req: Request, res: Response) => {
   try {
@@ -12,9 +13,9 @@ const Create = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "Esse email já foi cadastrado" });
     }
 
-    let result;
+    let data;
     if (ongData) {
-      result = await User.create({
+      data = await User.create({
         email,
         name,
         password,
@@ -27,17 +28,22 @@ const Create = async (req: Request, res: Response) => {
       }, {
         include: [{ association: User.associations.ongData }]
       });
+      await City.findOrCreate({
+        where: { label: ongData.city },
+      });
 
     } else {
-      result = await User.create({
+      data = await User.create({
         email,
         name,
         password
       });
     }
+
+    
       res
         .status(201)
-        .json({ message: ongData?message.createOngSuccess:message.createUserSuccess, data: result });
+        .json({ message: ongData?message.createOngSuccess:message.createUserSuccess, data });
   } catch (error) {
     return res.status(500).json({message: message.serverError});
   }

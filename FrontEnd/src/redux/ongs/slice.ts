@@ -6,6 +6,7 @@ const initialState: InitialState = {
   loading: false,
   data: null,
   ongData: null,
+  pagination: { limit: 10, offset: 0 },
 }
 
 const sliceUser = createSlice({

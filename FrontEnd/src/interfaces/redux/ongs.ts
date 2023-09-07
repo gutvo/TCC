@@ -9,10 +9,20 @@ export interface userOngData {
   userData: { name: string; email: string }
 }
 
+export interface OngFilter {
+  name: string
+  city: string
+}
+interface OngPagination {
+  offset: number
+  limit: number
+}
+
 export interface InitialState {
   loading: boolean
   data: userOngData[] | null
   ongData: userOngData | null
+  pagination: OngPagination
 }
 
 export interface listOngDTO {
@@ -32,6 +42,8 @@ export interface listActions {
   payload: {
     offset: number
     limit: number
+    filter: OngFilter
+    city: string
   }
 }
 

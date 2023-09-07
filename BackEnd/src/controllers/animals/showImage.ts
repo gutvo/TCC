@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import path from "path";
-import { Animal } from "../../models/animal";
+import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
 
-const showImageAnimal = async (req: Request, res: Response) => {
+const showImage = async (req: Request, res: Response) => {
   try {
     const result = await Animal.findOne({ where: { id: req.params.id } });
     
@@ -31,4 +31,4 @@ const showImageAnimal = async (req: Request, res: Response) => {
   }
 };
 
-export default showImageAnimal;
+export default showImage;

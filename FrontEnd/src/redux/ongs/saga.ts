@@ -8,10 +8,10 @@ import { OngDataDTO } from '@Interfaces/redux/users'
 
 function* listOng({ payload }: listActions) {
   const { listOngFailure, listOngSuccess } = actions
-  const { offset, limit } = payload
+  const { offset, limit, filter, city } = payload
   try {
     const list: listOngDTO = yield api.get('/ongs', {
-      params: { offset, limit },
+      params: { offset, limit, filter, city },
     })
     yield put(listOngSuccess(list))
   } catch (error) {

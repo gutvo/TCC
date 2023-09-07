@@ -1,5 +1,6 @@
 import { NewUserFormData, ProfileFormData } from '@Interfaces/pages/users'
 import {
+  CityProps,
   InitialState,
   UserData,
   loginData,
@@ -37,23 +38,14 @@ export const reducers = {
   loginSuccess: {
     reducer: (
       state: InitialState,
-      action: PayloadAction<{ response: loginData; token: string }>,
+      action: PayloadAction<{ response: loginData }>,
     ) => {
-      const { data, token } = action.payload.response
-      state.data = data
+      state.data = action.payload.response.data
       state.isLogged = true
       state.loading = false
-      localStorage.setItem('token', token)
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      )
     },
-    prepare: (response: loginData, token: string) => {
-      return { payload: { response, token } }
+    prepare: (response: loginData) => {
+      return { payload: { response } }
     },
   },
   loginFailure: (state: InitialState) => {
@@ -128,5 +120,22 @@ export const reducers = {
 
   deleteUserFailure: (state: InitialState) => {
     state.loading = false
+  },
+
+  listCityRequest: (state: InitialState) => {
+    state.loading = true
+  },
+  listCitySuccess: (
+    state: InitialState,
+    action: PayloadAction<{ data: CityProps[] }>,
+  ) => {
+    state.citys = action.payload.data
+    state.loading = false
+  },
+  listCityFailure: (state: InitialState) => {
+    state.loading = false
+  },
+  choiceCity: (state: InitialState, action: PayloadAction<string>) => {
+    state.city = action.payload
   },
 }

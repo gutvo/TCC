@@ -18,18 +18,24 @@ export function DefaultLayout() {
     <ThemeProvider theme={choiceTheme}>
       <Alert />
       <Navbar handleThemeChange={handleThemeChange} theme={theme} />
-
-      <Container
-        maxWidth="md"
-        sx={{
-          paddingY: '2rem',
-          minHeight: '90vh',
-          backgroundColor: choiceTheme.palette.background.default,
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: choiceTheme.palette.background.paper,
         }}
       >
-        <Outlet />
-      </Container>
-
+        <Container
+          maxWidth="md"
+          sx={{
+            paddingY: '2rem',
+            minHeight: '90vh',
+            backgroundColor: choiceTheme.palette.background.default,
+          }}
+        >
+          <Outlet />
+        </Container>
+      </div>
       <Footer />
     </ThemeProvider>
   )

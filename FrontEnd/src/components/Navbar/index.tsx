@@ -65,7 +65,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
                   dispatch(logout())
                 }}
               >
-                Logout
+                Sair
               </NavLink>
             ) : (
               <>
@@ -88,7 +88,7 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
                   to="/login"
                   color="inherit"
                 >
-                  Login
+                  Entrar
                 </NavLink>
               </>
             )}

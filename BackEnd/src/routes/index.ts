@@ -4,8 +4,13 @@ import userRoutes from "./users/routes";
 import generateTokenKey from "../validations/token/generatorKey";
 import upload from '../multer/config'
 import ongRoutes from "./ongs/routes";
+import ListCity from "../controllers/city/list";
 // import validateSequelize from "../validations/sequelize/sequelize";
 const mainRoutes = Router();
+
+// Pega todas as cidades registradas
+mainRoutes.get('/city',ListCity)
+
 
 // mainRoutes.use(validateSequelize);
 mainRoutes.use(upload.array('imageData'))

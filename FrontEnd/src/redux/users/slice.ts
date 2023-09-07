@@ -4,11 +4,14 @@ import { InitialState } from '@Interfaces/redux/users'
 
 const isLogged = !!localStorage.getItem('user')
 
+const localStorageCity = localStorage.getItem('city')
+
 const initialState: InitialState = {
   loading: false,
   data: null,
-  ongList: [],
   isLogged,
+  city: localStorageCity || '',
+  citys: [],
 }
 
 const sliceUser = createSlice({

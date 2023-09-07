@@ -11,7 +11,7 @@ export function Chat() {
   useEffect(() => {
     if (!isLogged) {
       navigate('/login')
-      toast.info('Porfavor Logue ou cadastre-se')
+      toast.info('Porfavor entre na sua conta ou cadastre-se')
     }
   }, [isLogged, navigate])
 

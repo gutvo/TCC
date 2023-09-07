@@ -20,7 +20,7 @@ export function UserForm({ handleAddUser }: CreateFormProps) {
   return (
     <Box>
       <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
         onSubmit={handleSubmit(handleAddUser)}
       >
         <TextFieldStyled

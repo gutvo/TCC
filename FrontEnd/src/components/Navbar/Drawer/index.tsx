@@ -1,9 +1,20 @@
-import { Button, Drawer, Box, Typography } from '@mui/material'
+import {
+  Button,
+  Drawer,
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+} from '@mui/material'
 import { DarkMode, LightMode, Edit } from '@mui/icons-material'
 import { ListDrawer } from './List'
 import userIsNotFound from '@Images/userNotFound.png'
 import { NavLink } from 'react-router-dom'
 import { drawerListProps } from '@Interfaces/components/Navbar'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@Redux/store'
+import { actions } from '@Redux/users/slice'
 
 export function DrawerList({
   drawerOpen,
@@ -12,6 +23,16 @@ export function DrawerList({
   theme,
   data,
 }: drawerListProps) {
+  const dispatch = useDispatch()
+  const { listCityRequest, choiceCity } = actions
+
+  const userData = useSelector((state: RootState) => state.users.data)
+  const { citys, city } = useSelector((state: RootState) => state.users)
+
+  useEffect(() => {
+    dispatch(listCityRequest())
+  }, [dispatch, listCityRequest])
+
   return (
     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
       <Box
@@ -91,15 +112,38 @@ export function DrawerList({
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'end',
+            alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'column',
+            marginBottom: '1rem',
+            gap: '1rem',
           }}
         >
+          {!userData?.ongData && (
+            <Select
+              variant="outlined"
+              sx={{ height: '2.75rem', width: '95%' }}
+              defaultValue={city}
+              onChange={(event) => {
+                const { value } = event.target
+                dispatch(choiceCity(value.toString()))
+                localStorage.setItem('city', `${value}`)
+              }}
+            >
+              {citys.map((item) => {
+                return (
+                  <MenuItem key={item.label} value={item.label}>
+                    {item.label}
+                  </MenuItem>
+                )
+              })}
+            </Select>
+          )}
           <Button
-            sx={{ width: '80%', marginBottom: '1rem', alignItems: 'end' }}
             size="large"
             variant="contained"
             color="warning"
+            sx={{ width: '95%', height: '2.75rem' }}
             onClick={handleThemeChange}
           >
             {theme ? <DarkMode /> : <LightMode />}

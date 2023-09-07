@@ -14,15 +14,16 @@ import { toast } from 'react-toastify'
 import axios from 'axios'
 import { deleteActions, updateAction } from '@Interfaces/redux/users'
 
-function* fetchAnimals({ payload }: FetchAction) {
+function* listAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions
-  const { limit, offset, ongId } = payload
+  const { limit, offset, ongId, city } = payload
   try {
     const animals: fetchAnimalDTO = yield api.get('/animal', {
       params: {
         offset,
         limit,
         ongId,
+        city,
       },
     })
     const result = animals.data
@@ -103,7 +104,7 @@ function* deleteAnimal({ payload }: deleteActions) {
 }
 
 export default all([
-  takeLatest(actions.listAnimalRequest.type, fetchAnimals),
+  takeLatest(actions.listAnimalRequest.type, listAnimals),
   takeLatest(actions.createAnimalRequest.type, createAnimal),
   takeLatest(actions.showAnimalRequest.type, showAnimal),
   takeLatest(actions.updateAnimalRequest.type, updateAnimal),

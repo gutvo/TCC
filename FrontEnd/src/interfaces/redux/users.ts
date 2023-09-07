@@ -39,11 +39,21 @@ export interface loginProps {
   password: string
 }
 
+export interface CityProps {
+  label: string
+}
+export interface CityDTO {
+  data: {
+    data: { label: string }[]
+  }
+}
+
 export interface InitialState {
   loading: boolean
   data: UserData | null
-  ongList: userOngData[]
   isLogged: boolean
+  city: string
+  citys: CityProps[]
 }
 
 // -------------------------------------------

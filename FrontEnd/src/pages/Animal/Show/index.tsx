@@ -84,8 +84,8 @@ export function ShowAnimal() {
                 </Button>
               </Box>
               <Typography variant="h3">Animal:</Typography>
-              <Typography>{animalData.id}</Typography>
-              <Typography>{animalData.name}</Typography>
+              <Typography>ID: {animalData.id}</Typography>
+              <Typography>Nome: {animalData.name}</Typography>
             </Box>
           )}
         </>

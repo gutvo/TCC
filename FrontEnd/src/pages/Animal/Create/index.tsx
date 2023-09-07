@@ -34,23 +34,22 @@ export function CreateAnimalForm() {
   })
 
   const { data } = useSelector((state: RootState) => state.users)
+
   const [haveImage, setHaveImage] = useState(false)
   const dispatch = useDispatch()
-
-  const ongID = getValues('ongId')
 
   function handleAddProduct(data: newAnimalFormData) {
     dispatch(createAnimalRequest(data, reset))
   }
 
   useEffect(() => {
-    if (data) {
-      setValue('ongId', data.id)
+    if (data && data.ongData) {
+      setValue('ongId', data.ongData.id)
     }
     if (haveImage) {
       setValue('image', haveImage)
     }
-  }, [setValue, data, haveImage, ongID])
+  }, [setValue, data, haveImage])
 
   return (
     <>

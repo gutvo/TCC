@@ -1,8 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../migrations/mysql";
-
-import {Ong}from './ongs'
-import { Animal } from "../animal";
+import { Ong } from "../ongs/ongs";
+import { Animal } from "../animals/animal";
 
 export interface UserData extends Model {
   id: number;
@@ -44,8 +43,8 @@ User.hasOne(Ong, { foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' });
 Ong.belongsTo(User,{ onDelete:'CASCADE',foreignKey: 'userId', targetKey:'id',as: 'userData'});
 
 Ong.hasMany(Animal, {  foreignKey: 'ongId', onDelete:'CASCADE',})
-Animal.belongsTo(Ong,{  foreignKey: 'ongId'})
+Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
 
 
 //sequelize.sync({force:true});
-//sequelize.sync();
+sequelize.sync();

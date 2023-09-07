@@ -14,8 +14,13 @@ export const reducers = {
     reducer: (state: InitialState) => {
       state.loading = true
     },
-    prepare: (offset: number, limit: number, ongId: number | null) => {
-      return { payload: { offset, limit, ongId } }
+    prepare: (
+      offset: number,
+      limit: number,
+      ongId: number | null,
+      city: string,
+    ) => {
+      return { payload: { offset, limit, ongId, city } }
     },
   },
 

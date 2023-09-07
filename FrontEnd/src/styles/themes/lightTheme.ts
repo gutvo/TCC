@@ -2,6 +2,11 @@ import { grey, lightBlue } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 const temaClaro = createTheme({
+  palette: {
+    secondary: {
+      main: '#101010',
+    },
+  },
   components: {
     MuiPagination: {
       styleOverrides: {

@@ -7,8 +7,8 @@ export const reducers = {
     reducer: (state: InitialState) => {
       state.loading = true
     },
-    prepare: (offset: number, limit: number) => {
-      return { payload: { offset, limit } }
+    prepare: (offset: number, limit: number, city: string) => {
+      return { payload: { offset, limit, city } }
     },
   },
   listOngSuccess: {
@@ -16,7 +16,8 @@ export const reducers = {
       state: InitialState,
       action: PayloadAction<{ data: listOngDTO }>,
     ) => {
-      state.data = action.payload.data.data.data.rows
+      const { data } = action.payload.data.data
+      state.data = data.rows
       state.loading = false
     },
     prepare: (data: listOngDTO) => {

@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,13 +29,13 @@ export function Login() {
     <Box>
       <Helmet title="Login" />
 
-      {/* <Typography textAlign="center" variant="h3">
-        Login
-      </Typography> */}
       <form
         style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
         onSubmit={handleSubmit(handleLogin)}
       >
+        <Typography textAlign="center" variant="h3">
+          Login
+        </Typography>
         <TextFieldStyled
           errors={errors.email}
           color="info"

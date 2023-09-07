@@ -70,6 +70,7 @@ export interface FetchAction {
     offset: number
     limit: number
     ongId: number | null
+    city: string
   }
 }
 

@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { Ong } from "../../models/users/ongs";
+import { Ong } from "../../models/ongs/ongs";
 import { Op } from "sequelize";
 import { User } from "../../models/users/user";
 
@@ -7,14 +7,10 @@ import { User } from "../../models/users/user";
 const listOng = async(req:Request,res:Response)=>{
     const limit = parseInt(req.query.limit as string)
     const offset = parseInt(req.query.offset as string)
+    const city = req.query.city as string
 
-
-    const response = await Ong.findAndCountAll({
-        where: {
-          userId: {
-            [Op.not]: null,
-          },
-        },
+    const data = await Ong.findAndCountAll({
+        where:{userId: {[Op.not]: null },city},
         limit,
         offset,
         include: [{
@@ -24,7 +20,7 @@ const listOng = async(req:Request,res:Response)=>{
           }],
       });
       
-    return res.json({data:response})
+    return res.json({data})
 }
 
 

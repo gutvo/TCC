@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../migrations/mysql";
+import { sequelize } from "../../migrations/mysql";
 
 export interface AnimalData extends Model {
   id: number;

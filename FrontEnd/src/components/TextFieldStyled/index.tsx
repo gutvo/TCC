@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
+  CircularProgress,
   // CircularProgress,
   IconButton,
   InputAdornment,
@@ -16,13 +17,14 @@ export interface StyledTextFieldProps extends Omit<TextFieldProps, 'type'> {
   isPassword?: boolean
   customType?: React.InputHTMLAttributes<HTMLInputElement>['type']
   loading?: boolean
+  isOptional?: boolean
 }
 
 export const TextFieldStyled = forwardRef<
   HTMLInputElement,
   StyledTextFieldProps
 >(function TextFieldPassword(
-  { errors, isPassword, customType = 'text', loading, ...rest },
+  { errors, isPassword, customType = 'text', loading, isOptional, ...rest },
   ref,
 ) {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -33,10 +35,13 @@ export const TextFieldStyled = forwardRef<
         <TextField
           error={!!errors?.message}
           helperText={errors?.message}
+          required={!isOptional}
+          InputLabelProps={{ shrink: true }}
           sx={{
             backgroundColor: theme.palette.background.default,
             borderRadius: 1,
           }}
+          fullWidth
           color="info"
           {...rest}
           inputRef={ref}
@@ -61,23 +66,26 @@ export const TextFieldStyled = forwardRef<
             backgroundColor: theme.palette.background.default,
             borderRadius: 1,
           }}
+          InputLabelProps={{ shrink: true }}
+          required={!isOptional}
           error={!!errors?.message}
           helperText={errors?.message}
           color="info"
+          fullWidth
           type={customType}
           {...rest}
           inputRef={ref}
-          // InputProps={{
-          //   endAdornment: (
-          //     <>
-          //       {loading ? (
-          //         <InputAdornment position="end">
-          //           <CircularProgress />
-          //         </InputAdornment>
-          //       ) : null}
-          //     </>
-          //   ),
-          // }})
+          InputProps={{
+            endAdornment: (
+              <>
+                {loading ? (
+                  <InputAdornment disablePointerEvents position="end">
+                    <CircularProgress />
+                  </InputAdornment>
+                ) : null}
+              </>
+            ),
+          }}
         />
       )}
     </>
