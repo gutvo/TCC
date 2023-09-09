@@ -9,6 +9,7 @@ const validator = zod.object({
         road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
         neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
         city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+        uf: zod.string().length(2,'Só pode ter dois digitos'),
         CEP: zod
           .string({ invalid_type_error: 'CEP inválido' })
           .min(8, 'CEP inválido')

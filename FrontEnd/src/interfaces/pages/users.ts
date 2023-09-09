@@ -14,7 +14,7 @@ export interface ViaCepDTO {
   complemento: string
   bairro: string
   localidade: string
-  uf: String
+  uf: string
 }
 
 // -------------------------------------------

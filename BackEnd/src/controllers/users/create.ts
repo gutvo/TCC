@@ -23,7 +23,8 @@ const Create = async (req: Request, res: Response) => {
           road: ongData.road,
           neighborhood: ongData.neighborhood,
           city: ongData.city,
-          CEP: ongData.CEP
+          CEP: ongData.CEP,
+          uf: ongData.uf
         }
       }, {
         include: [{ association: User.associations.ongData }]

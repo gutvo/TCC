@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { RootState } from '@Redux/store'
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/ongs/slice'
 import { Helmet } from 'react-helmet-async'
-import { List } from './ListItem'
+import { ListItem } from './ListItem'
+import { Loading } from '@Components/Loading'
 
 export function ListOng() {
   const dispatch = useDispatch()
@@ -26,13 +27,13 @@ export function ListOng() {
       <Helmet title="Lista das Organizações" />
 
       {loading ? (
-        <CircularProgress />
+        <Loading />
       ) : (
         <>
           {data ? (
             <>
               {data.map((item) => {
-                return <List key={item.userData.email} OngData={item} />
+                return <ListItem key={item.userData.email} OngData={item} />
               })}
             </>
           ) : (

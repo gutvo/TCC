@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
-import {
-  Pagination,
-  Typography,
-  CircularProgress,
-  Box,
-  Grid,
-} from '@mui/material'
+import { Pagination, Typography, Box, Grid } from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from './Card'
 import { Helmet } from 'react-helmet-async'
+import { Loading } from '@Components/Loading'
 
 export function ListAnimal() {
   const dispatch = useDispatch()
@@ -40,16 +35,7 @@ export function ListAnimal() {
       <Helmet title="Lista de Animais" />
 
       {loading ? (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            height: '100vh',
-            justifyContent: 'center',
-          }}
-        >
-          <CircularProgress color="error" size={'10rem'} />
-        </Box>
+        <Loading />
       ) : (
         <>
           {list.length ? (

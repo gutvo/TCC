@@ -18,6 +18,7 @@ export interface ongData {
   road: string
   neighborhood: string
   city: string
+  uf: string
   CEP: string
 }
 

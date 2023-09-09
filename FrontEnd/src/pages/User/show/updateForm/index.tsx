@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
@@ -10,6 +10,7 @@ import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import userNotFound from '@Images/userNotFound.png'
+import { NavLink } from 'react-router-dom'
 
 export function ProfileForm({
   data,
@@ -29,6 +30,8 @@ export function ProfileForm({
   const loading = useSelector((state: RootState) => state.users.loading)
 
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
+  const [loadingCEP, setLoadingCEP] = useState(false)
+  const [CEP, setCEP] = useState<ViaCepDTO | null>()
 
   async function getInformation(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -36,10 +39,17 @@ export function ProfileForm({
     const { value } = event.target
     try {
       if (value.length >= 8 && value.length <= 9) {
+        setLoadingCEP(true)
         const response: ViaCepDTO = await getInformationsByCEP(value)
+        setCEP(response)
         setValue('ongData.road', response.logradouro)
         setValue('ongData.neighborhood', response.bairro)
         setValue('ongData.city', response.localidade)
+        setLoadingCEP(false)
+      }
+      if (value.length === 0) {
+        setLoadingCEP(false)
+        setCEP(undefined)
       }
     } catch (error) {}
   }
@@ -48,7 +58,18 @@ export function ProfileForm({
     setValue('name', data.name)
     setValue('email', data.email)
     setValue('ongData', data.ongData)
-  }, [setValue, data])
+
+    if (data.ongData) {
+      const { city, neighborhood, road, uf } = data.ongData
+      setCEP({
+        bairro: neighborhood,
+        localidade: city,
+        logradouro: road,
+        uf,
+        complemento: '',
+      })
+    }
+  }, [setValue, data, editable])
 
   return (
     <Box>
@@ -89,47 +110,45 @@ export function ProfileForm({
 
         {data.ongData ? (
           <>
-            <TextFieldStyled
-              disabled={!editable}
-              errors={errors.ongData?.CEP}
-              label="CEP"
-              placeholder="Digite o seu CEP."
-              {...register('ongData.CEP', {
-                required: true,
-                onChange: getInformation,
-              })}
-            />
             <Box>
               <TextFieldStyled
+                loading={loadingCEP}
+                errors={errors.ongData?.CEP}
                 disabled={!editable}
-                errors={errors.ongData?.road}
-                label="Rua"
-                sx={{ width: '68%', marginRight: '2%' }}
-                placeholder="Digite a sua rua."
-                {...register('ongData.road', {
+                label="CEP"
+                sx={{ marginBottom: '0.25rem' }}
+                placeholder="Digite o CEP."
+                {...register('ongData.CEP', {
                   required: true,
+                  onChange: getInformation,
                 })}
               />
-              <TextFieldStyled
-                disabled={!editable}
-                errors={errors.ongData?.city}
-                label="Cidade"
-                sx={{ width: '30%' }}
-                placeholder="Digite a sua cidade."
-                {...register('ongData.city', {
-                  required: true,
-                })}
-              />
+              {CEP ? (
+                <Box sx={{ paddingLeft: '0.5rem' }}>
+                  <Typography color={!editable ? '#acacac' : 'black'}>
+                    Rua: {CEP.logradouro}
+                  </Typography>
+                  <Typography color={!editable ? '#acacac' : 'black'}>
+                    Bairro: {CEP.bairro}
+                  </Typography>
+                  <Typography color={!editable ? '#acacac' : 'black'}>
+                    Cidade: {CEP.localidade}
+                  </Typography>
+                  <Typography color={!editable ? '#acacac' : 'black'}>
+                    Estado: {CEP.uf}
+                  </Typography>
+                </Box>
+              ) : (
+                <Box
+                  component={NavLink}
+                  target="_blank"
+                  sx={{ paddingLeft: '0.25rem' }}
+                  to="http://www.buscacep.correios.com.br"
+                >
+                  Não sei qual é o meu CEP.
+                </Box>
+              )}
             </Box>
-            <TextFieldStyled
-              disabled={!editable}
-              errors={errors.ongData?.neighborhood}
-              label="Bairro"
-              placeholder="Digite o seu bairro."
-              {...register('ongData.neighborhood', {
-                required: true,
-              })}
-            />
           </>
         ) : (
           <input

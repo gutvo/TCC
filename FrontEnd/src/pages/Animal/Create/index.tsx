@@ -26,7 +26,6 @@ export function CreateAnimalForm() {
     handleSubmit,
     register,
     setValue,
-    getValues,
     reset,
     formState: { errors },
   } = useForm<CreateAnimal>({

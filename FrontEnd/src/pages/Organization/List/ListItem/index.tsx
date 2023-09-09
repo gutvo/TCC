@@ -2,7 +2,7 @@ import { userOngData } from '@Interfaces/redux/users'
 import {
   Avatar,
   Divider,
-  ListItem,
+  ListItem as ListItemMui,
   ListItemAvatar,
   ListItemText,
   Typography,
@@ -14,12 +14,12 @@ interface ListOngProps {
   OngData: userOngData
 }
 
-export function List({ OngData }: ListOngProps) {
+export function ListItem({ OngData }: ListOngProps) {
   const navigation = useNavigate()
   return (
     <>
       <Divider />
-      <ListItem
+      <ListItemMui
         alignItems="flex-start"
         sx={{ cursor: 'pointer', ':hover': { background: '#d4d4d4' } }}
         onClick={() => navigation('/ong', { state: OngData.id })}
@@ -42,7 +42,7 @@ export function List({ OngData }: ListOngProps) {
             </Fragment>
           }
         />
-      </ListItem>
+      </ListItemMui>
       <Divider />
     </>
   )

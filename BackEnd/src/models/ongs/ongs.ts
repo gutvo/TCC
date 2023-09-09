@@ -29,6 +29,10 @@ export const Ong = sequelize.define<OngData>('ongData', {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      uf:{
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       CEP:{
         type:DataTypes.STRING,
         allowNull: false,

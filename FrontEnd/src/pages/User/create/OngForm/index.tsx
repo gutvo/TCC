@@ -22,7 +22,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
   const loading = useSelector((state: RootState) => state.users.loading)
 
   const [loadingCEP, setLoadingCEP] = useState(false)
-  const [CEP, setCEP] = useState<ViaCepDTO>()
+  const [CEP, setCEP] = useState<ViaCepDTO | null>()
 
   async function getInformation(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -36,11 +36,12 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         setValue('ongData.road', response.logradouro)
         setValue('ongData.neighborhood', response.bairro)
         setValue('ongData.city', response.localidade)
+        setValue('ongData.uf', response.uf)
         setLoadingCEP(false)
       }
       if (value.length === 0) {
         setLoadingCEP(false)
-        setCEP(undefined)
+        setCEP(null)
       }
     } catch (error) {}
   }
@@ -102,6 +103,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         ) : (
           <Box
             component={NavLink}
+            target="_blank"
             sx={{ paddingLeft: '0.25rem' }}
             to="http://www.buscacep.correios.com.br"
           >
@@ -122,7 +124,12 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
           required: true,
         })}
       />
-
+      <TextFieldStyled
+        sx={{ display: 'none' }}
+        {...register('ongData.uf', {
+          required: true,
+        })}
+      />
       <TextFieldStyled
         sx={{ display: 'none' }}
         {...register('ongData.neighborhood', {
