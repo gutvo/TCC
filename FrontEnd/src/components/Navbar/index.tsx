@@ -6,10 +6,9 @@ import { DrawerList } from './Drawer'
 import { RootState } from '@Redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
-import { NavbarProps } from '@Interfaces/components/Navbar'
 import { DictionaryPaths } from './DictionaryPaths'
 
-export function Navbar({ handleThemeChange, theme }: NavbarProps) {
+export function Navbar() {
   const dispatch = useDispatch()
 
   const { showUserRequest, logout } = actions
@@ -98,8 +97,6 @@ export function Navbar({ handleThemeChange, theme }: NavbarProps) {
       <DrawerList
         drawerOpen={drawerOpen}
         data={data}
-        handleThemeChange={handleThemeChange}
-        theme={theme}
         toggleDrawer={toggleDrawer}
       />
     </Box>

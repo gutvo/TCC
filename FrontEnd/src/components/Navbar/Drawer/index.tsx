@@ -1,12 +1,5 @@
-import {
-  Button,
-  Drawer,
-  Box,
-  Typography,
-  Select,
-  MenuItem,
-} from '@mui/material'
-import { DarkMode, LightMode, Edit } from '@mui/icons-material'
+import { Drawer, Box, Typography, Select, MenuItem } from '@mui/material'
+import { Edit } from '@mui/icons-material'
 import { ListDrawer } from './List'
 import userIsNotFound from '@Images/userNotFound.png'
 import { NavLink } from 'react-router-dom'
@@ -19,8 +12,6 @@ import { actions } from '@Redux/users/slice'
 export function DrawerList({
   drawerOpen,
   toggleDrawer,
-  handleThemeChange,
-  theme,
   data,
 }: drawerListProps) {
   const dispatch = useDispatch()
@@ -139,15 +130,6 @@ export function DrawerList({
               })}
             </Select>
           )}
-          <Button
-            size="large"
-            variant="contained"
-            color="warning"
-            sx={{ width: '95%', height: '2.75rem' }}
-            onClick={handleThemeChange}
-          >
-            {theme ? <DarkMode /> : <LightMode />}
-          </Button>
         </Box>
       </Box>
     </Drawer>

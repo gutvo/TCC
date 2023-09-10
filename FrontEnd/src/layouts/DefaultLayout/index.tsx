@@ -1,28 +1,21 @@
 import { Outlet } from 'react-router-dom'
 import { Container, ThemeProvider } from '@mui/material'
-import { useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
-import darkTheme from '@Themes/darkTheme'
 import lightTheme from '@Themes/lightTheme'
 import { Alert } from '@Components/Alert'
 import { Navbar } from '@Components/Navbar'
 import { Footer } from '@Components/Footer'
 
 export function DefaultLayout() {
-  const [theme, setTheme] = useState(false)
-  const handleThemeChange = () => {
-    setTheme(!theme)
-  }
-  const choiceTheme = theme ? darkTheme : lightTheme
   return (
-    <ThemeProvider theme={choiceTheme}>
+    <ThemeProvider theme={lightTheme}>
       <Alert />
-      <Navbar handleThemeChange={handleThemeChange} theme={theme} />
+      <Navbar />
       <div
         style={{
           width: '100%',
           height: '100%',
-          backgroundColor: choiceTheme.palette.background.paper,
+          backgroundColor: lightTheme.palette.background.paper,
         }}
       >
         <Container
@@ -30,7 +23,7 @@ export function DefaultLayout() {
           sx={{
             paddingY: '2rem',
             minHeight: '90vh',
-            backgroundColor: choiceTheme.palette.background.default,
+            backgroundColor: lightTheme.palette.background.default,
           }}
         >
           <Outlet />

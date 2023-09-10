@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import path from "path";
 import MainRoutes from "./routes/index";
 import cors from "cors";
+import http from 'http'
+import {Server} from 'socket.io'
+
 dotenv.config();
 
 const server = express();
@@ -17,5 +20,21 @@ server.use((req, res) => {
   res.status(404).send("Página não encontrada");
 });
 
-server.listen(process.env.PORT);
+
+
+const serverHTTP = http.createServer(server);
+
+serverHTTP.listen(process.env.PORT);
 console.log("A porta é:", process.env.PORT);
+
+export const io = new Server(serverHTTP, {
+  cors: {
+    origin: '*',
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log(`User connected ${socket.id}`);
+  console.log('teste');
+
+});

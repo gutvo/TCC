@@ -33,8 +33,6 @@ function MainRoutes() {
 
           <Route path="/usuario" element={<ShowUser />} />
 
-          <Route path="/chat" element={<Chat />} />
-
           {/* Ong */}
 
           <Route path="/ongs" element={<ListOng />} />
@@ -45,6 +43,7 @@ function MainRoutes() {
 
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   )

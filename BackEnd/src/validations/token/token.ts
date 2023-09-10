@@ -12,7 +12,6 @@ const validateToken = async (req: Request, res: Response, next: NextFunction) =>
     }  
 
       jwt.verify(token, process.env.TOKEN_SECRET as string);
-      console.log('passou')
       return next();
     
   } catch (error) {

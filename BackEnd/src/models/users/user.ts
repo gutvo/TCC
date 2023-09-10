@@ -47,4 +47,4 @@ Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
 
 
 //sequelize.sync({force:true});
-sequelize.sync();
+// sequelize.sync();

@@ -6,9 +6,9 @@ import { message } from "../../dictionary";
 const ListCity = async (req: Request, res: Response) => {
     try {      
 
-        const { rows } = await City.findAndCountAll()
+        const data = await City.findAll()
       
-          res.json({data: rows});
+          res.json({data});
 
         } catch (error) {
           console.log(error)

@@ -25,4 +25,4 @@ export const City = sequelize.define<CityData>(
   }
 );
 
-sequelize.sync();
+// sequelize.sync();
