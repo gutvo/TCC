@@ -114,7 +114,7 @@ export function DrawerList({
             <Select
               variant="outlined"
               sx={{ height: '2.75rem', width: '95%' }}
-              defaultValue={city}
+              value={city}
               onChange={(event) => {
                 const { value } = event.target
                 dispatch(choiceCity(value.toString()))

@@ -9,7 +9,7 @@ export const message={
     
 //--------------------------------------------------------------------
 
-    userNotFound:'A conta não foi encotrada.',
+    userNotFound:'A conta não foi encontrada.',
 
     createUserSuccess:'A conta foi cadastrada com sucesso!',
     createOngSuccess:'A Organização foi cadastrada com sucesso!',

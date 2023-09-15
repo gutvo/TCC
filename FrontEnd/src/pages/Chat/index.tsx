@@ -6,8 +6,6 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { NavigateBar } from './NavigateBar'
-import { Navbar } from '@Components/Navbar'
-import { Footer } from '@Components/Footer'
 import { Input } from './Input'
 import { Content } from './Content'
 import Grid from '@mui/material/Grid'
@@ -23,17 +21,19 @@ export function Chat() {
 
   useEffect(() => {
     if (!isLogged) {
-      navigate('/login')
       toast.info('Porfavor entre na sua conta ou cadastre-se')
+      navigate('/login')
     } else {
-      socket.on('connect', () => console.log('[io] connect => new Connection'))
+      socket.on('connect', () =>
+        console.log('[io] connect => o usuário foi locado com sucesso'),
+      )
+      socket.connect()
     }
   }, [isLogged, navigate])
 
   return (
     <Box>
       <Helmet title="Chat" />
-      <Navbar />
       <Grid container height="90vh">
         <Grid width="30%" item>
           <NavigateBar />
@@ -43,7 +43,6 @@ export function Chat() {
           <Input />
         </Grid>
       </Grid>
-      <Footer />
     </Box>
   )
 }

@@ -17,7 +17,7 @@ function MainRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DefaultLayout />}>
+        <Route path="/" element={<DefaultLayout haveContainer={true} />}>
           {/* Animal */}
 
           <Route path="/animal" element={<ShowAnimal />} />
@@ -43,7 +43,9 @@ function MainRoutes() {
 
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/" element={<DefaultLayout />}>
+          <Route path="/chat" element={<Chat />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

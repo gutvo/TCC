@@ -5,6 +5,8 @@ import MainRoutes from "./routes/index";
 import cors from "cors";
 import http from 'http'
 import {Server} from 'socket.io'
+// import Association from "./models/associations";
+//Association()
 
 dotenv.config();
 
@@ -25,6 +27,7 @@ server.use((req, res) => {
 const serverHTTP = http.createServer(server);
 
 serverHTTP.listen(process.env.PORT);
+
 console.log("A porta é:", process.env.PORT);
 
 export const io = new Server(serverHTTP, {
@@ -35,6 +38,4 @@ export const io = new Server(serverHTTP, {
 
 io.on('connection', (socket) => {
   console.log(`User connected ${socket.id}`);
-  console.log('teste');
-
 });

@@ -8,7 +8,6 @@ const Create = async (req: Request, res: Response) => {
     const { email, password, name, ongData } = req.body;
     const userExist = await User.findOne({where:{email}});
 
-
     if (userExist) {
       return res.status(409).json({ message: "Esse email já foi cadastrado" });
     }
@@ -46,6 +45,7 @@ const Create = async (req: Request, res: Response) => {
         .status(201)
         .json({ message: ongData?message.createOngSuccess:message.createUserSuccess, data });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({message: message.serverError});
   }
 };

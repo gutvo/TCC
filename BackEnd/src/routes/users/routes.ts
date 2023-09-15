@@ -13,6 +13,10 @@ import Show from "../../controllers/users/show";
 import refleshToken from "../../controllers/users/refleshToken";
 import showUserValidation from "../../validations/users/show";
 import refleshTokenValidation from "../../validations/token/refleshToken";
+import CreatePhone from '../../controllers/phones/create'
+import DeletePhone from '../../controllers/phones/delete'
+import UpdatePhone from '../../controllers/phones/update'
+
 
 const userRoutes = Router();
 
@@ -26,5 +30,7 @@ userRoutes
 userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 
 userRoutes.route("/user/login").post(userLoginValidation, login);
+
+userRoutes.route("/phone").post(CreatePhone).delete(DeletePhone).put(UpdatePhone)
 
 export default userRoutes;

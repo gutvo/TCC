@@ -13,7 +13,7 @@ const login = async (req: Request, res: Response) => {
     const result = await User.findOne({ where: { email },include:{association:'ongData'}  });
 
     if (!result) {
-      return res.status(404).json({ message: message.emailOrPasswordUser });
+      return res.status(404).json({ message: message.userNotFound });
     }
 
     const comparation = await bcrypt.compare(password, result.password);
@@ -33,6 +33,7 @@ const login = async (req: Request, res: Response) => {
       token: token,
     });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: message.serverError });
   }
 };

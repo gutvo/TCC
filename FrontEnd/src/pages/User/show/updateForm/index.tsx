@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import userNotFound from '@Images/userNotFound.png'
 import { NavLink } from 'react-router-dom'
+import { PhoneTable } from './PhoneTable'
 
 export function ProfileForm({
   data,
@@ -198,6 +199,7 @@ export function ProfileForm({
       >
         Deletar Conta
       </Button>
+      <PhoneTable />
     </Box>
   )
 }

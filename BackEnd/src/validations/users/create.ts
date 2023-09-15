@@ -17,7 +17,7 @@ const userSchemas = zod.object({
         .string({ invalid_type_error: 'CEP inválido' })
         .min(8, 'CEP inválido')
         .max(9, 'CEP inválido'),
-    }).nullable()
+    }).optional()
 });
 
 const createUserValidation = async (
@@ -26,6 +26,7 @@ const createUserValidation = async (
   next: NextFunction
 ) => {
   try {
+    await userSchemas.parseAsync(req.body)
     return next();
   } catch (error) {
     if (error instanceof ZodError) {

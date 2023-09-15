@@ -1,5 +1,6 @@
 import { NewUserFormData, ProfileFormData } from '@Interfaces/pages/users'
 import { actions } from '@Redux/users/slice'
+import { Dispatch, SetStateAction } from 'react'
 import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
@@ -13,6 +14,12 @@ export interface userOngData {
   userData: { name: string; email: string }
 }
 
+export interface phoneData {
+  id: number
+  phone: string
+  ongId: number
+}
+
 export interface ongData {
   id: number
   road: string
@@ -20,6 +27,7 @@ export interface ongData {
   city: string
   uf: string
   CEP: string
+  phoneData: phoneData[]
 }
 
 export interface UserData {
@@ -55,6 +63,19 @@ export interface InitialState {
   isLogged: boolean
   city: string
   citys: CityProps[]
+}
+
+export interface CreatePhoneDTO {
+  data: {
+    data: phoneData
+    message: string
+  }
+}
+
+export interface DeletePhoneDTO {
+  data: {
+    message: string
+  }
 }
 
 // -------------------------------------------
@@ -130,5 +151,32 @@ export interface deleteActions {
     id: number
     email: number
     navigation: NavigateFunction
+  }
+}
+
+export interface CreatePhoneActions {
+  type: typeof actions.createPhoneRequest.type
+  payload: {
+    ongId: number
+    phone: string
+    handlePhoneData: Dispatch<SetStateAction<string>>
+  }
+}
+
+export interface DeletePhoneActions {
+  type: typeof actions.updatePhoneRequest.type
+  payload: {
+    id: number
+    index: number
+  }
+}
+
+export interface UpdatePhoneActions {
+  type: typeof actions.updatePhoneRequest.type
+  payload: {
+    id: number
+    phone: phoneData
+    index: number
+    setEditIndex: Dispatch<SetStateAction<number | null>>
   }
 }

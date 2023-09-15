@@ -5,7 +5,9 @@ import { toast } from 'react-toastify'
 import { api } from '@Services/backendApi'
 import {
   CityDTO,
+  CreatePhoneDTO,
   createAction,
+  CreatePhoneActions,
   createUserDTO,
   deleteActions,
   deleteDTO,
@@ -15,6 +17,8 @@ import {
   showUserDTO,
   updateAction,
   updateUserDTO,
+  DeletePhoneActions,
+  UpdatePhoneActions,
 } from '@Interfaces/redux/users'
 
 function* createUser({ payload }: createAction) {
@@ -153,6 +157,53 @@ function* getCitys() {
     }
   }
 }
+function* createPhone({ payload }: CreatePhoneActions) {
+  const { handlePhoneData, ongId, phone } = payload
+  const { createPhoneSuccess, createPhoneFailure } = actions
+  try {
+    const result: CreatePhoneDTO = yield api.post('/phone', { ongId, phone })
+    yield put(createPhoneSuccess(result.data.data))
+    toast.success(result.data.message)
+    handlePhoneData('')
+  } catch (error) {
+    yield put(createPhoneFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
+function* deletePhone({ payload }: DeletePhoneActions) {
+  const { id, index } = payload
+  const { deletePhoneSuccess, deletePhoneFailure } = actions
+  try {
+    const result: CreatePhoneDTO = yield api.delete('/phone', {
+      params: { id },
+    })
+    yield put(deletePhoneSuccess(index))
+    toast.success(result.data.message)
+  } catch (error) {
+    yield put(deletePhoneFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+function* updatePhone({ payload }: UpdatePhoneActions) {
+  const { phone, index, id, setEditIndex } = payload
+  const { updatePhoneSuccess, updatePhoneFailure } = actions
+  try {
+    const result: CreatePhoneDTO = yield api.put('/phone', { phone, id })
+    yield put(updatePhoneSuccess(index, result.data.data))
+    toast.success(result.data.message)
+    setEditIndex(null)
+  } catch (error) {
+    yield put(updatePhoneFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
 
 export default all([
   takeLatest(actions.createUserRequest.type, createUser),
@@ -161,4 +212,7 @@ export default all([
   takeLatest(actions.showUserRequest.type, showUser),
   takeLatest(actions.deleteUserRequest.type, deleteUser),
   takeLatest(actions.listCityRequest.type, getCitys),
+  takeLatest(actions.createPhoneRequest.type, createPhone),
+  takeLatest(actions.deletePhoneRequest.type, deletePhone),
+  takeLatest(actions.updatePhoneRequest.type, updatePhone),
 ])

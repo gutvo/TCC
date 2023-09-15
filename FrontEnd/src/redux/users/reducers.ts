@@ -5,9 +5,11 @@ import {
   UserData,
   loginData,
   loginProps,
+  phoneData,
 } from '@Interfaces/redux/users'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { NavigateFunction } from 'react-router-dom'
+import { Dispatch, SetStateAction } from 'react'
 
 export const reducers = {
   // create
@@ -106,6 +108,7 @@ export const reducers = {
     state.loading = false
   },
 
+  // Delete
   deleteUserRequest: {
     reducer: (state: InitialState) => {
       state.loading = true
@@ -122,6 +125,7 @@ export const reducers = {
     state.loading = false
   },
 
+  // City list
   listCityRequest: (state: InitialState) => {
     state.loading = true
   },
@@ -130,12 +134,104 @@ export const reducers = {
     action: PayloadAction<{ data: CityProps[] }>,
   ) => {
     state.citys = action.payload.data
+    if (!state.city) {
+      state.city = state.citys[0].label
+    }
     state.loading = false
   },
   listCityFailure: (state: InitialState) => {
     state.loading = false
   },
+
+  // Choice List
   choiceCity: (state: InitialState, action: PayloadAction<string>) => {
     state.city = action.payload
+  },
+
+  // Create Phone
+  createPhoneRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (
+      phone: string,
+      ongId: number,
+      handlePhoneData: Dispatch<SetStateAction<string>>,
+    ) => {
+      return { payload: { phone, handlePhoneData, ongId } }
+    },
+  },
+  createPhoneSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{ data: phoneData }>,
+    ) => {
+      state.data?.ongData?.phoneData.push(action.payload.data)
+      state.loading = false
+    },
+    prepare: (data: phoneData) => {
+      return { payload: { data } }
+    },
+  },
+  createPhoneFailure: (state: InitialState) => {
+    state.loading = false
+  },
+
+  // Delete Phone
+  deletePhoneRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (id: number, index: number) => {
+      return { payload: { id, index } }
+    },
+  },
+  deletePhoneSuccess: {
+    reducer: (state: InitialState, action: PayloadAction<number>) => {
+      if (state.data?.ongData) {
+        const { phoneData } = state.data.ongData
+        phoneData.splice(action.payload, 1)
+      }
+      state.loading = false
+    },
+    prepare: (index: number) => {
+      return { payload: index }
+    },
+  },
+  deletePhoneFailure: (state: InitialState) => {
+    state.loading = false
+  },
+
+  // Update Phone
+  updatePhoneRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (
+      phone: string,
+      id: number,
+      index: number,
+      setEditIndex: Dispatch<SetStateAction<number | null>>,
+    ) => {
+      return { payload: { phone, id, index, setEditIndex } }
+    },
+  },
+  updatePhoneSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{ index: number; phone: phoneData }>,
+    ) => {
+      if (state.data?.ongData) {
+        const { phoneData } = state.data.ongData
+        phoneData[action.payload.index] = action.payload.phone
+      }
+      state.loading = false
+    },
+    prepare: (index: number, phone: phoneData) => {
+      return { payload: { index, phone } }
+    },
+  },
+  updatePhoneFailure: (state: InitialState) => {
+    state.loading = false
   },
 }

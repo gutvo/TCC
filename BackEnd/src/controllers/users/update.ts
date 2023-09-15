@@ -5,7 +5,7 @@ import { message } from "../../dictionary";
 const Update = async (req: Request, res: Response) => {
   try {
     const email = req.body.email;
-
+    
     const result = await User.findOne({ where: { email },include:{association:'ongData'} });
 
     if (!result) {
