@@ -8,9 +8,9 @@ const Create = async (req: Request, res: Response) => {
     
     const [result,created] = await Phone.findOrCreate({where:{phone},defaults:{ongId}});
     if(!created){
-      return res.status(400).json({message: 'Esse telefone ja foi cadastrado'});
+      return res.status(400).json({message: message.ongPhoneExist});
     }
-    res.status(201).json({data:result, message: 'Telefone adicionado com sucesso'});
+    res.status(201).json({data:result, message: message.createOngPhoneSuccess});
   } catch (error) {
 
     res.status(500).json({message: message.serverError});

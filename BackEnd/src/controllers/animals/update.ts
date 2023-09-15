@@ -16,7 +16,7 @@ const Update = async (req: Request, res: Response) => {
     await result.update(req.body.data);
 
     res.json({
-      message: "As informações do animal foram alteradas com sucesso",
+      message: message.updateAnimalSuccess,
       data: result
     });
   } catch (error) {

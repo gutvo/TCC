@@ -11,11 +11,11 @@ const Delete = async (req: Request, res: Response) => {
     });
 
     if (!result) {
-      return res.status(404).json({ message: 'O Telefone não foi encontrado.'});
+      return res.status(404).json({ message: message.ongPhoneNotFound});
     }
 
     result.destroy();
-    return res.json({message: 'O número de telefone foi deletado com sucesso!'});
+    return res.json({message: message.deleteOngPhoneSuccess });
   } catch (error) {
     res.status(500).json({message: message.serverError});
   }
