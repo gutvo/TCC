@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Animal } from "../../models/animals/animal";
-import path from "path";
-import fs from "fs";
 import { message } from "../../dictionary";
+import path from "path";
+import fs from 'fs'
 
 interface animalData {
   name: string;
@@ -11,41 +11,42 @@ interface animalData {
   sex: "Macho" | "Fêmea";
   description: string;
   type: "Cachorro" | "Peixe" | "Gato" | "Outros";
-  birthday: number;
-  image: boolean|string;
-  imageData: File;
+  birthday: string;
+  image: string;
   ongId:number
 }
 
 const Create = async (req: Request, res: Response) => {
   try {
-    const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
-    
-    const result = await Animal.create({
+    const {name,race,birthday,color,description,ongId,sex,type}: animalData = req.body;
+    const file = req.file
+    await Animal.create({
       name,
       race,
       color,
       sex,
       type,
       description,
-      birthday,
-      image,
+      birthday:new Date(birthday).toISOString().slice(0, 10),
+      image:file? file?.filename:null,
       ongId
     });
 
-    const imageData = req.body.image
-
+    const imageData = req.file
+    
     if (imageData) {
-
-      const imagePath = `pet${result.id}.jpg`;
-
-      const imageBuffer = Buffer.from(imageData, "base64");
-
       const destinationPath = path.join(
         __dirname,
-        `../../images/animals/${imagePath}`
+        `../../images/animals/${imageData.filename}`
       );
-      fs.writeFileSync(destinationPath,imageBuffer);
+      fs.copyFileSync(imageData.path, destinationPath);
+
+
+      fs.unlink(imageData.path, (error) => {
+        if (error) {
+          return res.status(500).json(error);
+        }
+      });
     }
 
     res.status(201).json({ message: message.createAnimalSuccess});

@@ -19,7 +19,7 @@ const showImage = async (req: Request, res: Response) => {
 
     const imagePath = path.join(
       __dirname,
-      `../../images/animals/pet${req.params.id}.jpg`
+      `../../images/animals/${result.image}`
     );
     res.sendFile(imagePath, {
       headers: {

@@ -12,3 +12,7 @@ export function readFileAsBase64(file: File): Promise<string> {
     reader.readAsDataURL(file)
   })
 }
+
+export function convertDate(date: string | Date) {
+  return new Date(date).toISOString().split('T')[0]
+}

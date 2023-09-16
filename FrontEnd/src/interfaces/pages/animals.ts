@@ -16,8 +16,7 @@ export interface newAnimalFormData {
   sex: 'Macho' | 'Fêmea'
   description: string
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: Date
-  image: boolean
+  birthday: string
   imageData: FileList
 }
 
@@ -32,8 +31,7 @@ export interface UpdateAnimalFormData {
   sex: 'Macho' | 'Fêmea'
   description: string
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: Date
-  image: boolean
+  birthday: string
   imageData: FileList
 }
 

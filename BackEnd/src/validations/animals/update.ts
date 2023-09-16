@@ -6,14 +6,13 @@ const getFormatedDate = (currentDate: String) => {
 };
 
 const animalSchema = zod.object({
-  id: zod.number({ required_error: "O ID é obrigatório" }),
+  id: zod.string({ required_error: "O ID é obrigatório" }),
   name: zod.string({ required_error: "O nome é obrigatório" }),
   race: zod.string({ required_error: "A raça é obrigatória" }),
   color: zod.string({ required_error: "A Cor é obrigatória" }),
   sex: zod.union([zod.literal("Macho"), zod.literal("Fêmea")]),
   description: zod
     .string()
-    .min(2, "A raça é obrigatório")
     .max(255, "Não passe do Limite de 255 caracteres"),
   type: zod.union([
     zod.literal("Cachorro"),
@@ -30,11 +29,6 @@ const animalSchema = zod.object({
       path: ["birthday"],
     }
   ),
-  // imagesData: zod.union([zod.instanceof(FileList), zod.string()]).nullable(),
-  image: zod.boolean().refine((value) => typeof value === "boolean", {
-    message: "O campo image deve ser um valor booleano",
-    path: ["image"],
-  }),
 });
 
 const updateValidation = async (
@@ -43,7 +37,8 @@ const updateValidation = async (
   next: NextFunction
 ) => {
   try {
-    await animalSchema.parseAsync(req.body.data);
+    console.log(req.body)
+    await animalSchema.parseAsync(req.body);
 
     return next();
   } catch (error) {

@@ -1,30 +1,47 @@
 import { UseFormRegister } from 'react-hook-form'
-import { InputHTMLAttributes, useState } from 'react'
+import { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
 import ImageNotFound from '@Images/isNotFound.jpg'
 import { Box } from '@mui/material'
 import { UploadFile } from '@mui/icons-material'
+import { api } from '@Services/backendApi'
+import { readFileAsBase64 } from '@Functions'
 
 export interface TextFieldImageProps
   extends InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegister<any>
   name: string
-  setHaveImage: (data: boolean) => void
+  animalId?: number
 }
 
 export function TextFieldImage({
   register,
   name,
-  setHaveImage,
+  animalId,
   ...rest
 }: TextFieldImageProps) {
   const [imageUrl, setImageUrl] = useState<string | undefined | void>('')
+
+  const fetchImage = useCallback(async () => {
+    const result = await api.get(`/animal/images/${animalId}`, {
+      responseType: 'blob',
+    })
+    const convertedImage = await readFileAsBase64(result.data)
+    setImageUrl('data:image/jpeg;base64,' + convertedImage)
+  }, [animalId])
+
+  useEffect(() => {
+    if (animalId) {
+      fetchImage()
+    }
+  }, [animalId, fetchImage])
   return (
     <>
       <Box
         sx={{
-          width: '400px',
+          border: '1px solid #d4d4d4',
+          width: '450px',
           borderRadius: 2,
-          height: '400px',
+          height: '300px',
           ':hover': {
             filter: 'brightness(0.7)',
             cursor: 'pointer',
@@ -43,6 +60,7 @@ export function TextFieldImage({
           height="100%"
           width="100%"
         />
+
         <UploadFile
           color="primary"
           fontSize="large"
@@ -56,6 +74,7 @@ export function TextFieldImage({
             pointerEvents: 'none',
           }}
         />
+
         <input
           id="imageData"
           type="file"
@@ -72,7 +91,6 @@ export function TextFieldImage({
                   setImageUrl(reader.result?.toString()),
                 )
                 setImageUrl(reader.readAsDataURL(file))
-                setHaveImage(true)
               }
             },
           })}

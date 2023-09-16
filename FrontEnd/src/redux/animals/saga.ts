@@ -9,11 +9,12 @@ import {
   createAction,
   showAction,
   updateAnimalDTO,
+  updateAction,
+  deleteActions,
   AnimalData,
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { deleteActions, updateAction } from '@Interfaces/redux/users'
 import { readFileAsBase64 } from '@Functions'
 
 function* listAnimals({ payload }: FetchAction) {
@@ -33,14 +34,14 @@ function* listAnimals({ payload }: FetchAction) {
     const list: AnimalData[] = yield all(
       result.data.map(async (animal) => {
         if (animal.image) {
-          console.log('imagem do animal')
           const image = await api.get(`/animal/images/${animal.id}`, {
             responseType: 'blob',
           })
           const imageBase64 = await readFileAsBase64(image.data)
-          return { ...animal, imageData: imageBase64 }
+          return { ...animal, previewImage: imageBase64 }
+        } else {
+          return { ...animal, previewImage: '' }
         }
-        return animal
       }),
     )
 
@@ -53,16 +54,12 @@ function* listAnimals({ payload }: FetchAction) {
 function* createAnimal({ payload }: createAction) {
   const { createAnimalSuccess, createtAnimalFailure } = actions
   const { data } = payload
-  let image: string = ''
-  if (data.imageData) {
-    const { imageData } = data
-    image = yield readFileAsBase64(imageData[0])
-  }
+
+  const animalData = { ...data, imageData: data.imageData[0] }
 
   try {
     const response: createAnimalDTO = yield api.post('/animal', {
-      data,
-      image,
+      ...animalData,
     })
 
     yield put(createAnimalSuccess())
@@ -79,6 +76,7 @@ function* showAnimal({ payload }: showAction) {
   const { showAnimalSuccess, showAnimalFailure } = actions
   try {
     const response: showAnimalDTO = yield api.get(`animal/${payload.id}`)
+
     yield put(showAnimalSuccess(response.data))
   } catch (error) {
     yield put(showAnimalFailure())
@@ -89,12 +87,17 @@ function* updateAnimal({ payload }: updateAction) {
   const { updateAnimalSuccess, updateAnimalFailure } = actions
   const { data } = payload
 
+  const animalData = {
+    ...data,
+    imageData: data.imageData[0],
+  }
+
   try {
     const response: updateAnimalDTO = yield api.put('/animal', {
-      data,
+      ...animalData,
     })
 
-    yield put(updateAnimalSuccess(response.data.data))
+    yield put(updateAnimalSuccess(data))
     toast.success(response.data.message)
   } catch (error) {
     yield put(updateAnimalFailure())

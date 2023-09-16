@@ -10,7 +10,7 @@ export interface AnimalData extends Model {
   description: string;
   type: "Cachorro" | "Peixe" | "Gato" | "Outros";
   birthday: number;
-  image: boolean;
+  image: string;
   ongId:number
 }
 
@@ -44,7 +44,7 @@ export const Animal = sequelize.define<AnimalData>(
       type: DataTypes.DATEONLY,
     },
     image: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
     },
   },
   {

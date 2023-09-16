@@ -1,4 +1,4 @@
-import isNotFound from '@Images/dog.jpg'
+import isNotFound from '@Images/isNotFound.jpg'
 import { CardAnimalProps } from '@Interfaces/pages/animals'
 import {
   Card,
@@ -31,8 +31,8 @@ export function CardAnimal({ data }: CardAnimalProps) {
               component="img"
               height="186"
               src={
-                data.imageData
-                  ? `data:image/jpeg;base64,${data.imageData}`
+                data.image
+                  ? `data:image/jpeg;base64,${data.previewImage}`
                   : isNotFound
               }
               alt="Imagem do animal"

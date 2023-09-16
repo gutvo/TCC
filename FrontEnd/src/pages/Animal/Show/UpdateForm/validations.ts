@@ -13,9 +13,8 @@ export const updateAnimalFormSchema = zod.object({
     zod.literal('Gato'),
     zod.literal('Outros'),
   ]),
-  birthday: zod.date(),
+  birthday: zod.string(),
   imageData: zod.instanceof(FileList),
-  image: zod.boolean(),
 })
 
 export type UpdateAnimal = zod.infer<typeof updateAnimalFormSchema>

@@ -17,10 +17,9 @@ const Delete = async (req: Request, res: Response) => {
     }
 
     if (result.image) {
-      const imagePath = `pet${id}.jpg`;
       const destinationPath = path.join(
         __dirname,
-        `../../images/animals/${imagePath}`
+        `../../images/animals/${result.image}`
       );
       fs.unlink(destinationPath, (error) => {
         if (error) {

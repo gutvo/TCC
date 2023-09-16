@@ -1,4 +1,7 @@
-import { newAnimalFormData } from '@Interfaces/pages/animals'
+import {
+  UpdateAnimalFormData,
+  newAnimalFormData,
+} from '@Interfaces/pages/animals'
 import { actions } from '@Redux/animals/slice'
 import { NavigateFunction } from 'react-router-dom'
 import { UseFormReset } from 'react-hook-form'
@@ -18,8 +21,9 @@ export interface AnimalData {
   sex: 'Macho' | 'Fêmea'
   description: string
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: Date
-  image: boolean | string
+  birthday: string
+  image?: string
+  previewImage?: string
   imageData: FileList
 }
 
@@ -93,7 +97,7 @@ export interface showAction {
 export interface deleteActions {
   type: typeof actions.deleteAnimalRequest.type
   payload: {
-    email: number
+    id: number
     navigation: NavigateFunction
   }
 }
@@ -101,6 +105,6 @@ export interface deleteActions {
 export interface updateAction {
   type: typeof actions.updateAnimalRequest.type
   payload: {
-    data: AnimalData
+    data: UpdateAnimalFormData
   }
 }

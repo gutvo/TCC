@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   Box,
   TextField,
@@ -34,7 +34,6 @@ export function CreateAnimalForm() {
 
   const { data } = useSelector((state: RootState) => state.users)
 
-  const [haveImage, setHaveImage] = useState(false)
   const dispatch = useDispatch()
 
   function handleAddProduct(data: newAnimalFormData) {
@@ -45,10 +44,7 @@ export function CreateAnimalForm() {
     if (data && data.ongData) {
       setValue('ongId', data.ongData.id)
     }
-    if (haveImage) {
-      setValue('image', haveImage)
-    }
-  }, [setValue, data, haveImage])
+  }, [setValue, data])
 
   return (
     <>
@@ -66,20 +62,8 @@ export function CreateAnimalForm() {
         onSubmit={handleSubmit(handleAddProduct)}
       >
         <Box display="flex" justifyContent="center">
-          <TextFieldImage
-            register={register}
-            name="imageData"
-            setHaveImage={setHaveImage}
-          />
+          <TextFieldImage register={register} name="imageData" />
         </Box>
-
-        <input
-          type="checkbox"
-          style={{ display: 'none' }}
-          {...register('image', {
-            required: true,
-          })}
-        />
 
         <TextFieldStyled
           errors={errors.name}
@@ -142,13 +126,12 @@ export function CreateAnimalForm() {
         <TextFieldStyled
           errors={errors.description}
           label="Descrição"
-          placeholder="Digite a cor do animal."
+          placeholder="Digite a descrição do animal."
           multiline
           rows={3}
+          isOptional
           inputProps={{ maxLength: 255 }}
-          {...register('description', {
-            required: true,
-          })}
+          {...register('description')}
         />
 
         <TextField
