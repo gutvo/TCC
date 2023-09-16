@@ -31,7 +31,9 @@ export function CardAnimal({ data }: CardAnimalProps) {
               component="img"
               height="186"
               src={
-                data.image ? `data:image/jpeg;base64,${data.image}` : isNotFound
+                data.imageData
+                  ? `data:image/jpeg;base64,${data.imageData}`
+                  : isNotFound
               }
               alt="Imagem do animal"
             />

@@ -38,7 +38,7 @@ export function PhoneTable() {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Número de telefone</TableCell>

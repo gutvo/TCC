@@ -15,6 +15,7 @@ export default defineConfig({
       '@Services': path.resolve('./src/services'),
       '@Interfaces': path.resolve('./src/interfaces'),
       '@Validations': path.resolve('./src/validations'),
+      '@Functions': path.resolve('./src/functions/index.ts'),
     },
   },
   server: {

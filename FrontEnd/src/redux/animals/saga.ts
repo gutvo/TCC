@@ -9,10 +9,12 @@ import {
   createAction,
   showAction,
   updateAnimalDTO,
+  AnimalData,
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { deleteActions, updateAction } from '@Interfaces/redux/users'
+import { readFileAsBase64 } from '@Functions'
 
 function* listAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions
@@ -27,7 +29,22 @@ function* listAnimals({ payload }: FetchAction) {
       },
     })
     const result = animals.data
-    yield put(listAnimalSuccess(result.data, result.pagination))
+
+    const list: AnimalData[] = yield all(
+      result.data.map(async (animal) => {
+        if (animal.image) {
+          console.log('imagem do animal')
+          const image = await api.get(`/animal/images/${animal.id}`, {
+            responseType: 'blob',
+          })
+          const imageBase64 = await readFileAsBase64(image.data)
+          return { ...animal, imageData: imageBase64 }
+        }
+        return animal
+      }),
+    )
+
+    yield put(listAnimalSuccess(list, result.pagination))
   } catch (error) {
     yield put(listAnimalFailure())
   }
@@ -35,15 +52,20 @@ function* listAnimals({ payload }: FetchAction) {
 
 function* createAnimal({ payload }: createAction) {
   const { createAnimalSuccess, createtAnimalFailure } = actions
-  const { data, reset } = payload
+  const { data } = payload
+  let image: string = ''
+  if (data.imageData) {
+    const { imageData } = data
+    image = yield readFileAsBase64(imageData[0])
+  }
 
   try {
     const response: createAnimalDTO = yield api.post('/animal', {
       data,
+      image,
     })
 
     yield put(createAnimalSuccess())
-    reset()
     toast.success(response.data.message)
   } catch (error) {
     yield put(createtAnimalFailure())

@@ -21,7 +21,7 @@ const Create = async (req: Request, res: Response) => {
   try {
     const {name,race,birthday,color,description,image,ongId,sex,type}: animalData = req.body.data;
     
-    await Animal.create({
+    const result = await Animal.create({
       name,
       race,
       color,
@@ -33,21 +33,20 @@ const Create = async (req: Request, res: Response) => {
       ongId
     });
 
+    const imageData = req.body.image
 
-    // const imageData = req.body.imageAnimal
+    if (imageData) {
 
-    // if (imageData) {
+      const imagePath = `pet${result.id}.jpg`;
 
-    //   const imagePath = `pet${animal.id}.jpg`;
+      const imageBuffer = Buffer.from(imageData, "base64");
 
-    //   const imageBuffer = Buffer.from("imageData", "base64");
-
-    //   const destinationPath = path.join(
-    //     __dirname,
-    //     `../../images/animals/${imagePath}`
-    //   );
-    //   fs.writeFileSync(destinationPath,imageBuffer);
-    // }
+      const destinationPath = path.join(
+        __dirname,
+        `../../images/animals/${imagePath}`
+      );
+      fs.writeFileSync(destinationPath,imageBuffer);
+    }
 
     res.status(201).json({ message: message.createAnimalSuccess});
   } catch (error) {

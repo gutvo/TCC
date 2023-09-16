@@ -45,6 +45,9 @@
       ],
       "@Validations/*":[
         "./validations/*"
+      ],
+      "@Functions":[
+        "./functions/index.ts"
       ]
     }
   },

@@ -5,8 +5,6 @@ import MainRoutes from "./routes/index";
 import cors from "cors";
 import http from 'http'
 import {Server} from 'socket.io'
-// import Association from "./models/associations";
-//Association()
 
 dotenv.config();
 
@@ -22,7 +20,8 @@ server.use((req, res) => {
   res.status(404).send("Página não encontrada");
 });
 
-
+// ------------------------------------------------------------------
+// Código do chat
 
 const serverHTTP = http.createServer(server);
 
