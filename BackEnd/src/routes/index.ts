@@ -9,10 +9,11 @@ import { upload } from "../multer/config";
 const mainRoutes = Router();
 
 // Pega todas as cidades registradas
-mainRoutes.get('/city',ListCity)
-
+mainRoutes.get('/city', ListCity)
 
 // mainRoutes.use(validateSequelize);
+
+// Usando o multer
 mainRoutes.use(upload.single('imageData'))
 
 // rotas dos animais

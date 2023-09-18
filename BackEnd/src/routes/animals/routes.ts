@@ -15,11 +15,7 @@ const animalRoutes = Router();
 animalRoutes
   .route("/animal")
   .get(listAnimal)
-  .post((req, res,next)=>{
-    console.log(req.body);
-    console.log(req.file);
-    next()
-}, createValidation,Create)
+  .post(validateToken,createValidation,Create)
   .delete(validateToken, deleteValidator, Delete)
   .put(validateToken, updateValidation, Update);
 

@@ -141,8 +141,14 @@ export function CreateAnimalForm() {
           helperText={errors.birthday?.message}
           color="info"
           label="Data de Nascimento"
+          min="2020-01-01"
+          max="2018-12-31"
           fullWidth
-          {...register('birthday', { required: true, valueAsDate: true })}
+          {...register('birthday', {
+            required: true,
+            min: '2020-01-01',
+            max: '2023-01-01',
+          })}
         />
 
         <Button variant="contained" color="success" type="submit" fullWidth>

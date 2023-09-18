@@ -16,6 +16,9 @@ import refleshTokenValidation from "../../validations/token/refleshToken";
 import CreatePhone from '../../controllers/phones/create'
 import DeletePhone from '../../controllers/phones/delete'
 import UpdatePhone from '../../controllers/phones/update'
+import createPhoneValidation from "../../validations/phone/create";
+import updtatePhoneValidation from "../../validations/phone/update";
+import DeletePhoneValidations from "../../validations/phone/delete";
 
 
 const userRoutes = Router();
@@ -31,6 +34,6 @@ userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 
 userRoutes.route("/user/login").post(userLoginValidation, login);
 
-userRoutes.route("/phone").post(CreatePhone).delete(DeletePhone).put(UpdatePhone)
+userRoutes.route("/phone").all(validateToken).post(createPhoneValidation, CreatePhone).delete(DeletePhoneValidations,DeletePhone).put(updtatePhoneValidation,UpdatePhone)
 
 export default userRoutes;

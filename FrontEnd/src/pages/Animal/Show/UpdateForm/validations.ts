@@ -13,7 +13,14 @@ export const updateAnimalFormSchema = zod.object({
     zod.literal('Gato'),
     zod.literal('Outros'),
   ]),
-  birthday: zod.string(),
+  birthday: zod.string().superRefine((val, ctx) => {
+    if (new Date(val) < new Date('1990-01-01') || new Date(val) > new Date()) {
+      ctx.addIssue({
+        code: zod.ZodIssueCode.custom,
+        message: 'Data Inválida',
+      })
+    }
+  }),
   imageData: zod.instanceof(FileList),
 })
 
