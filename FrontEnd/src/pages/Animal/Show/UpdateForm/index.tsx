@@ -1,6 +1,5 @@
 import {
   Box,
-  TextField,
   Button,
   FormControl,
   Select,
@@ -149,12 +148,8 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
           {...register('description')}
         />
 
-        <TextField
-          InputLabelProps={{ shrink: true }}
-          type="date"
-          error={!!errors.birthday?.message}
-          helperText={errors.birthday?.message}
-          color="info"
+        <TextFieldStyled
+          errors={errors.birthday}
           label="Data de Nascimento"
           fullWidth
           {...register('birthday', {

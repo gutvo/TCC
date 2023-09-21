@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
@@ -10,8 +10,8 @@ import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import userNotFound from '@Images/userNotFound.png'
-import { NavLink } from 'react-router-dom'
 import { PhoneTable } from './PhoneTable'
+import { CepInformation } from '../../../../components/CepInformations'
 
 export function ProfileForm({
   data,
@@ -23,11 +23,11 @@ export function ProfileForm({
     handleSubmit,
     register,
     setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<UserUpdate>({
     resolver: zodResolver(updateUserFormSchema),
   })
-
   const loading = useSelector((state: RootState) => state.users.loading)
 
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
@@ -70,7 +70,8 @@ export function ProfileForm({
         complemento: '',
       })
     }
-  }, [setValue, data, editable])
+    clearErrors()
+  }, [setValue, data, editable, clearErrors])
 
   return (
     <Box>
@@ -117,38 +118,14 @@ export function ProfileForm({
                 errors={errors.ongData?.CEP}
                 disabled={!editable}
                 label="CEP"
-                sx={{ marginBottom: '0.25rem' }}
+                style={{ marginBottom: '0.25rem' }}
                 placeholder="Digite o CEP."
                 {...register('ongData.CEP', {
                   required: true,
                   onChange: getInformation,
                 })}
               />
-              {CEP ? (
-                <Box sx={{ paddingLeft: '0.5rem' }}>
-                  <Typography color={!editable ? '#acacac' : 'black'}>
-                    Rua: {CEP.logradouro}
-                  </Typography>
-                  <Typography color={!editable ? '#acacac' : 'black'}>
-                    Bairro: {CEP.bairro}
-                  </Typography>
-                  <Typography color={!editable ? '#acacac' : 'black'}>
-                    Cidade: {CEP.localidade}
-                  </Typography>
-                  <Typography color={!editable ? '#acacac' : 'black'}>
-                    Estado: {CEP.uf}
-                  </Typography>
-                </Box>
-              ) : (
-                <Box
-                  component={NavLink}
-                  target="_blank"
-                  sx={{ paddingLeft: '0.25rem' }}
-                  to="http://www.buscacep.correios.com.br"
-                >
-                  Não sei qual é o meu CEP.
-                </Box>
-              )}
+              <CepInformation CEP={CEP} editable={editable} />
             </Box>
           </>
         ) : (
@@ -189,6 +166,7 @@ export function ProfileForm({
           </Button>
         )}
       </form>
+      <PhoneTable />
       <Button
         disabled={dialogIsVisible}
         onClick={() => {
@@ -199,7 +177,6 @@ export function ProfileForm({
       >
         Deletar Conta
       </Button>
-      <PhoneTable />
     </Box>
   )
 }

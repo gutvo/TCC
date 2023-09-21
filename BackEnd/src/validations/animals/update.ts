@@ -36,7 +36,6 @@ const updateValidation = async (
   next: NextFunction
 ) => {
   try {
-    console.log(req.body)
     await animalSchema.parseAsync(req.body);
 
     return next();

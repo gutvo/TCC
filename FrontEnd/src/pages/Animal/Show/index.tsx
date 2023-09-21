@@ -16,7 +16,6 @@ export function ShowAnimal() {
   const { animalData, loading } = useSelector(
     (state: RootState) => state.animals,
   )
-  console.log(animalData)
 
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
 
@@ -34,6 +33,7 @@ export function ShowAnimal() {
       dispatch(showAnimalRequest(id, data?.ongData?.id))
     }
   }, [showAnimalRequest, dispatch, id, data])
+
   return (
     <Box>
       <Helmet title={`Pet ` + animalData?.name} />

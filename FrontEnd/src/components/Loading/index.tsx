@@ -1,6 +1,10 @@
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, SxProps } from '@mui/material'
 
-export function Loading() {
+interface LoadingProps {
+  sx?: SxProps
+}
+
+export function Loading({ sx }: LoadingProps) {
   return (
     <Box
       sx={{
@@ -8,6 +12,7 @@ export function Loading() {
         alignItems: 'center',
         height: '100vh',
         justifyContent: 'center',
+        ...sx,
       }}
     >
       <CircularProgress size={'7rem'} />

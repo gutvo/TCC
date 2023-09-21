@@ -8,7 +8,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography,
 } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,10 +15,10 @@ import PhoneInput from './PhoneInput'
 import { useEffect, useState } from 'react'
 import { phoneData } from '@Interfaces/redux/users'
 import { actions } from '@Redux/users/slice'
-import { ModeEdit, Delete, Close, Check } from '@mui/icons-material'
+import { ModeEdit, Delete } from '@mui/icons-material'
 
 export function PhoneTable() {
-  const { deletePhoneRequest, updatePhoneRequest } = actions
+  const { deletePhoneRequest } = actions
 
   const dispatch = useDispatch()
 
@@ -27,13 +26,13 @@ export function PhoneTable() {
 
   const [phone, setPhone] = useState<phoneData[]>()
 
-  const [editPhoneData, setEditPhoneData] = useState<string>('')
   const [editIndex, setEditIndex] = useState<number | null>(null)
+
   useEffect(() => {
     if (ongData) {
       setPhone(ongData.phoneData)
     }
-  }, [ongData])
+  }, [ongData, phone])
 
   return (
     <>
@@ -50,39 +49,17 @@ export function PhoneTable() {
               phone.map((row, index) => {
                 return (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      sx={{ fontSize: '1rem' }}
+                      component="th"
+                      scope="row"
+                    >
                       {editIndex === index ? (
-                        <>
-                          <TextField
-                            inputProps={{ style: { height: '0.25rem' } }}
-                            type="text"
-                            defaultValue={row.phone}
-                            onChange={(event) =>
-                              setEditPhoneData(event.target.value)
-                            }
-                          />
-                          <Button
-                            color="success"
-                            onClick={() =>
-                              dispatch(
-                                updatePhoneRequest(
-                                  editPhoneData,
-                                  row.id,
-                                  index,
-                                  setEditIndex,
-                                ),
-                              )
-                            }
-                          >
-                            <Check />
-                          </Button>
-                          <Button
-                            color="error"
-                            onClick={() => setEditIndex(null)}
-                          >
-                            <Close />
-                          </Button>
-                        </>
+                        <PhoneInput
+                          defaultValues={row.phone}
+                          update={{ id: row.id, index, setEditIndex }}
+                          width="14.6rem"
+                        />
                       ) : (
                         row.phone
                       )}
@@ -91,7 +68,6 @@ export function PhoneTable() {
                           color="warning"
                           onClick={() => {
                             setEditIndex(index)
-                            setEditPhoneData(row.phone)
                           }}
                         >
                           <ModeEdit />

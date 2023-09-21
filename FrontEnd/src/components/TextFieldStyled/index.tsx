@@ -64,6 +64,9 @@ export const TextFieldStyled = forwardRef<
           sx={{
             backgroundColor: theme.palette.background.default,
             borderRadius: 1,
+            '& .MuiInputBase-input.Mui-disabled': {
+              WebkitTextFillColor: '#777777',
+            },
           }}
           InputLabelProps={{ shrink: true }}
           required={!isOptional}

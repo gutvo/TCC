@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
@@ -8,7 +8,7 @@ import { CreateFormProps, ViaCepDTO } from '@Interfaces/pages/users'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-import { NavLink } from 'react-router-dom'
+import { CepInformation } from '@Components/CepInformations'
 
 export function OngForm({ handleAddUser }: CreateFormProps) {
   const {
@@ -93,23 +93,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
             onChange: getInformation,
           })}
         />
-        {CEP ? (
-          <Box sx={{ paddingLeft: '0.5rem' }}>
-            <Typography>Rua: {CEP.logradouro}</Typography>
-            <Typography>Bairro: {CEP.bairro}</Typography>
-            <Typography>Cidade: {CEP.localidade}</Typography>
-            <Typography>Estado: {CEP.uf}</Typography>
-          </Box>
-        ) : (
-          <Box
-            component={NavLink}
-            target="_blank"
-            sx={{ paddingLeft: '0.25rem' }}
-            to="http://www.buscacep.correios.com.br"
-          >
-            Não sei qual é o meu CEP.
-          </Box>
-        )}
+        <CepInformation CEP={CEP} />
       </Box>
 
       <TextFieldStyled
