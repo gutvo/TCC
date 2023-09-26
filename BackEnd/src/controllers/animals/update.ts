@@ -18,7 +18,6 @@ const Update = async (req: Request, res: Response) => {
     await result.update(req.body);
     const newImage = req.file
 
-    console.log(newImage)
     if(newImage){
       let destinationPath
 

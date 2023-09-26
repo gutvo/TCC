@@ -8,6 +8,7 @@ export interface ongData {
   neighborhood: string
   city: string
   CEP: string
+  cpfCnpj: string
 }
 export interface ViaCepDTO {
   logradouro: string

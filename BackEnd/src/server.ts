@@ -27,8 +27,6 @@ const serverHTTP = http.createServer(server);
 
 serverHTTP.listen(process.env.PORT);
 
-console.log("A porta é:", process.env.PORT);
-
 export const io = new Server(serverHTTP, {
   cors: {
     origin: '*',

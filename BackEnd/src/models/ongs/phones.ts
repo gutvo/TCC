@@ -13,7 +13,7 @@ export const Phone = sequelize.define<PhoneData>('phoneData', {
         autoIncrement: true,
       },
       phone:{
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(15),
     }
 },{
     tableName: "phone",

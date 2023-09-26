@@ -7,7 +7,6 @@ import { NewUserFormData } from '@Interfaces/pages/users'
 import { useNavigate } from 'react-router-dom'
 import { OngForm } from './OngForm'
 import { Helmet } from 'react-helmet-async'
-import { TextfieldCnpjCpf } from '@Components/TextFieldCnpjCpf'
 
 export function SignIn() {
   const { createUserRequest } = actions
@@ -59,7 +58,6 @@ export function SignIn() {
       ) : (
         <UserForm handleAddUser={handleAddUser} />
       )}
-      <TextfieldCnpjCpf />
     </Box>
   )
 }

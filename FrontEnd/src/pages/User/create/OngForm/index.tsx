@@ -9,6 +9,7 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { CepInformation } from '@Components/CepInformations'
+import { CepMask, CnpjCpfMask } from '@Functions'
 
 export function OngForm({ handleAddUser }: CreateFormProps) {
   const {
@@ -23,28 +24,38 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
 
   const [loadingCEP, setLoadingCEP] = useState(false)
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
+  const [inputCep, setInputCep] = useState('')
+  const [cpfCnpj, setCpfCnpj] = useState('')
 
-  async function getInformation(
+  function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
-    const { value } = event.target
     try {
-      if (value.length >= 8 && value.length <= 9) {
-        setLoadingCEP(true)
-        const response: ViaCepDTO = await getInformationsByCEP(value)
-        setCEP(response)
-        setValue('ongData.road', response.logradouro)
-        setValue('ongData.neighborhood', response.bairro)
-        setValue('ongData.city', response.localidade)
-        setValue('ongData.uf', response.uf)
-        setLoadingCEP(false)
+      const { value } = event.target
+      const formatValue = CepMask(value)
+      setInputCep(formatValue)
+
+      if (formatValue.length === 9) {
+        getCepInfo(formatValue)
       }
-      if (value.length === 0) {
+      if (formatValue.length === 0) {
         setLoadingCEP(false)
         setCEP(null)
       }
     } catch (error) {}
   }
+
+  async function getCepInfo(formatValue: string) {
+    setLoadingCEP(true)
+    const response: ViaCepDTO = await getInformationsByCEP(formatValue)
+    setCEP(response)
+    setValue('ongData.road', response.logradouro)
+    setValue('ongData.neighborhood', response.bairro)
+    setValue('ongData.city', response.localidade)
+    setValue('ongData.uf', response.uf)
+    setLoadingCEP(false)
+  }
+
   return (
     <form
       onSubmit={handleSubmit(handleAddUser)}
@@ -81,16 +92,33 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         {...register('confirmPassword', { required: true })}
       />
 
+      <TextFieldStyled
+        errors={errors.ongData?.cpfCnpj}
+        label="CPF/CNPJ"
+        value={cpfCnpj}
+        sx={{ marginBottom: '0.25rem' }}
+        placeholder="Digite o CPF ou CNPJ."
+        {...register('ongData.cpfCnpj', {
+          required: true,
+          onChange: (event) => {
+            const formatValue: string = CnpjCpfMask(event.target.value)
+            setCpfCnpj(formatValue)
+          },
+        })}
+      />
+
       <Box>
         <TextFieldStyled
           loading={loadingCEP}
           errors={errors.ongData?.CEP}
           label="CEP"
+          value={inputCep}
+          inputProps={{ maxLength: 9 }}
           sx={{ marginBottom: '0.25rem' }}
           placeholder="Digite o CEP."
           {...register('ongData.CEP', {
             required: true,
-            onChange: getInformation,
+            onChange: onChangeCep,
           })}
         />
         <CepInformation CEP={CEP} />

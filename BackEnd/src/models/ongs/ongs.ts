@@ -3,10 +3,11 @@ import { sequelize } from "../../migrations/mysql";
 
 export interface OngData extends Model {
     id:number
-    road: string;
-    neighborhood: string;
-    city: string;
+    road: string
+    neighborhood: string
+    city: string
     CEP:string
+    cpfCnpj:string
     userId:number
 
 }
@@ -34,13 +35,15 @@ export const Ong = sequelize.define<OngData>('ongData', {
         allowNull: false,
       },
       CEP:{
-        type:DataTypes.STRING,
+        type:DataTypes.STRING(9),
+        allowNull: false,
+      },
+      cpfCnpj:{
+        type:DataTypes.STRING(18),
         allowNull: false,
       },
       userId:{
         type:DataTypes.INTEGER,
-        allowNull: false,
-
       }
 },{
     tableName: "ong",

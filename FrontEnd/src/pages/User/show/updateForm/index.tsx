@@ -12,6 +12,7 @@ import { RootState } from '@Redux/store'
 import userNotFound from '@Images/userNotFound.png'
 import { PhoneTable } from './PhoneTable'
 import { CepInformation } from '../../../../components/CepInformations'
+import { CepMask, CnpjCpfMask } from '@Functions'
 
 export function ProfileForm({
   data,
@@ -33,32 +34,47 @@ export function ProfileForm({
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
   const [loadingCEP, setLoadingCEP] = useState(false)
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
+  const [inputCep, setInputCep] = useState('')
+  const [cpfCnpj, setCpfCnpj] = useState('')
 
-  async function getInformation(
+  function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
-    const { value } = event.target
     try {
-      if (value.length >= 8 && value.length <= 9) {
-        setLoadingCEP(true)
-        const response: ViaCepDTO = await getInformationsByCEP(value)
-        setCEP(response)
-        setValue('ongData.road', response.logradouro)
-        setValue('ongData.neighborhood', response.bairro)
-        setValue('ongData.city', response.localidade)
-        setLoadingCEP(false)
+      const { value } = event.target
+      const formatValue = CepMask(value)
+      setInputCep(formatValue)
+
+      if (formatValue.length === 9) {
+        getCepInfo(formatValue)
       }
-      if (value.length === 0) {
+      if (formatValue.length === 0) {
         setLoadingCEP(false)
-        setCEP(undefined)
+        setCEP(null)
       }
     } catch (error) {}
   }
 
+  async function getCepInfo(formatValue: string) {
+    setLoadingCEP(true)
+    const response: ViaCepDTO = await getInformationsByCEP(formatValue)
+    setCEP(response)
+    setValue('ongData.road', response.logradouro)
+    setValue('ongData.neighborhood', response.bairro)
+    setValue('ongData.city', response.localidade)
+    setValue('ongData.uf', response.uf)
+    setLoadingCEP(false)
+  }
+
   useEffect(() => {
-    setValue('name', data.name)
-    setValue('email', data.email)
-    setValue('ongData', data.ongData)
+    const { email, name, ongData } = data
+    setValue('name', name)
+    setValue('email', email)
+    if (ongData) {
+      setValue('ongData', ongData)
+      setCpfCnpj(ongData.cpfCnpj)
+      setInputCep(ongData.CEP)
+    }
 
     if (data.ongData) {
       const { city, neighborhood, road, uf } = data.ongData
@@ -82,7 +98,7 @@ export function ProfileForm({
         />
       ) : null}
       <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}
+        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
         onSubmit={handleSubmit(handleUpdateUser)}
       >
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -114,15 +130,32 @@ export function ProfileForm({
           <>
             <Box>
               <TextFieldStyled
+                errors={errors.ongData?.cpfCnpj}
+                disabled={!editable}
+                label="CPF/CNPJ"
+                value={cpfCnpj}
+                style={{ marginBottom: '1rem' }}
+                placeholder="Digite o CFP ou CNPJ."
+                {...register('ongData.cpfCnpj', {
+                  required: true,
+                  onChange: (event) => {
+                    const formatValue: string = CnpjCpfMask(event.target.value)
+                    setCpfCnpj(formatValue)
+                  },
+                })}
+              />
+              <TextFieldStyled
                 loading={loadingCEP}
                 errors={errors.ongData?.CEP}
                 disabled={!editable}
                 label="CEP"
+                inputProps={{ maxLength: 9 }}
+                value={inputCep}
                 style={{ marginBottom: '0.25rem' }}
                 placeholder="Digite o CEP."
                 {...register('ongData.CEP', {
                   required: true,
-                  onChange: getInformation,
+                  onChange: onChangeCep,
                 })}
               />
               <CepInformation CEP={CEP} editable={editable} />

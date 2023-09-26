@@ -17,7 +17,6 @@ const refleshTokenValidation = (req: Request, res: Response, next: NextFunction)
   } catch (error) {
     if (error instanceof ZodError) {
       const errorMessage = error.errors[0]?.message || "Erro na validação";
-      console.log(errorMessage);
 
       return res.status(400).json({ message: errorMessage });
     } else {

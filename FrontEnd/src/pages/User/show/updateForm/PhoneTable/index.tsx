@@ -1,5 +1,6 @@
 import { RootState } from '@Redux/store'
 import {
+  Box,
   Button,
   Paper,
   Table,
@@ -35,12 +36,15 @@ export function PhoneTable() {
   }, [ongData, phone])
 
   return (
-    <>
+    <Box marginTop="2rem">
+      <Typography textAlign="center" variant="h5" fontWeight="bold">
+        Tabela de Telefones
+      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Número de telefone</TableCell>
+              <TableCell>Número</TableCell>
               <TableCell align="right">Ação</TableCell>
             </TableRow>
           </TableHead>
@@ -90,7 +94,7 @@ export function PhoneTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={2}>
-                  <Typography color="red">Sem celulares cadastrados</Typography>
+                  <Typography color="red">Sem números cadastrados</Typography>
                 </TableCell>
               </TableRow>
             )}
@@ -102,6 +106,6 @@ export function PhoneTable() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   )
 }

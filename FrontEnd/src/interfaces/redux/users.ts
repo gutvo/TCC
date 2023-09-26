@@ -11,6 +11,7 @@ export interface userOngData {
   neighborhood: string
   city: string
   CEP: string
+  cpfCnpj: string
   userData: { name: string; email: string }
 }
 
@@ -27,6 +28,7 @@ export interface ongData {
   city: string
   uf: string
   CEP: string
+  cpfCnpj: string
   phoneData: phoneData[]
 }
 
