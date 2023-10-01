@@ -2,7 +2,7 @@ export const message={
     animalNotFound: 'O animal não foi encontrado.',
     serverError:'Erro no servidor.',
 
-    showAnimalImageNotFound:'O animal não tem imagem.',
+    ImageNotFound:'A imagem não encontrada.',
 
     createAnimalSuccess:'Animal Cadastrado com sucesso!',
     deleteAnimalSuccess:'O animal foi deletado com sucesso!',

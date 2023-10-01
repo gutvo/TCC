@@ -77,11 +77,16 @@ export function DrawerList({
                 />
                 <Box
                   component="img"
-                  src={userIsNotFound}
+                  src={
+                    data.image
+                      ? `data:image/jpeg;base64,${data.previewImage}`
+                      : userIsNotFound
+                  }
                   sx={{
                     width: '100%',
                     height: '100%',
                     marginTop: '1rem',
+                    borderRadius: '100%',
                   }}
                   alt="Foto de usuário"
                 />

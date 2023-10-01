@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
 import path from "path";
-import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
+import { User } from "../../models/users/user";
 
 const showImage = async (req: Request, res: Response) => {
   try {
-    const result = await Animal.findOne({ where: { id: req.params.id } });
+    const result = await User.findOne({ where: { email: req.params.email } });
     
 
     if (!result) {
       return res
         .status(404)
-        .json({ message: message.animalNotFound });
+        .json({ message: message.userNotFound });
     }
     if (!result.image) {
       return res.status(404).json({ message: message.ImageNotFound });
@@ -19,7 +19,7 @@ const showImage = async (req: Request, res: Response) => {
 
     const imagePath = path.join(
       __dirname,
-      `../../images/animals/${result.image}`
+      `../../images/users/${result.image}`
     );
     res.sendFile(imagePath, {
       headers: {

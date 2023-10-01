@@ -37,6 +37,8 @@ export interface UserData {
   name: string
   email: string
   password: string
+  image?: string
+  previewImage?: string
   ongData: ongData | null
 }
 

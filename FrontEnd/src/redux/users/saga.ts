@@ -20,6 +20,7 @@ import {
   DeletePhoneActions,
   UpdatePhoneActions,
 } from '@Interfaces/redux/users'
+import { readFileAsBase64 } from '@Functions'
 
 function* createUser({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions
@@ -72,13 +73,26 @@ function* updateUser({ payload }: updateAction) {
 function* showUser({ payload }: showAction) {
   const { showUserSuccess, showUserFailure, logout } = actions
   const { email } = payload
+
   try {
     const user: showUserDTO = yield api.get('/user', {
       params: {
         email,
       },
     })
-    yield put(showUserSuccess(user.data))
+    const { data } = user
+    let userData
+    if (user.data.image) {
+      const image: { data: File } = yield api.get(`/user/images/${email}`, {
+        responseType: 'blob',
+      })
+      const imageBase64: string = yield readFileAsBase64(image.data)
+      userData = { ...data, previewImage: imageBase64 }
+    } else {
+      userData = { ...data, previewImage: '' }
+    }
+
+    yield put(showUserSuccess(userData))
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       if (error.response?.status === 404) {

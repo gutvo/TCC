@@ -10,6 +10,7 @@ export interface UserData extends Model {
   email: string;
   password: string;
   ongId:number|null
+  image:string
 }
 
 export const User = sequelize.define<UserData>(
@@ -32,6 +33,9 @@ export const User = sequelize.define<UserData>(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
     },
   },
   {

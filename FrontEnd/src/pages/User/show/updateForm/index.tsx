@@ -130,6 +130,7 @@ export function ProfileForm({
             isDisabled={!editable}
             register={register}
             name="imageData"
+            profileEmail={data.email}
             isProfile
           />
         </Box>

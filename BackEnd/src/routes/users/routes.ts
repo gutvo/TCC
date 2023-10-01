@@ -19,7 +19,7 @@ import UpdatePhone from '../../controllers/phones/update'
 import createPhoneValidation from "../../validations/phone/create";
 import updtatePhoneValidation from "../../validations/phone/update";
 import DeletePhoneValidations from "../../validations/phone/delete";
-
+import showUserImage from '../../controllers/users/showImage'
 
 const userRoutes = Router();
 
@@ -30,10 +30,16 @@ userRoutes
   .delete(validateToken, deleteUserValidation, Delete)
   .get(validateToken, showUserValidation, Show);
 
+  userRoutes.route("/user/images/:email").get(showUserImage);
+
 userRoutes.post("/refleshtoken", refleshTokenValidation, refleshToken);
 
 userRoutes.route("/user/login").post(userLoginValidation, login);
 
-userRoutes.route("/phone").all(validateToken).post(createPhoneValidation, CreatePhone).delete(DeletePhoneValidations,DeletePhone).put(updtatePhoneValidation,UpdatePhone)
+userRoutes.route("/phone").
+all(validateToken).
+post(createPhoneValidation, CreatePhone)
+.delete(DeletePhoneValidations,DeletePhone)
+.put(updtatePhoneValidation,UpdatePhone)
 
 export default userRoutes;

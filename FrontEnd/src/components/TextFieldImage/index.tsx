@@ -14,6 +14,7 @@ export interface TextFieldImageProps
   register: UseFormRegister<any>
   name: string
   animalId?: number
+  profileEmail?: string
   isProfile?: boolean
   isDisabled?: boolean
 }
@@ -22,6 +23,7 @@ export function TextFieldImage({
   register,
   name,
   animalId,
+  profileEmail,
   isProfile = false,
   isDisabled = false,
   ...rest
@@ -40,10 +42,10 @@ export function TextFieldImage({
         },
       }
 
-  const fetchImage = useCallback(async () => {
+  const fetchAnimalImage = useCallback(async () => {
     try {
       const result: { data: Blob } = await api.get(
-        `/animal/images/${animalId}`,
+        `/${animalId ? 'animal' : 'user'}/images/${animalId || profileEmail}`,
         {
           responseType: 'blob',
         },
@@ -52,13 +54,14 @@ export function TextFieldImage({
     } catch (error) {
       setImageUrl(null)
     }
-  }, [animalId])
+  }, [animalId, profileEmail])
 
   useEffect(() => {
-    if (animalId) {
-      fetchImage()
+    if (animalId || profileEmail) {
+      fetchAnimalImage()
     }
-  }, [animalId, fetchImage])
+  }, [animalId, fetchAnimalImage, profileEmail])
+
   return (
     <>
       {animalLoading ? (
