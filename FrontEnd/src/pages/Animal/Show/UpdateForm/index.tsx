@@ -5,6 +5,7 @@ import {
   Select,
   InputLabel,
   MenuItem,
+  TextField,
 } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -148,12 +149,20 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
           {...register('description')}
         />
 
-        <TextFieldStyled
-          errors={errors.birthday}
+        <TextField
+          InputLabelProps={{ shrink: true }}
+          type="date"
+          error={!!errors.birthday?.message}
+          helperText={errors.birthday?.message}
+          color="info"
           label="Data de Nascimento"
+          min="2020-01-01"
+          max="2018-12-31"
           fullWidth
           {...register('birthday', {
             required: true,
+            min: '2020-01-01',
+            max: '2023-01-01',
           })}
         />
 
