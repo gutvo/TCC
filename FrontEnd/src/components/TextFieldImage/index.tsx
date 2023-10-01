@@ -1,6 +1,7 @@
 import { UseFormRegister } from 'react-hook-form'
 import { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
 import ImageNotFound from '@Images/isNotFound.jpg'
+import userNotFound from '@Images/userNotFound.png'
 import { Box } from '@mui/material'
 import { UploadFile } from '@mui/icons-material'
 import { api } from '@Services/backendApi'
@@ -13,17 +14,31 @@ export interface TextFieldImageProps
   register: UseFormRegister<any>
   name: string
   animalId?: number
+  isProfile?: boolean
+  isDisabled?: boolean
 }
 
 export function TextFieldImage({
   register,
   name,
   animalId,
+  isProfile = false,
+  isDisabled = false,
   ...rest
 }: TextFieldImageProps) {
   const [imageUrl, setImageUrl] = useState<string | null | void>()
-
+  const image = isProfile ? userNotFound : ImageNotFound
   const animalLoading = useSelector((state: RootState) => state.animals.loading)
+
+  const hover = isDisabled
+    ? {}
+    : {
+        filter: 'brightness(0.7)',
+        cursor: 'pointer',
+        '.iconProfile': {
+          display: 'block',
+        },
+      }
 
   const fetchImage = useCallback(async () => {
     try {
@@ -52,22 +67,16 @@ export function TextFieldImage({
         <Box
           sx={{
             border: '1px solid #d4d4d4',
-            width: '450px',
-            borderRadius: 2,
+            width: isProfile ? '300px' : '350px',
+            borderRadius: isProfile ? '100%' : 2,
             height: '300px',
-            ':hover': {
-              filter: 'brightness(0.7)',
-              cursor: 'pointer',
-              '.iconProfile': {
-                display: 'block',
-              },
-            },
+            ':hover': hover,
           }}
         >
           <Box
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: isProfile ? '100%' : 2 }}
             component="img"
-            src={imageUrl || ImageNotFound}
+            src={imageUrl || image}
             onClick={() => document.getElementById('imageData')?.click()}
             alt="Preview"
             height="100%"
@@ -83,7 +92,7 @@ export function TextFieldImage({
               fontSize: '4.5rem',
               display: 'none',
               top: '40%',
-              left: '42%',
+              left: '40%',
               pointerEvents: 'none',
             }}
           />
@@ -91,6 +100,7 @@ export function TextFieldImage({
             id="imageData"
             type="file"
             accept="image/*"
+            disabled={isDisabled}
             style={{ opacity: 0 }}
             {...rest}
             {...register('imageData', {

@@ -16,6 +16,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
     handleSubmit,
     register,
     setValue,
+    resetField,
     formState: { errors },
   } = useForm<CreateUser>({
     resolver: zodResolver(newUserFormSchema),
@@ -26,6 +27,8 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
   const [inputCep, setInputCep] = useState('')
   const [cpfCnpj, setCpfCnpj] = useState('')
+  const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
+  const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
 
   function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -40,6 +43,8 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
       }
       if (formatValue.length === 0) {
         setLoadingCEP(false)
+        setIsInVisibleNeighborhood(true)
+        setIsInVisibleRoad(true)
         setCEP(null)
       }
     } catch (error) {}
@@ -49,10 +54,24 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
     setLoadingCEP(true)
     const response: ViaCepDTO = await getInformationsByCEP(formatValue)
     setCEP(response)
-    setValue('ongData.road', response.logradouro)
-    setValue('ongData.neighborhood', response.bairro)
-    setValue('ongData.city', response.localidade)
-    setValue('ongData.uf', response.uf)
+    const { localidade, uf, logradouro, bairro } = response
+
+    setValue('ongData.city', localidade)
+    setValue('ongData.uf', uf)
+
+    if (!bairro.length) {
+      resetField('ongData.neighborhood')
+      setIsInVisibleNeighborhood(false)
+    } else {
+      setValue('ongData.neighborhood', bairro)
+    }
+
+    if (!logradouro.length) {
+      resetField('ongData.road')
+      setIsInVisibleRoad(false)
+    } else {
+      setValue('ongData.road', logradouro)
+    }
     setLoadingCEP(false)
   }
 
@@ -107,47 +126,55 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         })}
       />
 
-      <Box>
+      <TextFieldStyled
+        loading={loadingCEP}
+        errors={errors.ongData?.CEP}
+        label="CEP"
+        value={inputCep}
+        inputProps={{ maxLength: 9 }}
+        placeholder="Digite o CEP."
+        {...register('ongData.CEP', {
+          required: true,
+          onChange: onChangeCep,
+        })}
+      />
+      <Box display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}>
         <TextFieldStyled
-          loading={loadingCEP}
-          errors={errors.ongData?.CEP}
-          label="CEP"
-          value={inputCep}
-          inputProps={{ maxLength: 9 }}
-          sx={{ marginBottom: '0.25rem' }}
-          placeholder="Digite o CEP."
-          {...register('ongData.CEP', {
+          isInvisible={isInVisibleRoad}
+          label="Rua"
+          placeholder="Digite o nome da rua."
+          errors={errors.ongData?.road}
+          style={{ width: '49%', marginRight: '2%' }}
+          {...register('ongData.road', {
             required: true,
-            onChange: onChangeCep,
           })}
         />
-        <CepInformation CEP={CEP} />
+        <TextFieldStyled
+          isInvisible={isInVisibleNeighborhood}
+          label="Bairro"
+          style={{ width: '49%' }}
+          placeholder="Digite o nome da bairro."
+          errors={errors.ongData?.neighborhood}
+          {...register('ongData.neighborhood', {
+            required: true,
+          })}
+        />
       </Box>
 
       <TextFieldStyled
-        sx={{ display: 'none' }}
-        {...register('ongData.road', {
-          required: true,
-        })}
-      />
-      <TextFieldStyled
-        sx={{ display: 'none' }}
+        isInvisible={true}
         {...register('ongData.city', {
           required: true,
         })}
       />
       <TextFieldStyled
-        sx={{ display: 'none' }}
+        isInvisible={true}
         {...register('ongData.uf', {
           required: true,
         })}
       />
-      <TextFieldStyled
-        sx={{ display: 'none' }}
-        {...register('ongData.neighborhood', {
-          required: true,
-        })}
-      />
+
+      <CepInformation CEP={CEP} />
 
       <Box>
         <Button

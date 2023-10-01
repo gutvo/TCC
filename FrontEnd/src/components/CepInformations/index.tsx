@@ -1,31 +1,44 @@
 import { ViaCepDTO } from '@Interfaces/pages/users'
-import { Box, Typography } from '@mui/material'
+import { Box, SxProps, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 interface CepInformationProps {
   CEP: ViaCepDTO | null | undefined
   editable?: boolean
+  sx?: SxProps
 }
 
-export function CepInformation({ CEP, editable = true }: CepInformationProps) {
+export function CepInformation({
+  CEP,
+  editable = true,
+  sx,
+}: CepInformationProps) {
   const colorNotEditabled = '#777777'
   const colorEditabled = '#000000'
   return (
-    <>
+    <Box sx={sx}>
       {CEP ? (
         <Box sx={{ paddingLeft: '0.5rem' }}>
-          <Typography color={!editable ? colorNotEditabled : colorEditabled}>
-            Rua: {CEP.logradouro}
-          </Typography>
-          <Typography color={!editable ? colorNotEditabled : colorEditabled}>
-            Bairro: {CEP.bairro}
-          </Typography>
-          <Typography color={!editable ? colorNotEditabled : colorEditabled}>
-            Cidade: {CEP.localidade}
-          </Typography>
-          <Typography color={!editable ? colorNotEditabled : colorEditabled}>
-            Estado: {CEP.uf}
-          </Typography>
+          {CEP.logradouro && (
+            <Typography color={!editable ? colorNotEditabled : colorEditabled}>
+              Rua: {CEP.logradouro}
+            </Typography>
+          )}
+          {CEP.bairro && (
+            <Typography color={!editable ? colorNotEditabled : colorEditabled}>
+              Bairro: {CEP.bairro}
+            </Typography>
+          )}
+          {CEP.localidade && (
+            <Typography color={!editable ? colorNotEditabled : colorEditabled}>
+              Cidade: {CEP.localidade}
+            </Typography>
+          )}
+          {CEP.uf && (
+            <Typography color={!editable ? colorNotEditabled : colorEditabled}>
+              Estado: {CEP.uf}
+            </Typography>
+          )}
         </Box>
       ) : (
         <Box
@@ -37,6 +50,6 @@ export function CepInformation({ CEP, editable = true }: CepInformationProps) {
           Não sei qual é o meu CEP.
         </Box>
       )}
-    </>
+    </Box>
   )
 }

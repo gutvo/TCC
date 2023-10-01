@@ -27,6 +27,7 @@ export interface ProfileFormData {
   name: string
   email: string
   ongData: ongData | null
+  imageData: FileList
 }
 
 export interface ProfileFormProps {

@@ -50,13 +50,12 @@ function* createUser({ payload }: createAction) {
 function* updateUser({ payload }: updateAction) {
   const { updateUserSuccess, updateUserFailure } = actions
   const { setEditable } = payload
-  const { email, name, ongData } = payload.data
-
+  const { data } = payload
+  console.log(data.imageData[0])
+  const userData = { ...data, imageData: data.imageData[0] }
   try {
     const user: updateUserDTO = yield api.put('/user', {
-      email,
-      name,
-      ongData,
+      ...userData,
     })
     yield put(updateUserSuccess(user.data.data))
     setEditable(false)

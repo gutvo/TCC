@@ -17,13 +17,22 @@ export interface StyledTextFieldProps extends Omit<TextFieldProps, 'type'> {
   customType?: React.InputHTMLAttributes<HTMLInputElement>['type']
   loading?: boolean
   isOptional?: boolean
+  isInvisible?: boolean
 }
 
 export const TextFieldStyled = forwardRef<
   HTMLInputElement,
   StyledTextFieldProps
 >(function TextFieldPassword(
-  { errors, isPassword, customType = 'text', loading, isOptional, ...rest },
+  {
+    errors,
+    isPassword,
+    customType = 'text',
+    loading,
+    isOptional,
+    isInvisible,
+    ...rest
+  },
   ref,
 ) {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -67,6 +76,7 @@ export const TextFieldStyled = forwardRef<
             '& .MuiInputBase-input.Mui-disabled': {
               WebkitTextFillColor: '#777777',
             },
+            display: isInvisible ? 'none' : 'block',
           }}
           InputLabelProps={{ shrink: true }}
           required={!isOptional}

@@ -9,10 +9,10 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-import userNotFound from '@Images/userNotFound.png'
 import { PhoneTable } from './PhoneTable'
 import { CepInformation } from '../../../../components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
+import { TextFieldImage } from '@Components/TextFieldImage'
 
 export function ProfileForm({
   data,
@@ -24,6 +24,7 @@ export function ProfileForm({
     handleSubmit,
     register,
     setValue,
+    resetField,
     clearErrors,
     formState: { errors },
   } = useForm<UserUpdate>({
@@ -36,6 +37,8 @@ export function ProfileForm({
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
   const [inputCep, setInputCep] = useState('')
   const [cpfCnpj, setCpfCnpj] = useState('')
+  const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
+  const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
 
   function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -50,6 +53,8 @@ export function ProfileForm({
       }
       if (formatValue.length === 0) {
         setLoadingCEP(false)
+        setIsInVisibleNeighborhood(true)
+        setIsInVisibleRoad(true)
         setCEP(null)
       }
     } catch (error) {}
@@ -59,10 +64,26 @@ export function ProfileForm({
     setLoadingCEP(true)
     const response: ViaCepDTO = await getInformationsByCEP(formatValue)
     setCEP(response)
-    setValue('ongData.road', response.logradouro)
-    setValue('ongData.neighborhood', response.bairro)
-    setValue('ongData.city', response.localidade)
-    setValue('ongData.uf', response.uf)
+
+    const { localidade, uf, logradouro, bairro } = response
+
+    setValue('ongData.city', localidade)
+    setValue('ongData.uf', uf)
+
+    if (!bairro.length) {
+      resetField('ongData.neighborhood')
+      setIsInVisibleNeighborhood(false)
+    } else {
+      setValue('ongData.neighborhood', bairro)
+    }
+
+    if (!logradouro.length) {
+      resetField('ongData.road')
+      setIsInVisibleRoad(false)
+    } else {
+      setValue('ongData.road', logradouro)
+    }
+
     setLoadingCEP(false)
   }
 
@@ -74,10 +95,8 @@ export function ProfileForm({
       setValue('ongData', ongData)
       setCpfCnpj(ongData.cpfCnpj)
       setInputCep(ongData.CEP)
-    }
 
-    if (data.ongData) {
-      const { city, neighborhood, road, uf } = data.ongData
+      const { city, neighborhood, road, uf } = ongData
       setCEP({
         bairro: neighborhood,
         localidade: city,
@@ -85,6 +104,11 @@ export function ProfileForm({
         uf,
         complemento: '',
       })
+    }
+
+    if (!editable) {
+      setIsInVisibleRoad(true)
+      setIsInVisibleNeighborhood(true)
     }
     clearErrors()
   }, [setValue, data, editable, clearErrors])
@@ -101,11 +125,12 @@ export function ProfileForm({
         style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
         onSubmit={handleSubmit(handleUpdateUser)}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <img
-            src={userNotFound}
-            alt="Imagem do usuário"
-            style={{ width: '20rem', height: '20rem' }}
+        <Box display="flex" justifyContent="center">
+          <TextFieldImage
+            isDisabled={!editable}
+            register={register}
+            name="imageData"
+            isProfile
           />
         </Box>
 
@@ -128,38 +153,70 @@ export function ProfileForm({
 
         {data.ongData ? (
           <>
-            <Box>
+            <TextFieldStyled
+              errors={errors.ongData?.cpfCnpj}
+              disabled={!editable}
+              label="CPF/CNPJ"
+              value={cpfCnpj}
+              placeholder="Digite o CFP ou CNPJ."
+              {...register('ongData.cpfCnpj', {
+                required: true,
+                onChange: (event) => {
+                  const formatValue: string = CnpjCpfMask(event.target.value)
+                  setCpfCnpj(formatValue)
+                },
+              })}
+            />
+            <TextFieldStyled
+              loading={loadingCEP}
+              errors={errors.ongData?.CEP}
+              disabled={!editable}
+              label="CEP"
+              inputProps={{ maxLength: 9 }}
+              value={inputCep}
+              style={{ marginBottom: '0.25rem' }}
+              placeholder="Digite o CEP."
+              {...register('ongData.CEP', {
+                required: true,
+                onChange: onChangeCep,
+              })}
+            />
+            <Box display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}>
               <TextFieldStyled
-                errors={errors.ongData?.cpfCnpj}
-                disabled={!editable}
-                label="CPF/CNPJ"
-                value={cpfCnpj}
-                style={{ marginBottom: '1rem' }}
-                placeholder="Digite o CFP ou CNPJ."
-                {...register('ongData.cpfCnpj', {
+                isInvisible={isInVisibleRoad}
+                label="Rua"
+                placeholder="Digite o nome da rua."
+                errors={errors.ongData?.road}
+                style={{ width: '49%', marginRight: '2%' }}
+                {...register('ongData.road', {
                   required: true,
-                  onChange: (event) => {
-                    const formatValue: string = CnpjCpfMask(event.target.value)
-                    setCpfCnpj(formatValue)
-                  },
                 })}
               />
               <TextFieldStyled
-                loading={loadingCEP}
-                errors={errors.ongData?.CEP}
-                disabled={!editable}
-                label="CEP"
-                inputProps={{ maxLength: 9 }}
-                value={inputCep}
-                style={{ marginBottom: '0.25rem' }}
-                placeholder="Digite o CEP."
-                {...register('ongData.CEP', {
+                isInvisible={isInVisibleNeighborhood}
+                label="Bairro"
+                style={{ width: '49%' }}
+                placeholder="Digite o nome da bairro."
+                errors={errors.ongData?.neighborhood}
+                {...register('ongData.neighborhood', {
                   required: true,
-                  onChange: onChangeCep,
                 })}
               />
-              <CepInformation CEP={CEP} editable={editable} />
             </Box>
+            <TextFieldStyled
+              isInvisible={true}
+              {...register('ongData.city', {
+                required: true,
+              })}
+            />
+            <TextFieldStyled
+              isInvisible={true}
+              {...register('ongData.uf', {
+                required: true,
+              })}
+            />
+
+            <CepInformation CEP={CEP} editable={editable} />
           </>
         ) : (
           <input
@@ -199,7 +256,6 @@ export function ProfileForm({
           </Button>
         )}
       </form>
-      <PhoneTable />
       <Button
         disabled={dialogIsVisible}
         onClick={() => {
@@ -210,6 +266,8 @@ export function ProfileForm({
       >
         Deletar Conta
       </Button>
+
+      <PhoneTable />
     </Box>
   )
 }

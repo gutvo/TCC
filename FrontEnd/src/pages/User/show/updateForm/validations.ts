@@ -3,6 +3,7 @@ import * as zod from 'zod'
 export const updateUserFormSchema = zod.object({
   name: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
   email: zod.string().email('Precisa ser um email válido'),
+  imageData: zod.instanceof(FileList),
   ongData: zod
     .object({
       road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
