@@ -52,15 +52,29 @@ function* updateUser({ payload }: updateAction) {
   const { updateUserSuccess, updateUserFailure } = actions
   const { setEditable } = payload
   const { data } = payload
-  console.log(data.imageData[0])
-  const userData = { ...data, imageData: data.imageData[0] }
+
+  const userDataDTO = { ...data, imageData: data.imageData[0] }
   try {
-    const user: updateUserDTO = yield api.put('/user', {
-      ...userData,
+    const response: updateUserDTO = yield api.put('/user', {
+      ...userDataDTO,
     })
-    yield put(updateUserSuccess(user.data.data))
+    const user = response.data.data
+    let userData
+    if (user.image) {
+      const image: { data: File } = yield api.get(
+        `/user/images/${data.email}`,
+        {
+          responseType: 'blob',
+        },
+      )
+      const imageBase64: string = yield readFileAsBase64(image.data)
+      userData = { ...user, previewImage: imageBase64 }
+    } else {
+      userData = { ...user, previewImage: '' }
+    }
+    yield put(updateUserSuccess(userData))
     setEditable(false)
-    toast.success(user.data.message)
+    toast.success(response.data.message)
   } catch (error) {
     yield put(updateUserFailure())
 
