@@ -12,26 +12,32 @@ import { CreateAnimalForm } from '@Pages/Animal/Create'
 import { ShowAnimal } from '@Pages/Animal/Show'
 import { ShowUser } from '@Pages/User/show'
 import { ShowOng } from '@Pages/Organization/Show'
+import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { RootState } from '@Redux/store'
 
 function MainRoutes() {
+  const { data, isLogged } = useSelector((state: RootState) => state.users)
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DefaultLayout haveContainer={true} />}>
+        <Route path="/" element={<DefaultLayout container="md" />}>
           {/* Animal */}
+          {isLogged && data?.ongData && (
+            <>
+              <Route path="/animal" element={<ShowAnimal />} />
 
-          <Route path="/animal" element={<ShowAnimal />} />
+              <Route path="/animals" element={<ListAnimal />} />
 
-          <Route path="/animals" element={<ListAnimal />} />
-
-          <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
+              <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
+            </>
+          )}
 
           {/* User */}
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />
 
-          <Route path="/usuario" element={<ShowUser />} />
+          {isLogged && <Route path="/usuario" element={<ShowUser />} />}
 
           {/* Ong */}
 
@@ -43,6 +49,7 @@ function MainRoutes() {
 
           <Route path="*" element={<NotFound />} />
         </Route>
+
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/chat" element={<Chat />} />
         </Route>

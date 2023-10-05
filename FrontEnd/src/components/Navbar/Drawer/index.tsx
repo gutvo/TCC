@@ -4,7 +4,7 @@ import { ListDrawer } from './List'
 import userIsNotFound from '@Images/userNotFound.png'
 import { NavLink } from 'react-router-dom'
 import { drawerListProps } from '@Interfaces/components/Navbar'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { actions } from '@Redux/users/slice'
@@ -19,18 +19,12 @@ export function DrawerList({
 
   const userData = useSelector((state: RootState) => state.users.data)
   const { citys, city } = useSelector((state: RootState) => state.users)
-  const [image, setImage] = useState('')
+
   useEffect(() => {
     if (userData?.ongData) {
       dispatch(listCityRequest())
     }
   }, [dispatch, listCityRequest, userData])
-
-  useEffect(() => {
-    if (userData?.previewImage) {
-      setImage(userData?.previewImage)
-    }
-  }, [userData])
 
   return (
     <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
@@ -86,7 +80,9 @@ export function DrawerList({
                 <Box
                   component="img"
                   src={
-                    image ? `data:image/jpeg;base64,${image}` : userIsNotFound
+                    userData?.previewImage
+                      ? `data:image/jpeg;base64,${userData.previewImage}`
+                      : userIsNotFound
                   }
                   sx={{
                     width: '100%',

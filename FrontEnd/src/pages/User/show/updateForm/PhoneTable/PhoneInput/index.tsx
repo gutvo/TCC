@@ -1,7 +1,7 @@
 import { Box, Button, SxProps } from '@mui/material'
 import { useState, Dispatch, SetStateAction } from 'react'
 import MuiPhoneNumber from 'material-ui-phone-number-2'
-import { Add, Check, Close } from '@mui/icons-material'
+import { Check, Close } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/users/slice'
 import { RootState } from '@Redux/store'
@@ -23,7 +23,7 @@ export default function PhoneInput({
   defaultValues,
   update,
   sx,
-  width = '74%',
+  width = '70%',
 }: PhoneInputProps) {
   const { createPhoneRequest, updatePhoneRequest } = actions
 
@@ -59,7 +59,7 @@ export default function PhoneInput({
         sx={{
           ...sx,
           width,
-          paddingRight: '2%',
+          paddingRight: '3%',
         }}
         InputProps={{ style: { height: '2.25rem' } }}
         value={phone}
@@ -88,12 +88,11 @@ export default function PhoneInput({
         </>
       ) : (
         <Button
-          sx={{ height: '2.25rem' }}
+          sx={{ height: '2.25rem', width: '40%' }}
           variant="contained"
           onClick={() => handlePhone()}
         >
           Adicionar telefone
-          <Add />
         </Button>
       )}
     </Box>

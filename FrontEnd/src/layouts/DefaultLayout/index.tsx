@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { Container, ThemeProvider } from '@mui/material'
+import { Breakpoint, Container, ThemeProvider } from '@mui/material'
 import 'react-toastify/dist/ReactToastify.css'
 import lightTheme from '@Themes/lightTheme'
 import { Alert } from '@Components/Alert'
@@ -7,13 +7,13 @@ import { Navbar } from '@Components/Navbar'
 import { Footer } from '@Components/Footer'
 
 interface DefaultLayoutProps {
-  haveContainer?: boolean
+  container?: false | Breakpoint | undefined
 }
 
-export function DefaultLayout({ haveContainer }: DefaultLayoutProps) {
+export function DefaultLayout({ container }: DefaultLayoutProps) {
   return (
     <>
-      {haveContainer ? (
+      {container ? (
         <ThemeProvider theme={lightTheme}>
           <Alert />
           <Navbar />
@@ -25,7 +25,7 @@ export function DefaultLayout({ haveContainer }: DefaultLayoutProps) {
             }}
           >
             <Container
-              maxWidth="md"
+              maxWidth={container}
               sx={{
                 paddingY: '2rem',
                 minHeight: '90vh',

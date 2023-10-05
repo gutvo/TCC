@@ -70,9 +70,9 @@ export function TextFieldImage({
         <Box
           sx={{
             border: '1px solid #d4d4d4',
-            width: isProfile ? '300px' : '350px',
+            width: isProfile ? '200px' : '250px',
             borderRadius: isProfile ? '100%' : 2,
-            height: '300px',
+            height: '200px',
             ':hover': hover,
           }}
         >
