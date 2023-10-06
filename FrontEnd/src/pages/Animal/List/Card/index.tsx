@@ -30,11 +30,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
             <CardMedia
               component="img"
               height="186"
-              src={
-                data.image
-                  ? `data:image/jpeg;base64,${data.previewImage}`
-                  : isNotFound
-              }
+              src={data.image ? data.previewImage : isNotFound}
               alt="Imagem do animal"
             />
             <CardContent sx={{ height: '10.375rem' }}>

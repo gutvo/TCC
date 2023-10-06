@@ -21,7 +21,7 @@ export function DrawerList({
   const { citys, city } = useSelector((state: RootState) => state.users)
 
   useEffect(() => {
-    if (userData?.ongData) {
+    if (!userData?.ongData) {
       dispatch(listCityRequest())
     }
   }, [dispatch, listCityRequest, userData])
@@ -36,7 +36,6 @@ export function DrawerList({
       >
         {data ? (
           <Box
-            flex={1}
             justifyContent="center"
             textAlign="center"
             borderBottom={1}
@@ -79,11 +78,7 @@ export function DrawerList({
                 />
                 <Box
                   component="img"
-                  src={
-                    userData?.previewImage
-                      ? `data:image/jpeg;base64,${userData.previewImage}`
-                      : userIsNotFound
-                  }
+                  src={userData?.previewImage || userIsNotFound}
                   sx={{
                     width: '100%',
                     height: '100%',
@@ -117,7 +112,7 @@ export function DrawerList({
             gap: '1rem',
           }}
         >
-          {!userData?.ongData && (
+          {!userData?.ongData && city.length && (
             <Select
               variant="outlined"
               sx={{ height: '2.75rem', width: '95%' }}

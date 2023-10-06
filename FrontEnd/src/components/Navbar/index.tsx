@@ -33,7 +33,11 @@ export function Navbar() {
   }, [isLogged, showUserRequest, email, dispatch, flag])
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ fontSize: '5rem' }} elevation={0}>
+      <AppBar
+        position="static"
+        sx={{ fontSize: '5rem', backgroundColor: '#454545' }}
+        elevation={0}
+      >
         <Toolbar>
           <IconButton
             edge="start"

@@ -6,7 +6,16 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import {
+  ExpandLess,
+  ExpandMore,
+  Home,
+  Apartment,
+  Chat,
+  Pets,
+  Add,
+  List as ListIcon,
+} from '@mui/icons-material'
 import { ListItem } from './ListItem/index'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
@@ -32,19 +41,30 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
           textAlign: 'center',
         }}
       >
-        <ListItem toggleDrawer={toggleDrawer} path="/" label="Home" />
+        <ListItem
+          toggleDrawer={toggleDrawer}
+          path="/"
+          Icon={Home}
+          label="Home"
+        />
 
         {data ? (
-          <ListItem toggleDrawer={toggleDrawer} path="/chat" label="Chat" />
+          <ListItem
+            toggleDrawer={toggleDrawer}
+            path="/chat"
+            label="Chat"
+            Icon={Chat}
+          />
         ) : null}
 
-        {!data?.ongData ? (
+        {!data?.ongData && (
           <ListItem
             toggleDrawer={toggleDrawer}
             path="/ongs"
             label="Organizações"
+            Icon={Apartment}
           />
-        ) : null}
+        )}
         {isLogged && data?.ongData ? (
           <>
             <ListItemButton
@@ -52,6 +72,10 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
                 setOpenAnimalList(!openAnimalList)
               }}
             >
+              <Pets
+                color="primary"
+                sx={{ paddingRight: 1, fontSize: '2rem' }}
+              />
               <ListItemText
                 primary="Animal"
                 primaryTypographyProps={{ style: { fontSize: '1.35rem' } }}
@@ -66,12 +90,14 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
                   toggleDrawer={toggleDrawer}
                   path="/animal/cadastrar"
                   label="Cadastrar"
+                  Icon={Add}
                 />
                 <ListItem
                   paddinLeft
                   toggleDrawer={toggleDrawer}
                   path="/animals"
                   label="Lista"
+                  Icon={ListIcon}
                 />
               </List>
             </Collapse>
@@ -81,6 +107,7 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
             toggleDrawer={toggleDrawer}
             path="/animals"
             label="Lista de Animais"
+            Icon={Pets}
           />
         )}
       </List>

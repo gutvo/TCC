@@ -20,7 +20,6 @@ import {
   DeletePhoneActions,
   UpdatePhoneActions,
 } from '@Interfaces/redux/users'
-import { readFileAsBase64 } from '@Functions'
 
 function* createUser({ payload }: createAction) {
   const { createUserFailure, createUserSuccess } = actions
@@ -61,14 +60,15 @@ function* updateUser({ payload }: updateAction) {
     const user = response.data.data
     let userData
     if (user.image) {
-      const image: { data: File } = yield api.get(
-        `/user/images/${data.email}`,
-        {
+      const image: string = yield api
+        .get(`/user/images/${data.email}`, {
           responseType: 'blob',
-        },
-      )
-      const imageBase64: string = yield readFileAsBase64(image.data)
-      userData = { ...user, previewImage: imageBase64 }
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+
+      userData = { ...user, previewImage: image }
     } else {
       userData = { ...user, previewImage: '' }
     }
@@ -97,11 +97,14 @@ function* showUser({ payload }: showAction) {
     const { data } = user
     let userData
     if (user.data.image) {
-      const image: { data: File } = yield api.get(`/user/images/${email}`, {
-        responseType: 'blob',
-      })
-      const imageBase64: string = yield readFileAsBase64(image.data)
-      userData = { ...data, previewImage: imageBase64 }
+      const image: string = yield api
+        .get(`/user/images/${email}`, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+      userData = { ...data, previewImage: image }
     } else {
       userData = { ...data, previewImage: '' }
     }

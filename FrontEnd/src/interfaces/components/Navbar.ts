@@ -1,4 +1,5 @@
 import { UserData } from '@Interfaces/redux/users'
+import { SvgIconComponent } from '@mui/icons-material'
 
 // -------------------------------------------
 // Drawer
@@ -24,4 +25,5 @@ export interface listItemProps {
   label: string
   path: string
   paddinLeft?: boolean
+  Icon?: SvgIconComponent
 }

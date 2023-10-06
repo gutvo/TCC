@@ -70,7 +70,7 @@ export function TextFieldImage({
         <Box
           sx={{
             border: '1px solid #d4d4d4',
-            width: isProfile ? '200px' : '250px',
+            width: isProfile ? '250px' : '270px',
             borderRadius: isProfile ? '100%' : 2,
             height: '200px',
             ':hover': hover,
@@ -94,8 +94,8 @@ export function TextFieldImage({
               position: 'absolute',
               fontSize: '4.5rem',
               display: 'none',
-              top: '40%',
-              left: '40%',
+              top: '35%',
+              left: '35%',
               pointerEvents: 'none',
             }}
           />

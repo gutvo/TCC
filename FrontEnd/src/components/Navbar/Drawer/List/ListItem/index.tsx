@@ -7,21 +7,32 @@ export function ListItem({
   path,
   toggleDrawer,
   paddinLeft,
+  Icon,
 }: listItemProps) {
   return (
     <ListItemButton
-      sx={{ paddingX: '1.5rem' }}
-      content="button"
-      color="primary"
+      sx={{ paddingX: '1rem', paddingLeft: paddinLeft ? 2 : 1 }}
       component={NavLink}
       to={path}
       key={label}
       onClick={toggleDrawer}
       divider={true}
     >
+      {Icon && (
+        <Icon
+          color="primary"
+          sx={{
+            paddingRight: 1,
+            fontSize: '2rem',
+          }}
+        />
+      )}
       <ListItemText
-        sx={{ paddingLeft: paddinLeft ? 4 : 0 }}
-        primaryTypographyProps={{ style: { fontSize: '1.35rem' } }}
+        primaryTypographyProps={{
+          style: {
+            fontSize: '1.25rem',
+          },
+        }}
         primary={label}
       />
     </ListItemButton>

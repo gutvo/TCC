@@ -1,49 +1,71 @@
-import { Box, Typography, useTheme } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Container, Typography, Box, Grid, Link } from '@mui/material'
 
 export function Footer() {
-  const theme = useTheme()
+  const white = '#ffffff'
+  const primary = '#454545'
+  const secondary = '#d4d4d4'
+
   return (
     <Box
-      bgcolor={theme.palette.primary.main}
-      color="white"
-      height="4rem"
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      flexDirection="column"
+      component="footer"
+      sx={{
+        backgroundColor: primary,
+        color: white,
+        p: 2,
+        justifyContent: 'center',
+        height: '100%',
+      }}
     >
-      <NavLink to="">
-        <Typography
-          sx={{
-            color: '#ffff00',
-            ':hover': {
-              textDecoration: 'underline',
-            },
-          }}
-          variant="subtitle1"
-        >
-          Dar feedback
-        </Typography>
-      </NavLink>
+      <Container>
+        <Grid container spacing={5}>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6" color={white} gutterBottom>
+              Sobre o site
+            </Typography>
+            <Typography variant="body2" color={white}>
+              Site foi criado com o intuito trazer uma melhor comunicação entre
+              os adotantes e as organizações
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h6" color={white} gutterBottom>
+              Contatos
+            </Typography>
+            <Typography variant="body2" color={secondary}>
+              Email:{' '}
+              <Link
+                href="mailto:gustavo.souza@ead.eduvaleavare.com.br"
+                color="inherit"
+                alignItems="center"
+              >
+                gustavo.souza@ead.eduvaleavare.com.br
+              </Link>
+            </Typography>
 
-      <Typography variant="subtitle1">
-        Site feito por{' '}
-        <Box
-          component={NavLink}
-          target="_blank"
-          to="https://github.com/gutvo"
-          rel="noreferrer"
-          sx={{
-            color: '#ffff00',
-            ':hover': {
-              textDecoration: 'underline',
-            },
-          }}
-        >
-          @Gustavo
+            <Typography variant="body2" color={secondary}>
+              Git:{' '}
+              <Link
+                href="https://github.com/gutvo"
+                color="inherit"
+                alignItems="center"
+              >
+                {' '}
+                Gutvo9{' '}
+              </Link>
+            </Typography>
+          </Grid>
+        </Grid>
+        <Box mt={3}>
+          <Typography variant="body2" color={secondary} align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="http://localhost">
+              Pet Meu
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+          </Typography>
         </Box>
-      </Typography>
+      </Container>
     </Box>
   )
 }
