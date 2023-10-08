@@ -77,9 +77,25 @@ function* createAnimal({ payload }: createAction) {
 function* showAnimal({ payload }: showAction) {
   const { showAnimalSuccess, showAnimalFailure } = actions
   try {
-    const response: showAnimalDTO = yield api.get(`animal/${payload.id}`)
+    const animal: showAnimalDTO = yield api.get(`animal/${payload.id}`)
 
-    yield put(showAnimalSuccess(response.data))
+    const { data } = animal
+
+    let animalData
+    if (data.image) {
+      const image: string = yield api
+        .get(`/animal/images/${data.id}`, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+      animalData = { ...data, previewImage: image }
+    } else {
+      animalData = { ...data, previewImage: undefined }
+    }
+
+    yield put(showAnimalSuccess(animalData))
   } catch (error) {
     yield put(showAnimalFailure())
   }

@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { actions } from '@Redux/animals/slice'
 import { useEffect, useState } from 'react'
@@ -8,6 +8,7 @@ import { FormAnimal } from './UpdateForm'
 import { ArrowBack, Delete } from '@mui/icons-material'
 import { DeleteAnimalDialog } from './deleteDialog'
 import { Helmet } from 'react-helmet-async'
+import animalNotFound from '@Images/isNotFound.jpg'
 
 export function ShowAnimal() {
   const { id } = useLocation().state
@@ -18,6 +19,7 @@ export function ShowAnimal() {
   )
 
   const [dialogIsVisible, setDialogIsVisible] = useState(false)
+  const [date, setDate] = useState('')
 
   function handleChangeVisibleDialog() {
     setDialogIsVisible(!dialogIsVisible)
@@ -29,6 +31,13 @@ export function ShowAnimal() {
   const data = useSelector((state: RootState) => state.users.data)
 
   useEffect(() => {
+    if (animalData) {
+      const date = new Date(animalData.birthday).toLocaleDateString('pt')
+      setDate(date)
+    }
+  }, [animalData])
+
+  useEffect(() => {
     if (id) {
       dispatch(showAnimalRequest(id, data?.ongData?.id))
     }
@@ -38,60 +47,77 @@ export function ShowAnimal() {
     <Box>
       <Helmet title={`Pet ` + animalData?.name} />
 
+      {dialogIsVisible && animalData && (
+        <DeleteAnimalDialog
+          id={animalData.id}
+          dialogIsVisible={dialogIsVisible}
+          setDialogIsVisible={handleChangeVisibleDialog}
+          name={animalData.name}
+        />
+      )}
+
+      <Box
+        marginBottom={2}
+        display="flex"
+        width="100%"
+        justifyContent="space-between"
+      >
+        <Button
+          onClick={() => {
+            navigate(-1)
+          }}
+        >
+          <ArrowBack fontSize="large" />
+        </Button>
+        {data?.ongData && (
+          <Button color="error" onClick={handleChangeVisibleDialog}>
+            <Delete fontSize="large" />
+          </Button>
+        )}
+      </Box>
+
       {animalData ? (
         <>
           {data?.ongData ? (
-            <Box>
-              {dialogIsVisible ? (
-                <DeleteAnimalDialog
-                  id={animalData.id}
-                  dialogIsVisible={dialogIsVisible}
-                  setDialogIsVisible={handleChangeVisibleDialog}
-                  name={animalData.name}
-                />
-              ) : null}
-              <Box
-                marginBottom={2}
-                display="flex"
-                width="100%"
-                justifyContent="space-between"
-              >
-                <Button
-                  onClick={() => {
-                    navigate(-1)
-                  }}
-                >
-                  <ArrowBack fontSize="large" />
-                </Button>
-                <Button color="error" onClick={handleChangeVisibleDialog}>
-                  <Delete fontSize="large" />
-                </Button>
-              </Box>
-
-              <Box>
-                <FormAnimal loading={loading} animalData={animalData} />
-              </Box>
-            </Box>
+            <FormAnimal loading={loading} animalData={animalData} />
           ) : (
-            <Box>
-              <Box>
-                <Button
-                  sx={{ marginBottom: 2 }}
-                  onClick={() => {
-                    navigate(-1)
-                  }}
-                >
-                  <ArrowBack fontSize="large" />
-                </Button>
-              </Box>
-              <Typography variant="h3">Animal:</Typography>
-              <Typography>ID: {animalData.id}</Typography>
-              <Typography>Nome: {animalData.name}</Typography>
-            </Box>
+            <Grid container spacing={1}>
+              <Grid textAlign="end" item xs={12} sm={6} lg={4}>
+                <Box
+                  component="img"
+                  src={animalData?.previewImage || animalNotFound}
+                  width={'270px'}
+                  borderRadius={2}
+                  height="200px"
+                />
+              </Grid>
+              <Grid item sm={6}>
+                <Typography variant="h5">Nome: {animalData.name}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Data de nascimento: {date}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Cor: {animalData.color}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Descrição: {animalData.description}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Raça: {animalData.race}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Sexo: {animalData.sex}</Typography>
+              </Grid>
+              <Grid item sm={12}>
+                <Typography>Tipo: {animalData.type}</Typography>
+              </Grid>
+              <Button>Solicitar adoção de animal</Button>
+            </Grid>
           )}
         </>
       ) : (
-        <Typography color="error" variant="h3" textAlign="center">
+        <Typography variant="h4" textAlign="center">
           Animal não foi encontrado.
         </Typography>
       )}

@@ -15,7 +15,13 @@ const Update = async (req: Request, res: Response) => {
         .json({ message: message.animalNotFound });
     }
 
-    await result.update(req.body);
+    await result.update(
+      {
+        ...req.body,
+        updatedAt: new Date()
+      }
+    );
+
     const newImage = req.file
 
     if(newImage){

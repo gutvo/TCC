@@ -2,12 +2,9 @@ import { UseFormRegister } from 'react-hook-form'
 import { InputHTMLAttributes, useCallback, useEffect, useState } from 'react'
 import ImageNotFound from '@Images/isNotFound.jpg'
 import userNotFound from '@Images/userNotFound.png'
-import { Box } from '@mui/material'
+import { Box, Skeleton } from '@mui/material'
 import { UploadFile } from '@mui/icons-material'
 import { api } from '@Services/backendApi'
-import { useSelector } from 'react-redux'
-import { RootState } from '@Redux/store'
-import { Loading } from '@Components/Loading'
 
 export interface TextFieldImageProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -30,7 +27,7 @@ export function TextFieldImage({
 }: TextFieldImageProps) {
   const [imageUrl, setImageUrl] = useState<string | null | void>()
   const image = isProfile ? userNotFound : ImageNotFound
-  const animalLoading = useSelector((state: RootState) => state.animals.loading)
+  const [loading, setLoading] = useState(false)
 
   const hover = isDisabled
     ? {}
@@ -53,10 +50,13 @@ export function TextFieldImage({
       setImageUrl(URL.createObjectURL(result.data))
     } catch (error) {
       setImageUrl(null)
+    } finally {
+      setLoading(false)
     }
   }, [animalId, profileEmail])
 
   useEffect(() => {
+    setLoading(true)
     if (animalId || profileEmail) {
       fetchAnimalImage()
     }
@@ -64,15 +64,19 @@ export function TextFieldImage({
 
   return (
     <>
-      {animalLoading ? (
-        <Loading />
+      {loading ? (
+        <Skeleton
+          variant={isProfile ? 'circular' : 'rectangular'}
+          width={isProfile ? '250px' : '270px'}
+          height={isProfile ? '250px' : '200px'}
+        />
       ) : (
         <Box
           sx={{
             border: '1px solid #d4d4d4',
             width: isProfile ? '250px' : '270px',
             borderRadius: isProfile ? '100%' : 2,
-            height: '200px',
+            height: isProfile ? '250px' : '200px',
             ':hover': hover,
           }}
         >

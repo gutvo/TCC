@@ -68,7 +68,6 @@ export function CreateAnimalForm() {
         <TextFieldStyled
           errors={errors.name}
           label="Nome"
-          // inputProps={{ maxLength: 24 }}
           placeholder="Digite o nome do animal."
           {...register('name', {
             required: true,

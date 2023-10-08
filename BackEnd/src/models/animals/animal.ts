@@ -49,6 +49,5 @@ export const Animal = sequelize.define<AnimalData>(
   },
   {
     tableName: "animal",
-    timestamps: false,
   }
 );

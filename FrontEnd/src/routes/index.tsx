@@ -21,25 +21,20 @@ function MainRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DefaultLayout container="md" />}>
-          {/* Animal */}
           {isLogged && data?.ongData && (
             <>
-              <Route path="/animal" element={<ShowAnimal />} />
-
-              <Route path="/animals" element={<ListAnimal />} />
-
               <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
             </>
           )}
 
-          {/* User */}
+          <Route path="/animal" element={<ShowAnimal />} />
+
+          <Route path="/animals" element={<ListAnimal />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />
 
           {isLogged && <Route path="/usuario" element={<ShowUser />} />}
-
-          {/* Ong */}
 
           <Route path="/ongs" element={<ListOng />} />
 

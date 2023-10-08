@@ -41,7 +41,6 @@ const Create = async (req: Request, res: Response) => {
       );
       fs.copyFileSync(imageData.path, destinationPath);
 
-
       fs.unlink(imageData.path, (error) => {
         if (error) {
           return res.status(500).json(error);
