@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/users/slice'
@@ -52,9 +52,20 @@ export function Login() {
           isPassword
           {...register('password', { required: true })}
         />
-        <Button disabled={loading} variant="contained" type="submit" fullWidth>
-          {loading ? 'Logando...' : 'Logar'}
-        </Button>
+        <Box>
+          <Button
+            disabled={loading}
+            variant="contained"
+            type="submit"
+            fullWidth
+            sx={{ marginBottom: 1 }}
+          >
+            {loading ? 'Logando...' : 'Logar'}
+          </Button>
+          <Box component={NavLink} to="/cadastro" color="green">
+            Não tenho conta?
+          </Box>
+        </Box>
       </form>
     </Box>
   )

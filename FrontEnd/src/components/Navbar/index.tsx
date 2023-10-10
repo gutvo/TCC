@@ -7,7 +7,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { Menu as MenuIcon } from '@mui/icons-material'
+import { Menu as MenuIcon, Login } from '@mui/icons-material'
 import { DrawerList } from './Drawer'
 import { RootState } from '@Redux/store'
 import { useSelector, useDispatch } from 'react-redux'
@@ -63,15 +63,12 @@ export function Navbar() {
             justifyContent="flex-end"
             alignItems="center"
             width="100%"
-            gap={2}
+            gap={1}
           >
             {isLogged ? (
               <Profile />
             ) : (
-              <>
-                <NavLinkButton label="Cadastrar-se" href="/cadastro" />
-                <NavLinkButton label="Entrar" href="/login" />
-              </>
+              <NavLinkButton label="Entrar" href="/login" Icon={Login} />
             )}
           </Box>
         </Toolbar>

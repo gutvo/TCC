@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { CepInformation } from '@Components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
+import { NavLink } from 'react-router-dom'
 
 export function OngForm({ handleAddUser }: CreateFormProps) {
   const {
@@ -183,9 +184,13 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
           color="success"
           type="submit"
           fullWidth
+          sx={{ marginBottom: 1 }}
         >
           {loading ? 'Cadastrando...' : 'Cadastrar-se'}
         </Button>
+        <Box component={NavLink} to="/cadastro" color="green">
+          Já tem conta?
+        </Box>
       </Box>
     </form>
   )

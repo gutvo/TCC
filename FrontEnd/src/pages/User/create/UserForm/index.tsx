@@ -6,6 +6,7 @@ import { CreateFormProps } from '@Interfaces/pages/users'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
+import { NavLink } from 'react-router-dom'
 
 export function UserForm({ handleAddUser }: CreateFormProps) {
   const {
@@ -66,9 +67,13 @@ export function UserForm({ handleAddUser }: CreateFormProps) {
             color="success"
             type="submit"
             fullWidth
+            sx={{ marginBottom: 1 }}
           >
             {loading ? 'Cadastrando...' : 'Cadastrar-se'}
           </Button>
+          <Box component={NavLink} to="/cadastro" color="green">
+            Já tem conta?
+          </Box>
         </Box>
       </form>
     </Box>

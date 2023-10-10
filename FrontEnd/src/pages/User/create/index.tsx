@@ -37,7 +37,12 @@ export function SignIn() {
           onClick={() => {
             setIsOng(!isOng)
           }}
-          sx={{ width: '8rem' }}
+          sx={{
+            width: '8rem',
+            ':disabled': {
+              color: 'blue',
+            },
+          }}
           variant="outlined"
         >
           Usuário
