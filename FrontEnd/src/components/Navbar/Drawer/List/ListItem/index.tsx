@@ -16,7 +16,6 @@ export function ListItem({
       to={path}
       key={label}
       onClick={toggleDrawer}
-      divider={true}
     >
       {Icon && (
         <Icon

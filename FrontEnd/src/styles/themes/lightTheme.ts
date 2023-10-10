@@ -6,6 +6,14 @@ const temaClaro = createTheme({
     secondary: {
       main: '#101010',
     },
+    navLink: {
+      main: '#ffffff',
+    },
+  },
+  typography: {
+    button: {
+      textTransform: 'none',
+    },
   },
   components: {
     MuiPagination: {

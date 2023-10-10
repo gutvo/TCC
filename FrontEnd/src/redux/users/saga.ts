@@ -141,6 +141,20 @@ function* loginUser({ payload }: loginAction) {
       }),
     )
 
+    const { data } = user.data
+    if (data.image) {
+      const image: string = yield api
+        .get(`/user/images/${email}`, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+      data.previewImage = image
+    } else {
+      data.previewImage = ''
+    }
+
     yield put(loginSuccess(user.data))
 
     navigation('/')

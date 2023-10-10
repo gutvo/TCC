@@ -20,7 +20,7 @@ function MainRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DefaultLayout container="md" />}>
+        <Route path="/" element={<DefaultLayout container="lg" />}>
           {isLogged && data?.ongData && (
             <>
               <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />

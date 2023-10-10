@@ -40,6 +40,7 @@ export function TextFieldImage({
       }
 
   const fetchAnimalImage = useCallback(async () => {
+    setLoading(true)
     try {
       const result: { data: Blob } = await api.get(
         `/${animalId ? 'animal' : 'user'}/images/${animalId || profileEmail}`,
@@ -56,7 +57,6 @@ export function TextFieldImage({
   }, [animalId, profileEmail])
 
   useEffect(() => {
-    setLoading(true)
     if (animalId || profileEmail) {
       fetchAnimalImage()
     }

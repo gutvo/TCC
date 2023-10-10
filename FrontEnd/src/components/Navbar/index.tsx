@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
-import { AppBar, Toolbar, Box, IconButton } from '@mui/material'
-import { Menu } from '@mui/icons-material'
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { Menu as MenuIcon } from '@mui/icons-material'
 import { DrawerList } from './Drawer'
 import { RootState } from '@Redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
-import { DictionaryPaths } from './DictionaryPaths'
+import { NavLinkList } from './NavLinkList'
+import { NavLinkButton } from './NavLinkButton'
+import { Profile } from './Profile'
 
 export function Navbar() {
   const dispatch = useDispatch()
+  const theme = useTheme()
+  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { showUserRequest } = actions
 
-  const { showUserRequest, logout } = actions
-
-  const { data, isLogged } = useSelector((state: RootState) => state.users)
+  const { isLogged } = useSelector((state: RootState) => state.users)
 
   const user = localStorage.getItem('user')
   const email = user ? JSON.parse(user).email : null
@@ -33,21 +42,22 @@ export function Navbar() {
   }, [isLogged, showUserRequest, email, dispatch, flag])
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        sx={{ fontSize: '5rem', backgroundColor: '#454545' }}
-        elevation={0}
-      >
+      <AppBar position="static" sx={{ fontSize: '5rem' }} elevation={0}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            sx={{ marginRight: 2 }}
-            onClick={toggleDrawer}
-          >
-            <Menu sx={{ width: '2rem', height: '2rem' }} />
-          </IconButton>
-          <DictionaryPaths />
+          {mobile ? (
+            <>
+              <IconButton
+                edge="start"
+                color="inherit"
+                sx={{ marginRight: 2 }}
+                onClick={toggleDrawer}
+              >
+                <MenuIcon sx={{ width: '2rem', height: '2rem' }} />
+              </IconButton>
+            </>
+          ) : (
+            <NavLinkList />
+          )}
           <Box
             display="flex"
             justifyContent="flex-end"
@@ -56,53 +66,17 @@ export function Navbar() {
             gap={2}
           >
             {isLogged ? (
-              <NavLink
-                style={{
-                  fontSize: '1.1rem',
-                  fontWeight: 'bold',
-                  color: 'white',
-                }}
-                to="/"
-                color="inherit"
-                onClick={() => {
-                  dispatch(logout())
-                }}
-              >
-                Sair
-              </NavLink>
+              <Profile />
             ) : (
               <>
-                <NavLink
-                  style={{
-                    fontSize: '1.1rem',
-                    fontWeight: 'bold',
-                    color: 'white',
-                  }}
-                  to="/cadastro"
-                >
-                  Cadastrar-se
-                </NavLink>
-                <NavLink
-                  style={{
-                    fontSize: '1.1rem',
-                    fontWeight: 'bold',
-                    color: 'white',
-                  }}
-                  to="/login"
-                  color="inherit"
-                >
-                  Entrar
-                </NavLink>
+                <NavLinkButton label="Cadastrar-se" href="/cadastro" />
+                <NavLinkButton label="Entrar" href="/login" />
               </>
             )}
           </Box>
         </Toolbar>
       </AppBar>
-      <DrawerList
-        drawerOpen={drawerOpen}
-        data={data}
-        toggleDrawer={toggleDrawer}
-      />
+      <DrawerList drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
     </Box>
   )
 }

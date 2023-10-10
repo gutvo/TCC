@@ -1,4 +1,4 @@
-import { UserData } from '@Interfaces/redux/users'
+// import { UserData } from '@Interfaces/redux/users'
 import { SvgIconComponent } from '@mui/icons-material'
 
 // -------------------------------------------
@@ -7,7 +7,7 @@ import { SvgIconComponent } from '@mui/icons-material'
 export interface drawerListProps {
   drawerOpen: boolean
   toggleDrawer: () => void
-  data: UserData | null
+  // data: UserData | null
 }
 
 // -------------------------------------------
