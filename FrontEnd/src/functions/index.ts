@@ -1,3 +1,5 @@
+import { EncryptStorage } from 'encrypt-storage'
+
 export function readFileAsBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -41,3 +43,7 @@ export function CepMask(value: string) {
 
   return value
 }
+
+export const encryptStorage = new EncryptStorage(
+  import.meta.env.VITE_SECRET_KEY,
+)

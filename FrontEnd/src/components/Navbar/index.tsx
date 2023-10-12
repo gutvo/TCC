@@ -45,16 +45,14 @@ export function Navbar() {
       <AppBar position="static" sx={{ fontSize: '5rem' }} elevation={0}>
         <Toolbar>
           {mobile ? (
-            <>
-              <IconButton
-                edge="start"
-                color="inherit"
-                sx={{ marginRight: 2 }}
-                onClick={toggleDrawer}
-              >
-                <MenuIcon sx={{ width: '2rem', height: '2rem' }} />
-              </IconButton>
-            </>
+            <IconButton
+              edge="start"
+              color="inherit"
+              sx={{ marginRight: 2 }}
+              onClick={toggleDrawer}
+            >
+              <MenuIcon sx={{ width: '2rem', height: '2rem' }} />
+            </IconButton>
           ) : (
             <NavLinkList />
           )}

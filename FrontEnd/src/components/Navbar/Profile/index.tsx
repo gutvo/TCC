@@ -19,7 +19,7 @@ export function Profile() {
   const dispatch = useDispatch()
   const { logout } = actions
 
-  const teste = useSelector(
+  const priviewImageUser = useSelector(
     (state: RootState) => state.users.data?.previewImage,
   )
 
@@ -42,7 +42,10 @@ export function Profile() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: '3rem', height: '3rem' }} src={teste} />
+          <Avatar
+            sx={{ width: '3rem', height: '3rem' }}
+            src={priviewImageUser}
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -55,7 +58,7 @@ export function Profile() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem onClick={() => navigator('usuario')}>
-          <Avatar sx={{ marginRight: 1 }} /> Meu Perfil
+          <Avatar sx={{ marginRight: 1 }} src={priviewImageUser} /> Meu Perfil
         </MenuItem>
         <Divider />
         <MenuItem

@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { CepInformation } from '@Components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
-import { NavLink } from 'react-router-dom'
 
 export function OngForm({ handleAddUser }: CreateFormProps) {
   const {
@@ -77,9 +76,15 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
   }
 
   return (
-    <form
+    <Box
+      component="form"
       onSubmit={handleSubmit(handleAddUser)}
-      style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        paddingX: 4,
+      }}
     >
       <TextFieldStyled
         errors={errors.name}
@@ -181,17 +186,13 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         <Button
           disabled={loading}
           variant="contained"
-          color="success"
           type="submit"
           fullWidth
           sx={{ marginBottom: 1 }}
         >
           {loading ? 'Cadastrando...' : 'Cadastrar-se'}
         </Button>
-        <Box component={NavLink} to="/cadastro" color="green">
-          Já tem conta?
-        </Box>
       </Box>
-    </form>
+    </Box>
   )
 }

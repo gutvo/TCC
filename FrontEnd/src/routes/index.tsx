@@ -5,7 +5,7 @@ import { Home } from '@Pages/Home'
 import { NotFound } from '@Pages/NotFound'
 import { Chat } from '@Pages/Chat'
 import { ListOng } from '@Pages/Organization/List'
-import { SignIn } from '@Pages/User/create'
+import { SignIn } from '@Pages/User/create/'
 import { Login } from '@Pages/User/Login'
 import { ListAnimal } from '@Pages/Animal/List/index'
 import { CreateAnimalForm } from '@Pages/Animal/Create'
@@ -22,17 +22,12 @@ function MainRoutes() {
       <Routes>
         <Route path="/" element={<DefaultLayout container="lg" />}>
           {isLogged && data?.ongData && (
-            <>
-              <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
-            </>
+            <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
           )}
 
           <Route path="/animal" element={<ShowAnimal />} />
 
           <Route path="/animals" element={<ListAnimal />} />
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/cadastro" element={<SignIn />} />
 
           {isLogged && <Route path="/usuario" element={<ShowUser />} />}
 
@@ -48,6 +43,9 @@ function MainRoutes() {
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/chat" element={<Chat />} />
         </Route>
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/cadastro" element={<SignIn />} />
       </Routes>
     </BrowserRouter>
   )

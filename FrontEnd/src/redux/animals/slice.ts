@@ -8,7 +8,7 @@ const initialState: InitialState = {
   animalData: null,
   pagination: {
     offset: 0,
-    limit: 9,
+    limit: 12,
     count: 9,
   },
 }

@@ -1,5 +1,6 @@
 import isNotFound from '@Images/isNotFound.jpg'
 import { CardAnimalProps } from '@Interfaces/pages/animals'
+import { api } from '@Services/backendApi'
 import {
   Card,
   CardActionArea,
@@ -8,9 +9,29 @@ import {
   Grid,
   Typography,
 } from '@mui/material'
+import { useCallback, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 export function CardAnimal({ data }: CardAnimalProps) {
+  const [previewImage, setPreviewImage] = useState('')
+
+  const fetchAnimalImage = useCallback(async () => {
+    const image: string = await api
+      .get(`/animal/images/${data?.id}`, {
+        responseType: 'blob',
+      })
+      .then((response) => {
+        return URL.createObjectURL(response.data)
+      })
+
+    setPreviewImage(image)
+  }, [setPreviewImage, data?.id])
+
+  useEffect(() => {
+    if (data?.image) {
+      fetchAnimalImage()
+    }
+  }, [data.image, fetchAnimalImage])
   return (
     <Grid item key={data.id}>
       <NavLink to={`/animal`} state={{ id: data.id }}>
@@ -30,7 +51,7 @@ export function CardAnimal({ data }: CardAnimalProps) {
             <CardMedia
               component="img"
               height="186"
-              src={data.image ? data.previewImage : isNotFound}
+              src={previewImage || isNotFound}
               alt="Imagem do animal"
             />
             <CardContent sx={{ height: '10.375rem' }}>

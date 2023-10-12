@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
-import { Pagination, Typography, Box, Grid } from '@mui/material'
+import { actions as userActions } from '@Redux/users/slice'
+
+import {
+  Pagination,
+  Typography,
+  Box,
+  Grid,
+  Select,
+  MenuItem,
+} from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from './Card'
 import { Helmet } from 'react-helmet-async'
@@ -10,11 +19,13 @@ import { Loading } from '@Components/Loading'
 export function ListAnimal() {
   const dispatch = useDispatch()
   const { listAnimalRequest } = actions
+  const { listCityRequest, choiceCity } = userActions
 
   const { list, pagination, loading } = useSelector(
     (state: RootState) => state.animals,
   )
-  const { data, city } = useSelector((state: RootState) => state.users)
+
+  const { data, city, citys } = useSelector((state: RootState) => state.users)
 
   const [limit] = useState(pagination.limit)
   const [offset, setOffset] = useState(pagination.offset)
@@ -30,10 +41,36 @@ export function ListAnimal() {
     }
   }, [list, offset, limit])
 
+  useEffect(() => {
+    if (!data?.ongData) {
+      dispatch(listCityRequest())
+    }
+  }, [dispatch, listCityRequest, data])
+
   return (
     <Box>
       <Helmet title="Lista de Animais" />
 
+      {!data?.ongData && citys.length && (
+        <Select
+          variant="outlined"
+          sx={{ height: '2.75rem', width: '100%', marginBottom: 2 }}
+          value={city}
+          onChange={(event) => {
+            const { value } = event.target
+            dispatch(choiceCity(value.toString()))
+            localStorage.setItem('city', `${value}`)
+          }}
+        >
+          {citys.map((item) => {
+            return (
+              <MenuItem key={item.label} value={item.label}>
+                {item.label}
+              </MenuItem>
+            )
+          })}
+        </Select>
+      )}
       {loading ? (
         <Loading />
       ) : (

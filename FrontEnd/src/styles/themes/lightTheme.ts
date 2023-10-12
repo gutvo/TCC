@@ -1,13 +1,20 @@
-import { grey, lightBlue } from '@mui/material/colors'
+import { grey, lightBlue, orange } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
-const temaClaro = createTheme({
+const white = '#ffffff'
+
+export const lightTheme = createTheme({
   palette: {
     secondary: {
-      main: '#101010',
+      main: orange[500],
+      light: orange[300],
+      dark: orange[700],
+      contrastText: white,
+      '100': orange[500],
     },
+
     navLink: {
-      main: '#ffffff',
+      main: white,
     },
   },
   typography: {
@@ -42,5 +49,3 @@ const temaClaro = createTheme({
     },
   },
 })
-
-export default temaClaro

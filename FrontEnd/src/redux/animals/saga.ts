@@ -11,7 +11,6 @@ import {
   updateAnimalDTO,
   updateAction,
   deleteActions,
-  AnimalData,
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -30,24 +29,7 @@ function* listAnimals({ payload }: FetchAction) {
     })
     const result = animals.data
 
-    const list: AnimalData[] = yield all(
-      result.data.map(async (animal) => {
-        if (animal.image) {
-          const image: string = await api
-            .get(`/animal/images/${animal.id}`, {
-              responseType: 'blob',
-            })
-            .then((response) => {
-              return URL.createObjectURL(response.data)
-            })
-          return { ...animal, previewImage: image }
-        } else {
-          return { ...animal, previewImage: '' }
-        }
-      }),
-    )
-
-    yield put(listAnimalSuccess(list, result.pagination))
+    yield put(listAnimalSuccess(result.data, result.pagination))
   } catch (error) {
     yield put(listAnimalFailure())
   }
