@@ -54,7 +54,7 @@ export function ListAnimal() {
       {!data?.ongData && citys.length && (
         <Select
           variant="outlined"
-          sx={{ height: '2.75rem', width: '100%', marginBottom: 2 }}
+          sx={{ height: '2.75rem', width: '50%', marginBottom: 2 }}
           value={city}
           onChange={(event) => {
             const { value } = event.target
@@ -77,7 +77,7 @@ export function ListAnimal() {
         <>
           {list.length ? (
             <Box>
-              <Grid container spacing={2} justifyContent="center">
+              <Grid container spacing={5} justifyContent="center">
                 {list.map((item) => (
                   <CardAnimal key={item.id} data={item} />
                 ))}
@@ -89,6 +89,7 @@ export function ListAnimal() {
                   height: '100%',
                   justifyContent: 'center',
                   paddingTop: 4,
+                  marginBottom: 4,
                 }}
                 page={Math.ceil(offset / limit) + 1}
                 color="secondary"

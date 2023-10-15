@@ -9,7 +9,6 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-import { PhoneTable } from './PhoneTable'
 import { CepInformation } from '../../../../components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
 import { TextFieldImage } from '@Components/TextFieldImage'
@@ -115,160 +114,169 @@ export function ProfileForm({
 
   return (
     <Box>
-      {dialogIsVisible ? (
+      {dialogIsVisible && (
         <DeleteDialog
           dialogIsVisible={dialogIsVisible}
           setDialogIsVisible={setDialogIsVisible}
         />
-      ) : null}
-      <form
-        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-        onSubmit={handleSubmit(handleUpdateUser)}
-      >
-        <Box display="flex" justifyContent="center">
-          <TextFieldImage
-            isDisabled={!editable}
-            register={register}
-            name="imageData"
-            profileEmail={data.email}
-            isProfile
+      )}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box
+          component="form"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            width: '50rem',
+          }}
+          onSubmit={handleSubmit(handleUpdateUser)}
+        >
+          <Box display="flex" justifyContent="center">
+            <TextFieldImage
+              isDisabled={!editable}
+              register={register}
+              name="imageData"
+              profileEmail={data.email}
+              isProfile
+            />
+          </Box>
+
+          <TextFieldStyled
+            errors={errors.name}
+            label="Nome"
+            placeholder="Digite o seu nome."
+            {...register('name', { required: true })}
+            disabled={!editable}
           />
-        </Box>
 
-        <TextFieldStyled
-          errors={errors.name}
-          label="Nome"
-          placeholder="Digite o seu nome."
-          {...register('name', { required: true })}
-          disabled={!editable}
-        />
+          <TextFieldStyled
+            errors={errors.email}
+            label="Email"
+            disabled={!editable}
+            customType="email"
+            placeholder="Digite o seu email."
+            {...register('email', { required: true })}
+          />
 
-        <TextFieldStyled
-          errors={errors.email}
-          label="Email"
-          disabled={!editable}
-          customType="email"
-          placeholder="Digite o seu email."
-          {...register('email', { required: true })}
-        />
-
-        {data.ongData ? (
-          <>
-            <TextFieldStyled
-              errors={errors.ongData?.cpfCnpj}
-              disabled={!editable}
-              label="CPF/CNPJ"
-              value={cpfCnpj}
-              placeholder="Digite o CFP ou CNPJ."
-              {...register('ongData.cpfCnpj', {
-                required: true,
-                onChange: (event) => {
-                  const formatValue: string = CnpjCpfMask(event.target.value)
-                  setCpfCnpj(formatValue)
-                },
-              })}
-            />
-            <TextFieldStyled
-              loading={loadingCEP}
-              errors={errors.ongData?.CEP}
-              disabled={!editable}
-              label="CEP"
-              inputProps={{ maxLength: 9 }}
-              value={inputCep}
-              style={{ marginBottom: '0.25rem' }}
-              placeholder="Digite o CEP."
-              {...register('ongData.CEP', {
-                required: true,
-                onChange: onChangeCep,
-              })}
-            />
-            <Box display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}>
+          {data.ongData ? (
+            <>
               <TextFieldStyled
-                isInvisible={isInVisibleRoad}
-                label="Rua"
-                placeholder="Digite o nome da rua."
-                errors={errors.ongData?.road}
-                style={{ width: '49%', marginRight: '2%' }}
-                {...register('ongData.road', {
+                errors={errors.ongData?.cpfCnpj}
+                disabled={!editable}
+                label="CPF/CNPJ"
+                value={cpfCnpj}
+                placeholder="Digite o CFP ou CNPJ."
+                {...register('ongData.cpfCnpj', {
+                  required: true,
+                  onChange: (event) => {
+                    const formatValue: string = CnpjCpfMask(event.target.value)
+                    setCpfCnpj(formatValue)
+                  },
+                })}
+              />
+              <TextFieldStyled
+                loading={loadingCEP}
+                errors={errors.ongData?.CEP}
+                disabled={!editable}
+                label="CEP"
+                inputProps={{ maxLength: 9 }}
+                value={inputCep}
+                style={{ marginBottom: '0.25rem' }}
+                placeholder="Digite o CEP."
+                {...register('ongData.CEP', {
+                  required: true,
+                  onChange: onChangeCep,
+                })}
+              />
+              <Box
+                display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}
+              >
+                <TextFieldStyled
+                  isInvisible={isInVisibleRoad}
+                  label="Rua"
+                  placeholder="Digite o nome da rua."
+                  errors={errors.ongData?.road}
+                  style={{ width: '49%', marginRight: '2%' }}
+                  {...register('ongData.road', {
+                    required: true,
+                  })}
+                />
+                <TextFieldStyled
+                  isInvisible={isInVisibleNeighborhood}
+                  label="Bairro"
+                  style={{ width: '49%' }}
+                  placeholder="Digite o nome da bairro."
+                  errors={errors.ongData?.neighborhood}
+                  {...register('ongData.neighborhood', {
+                    required: true,
+                  })}
+                />
+              </Box>
+              <TextFieldStyled
+                isInvisible={true}
+                {...register('ongData.city', {
                   required: true,
                 })}
               />
               <TextFieldStyled
-                isInvisible={isInVisibleNeighborhood}
-                label="Bairro"
-                style={{ width: '49%' }}
-                placeholder="Digite o nome da bairro."
-                errors={errors.ongData?.neighborhood}
-                {...register('ongData.neighborhood', {
+                isInvisible={true}
+                {...register('ongData.uf', {
                   required: true,
                 })}
               />
+
+              <CepInformation CEP={CEP} editable={editable} />
+            </>
+          ) : (
+            <input
+              style={{ display: 'none' }}
+              {...register('ongData', { required: true, value: null })}
+            />
+          )}
+          {editable ? (
+            <Box>
+              <Button
+                sx={{ width: '48%', marginRight: '4%' }}
+                variant="contained"
+                color="success"
+                type="submit"
+              >
+                {loading ? 'Salvando...' : 'Salvar'}
+              </Button>
+              <Button
+                sx={{ width: '48%' }}
+                variant="contained"
+                onClick={() => {
+                  setEditable(false)
+                }}
+                color="inherit"
+              >
+                cancelar
+              </Button>
             </Box>
-            <TextFieldStyled
-              isInvisible={true}
-              {...register('ongData.city', {
-                required: true,
-              })}
-            />
-            <TextFieldStyled
-              isInvisible={true}
-              {...register('ongData.uf', {
-                required: true,
-              })}
-            />
-
-            <CepInformation CEP={CEP} editable={editable} />
-          </>
-        ) : (
-          <input
-            style={{ display: 'none' }}
-            {...register('ongData', { required: true, value: null })}
-          />
-        )}
-        {editable ? (
-          <Box>
+          ) : (
             <Button
-              sx={{ width: '48%', marginRight: '4%' }}
-              variant="contained"
-              color="success"
-              type="submit"
-            >
-              {loading ? 'Salvando...' : 'Salvar'}
-            </Button>
-            <Button
-              sx={{ width: '48%' }}
               variant="contained"
               onClick={() => {
-                setEditable(false)
+                setEditable(true)
               }}
-              color="inherit"
             >
-              cancelar
+              Editar
             </Button>
-          </Box>
-        ) : (
-          <Button
-            variant="contained"
-            onClick={() => {
-              setEditable(true)
-            }}
-          >
-            Editar
-          </Button>
-        )}
-      </form>
-      <Button
-        disabled={dialogIsVisible}
-        onClick={() => {
-          setDialogIsVisible(true)
-        }}
-        sx={{ marginTop: 1 }}
-        color="error"
-      >
-        Deletar Conta
-      </Button>
+          )}
 
-      <PhoneTable />
+          <Button
+            disabled={dialogIsVisible}
+            onClick={() => {
+              setDialogIsVisible(true)
+            }}
+            sx={{ marginTop: 1, justifyContent: 'start', width: '7rem' }}
+            color="error"
+          >
+            Deletar Conta
+          </Button>
+        </Box>
+      </Box>
     </Box>
   )
 }

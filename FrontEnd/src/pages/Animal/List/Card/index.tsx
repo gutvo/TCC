@@ -1,6 +1,7 @@
 import isNotFound from '@Images/isNotFound.jpg'
 import { CardAnimalProps } from '@Interfaces/pages/animals'
 import { api } from '@Services/backendApi'
+import { CalendarMonth, Pets } from '@mui/icons-material'
 import {
   Card,
   CardActionArea,
@@ -8,11 +9,13 @@ import {
   CardMedia,
   Grid,
   Typography,
+  Button,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export function CardAnimal({ data }: CardAnimalProps) {
+  const navigation = useNavigate()
   const [previewImage, setPreviewImage] = useState('')
 
   const fetchAnimalImage = useCallback(async () => {
@@ -34,50 +37,41 @@ export function CardAnimal({ data }: CardAnimalProps) {
   }, [data.image, fetchAnimalImage])
   return (
     <Grid item key={data.id}>
-      <NavLink to={`/animal`} state={{ id: data.id }}>
-        <Card
-          sx={{
-            width: '17rem',
-            height: '19rem',
-            borderRadius: 1,
-            margin: 'auto',
-            ':hover': {
-              transform: 'scale(1.06)',
-              transition: '400ms',
-            },
-          }}
-        >
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="186"
-              src={previewImage || isNotFound}
-              alt="Imagem do animal"
-            />
-            <CardContent sx={{ height: '10.375rem' }}>
-              <Typography variant="subtitle1" fontWeight="bold" component="div">
-                {data.name}
-              </Typography>
-              {data.description ? (
-                <Typography
-                  sx={{
-                    height: '100%',
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
-                    wordBreak: 'break-all',
-                  }}
-                >
-                  {data.description}
-                </Typography>
-              ) : (
-                <Typography color="red">Sem descrição</Typography>
-              )}
-            </CardContent>
+      <Card
+        sx={{
+          width: '17rem',
+          height: '20rem',
+          borderRadius: 1,
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="186"
+          src={previewImage || isNotFound}
+          alt="Imagem do animal"
+        />
+        <CardContent>
+          <Typography variant="subtitle1" fontWeight="bold">
+            Nome: {data.name}
+          </Typography>
+          <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            <CalendarMonth color="primary" sx={{ paddingRight: 1 }} />
+            {new Date(data.birthday).toLocaleDateString('pt')}
+          </Typography>
+          <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            <Pets color="primary" sx={{ paddingRight: 1 }} /> {data.race}
+          </Typography>
+
+          <CardActionArea sx={{ width: '50%' }}>
+            <Button
+              onClick={() => navigation('/animal', { state: { id: data.id } })}
+              size="small"
+            >
+              Visualizar animal
+            </Button>
           </CardActionArea>
-        </Card>
-      </NavLink>
+        </CardContent>
+      </Card>
     </Grid>
   )
 }

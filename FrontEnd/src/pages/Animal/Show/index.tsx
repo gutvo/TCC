@@ -82,7 +82,7 @@ export function ShowAnimal() {
             <FormAnimal loading={loading} animalData={animalData} />
           ) : (
             <Grid container spacing={1}>
-              <Grid textAlign="end" item xs={12} sm={6} lg={4}>
+              <Grid textAlign="center" item xs={12} sm={6} lg={4}>
                 <Box
                   component="img"
                   src={animalData?.previewImage || animalNotFound}
@@ -112,7 +112,7 @@ export function ShowAnimal() {
               <Grid item sm={12}>
                 <Typography>Tipo: {animalData.type}</Typography>
               </Grid>
-              <Button>Solicitar adoção de animal</Button>
+              <Button variant="contained">Solicitar adoção de animal</Button>
             </Grid>
           )}
         </>

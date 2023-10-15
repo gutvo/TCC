@@ -27,8 +27,6 @@ function MainRoutes() {
 
           <Route path="/animal" element={<ShowAnimal />} />
 
-          <Route path="/animals" element={<ListAnimal />} />
-
           {isLogged && <Route path="/usuario" element={<ShowUser />} />}
 
           <Route path="/ongs" element={<ListOng />} />
@@ -42,6 +40,7 @@ function MainRoutes() {
 
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/chat" element={<Chat />} />
+          <Route path="/animals" element={<ListAnimal />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

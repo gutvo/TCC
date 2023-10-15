@@ -37,9 +37,6 @@ export function PhoneTable() {
 
   return (
     <Box marginTop="2rem">
-      <Typography textAlign="center" variant="h5" fontWeight="bold">
-        Tabela de Telefones
-      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
