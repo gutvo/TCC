@@ -1,15 +1,16 @@
 import { Container, Typography, Box, Grid, Link } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 export function Footer() {
+  const { palette } = useTheme()
   const white = '#ffffff'
-  const primary = '#454545'
   const secondary = '#d4d4d4'
 
   return (
     <Box
       component="footer"
       sx={{
-        backgroundColor: primary,
+        backgroundColor: palette.primary.main,
         color: white,
         p: 2,
         justifyContent: 'center',
@@ -49,7 +50,6 @@ export function Footer() {
                 color="inherit"
                 alignItems="center"
               >
-                {' '}
                 Gutvo9{' '}
               </Link>
             </Typography>

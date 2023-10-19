@@ -41,10 +41,10 @@ function MainRoutes() {
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/chat" element={<Chat />} />
           <Route path="/animals" element={<ListAnimal />} />
-        </Route>
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<SignIn />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<SignIn />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

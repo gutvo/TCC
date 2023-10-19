@@ -69,6 +69,7 @@ export function UserForm({ handleAddUser }: CreateFormProps) {
           <Button
             disabled={loading}
             variant="contained"
+            color="secondary"
             type="submit"
             fullWidth
             sx={{ marginBottom: 1 }}

@@ -20,11 +20,11 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { Helmet } from 'react-helmet-async'
 import { useEffect, useState } from 'react'
 import { encryptStorage } from '@Functions'
-import { ArrowBack } from '@mui/icons-material'
+import loginImage from '@Images/loginImage.jpg'
 
 export function Login() {
   const navigation = useNavigate()
-  const { palette, breakpoints } = useTheme()
+  const { breakpoints } = useTheme()
 
   const mediaQuerySmall = useMediaQuery(breakpoints.up('sm'))
   const mediaQueryMiddle = useMediaQuery(breakpoints.up('md'))
@@ -62,13 +62,7 @@ export function Login() {
   return (
     <Grid container>
       <Helmet title="Login" />
-      <Grid item xs={12} md={8}>
-        <Button
-          onClick={() => navigation(-1)}
-          sx={{ marginTop: 1, marginLeft: 1, justifyContent: 'start' }}
-        >
-          <ArrowBack fontSize="large" />
-        </Button>
+      <Grid item xs={12} md={7}>
         <Box
           component="form"
           sx={{
@@ -79,7 +73,7 @@ export function Login() {
             gap: '1.5rem',
             paddingX: 2,
             borderRadius: 2,
-            marginX: mediaQueryMiddle ? 20 : mediaQuerySmall ? 10 : 2,
+            marginX: mediaQueryMiddle ? 10 : mediaQuerySmall ? 14 : 2,
           }}
           onSubmit={handleSubmit(handleLogin)}
         >
@@ -129,43 +123,24 @@ export function Login() {
                 }
                 label="Lembrar de login"
               />
-              {/* <Box component={NavLink} to="/cadastro" color="green">
-                Não tenho conta?
-              </Box> */}
+              <Button onClick={() => navigation('/cadastro')} color="primary">
+                Não tem uma conta?
+              </Button>
             </Box>
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Box
-          paddingY="2rem"
-          height="100%"
-          width="100"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          textAlign="center"
-          alignItems="center"
-          bgcolor={palette.primary.main}
-        >
-          <Typography
-            variant="h4"
-            marginBottom={2}
-            color={palette.primary.contrastText}
-            fontWeight="bold"
-          >
-            Ainda não se cadastrou?
-          </Typography>
-          <Button
-            color="secondary"
-            sx={{ paddingX: '4rem' }}
-            variant="contained"
-            onClick={() => navigation('/cadastro')}
-          >
-            Cadastrar-se
-          </Button>
-        </Box>
-      </Grid>
+      {mediaQueryMiddle && (
+        <Grid item xs={12} md={5}>
+          <Box
+            component="img"
+            alt="Foto de cachorro tirada por Alvan Nee na Unsplash"
+            src={loginImage}
+            width="100%"
+            height="100%"
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

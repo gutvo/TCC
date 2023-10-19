@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useMediaQuery } from '@mui/material'
+import { Box, Button, Typography, useMediaQuery, Paper } from '@mui/material'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { actions } from '@Redux/users/slice'
@@ -28,11 +28,22 @@ export function SignIn() {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      height="100vh"
+      minHeight="100vh"
     >
       <Helmet title="Cadastro de Conta" />
-      <Box width="45rem">
-        <Typography variant={mediaQuerySmall ? 'h4' : 'h3'} textAlign="center">
+      <Box
+        width="45rem"
+        paddingY={5}
+        marginY={5}
+        borderRadius={2}
+        component={Paper}
+        elevation={5}
+      >
+        <Typography
+          variant={mediaQuerySmall ? 'h4' : 'h3'}
+          textAlign="center"
+          fontWeight="bold"
+        >
           Cadastro de {isOng ? 'Organização' : 'Usuário'}
         </Typography>
         <Box
