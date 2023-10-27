@@ -5,6 +5,7 @@ import generateTokenKey from "../validations/token/generatorKey";
 import ongRoutes from "./ongs/routes";
 import ListCity from "../controllers/city/list";
 import { upload } from "../multer/config";
+import adoptionRoutes from "./adoptions";
 // import validateSequelize from "../validations/sequelize/sequelize";
 const mainRoutes = Router();
 
@@ -25,6 +26,8 @@ mainRoutes.use(userRoutes);
 // rotas das Organização
 
 mainRoutes.use(ongRoutes)
+
+mainRoutes.use(adoptionRoutes)
 
 // Gerador de chaves para o .env
 mainRoutes.route("/generatekey").get(generateTokenKey);

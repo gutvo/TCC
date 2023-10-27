@@ -1,15 +1,15 @@
 import isNotFound from '@Images/isNotFound.jpg'
 import { CardAnimalProps } from '@Interfaces/pages/animals'
 import { api } from '@Services/backendApi'
-import { CalendarMonth, Pets } from '@mui/icons-material'
+import { CalendarMonth, Female, Male, Pets } from '@mui/icons-material'
 import {
   Card,
-  CardActionArea,
   CardContent,
   CardMedia,
   Grid,
   Typography,
   Button,
+  CardActions,
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -40,19 +40,19 @@ export function CardAnimal({ data }: CardAnimalProps) {
       <Card
         sx={{
           width: '17rem',
-          height: '20rem',
+          height: '20.2rem',
           borderRadius: 1,
         }}
       >
         <CardMedia
           component="img"
-          height="186"
+          height="170"
           src={previewImage || isNotFound}
           alt="Imagem do animal"
         />
-        <CardContent>
+        <CardContent sx={{ height: '7rem' }}>
           <Typography variant="subtitle1" fontWeight="bold">
-            Nome: {data.name}
+            {data.name}
           </Typography>
           <Typography sx={{ display: 'flex', alignItems: 'center' }}>
             <CalendarMonth color="primary" sx={{ paddingRight: 1 }} />
@@ -61,16 +61,23 @@ export function CardAnimal({ data }: CardAnimalProps) {
           <Typography sx={{ display: 'flex', alignItems: 'center' }}>
             <Pets color="primary" sx={{ paddingRight: 1 }} /> {data.race}
           </Typography>
-
-          <CardActionArea sx={{ width: '50%' }}>
-            <Button
-              onClick={() => navigation('/animal', { state: { id: data.id } })}
-              size="small"
-            >
-              Visualizar animal
-            </Button>
-          </CardActionArea>
+          <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            {data.sex === 'Macho' ? (
+              <Male color="primary" sx={{ paddingRight: 1 }} />
+            ) : (
+              <Female color="primary" sx={{ paddingRight: 1 }} />
+            )}
+            {data.sex}
+          </Typography>
         </CardContent>
+        <CardActions sx={{ width: '60%' }}>
+          <Button
+            onClick={() => navigation('/animal', { state: { id: data.id } })}
+            size="small"
+          >
+            Visualizar animal
+          </Button>
+        </CardActions>
       </Card>
     </Grid>
   )

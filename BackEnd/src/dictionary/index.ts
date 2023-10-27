@@ -8,6 +8,14 @@ export const message={
     deleteAnimalSuccess:'O animal foi deletado com sucesso!',
     updateAnimalSuccess:'As informações do animal foram alteradas com sucesso!',
     
+    createAdoptionSuccess:'Pedido de adoção feito com sucesso!',
+    createAdoptionNotExists:'Seu pedido de adoção desse animal já foi feito.',
+
+    adoptedSuccess:'Animal foi adotado com sucesso!',
+    adoptedNotExists:'Pedido de adoção de animal não foi encontrado',
+
+    deleteAdoptionSuccess:'Pedido foi recusado com sucesso!',
+
 //--------------------------------------------------------------------
 
     userNotFound:'A conta não foi encontrada.',
@@ -30,6 +38,7 @@ export const message={
     deleteOngPhoneSuccess:'O número de telefone foi deletado com sucesso!',
 
     updateOngPhoneSuccess:'O número de telefone alterado com sucesso',
+
 
 }
 

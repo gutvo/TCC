@@ -18,7 +18,7 @@ const List = async (req: Request, res: Response) => {
     }
     
     const { rows, count } = await Animal.findAndCountAll({
-      where,
+      where:{...where,situation:'disponivel'},
       include: {
         association:'ongData',
         where:whereCity

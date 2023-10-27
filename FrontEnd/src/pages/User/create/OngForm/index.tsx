@@ -186,7 +186,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         <Button
           disabled={loading}
           variant="contained"
-          color="secondary"
+          color="primary"
           type="submit"
           fullWidth
           sx={{ marginBottom: 1 }}

@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { actions } from '@Redux/animals/slice'
+import { actions as adoptionActions } from '@Redux/adoptions/slice'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
@@ -9,10 +10,13 @@ import { ArrowBack, Delete } from '@mui/icons-material'
 import { DeleteAnimalDialog } from './deleteDialog'
 import { Helmet } from 'react-helmet-async'
 import animalNotFound from '@Images/isNotFound.jpg'
+import { toast } from 'react-toastify'
+import { TypographyDetail } from '@Components/TypographyDetail'
 
 export function ShowAnimal() {
   const { id } = useLocation().state
   const { showAnimalRequest } = actions
+  const { createAdoptionRequests } = adoptionActions
 
   const { animalData, loading } = useSelector(
     (state: RootState) => state.animals,
@@ -28,7 +32,16 @@ export function ShowAnimal() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const data = useSelector((state: RootState) => state.users.data)
+  const { data, isLogged } = useSelector((state: RootState) => state.users)
+
+  function handleAdoptionRequest() {
+    if (!isLogged) {
+      navigate('/login')
+      toast.info('Logue para solicitar adoção')
+    }
+    if (data?.id && animalData?.id && animalData?.ongId)
+      dispatch(createAdoptionRequests(data.id, animalData.id, animalData.ongId))
+  }
 
   useEffect(() => {
     if (animalData) {
@@ -81,38 +94,60 @@ export function ShowAnimal() {
           {data?.ongData ? (
             <FormAnimal loading={loading} animalData={animalData} />
           ) : (
-            <Grid container spacing={1}>
-              <Grid textAlign="center" item xs={12} sm={6} lg={4}>
+            <Grid container spacing={2}>
+              <Grid textAlign="center" item sm={12} md={6}>
                 <Box
                   component="img"
                   src={animalData?.previewImage || animalNotFound}
-                  width={'270px'}
+                  width="80%"
                   borderRadius={2}
-                  height="200px"
                 />
               </Grid>
-              <Grid item sm={6}>
-                <Typography variant="h5">Nome: {animalData.name}</Typography>
+              <Grid item sm={12} md={6}>
+                <TypographyDetail
+                  label="Nome:"
+                  variant="h6"
+                  value={animalData.name}
+                />
+                <TypographyDetail
+                  label="Data de nascimento:"
+                  variant="h6"
+                  value={date}
+                />
+                <TypographyDetail
+                  label="Cor:"
+                  variant="h6"
+                  value={animalData.color}
+                />
+                <TypographyDetail
+                  label="Raça:"
+                  variant="h6"
+                  value={animalData.race}
+                />
+                <TypographyDetail
+                  label="Sexo:"
+                  variant="h6"
+                  value={animalData.sex}
+                />
+                <TypographyDetail
+                  label="Tipo:"
+                  variant="h6"
+                  value={animalData.type}
+                />
+                <TypographyDetail
+                  label="Descrição:"
+                  variant="h6"
+                  value={animalData.description}
+                />
+                <Button
+                  fullWidth
+                  sx={{ marginTop: '2rem' }}
+                  variant="contained"
+                  onClick={handleAdoptionRequest}
+                >
+                  Solicitar adoção de animal
+                </Button>
               </Grid>
-              <Grid item sm={12}>
-                <Typography>Data de nascimento: {date}</Typography>
-              </Grid>
-              <Grid item sm={12}>
-                <Typography>Cor: {animalData.color}</Typography>
-              </Grid>
-              <Grid item sm={12}>
-                <Typography>Descrição: {animalData.description}</Typography>
-              </Grid>
-              <Grid item sm={12}>
-                <Typography>Raça: {animalData.race}</Typography>
-              </Grid>
-              <Grid item sm={12}>
-                <Typography>Sexo: {animalData.sex}</Typography>
-              </Grid>
-              <Grid item sm={12}>
-                <Typography>Tipo: {animalData.type}</Typography>
-              </Grid>
-              <Button variant="contained">Solicitar adoção de animal</Button>
             </Grid>
           )}
         </>

@@ -14,6 +14,7 @@ import { ShowUser } from '@Pages/User/show'
 import { ShowOng } from '@Pages/Organization/Show'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { RootState } from '@Redux/store'
+import { Adoption } from '@Pages/Animal/Adoption'
 
 function MainRoutes() {
   const { data, isLogged } = useSelector((state: RootState) => state.users)
@@ -30,6 +31,8 @@ function MainRoutes() {
           {isLogged && <Route path="/usuario" element={<ShowUser />} />}
 
           <Route path="/ongs" element={<ListOng />} />
+
+          <Route path="adocoes" element={<Adoption />} />
 
           <Route path="/ong" element={<ShowOng />} />
 

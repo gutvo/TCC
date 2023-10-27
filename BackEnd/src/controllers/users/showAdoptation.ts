@@ -4,9 +4,9 @@ import { message } from "../../dictionary";
 
 const Show = async (req: Request, res: Response) => {
   try {
-    const email = req.query.email;
+    const id = req.query.id;
     
-    const result = await User.findOne({ where: { email } ,include:{association:'ongData',required:true,include:[{association:'phoneData'}]} });
+    const result = await User.findOne({ where: { id },include:{association:'ongData',required:true,include:[{association:'phoneData'}]} });
 
     if (!result) {
       return res.status(404).json({ message: message.userNotFound });

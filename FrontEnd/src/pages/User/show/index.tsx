@@ -27,42 +27,45 @@ export function ShowUser() {
   return (
     <Box>
       <Helmet title="Perfil" />
-      <Box
-        sx={{ display: 'flex', gap: 4, justifyContent: 'center', marginY: 4 }}
-      >
-        <Button
-          disabled={pageType === 'profile'}
-          onClick={() => {
-            setPageType('profile')
-          }}
-          sx={{
-            width: '8rem',
-            ':disabled': {
-              color: primary.contrastText,
-              backgroundColor: primary.main,
-            },
-          }}
-          variant={pageType === 'profile' ? 'contained' : 'outlined'}
+      {data?.ongData && (
+        <Box
+          sx={{ display: 'flex', gap: 4, justifyContent: 'center', marginY: 4 }}
         >
-          Perfil
-        </Button>
-        <Button
-          disabled={pageType === 'phones'}
-          onClick={() => {
-            setPageType('phones')
-          }}
-          sx={{
-            width: '8rem',
-            ':disabled': {
-              color: primary.contrastText,
-              backgroundColor: primary.main,
-            },
-          }}
-          variant={pageType === 'phones' ? 'contained' : 'outlined'}
-        >
-          Telefones
-        </Button>
-      </Box>
+          <Button
+            disabled={pageType === 'profile'}
+            onClick={() => {
+              setPageType('profile')
+            }}
+            sx={{
+              width: '8rem',
+              ':disabled': {
+                color: primary.contrastText,
+                backgroundColor: primary.main,
+              },
+            }}
+            variant={pageType === 'profile' ? 'contained' : 'outlined'}
+          >
+            Perfil
+          </Button>
+          <Button
+            disabled={pageType === 'phones'}
+            onClick={() => {
+              setPageType('phones')
+            }}
+            sx={{
+              width: '8rem',
+              ':disabled': {
+                color: primary.contrastText,
+                backgroundColor: primary.main,
+              },
+            }}
+            variant={pageType === 'phones' ? 'contained' : 'outlined'}
+          >
+            Telefones
+          </Button>
+        </Box>
+      )}
+
       {data ? (
         <>
           {pageType === 'profile' && (

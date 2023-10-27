@@ -25,6 +25,7 @@ export interface AnimalData {
   image?: string
   previewImage?: string
   imageData: FileList
+  ongId?: number
 }
 
 export interface InitialState {

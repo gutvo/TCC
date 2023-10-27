@@ -11,7 +11,8 @@ export interface AnimalData extends Model {
   type: "Cachorro" | "Peixe" | "Gato" | "Outros";
   birthday: number;
   image: string;
-  ongId:number
+  ongId:number;
+  situation?:string
 }
 
 export const Animal = sequelize.define<AnimalData>(
@@ -46,6 +47,9 @@ export const Animal = sequelize.define<AnimalData>(
     image: {
       type: DataTypes.STRING,
     },
+    situation:{
+      type: DataTypes.STRING,
+    }
   },
   {
     tableName: "animal",

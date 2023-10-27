@@ -21,8 +21,9 @@ const userSchemas = zod.object({
               message: 'Cpf ou CNPJ inválidos',
             })
           }
-        }),      })
-      .nullable(),
+        }),
+      })
+      .optional(),
 });
 
 const updateUserValidation = async (
@@ -34,7 +35,7 @@ const updateUserValidation = async (
     const data = req.body
     await userSchemas.parseAsync(data)
 
-    if(data.ongData){
+    if(data?.ongData){
       const { cpfCnpj } = data.ongData
 
       let isValid

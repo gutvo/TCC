@@ -77,7 +77,7 @@ export function ListAnimal() {
         <>
           {list.length ? (
             <Box>
-              <Grid container spacing={5} justifyContent="center">
+              <Grid container spacing={5} marginTop={5} justifyContent="center">
                 {list.map((item) => (
                   <CardAnimal key={item.id} data={item} />
                 ))}
