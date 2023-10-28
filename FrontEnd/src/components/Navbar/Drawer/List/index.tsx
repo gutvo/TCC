@@ -15,6 +15,8 @@ import {
   Pets,
   Add,
   List as ListIcon,
+  Assessment,
+  Favorite,
 } from '@mui/icons-material'
 import { ListItem } from './ListItem/index'
 import { useSelector } from 'react-redux'
@@ -48,14 +50,14 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
           label="Home"
         />
 
-        {data ? (
+        {isLogged && data && (
           <ListItem
             toggleDrawer={toggleDrawer}
             path="/chat"
             label="Chat"
             Icon={Chat}
           />
-        ) : null}
+        )}
 
         {!data?.ongData && (
           <ListItem
@@ -67,6 +69,19 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
         )}
         {isLogged && data?.ongData ? (
           <>
+            <ListItem
+              toggleDrawer={toggleDrawer}
+              path="/relatorios"
+              label="Relatórios"
+              Icon={Assessment}
+            />
+            <ListItem
+              toggleDrawer={toggleDrawer}
+              path="/adocoes"
+              label="Adoções"
+              Icon={Favorite}
+            />
+
             <ListItemButton
               onClick={() => {
                 setOpenAnimalList(!openAnimalList)

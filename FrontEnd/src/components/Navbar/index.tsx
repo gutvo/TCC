@@ -30,9 +30,15 @@ export function Navbar() {
 
   const [flag, setFlag] = useState(true)
 
-  const toggleDrawer = () => {
+  function toggleDrawer() {
     setDrawerOpen(!drawerOpen)
   }
+
+  useEffect(() => {
+    if (!mobile) {
+      setDrawerOpen(false)
+    }
+  }, [mobile])
 
   useEffect(() => {
     if (isLogged && flag) {

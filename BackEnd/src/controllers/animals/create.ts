@@ -30,7 +30,7 @@ const Create = async (req: Request, res: Response) => {
       birthday:new Date(birthday).toISOString().slice(0, 10),
       image:file? file?.filename:null,
       ongId,
-      situation:'disponivel'
+      situation:'available'
     });
 
     const imageData = req.file

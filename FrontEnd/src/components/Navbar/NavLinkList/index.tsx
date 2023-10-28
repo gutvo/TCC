@@ -28,7 +28,11 @@ export function NavLinkList() {
       {/* <NavLinkButton href="/ongs" label="Organizações" Icon={Apartment} /> */}
       {isLogged && data?.ongData && (
         <>
-          <NavLinkButton href="/" label="Relatórios" Icon={Assessment} />
+          <NavLinkButton
+            href="/relatorios"
+            label="Relatórios"
+            Icon={Assessment}
+          />
 
           <NavLinkButton href="/adocoes" label="Adoções" Icon={Favorite} />
 

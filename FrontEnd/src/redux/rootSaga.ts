@@ -4,7 +4,8 @@ import animalSaga from './animals/saga'
 import userSaga from './users/saga'
 import ongSaga from './ongs/saga'
 import adoptionSaga from './adoptions/saga'
+import reportSaga from './reports/saga'
 
 export default function* rootSaga(): SagaIterator<void> {
-  return yield all([animalSaga, userSaga, ongSaga, adoptionSaga])
+  return yield all([animalSaga, userSaga, ongSaga, adoptionSaga, reportSaga])
 }

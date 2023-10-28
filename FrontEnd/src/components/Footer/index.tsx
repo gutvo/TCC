@@ -4,7 +4,6 @@ import { useTheme } from '@mui/material/styles'
 export function Footer() {
   const { palette } = useTheme()
   const white = '#ffffff'
-  const secondary = '#d4d4d4'
 
   return (
     <Box
@@ -32,7 +31,7 @@ export function Footer() {
             <Typography variant="h6" color={white} gutterBottom>
               Contatos
             </Typography>
-            <Typography variant="body2" color={secondary}>
+            <Typography variant="body2" color={white}>
               Email:{' '}
               <Link
                 href="mailto:gustavo.souza@ead.eduvaleavare.com.br"
@@ -43,7 +42,7 @@ export function Footer() {
               </Link>
             </Typography>
 
-            <Typography variant="body2" color={secondary}>
+            <Typography variant="body2" color={white}>
               Git:{' '}
               <Link
                 href="https://github.com/gutvo"
@@ -56,7 +55,7 @@ export function Footer() {
           </Grid>
         </Grid>
         <Box mt={3}>
-          <Typography variant="body2" color={secondary} align="center">
+          <Typography variant="body2" color={white} align="center">
             {'Copyright © '}
             <Link color="inherit" href="http://localhost">
               Pet Meu
