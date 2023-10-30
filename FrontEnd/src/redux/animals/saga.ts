@@ -11,6 +11,8 @@ import {
   updateAnimalDTO,
   updateAction,
   deleteActions,
+  FetchRandomAnimalAction,
+  fetchRandomAnimalDTO,
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -128,10 +130,26 @@ function* deleteAnimal({ payload }: deleteActions) {
   }
 }
 
+function* listRandomAnimals({ payload }: FetchRandomAnimalAction) {
+  const { listRandomAnimalFailure, listRandomAnimalSuccess } = actions
+  const { city } = payload
+  try {
+    const animals: fetchRandomAnimalDTO = yield api.get('/random/animal', {
+      params: { city },
+    })
+    const result = animals.data
+
+    yield put(listRandomAnimalSuccess(result.data))
+  } catch (error) {
+    yield put(listRandomAnimalFailure())
+  }
+}
+
 export default all([
   takeLatest(actions.listAnimalRequest.type, listAnimals),
   takeLatest(actions.createAnimalRequest.type, createAnimal),
   takeLatest(actions.showAnimalRequest.type, showAnimal),
   takeLatest(actions.updateAnimalRequest.type, updateAnimal),
   takeLatest(actions.deleteAnimalRequest.type, deleteAnimal),
+  takeLatest(actions.listRandomAnimalRequest.type, listRandomAnimals),
 ])

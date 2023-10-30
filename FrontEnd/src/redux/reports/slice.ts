@@ -5,6 +5,7 @@ import { InitialState } from '@Interfaces/redux/reports'
 const initialState: InitialState = {
   loading: false,
   animalData: [],
+  dashboadHomeData: null,
 }
 
 const sliceUser = createSlice({

@@ -20,9 +20,9 @@ export function Navbar() {
   const dispatch = useDispatch()
   const theme = useTheme()
   const mobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const { showUserRequest } = actions
+  const { showUserRequest, listCityRequest } = actions
 
-  const { isLogged } = useSelector((state: RootState) => state.users)
+  const { isLogged, data } = useSelector((state: RootState) => state.users)
 
   const user = localStorage.getItem('user')
   const email = user ? JSON.parse(user).email : null
@@ -39,6 +39,12 @@ export function Navbar() {
       setDrawerOpen(false)
     }
   }, [mobile])
+
+  useEffect(() => {
+    if (!data?.ongData) {
+      dispatch(listCityRequest())
+    }
+  }, [dispatch, listCityRequest, data])
 
   useEffect(() => {
     if (isLogged && flag) {

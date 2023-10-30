@@ -26,9 +26,17 @@ export interface AnimalData {
   situation: 'adopted' | 'available'
 }
 
+export interface dashboardData {
+  countAdoptedAnimals: number
+  countAvailableAnimals: number
+  countTotalAnimals: number
+  countTotalOngs: number
+}
+
 export interface InitialState {
   loading: boolean
   animalData: AnimalData[]
+  dashboadHomeData: dashboardData | null
 }
 
 // -------------------------------------------
@@ -38,6 +46,10 @@ export interface fetchAnimalReportDTO {
   data: {
     data: AnimalData[]
   }
+}
+
+export interface fetchDashboardDTO {
+  data: dashboardData
 }
 
 export interface createAnimalDTO {
@@ -56,3 +68,8 @@ export interface FetchAnimalReportAction {
     ongId: number
   }
 }
+
+// export interface FetchDashboardDataAction {
+//   type: typeof actions.listAnimalRequest.type
+//   payload: {}
+// }

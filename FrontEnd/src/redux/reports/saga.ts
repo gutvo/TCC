@@ -5,7 +5,10 @@ import { toast } from 'react-toastify'
 import { api } from '@Services/backendApi'
 import {
   FetchAnimalReportAction,
+  // FetchDashboardDataAction,
+  // FetchDashboardDataAction,
   fetchAnimalReportDTO,
+  fetchDashboardDTO,
 } from '@Interfaces/redux/reports'
 
 function* getRescuedAdoptedAnimal({ payload }: FetchAnimalReportAction) {
@@ -28,9 +31,24 @@ function* getRescuedAdoptedAnimal({ payload }: FetchAnimalReportAction) {
   }
 }
 
+function* getDashboardHomeData() {
+  const { getDashboardDataFailure, getDashboardDataSuccess } = actions
+
+  try {
+    const result: fetchDashboardDTO = yield api.get('/dashboardhome')
+    yield put(getDashboardDataSuccess(result))
+  } catch (error) {
+    yield put(getDashboardDataFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest(
     actions.getRescuedAdoptedAnimalRequest.type,
     getRescuedAdoptedAnimal,
   ),
+  takeLatest(actions.getDashboardDataRequest.type, getDashboardHomeData),
 ])

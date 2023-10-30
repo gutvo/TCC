@@ -66,6 +66,12 @@ export interface updateAnimalDTO {
   }
 }
 
+export interface fetchRandomAnimalDTO {
+  data: {
+    data: AnimalData[]
+  }
+}
+
 // -------------------------------------------
 // actions
 
@@ -107,5 +113,12 @@ export interface updateAction {
   type: typeof actions.updateAnimalRequest.type
   payload: {
     data: UpdateAnimalFormData
+  }
+}
+
+export interface FetchRandomAnimalAction {
+  type: typeof actions.listRandomAnimalRequest.type
+  payload: {
+    city: string
   }
 }

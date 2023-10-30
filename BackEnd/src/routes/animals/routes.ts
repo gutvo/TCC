@@ -9,6 +9,7 @@ import deleteValidator from "../../validations/animals/delete";
 import Show from "../../controllers/animals/show";
 import updateValidation from "../../validations/animals/update";
 import Update from "../../controllers/animals/update";
+import randomAnimal from "../../controllers/animals/randomAnimal";
 
 const animalRoutes = Router();
 
@@ -22,5 +23,7 @@ animalRoutes
 animalRoutes.route("/animal/:id").get(Show);
 
 animalRoutes.route("/animal/images/:id").get(showImageAnimal);
+
+animalRoutes.route("/random/animal").get(randomAnimal);
 
 export default animalRoutes;

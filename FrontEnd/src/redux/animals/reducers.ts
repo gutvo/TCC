@@ -131,4 +131,29 @@ export const reducers = {
   deleteAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
+
+  listRandomAnimalRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (city: string) => {
+      return { payload: { city } }
+    },
+  },
+
+  listRandomAnimalSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{ data: AnimalData[] }>,
+    ) => {
+      state.loading = true
+      state.list = action.payload.data
+    },
+    prepare: (data: AnimalData[]) => {
+      return { payload: { data } }
+    },
+  },
+  listRandomAnimalFailure: (state: InitialState) => {
+    state.loading = false
+  },
 }

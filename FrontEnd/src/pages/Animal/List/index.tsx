@@ -12,14 +12,14 @@ import {
   MenuItem,
 } from '@mui/material'
 import { RootState } from '@Redux/store'
-import { CardAnimal } from './Card'
+import { CardAnimal } from '@Components/CardAnimal'
 import { Helmet } from 'react-helmet-async'
 import { Loading } from '@Components/Loading'
 
 export function ListAnimal() {
   const dispatch = useDispatch()
   const { listAnimalRequest } = actions
-  const { listCityRequest, choiceCity } = userActions
+  const { choiceCity } = userActions
 
   const { list, pagination, loading } = useSelector(
     (state: RootState) => state.animals,
@@ -40,12 +40,6 @@ export function ListAnimal() {
       setOffset(offset - limit)
     }
   }, [list, offset, limit])
-
-  useEffect(() => {
-    if (!data?.ongData) {
-      dispatch(listCityRequest())
-    }
-  }, [dispatch, listCityRequest, data])
 
   return (
     <Box>
