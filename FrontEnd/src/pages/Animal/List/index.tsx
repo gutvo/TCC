@@ -1,39 +1,36 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/animals/slice'
-import { actions as userActions } from '@Redux/users/slice'
+// import { actions as userActions } from '@Redux/users/slice'
 
-import {
-  Pagination,
-  Typography,
-  Box,
-  Grid,
-  Select,
-  MenuItem,
-} from '@mui/material'
+import { Pagination, Typography, Box, Grid } from '@mui/material'
 import { RootState } from '@Redux/store'
 import { CardAnimal } from '@Components/CardAnimal'
 import { Helmet } from 'react-helmet-async'
 import { Loading } from '@Components/Loading'
+import { animalFilterProps } from '@Interfaces/redux/animals'
+import { Filter } from './Filter'
 
 export function ListAnimal() {
   const dispatch = useDispatch()
   const { listAnimalRequest } = actions
-  const { choiceCity } = userActions
 
   const { list, pagination, loading } = useSelector(
     (state: RootState) => state.animals,
   )
 
-  const { data, city, citys } = useSelector((state: RootState) => state.users)
+  const { city, data } = useSelector((state: RootState) => state.users)
+  const { filter } = useSelector((state: RootState) => state.animals)
 
   const [limit] = useState(pagination.limit)
   const [offset, setOffset] = useState(pagination.offset)
+  const [animalFilter, setAnimalFilter] = useState<animalFilterProps>(filter)
 
   const ongId = data?.ongData ? data.ongData?.id : null
+
   useEffect(() => {
-    dispatch(listAnimalRequest(offset, limit, ongId, city))
-  }, [dispatch, limit, offset, listAnimalRequest, ongId, city])
+    dispatch(listAnimalRequest(offset, limit, ongId, city, animalFilter))
+  }, [dispatch, limit, offset, listAnimalRequest, ongId, city, animalFilter])
 
   useEffect(() => {
     if (!list.length && offset) {
@@ -44,34 +41,15 @@ export function ListAnimal() {
   return (
     <Box>
       <Helmet title="Lista de Animais" />
+      <Filter setAnimalFilter={setAnimalFilter} />
 
-      {!data?.ongData && citys.length && (
-        <Select
-          variant="outlined"
-          sx={{ height: '2.75rem', width: '50%', marginBottom: 2 }}
-          value={city}
-          onChange={(event) => {
-            const { value } = event.target
-            dispatch(choiceCity(value.toString()))
-            localStorage.setItem('city', `${value}`)
-          }}
-        >
-          {citys.map((item) => {
-            return (
-              <MenuItem key={item.label} value={item.label}>
-                {item.label}
-              </MenuItem>
-            )
-          })}
-        </Select>
-      )}
       {loading ? (
         <Loading />
       ) : (
         <>
           {list.length ? (
             <Box>
-              <Grid container spacing={5} marginTop={5} justifyContent="center">
+              <Grid container spacing={5} justifyContent="center">
                 {list.map((item) => (
                   <CardAnimal key={item.id} data={item} />
                 ))}
@@ -97,7 +75,14 @@ export function ListAnimal() {
               />
             </Box>
           ) : (
-            <Typography color="error" variant="h3" textAlign="center">
+            <Typography
+              display="flex"
+              alignItems="center"
+              height="100vh"
+              variant="h3"
+              textAlign="center"
+              justifyContent="center"
+            >
               Nenhum animal foi encontrado.
             </Typography>
           )}

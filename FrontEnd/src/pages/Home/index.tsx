@@ -42,7 +42,7 @@ export function Home() {
         marginBottom={4}
         color={palette.primary.dark}
       >
-        Bem-vindo ao nosso site{' ' + name ? name?.split(' ')[0] : ''}!
+        Bem-vindo ao nosso site{name ? ' ' + name?.split(' ')[0] : ''}!
       </Typography>
 
       <Typography

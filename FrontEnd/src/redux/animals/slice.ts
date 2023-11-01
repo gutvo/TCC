@@ -11,6 +11,11 @@ const initialState: InitialState = {
     limit: 16,
     count: 16,
   },
+  filter: {
+    race: [],
+    sex: 'Todos',
+    type: 'Todos',
+  },
 }
 
 export const sliceAnimal = createSlice({

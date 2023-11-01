@@ -19,7 +19,8 @@ import axios from 'axios'
 
 function* listAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions
-  const { limit, offset, ongId, city } = payload
+  const { limit, offset, ongId, city, filter } = payload
+
   try {
     const animals: fetchAnimalDTO = yield api.get('/animal', {
       params: {
@@ -27,11 +28,12 @@ function* listAnimals({ payload }: FetchAction) {
         limit,
         ongId,
         city,
+        filter,
       },
     })
     const result = animals.data
 
-    yield put(listAnimalSuccess(result.data, result.pagination))
+    yield put(listAnimalSuccess(result.data, result.pagination, filter))
   } catch (error) {
     yield put(listAnimalFailure())
   }

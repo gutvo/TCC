@@ -45,9 +45,12 @@ function MainRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
+        <Route path="/" element={<DefaultLayout container="xl" />}>
+          <Route path="/animals" element={<ListAnimal />} />
+        </Route>
+
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/chat" element={<Chat />} />
-          <Route path="/animals" element={<ListAnimal />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />

@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { differenceInMonths } from 'date-fns'
 
 export function CardAnimal({ data }: CardAnimalProps) {
   const navigation = useNavigate()
@@ -35,6 +36,15 @@ export function CardAnimal({ data }: CardAnimalProps) {
       fetchAnimalImage()
     }
   }, [data.image, fetchAnimalImage])
+
+  function getYears() {
+    const difference = differenceInMonths(new Date(), new Date(data.birthday))
+    const years = Math.floor(difference / 12)
+    if (years < 1) {
+      return `${difference} meses`
+    }
+    return `${years} anos`
+  }
   return (
     <Grid item key={data.id}>
       <Card
@@ -51,12 +61,12 @@ export function CardAnimal({ data }: CardAnimalProps) {
           alt="Imagem do animal"
         />
         <CardContent sx={{ height: '7rem' }}>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="h6" fontWeight="bold">
             {data.name}
           </Typography>
           <Typography sx={{ display: 'flex', alignItems: 'center' }}>
             <CalendarMonth color="primary" sx={{ paddingRight: 1 }} />
-            {new Date(data.birthday).toLocaleDateString('pt')}
+            {getYears()}
           </Typography>
           <Typography sx={{ display: 'flex', alignItems: 'center' }}>
             <Pets color="primary" sx={{ paddingRight: 1 }} /> {data.race}

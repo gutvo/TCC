@@ -28,7 +28,14 @@ export interface AnimalData {
   ongId?: number
 }
 
+export interface animalFilterProps {
+  race: string[]
+  sex: string
+  type: string
+}
+
 export interface InitialState {
+  filter: animalFilterProps
   loading: boolean
   list: AnimalData[]
   animalData: AnimalData | null
@@ -82,6 +89,7 @@ export interface FetchAction {
     limit: number
     ongId: number | null
     city: string
+    filter: animalFilterProps
   }
 }
 

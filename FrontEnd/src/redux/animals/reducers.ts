@@ -3,6 +3,7 @@ import {
   AnimalData,
   InitialState,
   PaginationProps,
+  animalFilterProps,
 } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { NavigateFunction } from 'react-router-dom'
@@ -19,8 +20,9 @@ export const reducers = {
       limit: number,
       ongId: number | null,
       city: string,
+      filter: animalFilterProps,
     ) => {
-      return { payload: { offset, limit, ongId, city } }
+      return { payload: { offset, limit, ongId, city, filter } }
     },
   },
 
@@ -30,16 +32,22 @@ export const reducers = {
       action: PayloadAction<{
         data: AnimalData[]
         pagination: PaginationProps
+        filter: animalFilterProps
       }>,
     ) => {
-      const { data, pagination } = action.payload
+      const { data, pagination, filter } = action.payload
 
       state.pagination = pagination
       state.list = data
+      state.filter = filter
       state.loading = false
     },
-    prepare: (data: AnimalData[], pagination: PaginationProps) => {
-      return { payload: { data, pagination } }
+    prepare: (
+      data: AnimalData[],
+      pagination: PaginationProps,
+      filter: animalFilterProps,
+    ) => {
+      return { payload: { data, pagination, filter } }
     },
   },
 
