@@ -1,6 +1,14 @@
 import { Request, Response } from "express";
 import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
+import { Op } from 'sequelize';
+
+
+interface animalFilterProps{
+  race?:string[]
+  type?:'Todos'|'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
+  sex?:'Todos'|'Macho' | 'Fêmea'
+}
 
 const List = async (req: Request, res: Response) => {
   try {
@@ -9,14 +17,36 @@ const List = async (req: Request, res: Response) => {
     const ongId = parseInt(req.query.ongId as string);
     const city = req.query.city as string;
 
-    let where = {}
-    let whereCity = {}
-    if (ongId) {
-      where = { ongId };
-    }else if(city){
-      whereCity={city}
+    let filter: animalFilterProps | undefined;
+
+    if (typeof req.query.filter === 'object') {
+      filter = req.query.filter as animalFilterProps;
     }
-    
+
+    let where: { [Op.and]: any[]} = {
+      [Op.and]: [],
+  };
+   let whereCity = {}
+   
+    if (ongId) {
+      where[Op.and].push({ ongId });
+    }else if(city){
+      whereCity = {city}
+    }
+
+
+    if (filter) {
+      if (filter?.race?.length) {
+        where[Op.and].push({ race: { [Op.in]: filter.race } });
+      }
+      if (filter?.sex?.length && filter.sex !== 'Todos') {
+          where[Op.and].push({ sex: filter.sex });
+      }
+      if (filter?.type?.length && filter.type !== 'Todos') {
+        where[Op.and].push({ type: filter.type });
+      }
+    } 
+
     const { rows, count } = await Animal.findAndCountAll({
       where:{...where,situation:'available'},
       include: {

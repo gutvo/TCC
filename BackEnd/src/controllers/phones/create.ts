@@ -14,7 +14,6 @@ const Create = async (req: Request, res: Response) => {
     }
     res.status(201).json({data:result, message: message.createOngPhoneSuccess});
   } catch (error) {
-    console.log(error)
     res.status(500).json({message: message.serverError});
   }
 };
