@@ -5,7 +5,7 @@ import { NavLinkButton } from '../NavLinkButton'
 import { Menu } from '@Components/Menu'
 import {
   Home,
-  // Apartment,
+  Apartment,
   Chat,
   Pets,
   Add,
@@ -25,7 +25,7 @@ export function NavLinkList() {
       {!data?.ongData && (
         <NavLinkButton href="/animals" label="Animais" Icon={Pets} />
       )}
-      {/* <NavLinkButton href="/ongs" label="Organizações" Icon={Apartment} /> */}
+      <NavLinkButton href="/ongs" label="Organizações" Icon={Apartment} />
       {isLogged && data?.ongData && (
         <>
           <NavLinkButton

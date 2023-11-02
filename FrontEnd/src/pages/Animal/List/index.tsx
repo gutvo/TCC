@@ -19,7 +19,7 @@ export function ListAnimal() {
     (state: RootState) => state.animals,
   )
 
-  const { city, data } = useSelector((state: RootState) => state.users)
+  const { data } = useSelector((state: RootState) => state.users)
   const { filter } = useSelector((state: RootState) => state.animals)
 
   const [limit] = useState(pagination.limit)
@@ -29,8 +29,8 @@ export function ListAnimal() {
   const ongId = data?.ongData ? data.ongData?.id : null
 
   useEffect(() => {
-    dispatch(listAnimalRequest(offset, limit, ongId, city, animalFilter))
-  }, [dispatch, limit, offset, listAnimalRequest, ongId, city, animalFilter])
+    dispatch(listAnimalRequest(offset, limit, ongId, animalFilter))
+  }, [dispatch, limit, offset, listAnimalRequest, ongId, animalFilter])
 
   useEffect(() => {
     if (!list.length && offset) {

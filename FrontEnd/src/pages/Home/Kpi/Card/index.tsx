@@ -1,11 +1,11 @@
 import { Box, Paper, Typography, useTheme } from '@mui/material'
 
-interface CardHomeProps {
+interface CardKpisProps {
   label: String
   value: string | number | undefined
 }
 
-export function CardHome({ label, value = 0 }: CardHomeProps) {
+export function CardKpis({ label, value = 0 }: CardKpisProps) {
   const theme = useTheme()
   const { palette } = theme
   return (
@@ -15,7 +15,7 @@ export function CardHome({ label, value = 0 }: CardHomeProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '16rem',
+        width: '17rem',
         height: '6rem',
         bgcolor: palette.secondary.dark,
       }}

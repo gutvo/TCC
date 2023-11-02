@@ -144,11 +144,6 @@ export const reducers = {
     state.loading = false
   },
 
-  // Choice List
-  choiceCity: (state: InitialState, action: PayloadAction<string>) => {
-    state.city = action.payload
-  },
-
   // Create Phone
   createPhoneRequest: {
     reducer: (state: InitialState) => {

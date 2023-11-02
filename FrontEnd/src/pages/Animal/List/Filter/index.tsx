@@ -1,6 +1,5 @@
 import { useState, SetStateAction, Dispatch } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { actions as userActions } from '@Redux/users/slice'
+import { useSelector } from 'react-redux'
 
 import {
   Box,
@@ -23,17 +22,15 @@ interface FilterProps {
 }
 
 export function Filter({ setAnimalFilter }: FilterProps) {
-  const dispatch = useDispatch()
   const { breakpoints } = useTheme()
 
-  const { choiceCity } = userActions
-
   const { filter } = useSelector((state: RootState) => state.animals)
-  const { data, city, citys } = useSelector((state: RootState) => state.users)
+  const { data, citys } = useSelector((state: RootState) => state.users)
 
   const [raceFilter, setRaceFilter] = useState(filter.race)
   const [sexFilter, setSexFilter] = useState(filter.sex)
   const [typeFilter, setTypeFilter] = useState(filter.type)
+  const [cityFilter, setCityFilter] = useState(filter.city)
 
   const typeOptions = ['Cachorro', 'Peixe', 'Gato', 'Outros', 'Todos']
   const sexOptions = ['Macho', 'Fêmea', 'Todos']
@@ -42,16 +39,16 @@ export function Filter({ setAnimalFilter }: FilterProps) {
       race: raceFilter,
       sex: sexFilter,
       type: typeFilter,
+      city: cityFilter,
     })
   }
   const gridBreakPointsXs = !data?.ongData && citys.length ? 4 : 6
 
-  const gridBreakPointsMd = !data?.ongData && citys.length ? 1 : 2
-
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
       <Grid
-        marginY={3}
+        // marginY={3}
+        marginBottom={3}
         container
         spacing={2}
         width={breakpoints.values.lg + 24}
@@ -59,7 +56,7 @@ export function Filter({ setAnimalFilter }: FilterProps) {
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={gridBreakPointsXs}>
           <Autocomplete
             size="small"
             fullWidth
@@ -91,7 +88,7 @@ export function Filter({ setAnimalFilter }: FilterProps) {
           />
         </Grid>
 
-        <Grid item xs={gridBreakPointsXs} md={gridBreakPointsMd}>
+        <Grid item xs={gridBreakPointsXs} md={2}>
           <FormControl fullWidth>
             <InputLabel>Tipo de animal</InputLabel>
             <Select
@@ -115,7 +112,7 @@ export function Filter({ setAnimalFilter }: FilterProps) {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={gridBreakPointsXs} md={gridBreakPointsMd}>
+        <Grid item xs={gridBreakPointsXs} md={2}>
           <FormControl fullWidth>
             <InputLabel>Sexo</InputLabel>
             <Select
@@ -141,25 +138,29 @@ export function Filter({ setAnimalFilter }: FilterProps) {
         </Grid>
 
         {!data?.ongData && citys.length && (
-          <Grid item xs={gridBreakPointsXs} md={gridBreakPointsMd}>
-            <Select
-              size="small"
-              variant="outlined"
-              value={city}
-              onChange={(event) => {
-                const { value } = event.target
-                dispatch(choiceCity(value.toString()))
-                localStorage.setItem('city', `${value}`)
-              }}
-            >
-              {citys.map((item) => {
-                return (
-                  <MenuItem key={item.label} value={item.label}>
-                    {item.label}
-                  </MenuItem>
-                )
-              })}
-            </Select>
+          <Grid item xs={gridBreakPointsXs} md={2}>
+            <FormControl fullWidth>
+              <InputLabel>Cidade</InputLabel>
+              <Select
+                label="Cidade"
+                size="small"
+                variant="outlined"
+                value={cityFilter}
+                onChange={(event) => {
+                  const { value } = event.target
+                  setCityFilter(value)
+                  localStorage.setItem('city', `${value}`)
+                }}
+              >
+                {citys.map((item) => {
+                  return (
+                    <MenuItem key={item.label} value={item.label}>
+                      {item.label}
+                    </MenuItem>
+                  )
+                })}
+              </Select>
+            </FormControl>
           </Grid>
         )}
 

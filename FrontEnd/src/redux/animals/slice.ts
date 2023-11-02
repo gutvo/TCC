@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { reducers } from './reducers'
 import { InitialState } from '@Interfaces/redux/animals'
 
+const city = localStorage.getItem('city')
+
 const initialState: InitialState = {
   loading: false,
   list: [],
@@ -15,6 +17,7 @@ const initialState: InitialState = {
     race: [],
     sex: 'Todos',
     type: 'Todos',
+    city: city || 'Avaré',
   },
 }
 

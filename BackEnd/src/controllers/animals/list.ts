@@ -8,6 +8,7 @@ interface animalFilterProps{
   race?:string[]
   type?:'Todos'|'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   sex?:'Todos'|'Macho' | 'Fêmea'
+  city?:string
 }
 
 const List = async (req: Request, res: Response) => {
@@ -30,8 +31,6 @@ const List = async (req: Request, res: Response) => {
    
     if (ongId) {
       where[Op.and].push({ ongId });
-    }else if(city){
-      whereCity = {city}
     }
 
 
@@ -44,6 +43,9 @@ const List = async (req: Request, res: Response) => {
       }
       if (filter?.type?.length && filter.type !== 'Todos') {
         where[Op.and].push({ type: filter.type });
+      }
+      if(filter?.city && !ongId){
+        whereCity = {city: filter.city}
       }
     } 
 
