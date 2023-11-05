@@ -16,9 +16,23 @@ import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { RootState } from '@Redux/store'
 import { Adoption } from '@Pages/Animal/Adoption'
 import { Reports } from '@Pages/Reports'
+import { useEffect } from 'react'
+import socketIO from 'socket.io-client'
 
+const socket = socketIO(import.meta.env.VITE_LINK as string, {
+  autoConnect: false,
+})
 function MainRoutes() {
   const { data, isLogged } = useSelector((state: RootState) => state.users)
+
+  useEffect(() => {
+    if (data && isLogged) {
+      socket.on('connect', () => console.log('Usuário conectado'))
+      socket.auth = { userId: data.id }
+      socket.connect()
+    }
+  }, [data, isLogged])
+
   return (
     <BrowserRouter>
       <Routes>
@@ -50,7 +64,7 @@ function MainRoutes() {
         </Route>
 
         <Route path="/" element={<DefaultLayout />}>
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat" element={<Chat socket={socket} />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />

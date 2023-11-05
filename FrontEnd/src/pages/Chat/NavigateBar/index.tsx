@@ -1,9 +1,10 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 
 export function NavigateBar() {
+  const { palette } = useTheme()
   return (
-    <Box bgcolor="green" height="100%">
-      <Typography>ChatBar!</Typography>
+    <Box bgcolor={palette.primary.dark} color="white" height="100%">
+      <Typography>NAVIGATE BAR</Typography>
     </Box>
   )
 }

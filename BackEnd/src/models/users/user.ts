@@ -4,6 +4,8 @@ import { Ong } from "../ongs/ongs";
 import { Animal } from "../animals/animal";
 import { Phone } from "../ongs/phones";
 import { Adoption } from "../adoptions/adoptions";
+import { Room } from "../chats/rooms";
+import { Message } from "../chats/messages";
 
 export interface UserData extends Model {
   id: number;
@@ -45,8 +47,8 @@ export const User = sequelize.define<UserData>(
   }
 );
 
-User.hasOne(Ong, { foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' });
-Ong.belongsTo(User,{ onDelete:'CASCADE',foreignKey: 'userId', targetKey:'id',as: 'userData'});
+User.hasOne(Ong, { foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' })
+Ong.belongsTo(User,{ onDelete:'CASCADE',foreignKey: 'userId', targetKey:'id',as: 'userData'})
 
 Ong.hasMany(Animal, {  foreignKey: 'ongId', onDelete:'CASCADE',})
 Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
@@ -58,6 +60,11 @@ Adoption.belongsTo(Animal,{ foreignKey:'animalId',as:'animalData'})
 Adoption.belongsTo(User,{ foreignKey:'userId',as:'userData'})
 Adoption.belongsTo(Ong,{ foreignKey:'ongId',as:'ongData'})
 
+User.hasMany(Room,{foreignKey:'userId',as:'roomData',onDelete:'CASCADE'})
+Room.belongsTo(User,{foreignKey:'userId', as:'userData', targetKey:'id'})
+
+Room.hasMany(Message,{foreignKey:'roomId',as:'messageData',onDelete:'CASCADE'})
+Message.belongsTo(Room,{foreignKey:'roomId', as:'roomData', targetKey:'id'})
 
 //sequelize.sync({force:true});
-//sequelize.sync();
+// sequelize.sync();

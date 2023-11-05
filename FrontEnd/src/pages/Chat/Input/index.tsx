@@ -1,4 +1,10 @@
-import { Box, CircularProgress, InputAdornment, TextField } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material'
 import { Send } from '@mui/icons-material'
 
 export function Input() {
@@ -9,7 +15,6 @@ export function Input() {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      borderTop="1px solid blueviolet"
       paddingX={2}
     >
       <TextField
@@ -18,11 +23,11 @@ export function Input() {
         maxRows={3}
         InputProps={{
           endAdornment: (
-            <>
+            <IconButton>
               <InputAdornment disablePointerEvents position="end">
                 {loading ? <CircularProgress /> : <Send />}
               </InputAdornment>
-            </>
+            </IconButton>
           ),
         }}
       />
