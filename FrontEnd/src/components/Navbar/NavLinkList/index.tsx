@@ -23,9 +23,11 @@ export function NavLinkList() {
       {isLogged && <NavLinkButton href="/chat" label="Chat" Icon={Chat} />}
 
       {!data?.ongData && (
-        <NavLinkButton href="/animals" label="Animais" Icon={Pets} />
+        <>
+          <NavLinkButton href="/animals" label="Animais" Icon={Pets} />
+          <NavLinkButton href="/ongs" label="Organizações" Icon={Apartment} />
+        </>
       )}
-      <NavLinkButton href="/ongs" label="Organizações" Icon={Apartment} />
       {isLogged && data?.ongData && (
         <>
           <NavLinkButton

@@ -17,3 +17,12 @@ declare module '@mui/material/Button' {
     navLink: true
   }
 }
+declare module '@mui/material/styles' {
+  // eslint-disable-next-line no-unused-vars
+  interface BreakpointOverrides {
+    mobile: true
+    // tablet: true
+    // laptop: true
+    // desktop: true
+  }
+}

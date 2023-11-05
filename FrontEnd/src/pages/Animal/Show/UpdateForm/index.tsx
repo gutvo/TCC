@@ -6,6 +6,7 @@ import {
   InputLabel,
   MenuItem,
   TextField,
+  Grid,
 } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -59,122 +60,129 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
     <>
       <Box
         component="form"
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-          paddingX: '1rem',
-        }}
         encType="multipart/form-data"
         onSubmit={handleSubmit(handleUpdateProduct)}
       >
-        <input
-          style={{ display: 'none' }}
-          {...register('id', { required: true })}
-        />
-
-        <Box display="flex" justifyContent="center">
-          <TextFieldImage
-            register={register}
-            animalId={animalData.id}
-            name="imageData"
+        <Grid container spacing={4}>
+          <input
+            style={{ display: 'none' }}
+            {...register('id', { required: true })}
           />
-        </Box>
 
-        <TextFieldStyled
-          errors={errors.name}
-          label="Nome"
-          placeholder="Digite o nome do animal."
-          {...register('name', {
-            required: true,
-          })}
-        />
-        <TextFieldStyled
-          errors={errors.race}
-          label="Raça"
-          placeholder="Digite a raça do animal."
-          {...register('race', {
-            required: true,
-          })}
-        />
+          <Grid item xs={12} display="flex" justifyContent="center">
+            <TextFieldImage
+              register={register}
+              animalId={animalData.id}
+              name="imageData"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextFieldStyled
+              errors={errors.name}
+              label="Nome"
+              placeholder="Digite o nome do animal."
+              {...register('name', {
+                required: true,
+              })}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextFieldStyled
+              errors={errors.race}
+              label="Raça"
+              placeholder="Digite a raça do animal."
+              {...register('race', {
+                required: true,
+              })}
+            />
+          </Grid>
 
-        <Box width="100%" display="flex" gap="2%">
-          <TextFieldStyled
-            errors={errors.color}
-            label="Cor"
-            placeholder="Digite a cor do animal."
-            sx={{ width: '32%' }}
-            {...register('color', {
-              required: true,
-            })}
-          />
-          <FormControl sx={{ width: '32%' }}>
-            <InputLabel>Sexo</InputLabel>
-            <Select
-              error={!!errors.sex?.message}
-              label="Sexo"
-              defaultValue={animalData.sex}
-              displayEmpty
-              {...register('sex', { required: true })}
+          <Grid item xs={12} sm={6} md={4}>
+            <TextFieldStyled
+              errors={errors.color}
+              label="Cor"
+              fullWidth
+              placeholder="Digite a cor do animal."
+              {...register('color', {
+                required: true,
+              })}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Sexo</InputLabel>
+              <Select
+                error={!!errors.sex?.message}
+                label="Sexo"
+                defaultValue=""
+                displayEmpty
+                {...register('sex', { required: true })}
+              >
+                <MenuItem value={'Macho'}>Macho</MenuItem>
+                <MenuItem value={'Fêmea'}>Fêmea</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <FormControl fullWidth>
+              <InputLabel>Animal</InputLabel>
+              <Select
+                error={!!errors.sex?.message}
+                label="Tipo"
+                defaultValue=""
+                displayEmpty
+                {...register('type', { required: true })}
+              >
+                <MenuItem value={'Cachorro'}>Cachorro</MenuItem>
+                <MenuItem value={'Gato'}>Gato</MenuItem>
+                <MenuItem value={'Peixe'}>Peixe</MenuItem>
+                <MenuItem value={'Outros'}>Outros</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TextField
+              InputLabelProps={{ shrink: true }}
+              type="date"
+              error={!!errors.birthday?.message}
+              helperText={errors.birthday?.message}
+              color="info"
+              label="Data de Nascimento"
+              min="2020-01-01"
+              max="2018-12-31"
+              fullWidth
+              {...register('birthday', {
+                required: true,
+                min: '2020-01-01',
+                max: '2023-01-01',
+              })}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextFieldStyled
+              errors={errors.description}
+              label="Descrição"
+              placeholder="Digite a descrição do animal."
+              multiline
+              rows={3}
+              isOptional
+              inputProps={{ maxLength: 255 }}
+              {...register('description')}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button
+              disabled={loading}
+              variant="contained"
+              color="primary"
+              type="submit"
+              fullWidth
             >
-              <MenuItem value={'Macho'}>Macho</MenuItem>
-              <MenuItem value={'Fêmea'}>Fêmea</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ width: '32%' }}>
-            <InputLabel>Animal</InputLabel>
-            <Select
-              error={!!errors.sex?.message}
-              label="Tipo"
-              defaultValue={animalData.type}
-              displayEmpty
-              {...register('type', { required: true })}
-            >
-              <MenuItem value={'Cachorro'}>Cachorro</MenuItem>
-              <MenuItem value={'Gato'}>Gato</MenuItem>
-              <MenuItem value={'Peixe'}>Peixe</MenuItem>
-              <MenuItem value={'Outros'}>Outros</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-
-        <TextFieldStyled
-          errors={errors.description}
-          label="Descrição"
-          placeholder="Digite uma descrição para o animal."
-          multiline
-          rows={2}
-          isOptional
-          inputProps={{ maxLength: 255 }}
-          {...register('description')}
-        />
-
-        <TextField
-          InputLabelProps={{ shrink: true }}
-          type="date"
-          error={!!errors.birthday?.message}
-          helperText={errors.birthday?.message}
-          color="info"
-          label="Data de Nascimento"
-          min="2020-01-01"
-          max="2018-12-31"
-          fullWidth
-          {...register('birthday', {
-            required: true,
-            min: '2020-01-01',
-            max: '2023-01-01',
-          })}
-        />
-
-        <Button
-          disabled={loading}
-          variant="contained"
-          color="primary"
-          type="submit"
-          fullWidth
-        >
-          {loading ? 'Atualizando...' : 'Atualizar'}
-        </Button>
+              {loading ? 'Atualizando...' : 'Atualizar'}
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </>
   )

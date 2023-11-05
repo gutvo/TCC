@@ -137,7 +137,7 @@ export function Filter({ setAnimalFilter }: FilterProps) {
           </FormControl>
         </Grid>
 
-        {!data?.ongData && citys.length && (
+        {!data?.ongData && citys.length ? (
           <Grid item xs={gridBreakPointsXs} md={2}>
             <FormControl fullWidth>
               <InputLabel>Cidade</InputLabel>
@@ -162,7 +162,7 @@ export function Filter({ setAnimalFilter }: FilterProps) {
               </Select>
             </FormControl>
           </Grid>
-        )}
+        ) : null}
 
         <Grid item xs={12} md={2}>
           <Button

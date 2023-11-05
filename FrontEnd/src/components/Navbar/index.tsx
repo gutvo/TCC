@@ -18,8 +18,8 @@ import { Profile } from './Profile'
 
 export function Navbar() {
   const dispatch = useDispatch()
-  const theme = useTheme()
-  const mobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const { breakpoints } = useTheme()
+  const mobile = useMediaQuery(breakpoints.down('mobile'))
   const { showUserRequest, listCityRequest } = actions
 
   const { isLogged, data } = useSelector((state: RootState) => state.users)
@@ -73,7 +73,6 @@ export function Navbar() {
             justifyContent="flex-end"
             alignItems="center"
             width="100%"
-            gap={1}
           >
             {isLogged ? (
               <Profile />
