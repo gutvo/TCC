@@ -32,11 +32,18 @@ export interface AdoptionData {
   animalData: AnimalData
 }
 
+export interface animalFilterProps {
+  race: string[]
+  sex: string
+  type: string
+}
+
 export interface InitialState {
   loading: boolean
   list: AnimalData[]
   pagination: PaginationProps
   adoptionData: AdoptionData[]
+  filter: animalFilterProps
 }
 
 // -------------------------------------------
@@ -57,6 +64,17 @@ export interface deleteAdoptionDTO {
 export interface listAdoptionAnimalDTO {
   data: {
     data: AdoptionData[]
+    pagination: {
+      offset: number
+      limit: number
+      count: number
+    }
+  }
+}
+
+export interface listAdoptedAnimalsDTO {
+  data: {
+    data: AnimalData[]
     pagination: {
       offset: number
       limit: number
@@ -99,5 +117,15 @@ export interface deleteAdoptionActions {
   payload: {
     adoptionId: number
     fetchAdoptedRequests: () => void
+  }
+}
+
+export interface listAdoptedAnimalsActions {
+  type: typeof actions.listAdoptedAnimalsRequest.type
+  payload: {
+    ongId: number
+    offset: number
+    limit: number
+    filter: animalFilterProps
   }
 }

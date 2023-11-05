@@ -17,6 +17,7 @@ import {
   List as ListIcon,
   Assessment,
   Favorite,
+  FavoriteBorder,
 } from '@mui/icons-material'
 import { ListItem } from './ListItem/index'
 import { useSelector } from 'react-redux'
@@ -113,6 +114,13 @@ export function ListDrawer({ toggleDrawer }: ListDrawerProps) {
                   path="/animals"
                   label="Lista"
                   Icon={ListIcon}
+                />
+                <ListItem
+                  paddinLeft
+                  toggleDrawer={toggleDrawer}
+                  path="/animais/adotados"
+                  label="Adotados"
+                  Icon={FavoriteBorder}
                 />
               </List>
             </Collapse>

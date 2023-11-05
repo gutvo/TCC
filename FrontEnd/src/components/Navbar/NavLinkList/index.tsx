@@ -12,6 +12,7 @@ import {
   List,
   Favorite,
   Assessment,
+  FavoriteBorder,
 } from '@mui/icons-material'
 
 export function NavLinkList() {
@@ -41,6 +42,11 @@ export function NavLinkList() {
           <Menu
             list={[
               { label: 'Lista', path: '/animals', Icon: List },
+              {
+                label: 'Adotados',
+                path: '/animais/adotados',
+                Icon: FavoriteBorder,
+              },
               { label: 'Cadastrar', path: '/animal/cadastrar', Icon: Add },
             ]}
             name="Animais"

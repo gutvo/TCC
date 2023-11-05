@@ -3,6 +3,7 @@ import { AnimalData } from '@Interfaces/redux/animals'
 // List
 export interface CardAnimalProps {
   data: AnimalData
+  navigatePath: string
 }
 
 // -------------------------------------------

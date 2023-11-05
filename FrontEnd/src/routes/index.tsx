@@ -18,6 +18,8 @@ import { Adoption } from '@Pages/Animal/Adoption'
 import { Reports } from '@Pages/Reports'
 import { useEffect } from 'react'
 import socketIO from 'socket.io-client'
+import { AdoptedAnimal } from '@Pages/Animal/Adopted'
+import { AdoptedAnimalShow } from '@Pages/Animal/AdoptedShow'
 
 const socket = socketIO(import.meta.env.VITE_LINK as string, {
   autoConnect: false,
@@ -43,6 +45,8 @@ function MainRoutes() {
             </>
           )}
           <Route path="/animal" element={<ShowAnimal />} />
+          <Route path="/animais/adotados" element={<AdoptedAnimal />} />
+          <Route path="/animal/adotado" element={<AdoptedAnimalShow />} />
 
           <Route path="/relatorios" element={<Reports />} />
 

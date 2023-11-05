@@ -1,53 +1,51 @@
+import { actions } from '@Redux/adoptions/slice'
+import { RootState } from '@Redux/store'
+import { Box, Grid, Pagination, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actions } from '@Redux/animals/slice'
-// import { actions as userActions } from '@Redux/users/slice'
-
-import { Pagination, Typography, Box, Grid } from '@mui/material'
-import { RootState } from '@Redux/store'
-import { CardAnimal } from '@Components/CardAnimal'
 import { Helmet } from 'react-helmet-async'
 import { Loading } from '@Components/Loading'
-import { animalFilterProps } from '@Interfaces/redux/animals'
+import { CardAnimal } from '@Components/CardAnimal'
 import { Filter } from './Filter'
+import { animalFilterProps } from '@Interfaces/redux/adoptions'
 
-export function ListAnimal() {
-  const dispatch = useDispatch()
-  const { listAnimalRequest } = actions
-
-  const { list, pagination, loading } = useSelector(
-    (state: RootState) => state.animals,
-  )
+export function AdoptedAnimal() {
+  const { listAdoptedAnimalsRequest } = actions
+  const disptach = useDispatch()
 
   const { data } = useSelector((state: RootState) => state.users)
-  const { filter } = useSelector((state: RootState) => state.animals)
+  const { loading, list, pagination, filter } = useSelector(
+    (state: RootState) => state.adoptions,
+  )
 
   const [limit] = useState(pagination.limit)
   const [offset, setOffset] = useState(pagination.offset)
   const [animalFilter, setAnimalFilter] = useState<animalFilterProps>(filter)
 
-  const ongId = data?.ongData ? data.ongData?.id : null
-
   useEffect(() => {
-    dispatch(listAnimalRequest(offset, limit, ongId, animalFilter))
-  }, [dispatch, limit, offset, listAnimalRequest, ongId, animalFilter])
-
-  useEffect(() => {
-    if (!list.length && offset) {
-      setOffset(offset - limit)
+    if (data?.ongData?.id) {
+      disptach(
+        listAdoptedAnimalsRequest(data.ongData.id, offset, limit, animalFilter),
+      )
     }
-  }, [list, offset, limit])
-
+  }, [
+    data?.ongData?.id,
+    offset,
+    limit,
+    listAdoptedAnimalsRequest,
+    disptach,
+    animalFilter,
+  ])
   return (
     <Box>
-      <Helmet title="Lista de Animais" />
+      <Helmet title="Animais Adotados" />
       <Typography
         variant="h4"
         textAlign="center"
         fontWeight="bold"
         marginBottom={4}
       >
-        Lista de animais
+        Lista de animais adotados
       </Typography>
       <Filter setAnimalFilter={setAnimalFilter} />
 
@@ -60,7 +58,7 @@ export function ListAnimal() {
               <Grid container spacing={5} justifyContent="center">
                 {list.map((item) => (
                   <CardAnimal
-                    navigatePath="/animal"
+                    navigatePath="/animal/adotado"
                     key={item.id}
                     data={item}
                   />

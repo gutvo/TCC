@@ -10,6 +10,7 @@ import Show from "../../controllers/animals/show";
 import updateValidation from "../../validations/animals/update";
 import Update from "../../controllers/animals/update";
 import randomAnimal from "../../controllers/animals/randomAnimal";
+import ListAdoptedAnimals from "../../controllers/animals/listAdoptedAnimals";
 
 const animalRoutes = Router();
 
@@ -25,5 +26,8 @@ animalRoutes.route("/animal/:id").get(Show);
 animalRoutes.route("/animal/images/:id").get(showImageAnimal);
 
 animalRoutes.route("/random/animal").get(randomAnimal);
+
+animalRoutes.route("/adopted/animal").get(validateToken, ListAdoptedAnimals);
+
 
 export default animalRoutes;

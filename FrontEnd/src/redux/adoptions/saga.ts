@@ -9,6 +9,8 @@ import {
   createAdoptionActions,
   deleteAdoptionActions,
   deleteAdoptionDTO,
+  listAdoptedAnimalsActions,
+  listAdoptedAnimalsDTO,
 } from '@Interfaces/redux/adoptions'
 import { toast } from 'react-toastify'
 import axios from 'axios'
@@ -99,9 +101,34 @@ function* deleteAdoption({ payload }: deleteAdoptionActions) {
   }
 }
 
+function* listAdoptedAnimals({ payload }: listAdoptedAnimalsActions) {
+  const { listAdoptedAnimalsFailure, listAdoptedAnimalsSuccess } = actions
+  const { ongId, limit, offset, filter } = payload
+  try {
+    const response: listAdoptedAnimalsDTO = yield api.get('/adopted/animal', {
+      params: {
+        ongId,
+        limit,
+        offset,
+        filter,
+      },
+    })
+
+    const { data, pagination } = response.data
+
+    yield put(listAdoptedAnimalsSuccess(data, pagination, filter))
+  } catch (error) {
+    yield put(listAdoptedAnimalsFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest(actions.createAdoptionRequests.type, createAdoption),
   takeLatest(actions.listAdoptionRequest.type, listAdoption),
   takeLatest(actions.adoptAnimalRequest.type, adopt),
   takeLatest(actions.deleteAdoptionRequest.type, deleteAdoption),
+  takeLatest(actions.listAdoptedAnimalsRequest.type, listAdoptedAnimals),
 ])

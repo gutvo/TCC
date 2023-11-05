@@ -1,5 +1,5 @@
 import { RootState } from '@Redux/store'
-import { Box, Button, Grid } from '@mui/material'
+import { Box, Button, Grid, useMediaQuery, useTheme } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import animalNotFound from '@Images/isNotFound.jpg'
 import { toast } from 'react-toastify'
@@ -16,6 +16,9 @@ interface AnimalDetailProps {
 }
 
 export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
+  const { breakpoints } = useTheme()
+  const midiaQueryDownMd = useMediaQuery(breakpoints.down('sm'))
+  const midiaQueryDownSm = useMediaQuery(breakpoints.down('md'))
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
@@ -43,7 +46,7 @@ export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
 
   return (
     <Grid container spacing={2}>
-      <Grid textAlign="center" item sm={12} md={6}>
+      <Grid textAlign="center" item xs={12} md={6}>
         <Box
           component="img"
           src={animalData?.previewImage || animalNotFound}
@@ -51,22 +54,40 @@ export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
           borderRadius={2}
         />
       </Grid>
-      <Grid item sm={12} md={6}>
-        <TypographyDetail label="Nome:" variant="h6" value={animalData.name} />
-        <TypographyDetail
-          label="Data de nascimento:"
-          variant="h6"
-          value={date}
-        />
-        <TypographyDetail label="Cor:" variant="h6" value={animalData.color} />
-        <TypographyDetail label="Raça:" variant="h6" value={animalData.race} />
-        <TypographyDetail label="Sexo:" variant="h6" value={animalData.sex} />
-        <TypographyDetail label="Tipo:" variant="h6" value={animalData.type} />
-        <TypographyDetail
-          label="Descrição:"
-          variant="h6"
-          value={animalData.description}
-        />
+      <Grid item xs={12} md={6}>
+        <Box marginLeft={midiaQueryDownMd ? 7 : midiaQueryDownSm ? 10 : 0}>
+          <TypographyDetail
+            label="Nome:"
+            variant="h6"
+            value={animalData.name}
+          />
+          <TypographyDetail
+            label="Data de nascimento:"
+            variant="h6"
+            value={date}
+          />
+          <TypographyDetail
+            label="Cor:"
+            variant="h6"
+            value={animalData.color}
+          />
+          <TypographyDetail
+            label="Raça:"
+            variant="h6"
+            value={animalData.race}
+          />
+          <TypographyDetail label="Sexo:" variant="h6" value={animalData.sex} />
+          <TypographyDetail
+            label="Tipo:"
+            variant="h6"
+            value={animalData.type}
+          />
+          <TypographyDetail
+            label="Descrição:"
+            variant="h6"
+            value={animalData.description}
+          />
+        </Box>
         <Button
           fullWidth
           sx={{ marginTop: '2rem' }}

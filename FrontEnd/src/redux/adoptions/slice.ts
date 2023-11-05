@@ -11,6 +11,11 @@ const initialState: InitialState = {
     count: 20,
   },
   adoptionData: [],
+  filter: {
+    race: [],
+    sex: 'Todos',
+    type: 'Todos',
+  },
 }
 
 export const sliceAdoption = createSlice({

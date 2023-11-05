@@ -2,7 +2,9 @@ import {
   AdoptionData,
   InitialState,
   PaginationProps,
+  animalFilterProps,
 } from '@Interfaces/redux/adoptions'
+import { AnimalData } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export const reducers = {
@@ -75,6 +77,48 @@ export const reducers = {
     state.loading = false
   },
   deleteAdoptionFailure: (state: InitialState) => {
+    state.loading = false
+  },
+
+  listAdoptedAnimalsRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (
+      ongId: number,
+      offset: number,
+      limit: number,
+      filter: animalFilterProps,
+    ) => {
+      return { payload: { ongId, offset, limit, filter } }
+    },
+  },
+
+  listAdoptedAnimalsSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{
+        data: AnimalData[]
+        pagination: PaginationProps
+        filter: animalFilterProps
+      }>,
+    ) => {
+      const { data, pagination, filter } = action.payload
+      state.pagination = pagination
+      state.list = data
+      state.filter = filter
+      state.loading = false
+    },
+    prepare: (
+      data: AnimalData[],
+      pagination: PaginationProps,
+      filter: animalFilterProps,
+    ) => {
+      return { payload: { data, pagination, filter } }
+    },
+  },
+
+  listAdoptedAnimalsFailure: (state: InitialState) => {
     state.loading = false
   },
 }
