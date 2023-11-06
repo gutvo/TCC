@@ -10,7 +10,7 @@ const List = async(req:Request,res:Response)=>{
     const ongId = parseInt(req.query.ongId as string)
 
     const {count,rows} = await Adoption.findAndCountAll({
-        where:{ongId},
+        where:{ongId,confirm:null},
         include:[
             {
                 model:User,

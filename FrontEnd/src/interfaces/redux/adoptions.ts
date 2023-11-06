@@ -21,6 +21,8 @@ export interface AnimalData {
   previewImage?: string
   imageData: FileList
   ongId?: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface AdoptionData {
@@ -32,6 +34,13 @@ export interface AdoptionData {
   animalData: AnimalData
 }
 
+export interface AdoptedAnimalData {
+  id: number
+  animalData: AnimalData
+  userName: string
+  userEmail: string
+}
+
 export interface animalFilterProps {
   race: string[]
   sex: string
@@ -41,9 +50,11 @@ export interface animalFilterProps {
 export interface InitialState {
   loading: boolean
   list: AnimalData[]
+  adoptedAnimalList: AdoptedAnimalData[]
   pagination: PaginationProps
   adoptionData: AdoptionData[]
   filter: animalFilterProps
+  animalData: AdoptedAnimalData | null
 }
 
 // -------------------------------------------
@@ -61,6 +72,10 @@ export interface deleteAdoptionDTO {
   }
 }
 
+export interface showAdoptedAnimalDTO {
+  data: AdoptedAnimalData
+}
+
 export interface listAdoptionAnimalDTO {
   data: {
     data: AdoptionData[]
@@ -74,7 +89,7 @@ export interface listAdoptionAnimalDTO {
 
 export interface listAdoptedAnimalsDTO {
   data: {
-    data: AnimalData[]
+    data: AdoptedAnimalData[]
     pagination: {
       offset: number
       limit: number
@@ -127,5 +142,12 @@ export interface listAdoptedAnimalsActions {
     offset: number
     limit: number
     filter: animalFilterProps
+  }
+}
+
+export interface showAdoptedAnimalAction {
+  type: typeof actions.showAdoptedAnimalRequest.type
+  payload: {
+    id: number
   }
 }

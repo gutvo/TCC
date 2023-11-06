@@ -1,27 +1,38 @@
-import { Box, Grid, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
 import animalNotFound from '@Images/isNotFound.jpg'
 import { TypographyDetail } from '@Components/TypographyDetail'
 import { useEffect, useState } from 'react'
-import { AnimalData } from '@Interfaces/redux/animals'
 import { Loading } from '@Components/Loading'
+import { AdoptedAnimalData } from '@Interfaces/redux/adoptions'
+import { format } from 'date-fns'
 
 interface AnimalDetailProps {
   id: string
-  animalData: AnimalData
+  adoptedAnimalData: AdoptedAnimalData
   loading: boolean
 }
 
-export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
+export function AnimalDetail({
+  adoptedAnimalData,
+  loading,
+}: AnimalDetailProps) {
   const { breakpoints } = useTheme()
   const midiaQueryDownMd = useMediaQuery(breakpoints.down('sm'))
   const midiaQueryDownSm = useMediaQuery(breakpoints.down('md'))
-
+  const { animalData } = adoptedAnimalData
   const [date, setDate] = useState('')
+  const [adoptedDate, setAdoptedDate] = useState('')
 
   useEffect(() => {
     if (animalData) {
-      const date = new Date(animalData.birthday).toLocaleDateString('pt')
-      setDate(date)
+      const formatDate = new Date(animalData.birthday).toLocaleDateString('pt')
+      setDate(formatDate)
+
+      const formatAdoptedDate = format(
+        new Date(animalData.updatedAt),
+        "dd/MM/yyyy 'às' HH:mm",
+      )
+      setAdoptedDate(formatAdoptedDate)
     }
   }, [animalData])
 
@@ -41,6 +52,9 @@ export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
           </Grid>
           <Grid item xs={12} md={6}>
             <Box marginLeft={midiaQueryDownMd ? 7 : midiaQueryDownSm ? 10 : 0}>
+              <Typography marginBottom={1} variant="h5" fontWeight="bold">
+                Informações do animal:
+              </Typography>
               <TypographyDetail
                 label="Nome:"
                 variant="h6"
@@ -72,9 +86,37 @@ export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
                 value={animalData.type}
               />
               <TypographyDetail
+                label="Adotado em:"
+                variant="h6"
+                value={adoptedDate}
+              />
+              <TypographyDetail
                 label="Descrição:"
                 variant="h6"
-                value={animalData.description}
+                noDescription={!animalData.description}
+                value={
+                  animalData.description.length
+                    ? animalData.description
+                    : 'Sem descrição'
+                }
+              />
+              <Typography
+                marginBottom={1}
+                marginTop={2}
+                variant="h5"
+                fontWeight="bold"
+              >
+                Informações do adotante:
+              </Typography>
+              <TypographyDetail
+                label="Nome:"
+                variant="h6"
+                value={adoptedAnimalData.userName}
+              />
+              <TypographyDetail
+                label="Email:"
+                variant="h6"
+                value={adoptedAnimalData.userEmail}
               />
             </Box>
           </Grid>

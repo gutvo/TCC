@@ -57,7 +57,7 @@ export function Home() {
         {list.map((item) => {
           return (
             <Grid item key={item.id}>
-              <CardAnimal data={item} />
+              <CardAnimal id={item.id} navigatePath="/animal" data={item} />
             </Grid>
           )
         })}

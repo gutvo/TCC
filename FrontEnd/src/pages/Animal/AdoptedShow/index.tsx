@@ -6,27 +6,26 @@ import { RootState } from '@Redux/store'
 import { ArrowBack } from '@mui/icons-material'
 import { Helmet } from 'react-helmet-async'
 import { AnimalDetail } from './AnimalDetail'
-import { actions } from '@Redux/animals/slice'
+import { actions } from '@Redux/adoptions/slice'
 
 export function AdoptedAnimalShow() {
   const { id } = useLocation().state
-  const { showAnimalRequest } = actions
+  const { showAdoptedAnimalRequest } = actions
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { animalData, loading } = useSelector(
-    (state: RootState) => state.animals,
+    (state: RootState) => state.adoptions,
   )
-  const { data } = useSelector((state: RootState) => state.users)
 
   useEffect(() => {
     if (id) {
-      dispatch(showAnimalRequest(id, data?.ongData?.id))
+      dispatch(showAdoptedAnimalRequest(id))
     }
-  }, [showAnimalRequest, dispatch, id, data?.ongData?.id])
+  }, [showAdoptedAnimalRequest, dispatch, id])
 
   return (
     <Box>
-      <Helmet title={`Pet ${animalData?.name}`} />
+      <Helmet title={`Pet ${animalData?.animalData.name}`} />
 
       <Box
         marginBottom={2}
@@ -44,7 +43,11 @@ export function AdoptedAnimalShow() {
       </Box>
 
       {animalData ? (
-        <AnimalDetail loading={loading} id={id} animalData={animalData} />
+        <AnimalDetail
+          loading={loading}
+          id={id}
+          adoptedAnimalData={animalData}
+        />
       ) : (
         <Typography variant="h4" textAlign="center">
           Animal não foi encontrado.

@@ -15,7 +15,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { differenceInMonths } from 'date-fns'
 
-export function CardAnimal({ data, navigatePath }: CardAnimalProps) {
+export function CardAnimal({ data, navigatePath, id }: CardAnimalProps) {
   const navigation = useNavigate()
   const [previewImage, setPreviewImage] = useState('')
 
@@ -82,7 +82,7 @@ export function CardAnimal({ data, navigatePath }: CardAnimalProps) {
         </CardContent>
         <CardActions sx={{ width: '60%' }}>
           <Button
-            onClick={() => navigation(navigatePath, { state: { id: data.id } })}
+            onClick={() => navigation(navigatePath, { state: { id } })}
             size="small"
           >
             Visualizar animal

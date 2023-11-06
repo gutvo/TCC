@@ -19,7 +19,7 @@ const Update = async (req: Request, res: Response) => {
         .json({ message: message.userNotFound });
     }
 
-    await result.update(data);
+    await result.update({...data, updatedAt: new Date()});
 
     if(data.ongData){
       const ongResult = await Ong.findOne({where: {userId:result.id}})

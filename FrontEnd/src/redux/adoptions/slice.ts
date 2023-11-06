@@ -5,11 +5,13 @@ import { InitialState } from '@Interfaces/redux/adoptions'
 const initialState: InitialState = {
   loading: false,
   list: [],
+  adoptedAnimalList: [],
   pagination: {
     offset: 0,
     limit: 10,
     count: 20,
   },
+  animalData: null,
   adoptionData: [],
   filter: {
     race: [],

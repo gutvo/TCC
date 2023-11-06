@@ -6,6 +6,7 @@ interface TypographyDetailProps {
   value?: string
   sx?: SxProps
   variant?: TypographyVariant
+  noDescription?: boolean
 }
 
 export function TypographyDetail({
@@ -13,10 +14,16 @@ export function TypographyDetail({
   sx,
   value,
   variant,
+  noDescription,
 }: TypographyDetailProps) {
   return (
     <TypographyLabel variant={variant} sx={sx}>
-      {label} <span style={{ fontWeight: 'normal' }}>{value}</span>
+      {label}{' '}
+      <span
+        style={{ fontWeight: 'normal', color: noDescription ? 'red' : 'black' }}
+      >
+        {value}
+      </span>
     </TypographyLabel>
   )
 }

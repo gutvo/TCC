@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
 import { Op } from 'sequelize';
+import { Adoption } from "../../models/adoptions/adoptions";
 
 
 interface animalFilterProps{
@@ -45,11 +46,19 @@ const ListAdoptedAnimals = async (req: Request, res: Response) => {
     } 
 
 
-    const { rows, count } = await Animal.findAndCountAll({
-      where:{...where,situation:'adopted'},
-      include: {
-        association:'ongData',
-      },
+    const { rows, count } = await Adoption.findAndCountAll({
+      include: [
+        {
+          association:'animalData',
+          where:{...where,situation:'adopted'},
+          include:[{
+            association:'ongData',
+          }],
+        },
+        {
+          association:'animalData',
+        },
+    ],
       offset,
       limit,
     });

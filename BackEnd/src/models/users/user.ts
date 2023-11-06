@@ -43,7 +43,6 @@ export const User = sequelize.define<UserData>(
   },
   {
     tableName: "user",
-    timestamps: false,
   }
 );
 
@@ -56,9 +55,9 @@ Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
 Ong.hasMany(Phone, {  foreignKey: 'ongId', onDelete:'CASCADE',as:'phoneData'})
 Phone.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
 
-Adoption.belongsTo(Animal,{ foreignKey:'animalId',as:'animalData'})
+Adoption.belongsTo(Animal,{ foreignKey:'animalId',as:'animalData',onDelete:'CASCADE'})
 Adoption.belongsTo(User,{ foreignKey:'userId',as:'userData'})
-Adoption.belongsTo(Ong,{ foreignKey:'ongId',as:'ongData'})
+Adoption.belongsTo(Ong,{ foreignKey:'ongId',as:'ongData',onDelete:'CASCADE'})
 
 User.hasMany(Room,{foreignKey:'userId',as:'roomData',onDelete:'CASCADE'})
 Room.belongsTo(User,{foreignKey:'userId', as:'userData', targetKey:'id'})

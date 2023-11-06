@@ -63,6 +63,7 @@ export function ListAnimal() {
                     navigatePath="/animal"
                     key={item.id}
                     data={item}
+                    id={item.id}
                   />
                 ))}
               </Grid>

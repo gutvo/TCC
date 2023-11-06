@@ -85,7 +85,12 @@ export function AnimalDetail({ animalData, loading }: AnimalDetailProps) {
           <TypographyDetail
             label="Descrição:"
             variant="h6"
-            value={animalData.description}
+            noDescription={!animalData.description}
+            value={
+              animalData.description.length
+                ? animalData.description
+                : 'Sem descrição'
+            }
           />
         </Box>
         <Button

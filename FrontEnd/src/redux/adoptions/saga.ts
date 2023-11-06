@@ -11,9 +11,13 @@ import {
   deleteAdoptionDTO,
   listAdoptedAnimalsActions,
   listAdoptedAnimalsDTO,
+  showAdoptedAnimalDTO,
+  showAdoptedAnimalAction,
+  AdoptedAnimalData,
 } from '@Interfaces/redux/adoptions'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { AnimalData } from '@Interfaces/redux/animals'
 
 function* createAdoption({ payload }: createAdoptionActions) {
   const { createAdoptionSuccess, createAdoptionFailure } = actions
@@ -125,10 +129,64 @@ function* listAdoptedAnimals({ payload }: listAdoptedAnimalsActions) {
   }
 }
 
+function* showAdoptedAnimal({ payload }: showAdoptedAnimalAction) {
+  const { showAdoptedAnimalFailure, showAdoptedAnimalSuccess } = actions
+  try {
+    const animal: showAdoptedAnimalDTO = yield api.get(
+      `/adopted/animal/${payload.id}`,
+    )
+    const { data } = animal
+
+    let animalData
+
+    if (data.animalData.image) {
+      const image: string = yield api
+        .get(`/animal/images/${data.animalData.id}`, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+
+      const updatedAnimalData: AnimalData = {
+        ...data.animalData,
+        previewImage: image,
+      }
+
+      const adoptedAnimalData: AdoptedAnimalData = {
+        id: data.animalData.id,
+        animalData: updatedAnimalData,
+        userName: data.userName,
+        userEmail: data.userEmail,
+      }
+
+      yield put(showAdoptedAnimalSuccess(adoptedAnimalData))
+    } else {
+      animalData = { ...data.animalData, previewImage: undefined }
+      const adoptedAnimalData: AdoptedAnimalData = {
+        id: data.animalData.id,
+        animalData,
+        userName: data.userName,
+        userEmail: data.userEmail,
+      }
+
+      yield put(showAdoptedAnimalSuccess(adoptedAnimalData))
+    }
+  } catch (error) {
+    console.log(console.log(error))
+
+    yield put(showAdoptedAnimalFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest(actions.createAdoptionRequests.type, createAdoption),
   takeLatest(actions.listAdoptionRequest.type, listAdoption),
   takeLatest(actions.adoptAnimalRequest.type, adopt),
   takeLatest(actions.deleteAdoptionRequest.type, deleteAdoption),
   takeLatest(actions.listAdoptedAnimalsRequest.type, listAdoptedAnimals),
+  takeLatest(actions.showAdoptedAnimalRequest.type, showAdoptedAnimal),
 ])

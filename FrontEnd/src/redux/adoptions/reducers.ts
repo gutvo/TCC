@@ -1,10 +1,10 @@
 import {
+  AdoptedAnimalData,
   AdoptionData,
   InitialState,
   PaginationProps,
   animalFilterProps,
 } from '@Interfaces/redux/adoptions'
-import { AnimalData } from '@Interfaces/redux/animals'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 export const reducers = {
@@ -98,19 +98,19 @@ export const reducers = {
     reducer: (
       state: InitialState,
       action: PayloadAction<{
-        data: AnimalData[]
+        data: AdoptedAnimalData[]
         pagination: PaginationProps
         filter: animalFilterProps
       }>,
     ) => {
       const { data, pagination, filter } = action.payload
       state.pagination = pagination
-      state.list = data
+      state.adoptedAnimalList = data
       state.filter = filter
       state.loading = false
     },
     prepare: (
-      data: AnimalData[],
+      data: AdoptedAnimalData[],
       pagination: PaginationProps,
       filter: animalFilterProps,
     ) => {
@@ -119,6 +119,30 @@ export const reducers = {
   },
 
   listAdoptedAnimalsFailure: (state: InitialState) => {
+    state.loading = false
+  },
+
+  showAdoptedAnimalRequest: {
+    reducer: (state: InitialState) => {
+      state.loading = true
+    },
+    prepare: (id: string) => {
+      return { payload: { id } }
+    },
+  },
+  showAdoptedAnimalSuccess: {
+    reducer: (
+      state: InitialState,
+      action: PayloadAction<{ data: AdoptedAnimalData }>,
+    ) => {
+      state.animalData = action.payload.data
+      state.loading = false
+    },
+    prepare: (data: AdoptedAnimalData) => {
+      return { payload: { data } }
+    },
+  },
+  showAdoptedAnimalFailure: (state: InitialState) => {
     state.loading = false
   },
 }

@@ -9,6 +9,7 @@ import {
 import { BarChart, LineChart } from '@mui/x-charts'
 import { actions } from '@Redux/reports/slice'
 import { RootState } from '@Redux/store'
+import { differenceInYears } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -23,6 +24,7 @@ export function RecuedAdoptedAnimal() {
 
   const [chartType, setChartType] = useState('bars')
   const [chartYear, setChartYear] = useState(new Date().getFullYear())
+  const [chartYearOptions, setChartYearOptions] = useState<number[]>([])
 
   const initialArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -67,6 +69,23 @@ export function RecuedAdoptedAnimal() {
       dispatch(getRescuedAdoptedAnimalRequest(data.ongData.id, chartYear))
     }
   }, [dispatch, data?.ongData?.id, getRescuedAdoptedAnimalRequest, chartYear])
+
+  useEffect(() => {
+    if (data?.createdAt) {
+      const difference = differenceInYears(new Date(), new Date(data.createdAt))
+
+      if (difference === 0) {
+        setChartYearOptions([new Date().getFullYear()])
+        return
+      }
+      const years = []
+      const initialYear = new Date(data.createdAt).getFullYear()
+      for (let count = 0; count <= difference; count++) {
+        years.push(initialYear + count)
+      }
+      setChartYearOptions(years)
+    }
+  }, [data?.createdAt])
 
   const xAxisData = [
     'Janeiro',
@@ -116,8 +135,13 @@ export function RecuedAdoptedAnimal() {
               setChartYear(number)
             }}
           >
-            <MenuItem value={2023}>2023</MenuItem>
-            <MenuItem value={2022}>2022</MenuItem>
+            {chartYearOptions.map((item) => {
+              return (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              )
+            })}
           </Select>
         </FormControl>
       </Box>

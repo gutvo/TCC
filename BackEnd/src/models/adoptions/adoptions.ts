@@ -6,6 +6,9 @@ export interface AdoptionData extends Model {
   animalId: number
   userId:number
   ongId:number
+  confirm:boolean
+  userName:string
+  userEmail:string
 }
 
 export const Adoption = sequelize.define<AdoptionData>(
@@ -28,6 +31,15 @@ export const Adoption = sequelize.define<AdoptionData>(
         type: DataTypes.INTEGER,
         allowNull:false
     },
+    confirm:{
+      type:DataTypes.BOOLEAN,
+    },
+    userName:{
+      type:DataTypes.STRING,
+    },
+    userEmail:{
+      type:DataTypes.STRING,
+    }
   },
   {
     tableName: "adoption",

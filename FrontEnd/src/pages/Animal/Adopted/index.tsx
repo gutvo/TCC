@@ -14,10 +14,9 @@ export function AdoptedAnimal() {
   const disptach = useDispatch()
 
   const { data } = useSelector((state: RootState) => state.users)
-  const { loading, list, pagination, filter } = useSelector(
+  const { loading, adoptedAnimalList, pagination, filter } = useSelector(
     (state: RootState) => state.adoptions,
   )
-
   const [limit] = useState(pagination.limit)
   const [offset, setOffset] = useState(pagination.offset)
   const [animalFilter, setAnimalFilter] = useState<animalFilterProps>(filter)
@@ -53,14 +52,15 @@ export function AdoptedAnimal() {
         <Loading />
       ) : (
         <>
-          {list.length ? (
+          {adoptedAnimalList.length ? (
             <Box>
               <Grid container spacing={5} justifyContent="center">
-                {list.map((item) => (
+                {adoptedAnimalList.map((item) => (
                   <CardAnimal
                     navigatePath="/animal/adotado"
                     key={item.id}
-                    data={item}
+                    data={item.animalData}
+                    id={item.id}
                   />
                 ))}
               </Grid>

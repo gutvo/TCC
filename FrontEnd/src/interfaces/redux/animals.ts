@@ -106,7 +106,6 @@ export interface showAction {
   type: typeof actions.showAnimalRequest.type
   payload: {
     id: number
-    ongId: number
   }
 }
 

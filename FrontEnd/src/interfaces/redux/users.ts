@@ -40,6 +40,8 @@ export interface UserData {
   image?: string
   previewImage?: string
   ongData: ongData | null
+  createdAt: string
+  updatedAt: string
 }
 
 export interface loginData {

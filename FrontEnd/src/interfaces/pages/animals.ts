@@ -4,6 +4,7 @@ import { AnimalData } from '@Interfaces/redux/animals'
 export interface CardAnimalProps {
   data: AnimalData
   navigatePath: string
+  id: number
 }
 
 // -------------------------------------------

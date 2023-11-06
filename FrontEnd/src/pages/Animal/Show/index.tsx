@@ -28,9 +28,9 @@ export function ShowAnimal() {
 
   useEffect(() => {
     if (id) {
-      dispatch(showAnimalRequest(id, data?.ongData?.id))
+      dispatch(showAnimalRequest(id))
     }
-  }, [showAnimalRequest, dispatch, id, data?.ongData?.id])
+  }, [showAnimalRequest, dispatch, id])
 
   return (
     <Box>
