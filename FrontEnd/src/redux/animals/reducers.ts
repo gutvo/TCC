@@ -153,8 +153,8 @@ export const reducers = {
       state: InitialState,
       action: PayloadAction<{ data: AnimalData[] }>,
     ) => {
-      state.loading = true
       state.list = action.payload.data
+      state.loading = false
     },
     prepare: (data: AnimalData[]) => {
       return { payload: { data } }

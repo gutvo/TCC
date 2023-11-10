@@ -17,10 +17,13 @@ export function TypographyDetail({
   noDescription,
 }: TypographyDetailProps) {
   return (
-    <TypographyLabel variant={variant} sx={sx}>
+    <TypographyLabel variant={variant} sx={{ ...sx, marginBottom: 2 }}>
       {label}{' '}
       <span
-        style={{ fontWeight: 'normal', color: noDescription ? 'red' : 'black' }}
+        style={{
+          fontWeight: 'normal',
+          color: noDescription ? 'red' : 'black',
+        }}
       >
         {value}
       </span>

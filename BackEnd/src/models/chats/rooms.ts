@@ -2,8 +2,10 @@ import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../../migrations/mysql";
 
 export interface RoomData extends Model {
-  id: number;
+  id: number
   name:string
+  receiver:string
+  sender:string
 }
 
 export const Room = sequelize.define<RoomData>(

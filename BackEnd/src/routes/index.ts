@@ -7,14 +7,12 @@ import ListCity from "../controllers/city/list";
 import { upload } from "../multer/config";
 import adoptionRoutes from "./adoptions";
 import reportRoutes from "./reports/routes";
-import chatRoutes from "./chat/route";
+
 // import validateSequelize from "../validations/sequelize/sequelize";
 const mainRoutes = Router();
 
 // Pega todas as cidades registradas
 mainRoutes.get('/city', ListCity)
-
-mainRoutes.use(chatRoutes)
 
 // mainRoutes.use(validateSequelize);
 

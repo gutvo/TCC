@@ -15,8 +15,14 @@ import { actions } from '@Redux/users/slice'
 import { NavLinkList } from './NavLinkList'
 import { NavLinkButton } from './NavLinkButton'
 import { Profile } from './Profile'
+import { Notifications } from './Notifications'
+import { Socket } from 'socket.io-client'
 
-export function Navbar() {
+interface NavbarProps {
+  socket: Socket
+}
+
+export function Navbar({ socket }: NavbarProps) {
   const dispatch = useDispatch()
   const { breakpoints } = useTheme()
   const mobile = useMediaQuery(breakpoints.down('mobile'))
@@ -75,7 +81,10 @@ export function Navbar() {
             width="100%"
           >
             {isLogged ? (
-              <Profile />
+              <>
+                <Notifications socket={socket} />
+                <Profile />
+              </>
             ) : (
               <NavLinkButton label="Entrar" href="/login" Icon={Login} />
             )}

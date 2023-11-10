@@ -24,7 +24,9 @@ export function RecuedAdoptedAnimal() {
 
   const [chartType, setChartType] = useState('bars')
   const [chartYear, setChartYear] = useState(new Date().getFullYear())
-  const [chartYearOptions, setChartYearOptions] = useState<number[]>([])
+  const [chartYearOptions, setChartYearOptions] = useState<number[]>([
+    new Date().getFullYear(),
+  ])
 
   const initialArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -75,17 +77,16 @@ export function RecuedAdoptedAnimal() {
       const difference = differenceInYears(new Date(), new Date(data.createdAt))
 
       if (difference === 0) {
-        setChartYearOptions([new Date().getFullYear()])
         return
       }
       const years = []
       const initialYear = new Date(data.createdAt).getFullYear()
-      for (let count = 0; count <= difference; count++) {
+      for (let count = 0; count < difference; count++) {
         years.push(initialYear + count)
       }
-      setChartYearOptions(years)
+      setChartYearOptions([...chartYearOptions, ...years])
     }
-  }, [data?.createdAt])
+  }, [data?.createdAt, chartYearOptions])
 
   const xAxisData = [
     'Janeiro',

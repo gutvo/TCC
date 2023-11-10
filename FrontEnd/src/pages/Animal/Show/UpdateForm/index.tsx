@@ -114,8 +114,7 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
               <Select
                 error={!!errors.sex?.message}
                 label="Sexo"
-                defaultValue=""
-                displayEmpty
+                defaultValue={animalData ? animalData.sex : ''}
                 {...register('sex', { required: true })}
               >
                 <MenuItem value={'Macho'}>Macho</MenuItem>
@@ -129,8 +128,7 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
               <Select
                 error={!!errors.sex?.message}
                 label="Tipo"
-                defaultValue=""
-                displayEmpty
+                defaultValue={animalData ? animalData.type : ''}
                 {...register('type', { required: true })}
               >
                 <MenuItem value={'Cachorro'}>Cachorro</MenuItem>

@@ -7,6 +7,7 @@ import http from 'http'
 import {Server,Socket} from 'socket.io'
 import { Message } from "./models/chats/messages";
 import { Room } from "./models/chats/rooms";
+import { type } from "os";
 
 dotenv.config();
 
@@ -27,6 +28,23 @@ server.use((req, res) => {
 
 interface SocketProps extends Socket {
   userId?: number;
+  userName?:string;
+  type?:string
+}
+interface roomsProps {
+  id: number
+  name: string
+  ongData?: { email: string; name: string }
+  userData?: { email: string; name: string }
+  receiver: number
+  sender: number
+}
+
+export interface MessageProps {
+  id: number;
+  email:string
+  message:string
+  room:string
 }
 
 const serverHTTP = http.createServer(server);
@@ -40,49 +58,91 @@ export const io = new Server(serverHTTP, {
 });
 
 io.use((socket: SocketProps,next)=>{
-  const userId = socket.handshake.auth.userId
-  if(!userId){
-    return next(new Error("Email inválido"))
+  const {userId,userName,type} = socket.handshake.auth
+  if(!userId && !type && !userName){
+    return next(new Error("Erro ao conectar no chat"))
   }
   socket.userId = userId
+  socket.userName = userName
+  socket.type = type
   next()
 })
 
 io.on('connection', async(socket:SocketProps) => {
-  console.log(`User connected ${socket.userId}`);
+  const { userId, type } = socket
+  socket.join(`notfications${userId}`)
 
-  // const room = await Room.findOne({where:{userId:socket.userId}})
+  socket.on('rooms',async()=>{
+    const rooms: {
+      id: number
+      name: string
+      ongData?: { email: string; name: string }
+      receiver: number
+      sender: number
+    }[] = [];
 
-  const users = [];
-  for (let [id, socket] of io.of("/").sockets) {
-    users.push({
-      id: id,
-      userId: (socket as any).userId,
-    });
-  }
-  socket.emit("users", users);
-
-  socket.onAny((data)=>{
-    console.log(data)
+    if(type==='user'){
+      const result = await Room.findAll({where:{sender:userId},include:[{association:'ongData', attributes:['id','email','name'],as:'userData'}]})
+      result.map((item)=>{
+        rooms.push(item.dataValues)
+      })
+    }else{
+      const result = await Room.findAll({where:{receiver:userId},include:[{association:'userData', attributes:['id','email','name']}]})
+      result.map((item)=>{
+        rooms.push(item.dataValues)
+      })
+    }
+    socket.emit('rooms.response', rooms);
   })
-  socket.on('chat.message',(message)=>{
-    console.log('chat.message => ',message)
-    
-    io.emit('message.response',message)
+
+  socket.on('join.room',async(room:roomsProps)=>{
+      socket.join(room.name)
+
+      if(room){
+        const message = await Message.findAll({where:{roomId:room.id}})
+        socket.emit('get.messages',message)
+      }
   })
+
+  socket.on('leave.room',(room:roomsProps)=>{
+    socket.leave(room.name)
+})
+
+  socket.onAny((data,...args)=>{
+    console.log(data, args)
+  })
+  socket.on('send.message',async(message:MessageProps,room:roomsProps)=>{ 
+    await Message.create({
+      email:message.email,
+      message:message.message,
+      roomId:room.id
+    })
+    io.to(room.name).emit('message.response',message)
+  })
+
+  socket.on('create.room',async(data)=>{
+    const {userId,ongId} = data
+
+    const name = `${userId} - ${ongId}`
+    const [room] = await Room.findOrCreate({where:{name,sender:userId,receiver:ongId}})
+    socket.emit('create.room', room)
+  })
+
+
+
+  socket.on('get.messages',async(room:roomsProps)=>{
+    if(room){
+      const message = await Message.findAll({where:{roomId:room.id}})
+      socket.emit('get.messages',message)
+    }
+  })
+
+  socket.on('notifications',(id)=>{
+    socket.to(`notfications${id}`).emit('get.notifications',userId)
+  })
+
+
   socket.on('disconnect',()=>{
     console.log('user disconnected')
   })
-
-  socket.on('get.messages',async()=>{
-    const room = await Room.findOne({where:{userId:socket.userId}})
-    if(room){
-      const message = await Message.findAll({where:{roomId:room.id}})
-      io.emit('get.messages',message)
-    }else{
-      io.emit('get.messages','Sem mensagens')
-    }
-
-  })
-
 });

@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
@@ -9,9 +9,10 @@ import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
 import { useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-import { CepInformation } from '../../../../components/CepInformations'
+import { CepInformation } from '@Components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
 import { TextFieldImage } from '@Components/TextFieldImage'
+import { toast } from 'react-toastify'
 
 export function ProfileForm({
   data,
@@ -39,7 +40,7 @@ export function ProfileForm({
   const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
   const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
 
-  function onChangeCep(
+  async function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
     try {
@@ -48,7 +49,7 @@ export function ProfileForm({
       setInputCep(formatValue)
 
       if (formatValue.length === 9) {
-        getCepInfo(formatValue)
+        await getCepInfo(formatValue)
       }
       if (formatValue.length === 0) {
         setLoadingCEP(false)
@@ -60,30 +61,35 @@ export function ProfileForm({
   }
 
   async function getCepInfo(formatValue: string) {
-    setLoadingCEP(true)
-    const response: ViaCepDTO = await getInformationsByCEP(formatValue)
-    setCEP(response)
+    try {
+      setLoadingCEP(true)
+      const response: ViaCepDTO = await getInformationsByCEP(formatValue)
+      setCEP(response)
 
-    const { localidade, uf, logradouro, bairro } = response
+      const { localidade, uf, logradouro, bairro } = response
 
-    setValue('ongData.city', localidade)
-    setValue('ongData.uf', uf)
+      setValue('ongData.city', localidade)
+      setValue('ongData.uf', uf)
 
-    if (!bairro.length) {
-      resetField('ongData.neighborhood')
-      setIsInVisibleNeighborhood(false)
-    } else {
-      setValue('ongData.neighborhood', bairro)
+      if (!bairro.length) {
+        resetField('ongData.neighborhood')
+        setIsInVisibleNeighborhood(false)
+      } else {
+        setValue('ongData.neighborhood', bairro)
+      }
+
+      if (!logradouro.length) {
+        resetField('ongData.road')
+        setIsInVisibleRoad(false)
+      } else {
+        setValue('ongData.road', logradouro)
+      }
+
+      setLoadingCEP(false)
+    } catch (error) {
+      toast.error('CEP inválido')
+      setLoadingCEP(false)
     }
-
-    if (!logradouro.length) {
-      resetField('ongData.road')
-      setIsInVisibleRoad(false)
-    } else {
-      setValue('ongData.road', logradouro)
-    }
-
-    setLoadingCEP(false)
   }
 
   useEffect(() => {
@@ -121,17 +127,16 @@ export function ProfileForm({
         />
       )}
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Box
+        <Grid
+          container
           component="form"
+          spacing={2}
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-            width: '50rem',
+            maxWidth: '50rem',
           }}
           onSubmit={handleSubmit(handleUpdateUser)}
         >
-          <Box display="flex" justifyContent="center">
+          <Grid xs={12} item display="flex" justifyContent="center">
             <TextFieldImage
               isDisabled={!editable}
               register={register}
@@ -139,79 +144,94 @@ export function ProfileForm({
               profileEmail={data.email}
               isProfile
             />
-          </Box>
+          </Grid>
 
-          <TextFieldStyled
-            errors={errors.name}
-            label="Nome"
-            placeholder="Digite o seu nome."
-            {...register('name', { required: true })}
-            disabled={!editable}
-          />
-
-          <TextFieldStyled
-            errors={errors.email}
-            label="Email"
-            disabled={!editable}
-            customType="email"
-            placeholder="Digite o seu email."
-            {...register('email', { required: true })}
-          />
+          <Grid item xs={12} md={6}>
+            <TextFieldStyled
+              errors={errors.name}
+              label="Nome"
+              placeholder="Digite o seu nome."
+              {...register('name', { required: true })}
+              disabled={!editable}
+            />
+          </Grid>
+          <Grid xs={12} md={6} item>
+            <TextFieldStyled
+              errors={errors.email}
+              label="Email"
+              disabled={!editable}
+              customType="email"
+              placeholder="Digite o seu email."
+              {...register('email', { required: true })}
+            />
+          </Grid>
 
           {data.ongData ? (
             <>
-              <TextFieldStyled
-                errors={errors.ongData?.cpfCnpj}
-                disabled={!editable}
-                label="CPF/CNPJ"
-                value={cpfCnpj}
-                placeholder="Digite o CFP ou CNPJ."
-                {...register('ongData.cpfCnpj', {
-                  required: true,
-                  onChange: (event) => {
-                    const formatValue: string = CnpjCpfMask(event.target.value)
-                    setCpfCnpj(formatValue)
-                  },
-                })}
-              />
-              <TextFieldStyled
-                loading={loadingCEP}
-                errors={errors.ongData?.CEP}
-                disabled={!editable}
-                label="CEP"
-                inputProps={{ maxLength: 9 }}
-                value={inputCep}
-                style={{ marginBottom: '0.25rem' }}
-                placeholder="Digite o CEP."
-                {...register('ongData.CEP', {
-                  required: true,
-                  onChange: onChangeCep,
-                })}
-              />
-              <Box
+              <Grid xs={6} item>
+                <TextFieldStyled
+                  errors={errors.ongData?.cpfCnpj}
+                  disabled={!editable}
+                  label="CPF/CNPJ"
+                  value={cpfCnpj}
+                  placeholder="Digite o CFP ou CNPJ."
+                  {...register('ongData.cpfCnpj', {
+                    required: true,
+                    onChange: (event) => {
+                      const formatValue: string = CnpjCpfMask(
+                        event.target.value,
+                      )
+                      setCpfCnpj(formatValue)
+                    },
+                  })}
+                />
+              </Grid>
+              <Grid xs={6} item>
+                <TextFieldStyled
+                  loading={loadingCEP}
+                  errors={errors.ongData?.CEP}
+                  disabled={!editable}
+                  label="CEP"
+                  inputProps={{ maxLength: 9 }}
+                  value={inputCep}
+                  style={{ marginBottom: '0.25rem' }}
+                  placeholder="Digite o CEP."
+                  {...register('ongData.CEP', {
+                    required: true,
+                    onChange: onChangeCep,
+                  })}
+                />
+              </Grid>
+              <Grid
+                item
+                xs={12}
                 display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}
               >
-                <TextFieldStyled
-                  isInvisible={isInVisibleRoad}
-                  label="Rua"
-                  placeholder="Digite o nome da rua."
-                  errors={errors.ongData?.road}
-                  style={{ width: '49%', marginRight: '2%' }}
-                  {...register('ongData.road', {
-                    required: true,
-                  })}
-                />
-                <TextFieldStyled
-                  isInvisible={isInVisibleNeighborhood}
-                  label="Bairro"
-                  style={{ width: '49%' }}
-                  placeholder="Digite o nome da bairro."
-                  errors={errors.ongData?.neighborhood}
-                  {...register('ongData.neighborhood', {
-                    required: true,
-                  })}
-                />
-              </Box>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <TextFieldStyled
+                      isInvisible={isInVisibleRoad}
+                      label="Rua"
+                      placeholder="Digite o nome da rua."
+                      errors={errors.ongData?.road}
+                      {...register('ongData.road', {
+                        required: true,
+                      })}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextFieldStyled
+                      isInvisible={isInVisibleNeighborhood}
+                      label="Bairro"
+                      placeholder="Digite o nome da bairro."
+                      errors={errors.ongData?.neighborhood}
+                      {...register('ongData.neighborhood', {
+                        required: true,
+                      })}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
               <TextFieldStyled
                 isInvisible={true}
                 {...register('ongData.city', {
@@ -224,8 +244,9 @@ export function ProfileForm({
                   required: true,
                 })}
               />
-
-              <CepInformation CEP={CEP} editable={editable} />
+              <Grid xs={12} item>
+                <CepInformation CEP={CEP} editable={editable} />
+              </Grid>
             </>
           ) : (
             <input
@@ -233,49 +254,59 @@ export function ProfileForm({
               {...register('ongData', { required: true, value: null })}
             />
           )}
-          {editable ? (
-            <Box>
+          <Grid item xs={12}>
+            {editable ? (
+              <Grid container spacing={2}>
+                <Grid xs={6} item>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="success"
+                    type="submit"
+                  >
+                    {loading ? 'Salvando...' : 'Salvar'}
+                  </Button>
+                </Grid>
+                <Grid xs={6} item>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => {
+                      setEditable(false)
+                    }}
+                    color="inherit"
+                  >
+                    cancelar
+                  </Button>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid xs={12} item>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={() => {
+                    setEditable(true)
+                  }}
+                >
+                  Editar
+                </Button>
+              </Grid>
+            )}
+            <Grid xs={12} item>
               <Button
-                sx={{ width: '48%', marginRight: '4%' }}
-                variant="contained"
-                color="success"
-                type="submit"
-              >
-                {loading ? 'Salvando...' : 'Salvar'}
-              </Button>
-              <Button
-                sx={{ width: '48%' }}
-                variant="contained"
+                disabled={dialogIsVisible}
                 onClick={() => {
-                  setEditable(false)
+                  setDialogIsVisible(true)
                 }}
-                color="inherit"
+                sx={{ justifyContent: 'start', width: '7rem' }}
+                color="error"
               >
-                cancelar
+                Deletar Conta
               </Button>
-            </Box>
-          ) : (
-            <Button
-              variant="contained"
-              onClick={() => {
-                setEditable(true)
-              }}
-            >
-              Editar
-            </Button>
-          )}
-
-          <Button
-            disabled={dialogIsVisible}
-            onClick={() => {
-              setDialogIsVisible(true)
-            }}
-            sx={{ marginTop: 1, justifyContent: 'start', width: '7rem' }}
-            color="error"
-          >
-            Deletar Conta
-          </Button>
-        </Box>
+            </Grid>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   )

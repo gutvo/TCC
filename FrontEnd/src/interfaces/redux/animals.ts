@@ -13,6 +13,15 @@ export interface PaginationProps {
   count: number
 }
 
+export interface userOngData {
+  id: number
+  road: string
+  neighborhood: string
+  city: string
+  CEP: string
+  userData: { id: number; name: string; email: string }
+}
+
 export interface AnimalData {
   id: number
   name: string
@@ -26,6 +35,7 @@ export interface AnimalData {
   previewImage?: string
   imageData: FileList
   ongId?: number
+  ongData?: userOngData
 }
 
 export interface animalFilterProps {

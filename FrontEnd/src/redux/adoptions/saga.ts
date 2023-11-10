@@ -14,10 +14,10 @@ import {
   showAdoptedAnimalDTO,
   showAdoptedAnimalAction,
   AdoptedAnimalData,
+  AnimalData,
 } from '@Interfaces/redux/adoptions'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { AnimalData } from '@Interfaces/redux/animals'
 
 function* createAdoption({ payload }: createAdoptionActions) {
   const { createAdoptionSuccess, createAdoptionFailure } = actions

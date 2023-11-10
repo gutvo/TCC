@@ -52,18 +52,21 @@ Ong.belongsTo(User,{ onDelete:'CASCADE',foreignKey: 'userId', targetKey:'id',as:
 Ong.hasMany(Animal, {  foreignKey: 'ongId', onDelete:'CASCADE',})
 Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
 
-Ong.hasMany(Phone, {  foreignKey: 'ongId', onDelete:'CASCADE',as:'phoneData'})
-Phone.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
+User.hasMany(Phone, {  foreignKey: 'userId', onDelete:'CASCADE',as:'phoneData'})
+Phone.belongsTo(User,{  foreignKey: 'userId', as: 'userData'})
 
 Adoption.belongsTo(Animal,{ foreignKey:'animalId',as:'animalData',onDelete:'CASCADE'})
 Adoption.belongsTo(User,{ foreignKey:'userId',as:'userData'})
 Adoption.belongsTo(Ong,{ foreignKey:'ongId',as:'ongData',onDelete:'CASCADE'})
 
-User.hasMany(Room,{foreignKey:'userId',as:'roomData',onDelete:'CASCADE'})
-Room.belongsTo(User,{foreignKey:'userId', as:'userData', targetKey:'id'})
+User.hasMany(Room,{foreignKey:'receiver',as:'roomOngData'})
+Room.belongsTo(User,{foreignKey:'receiver', as:'ongData'})
+
+User.hasMany(Room,{foreignKey:'sender',as:'roomUserData'})
+Room.belongsTo(User,{foreignKey:'sender', as:'userData'})
 
 Room.hasMany(Message,{foreignKey:'roomId',as:'messageData',onDelete:'CASCADE'})
 Message.belongsTo(Room,{foreignKey:'roomId', as:'roomData', targetKey:'id'})
 
-//sequelize.sync({force:true});
+// sequelize.sync({force:true});
 // sequelize.sync();

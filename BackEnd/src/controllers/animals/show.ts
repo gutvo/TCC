@@ -6,7 +6,7 @@ const Show = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
 
-    const result = await Animal.findOne({ where: { id }, attributes: { exclude: ['createdAt','updatedAt'] }, });
+    const result = await Animal.findOne({ where: { id }, attributes: { exclude: ['createdAt','updatedAt'] },include:[{association:'ongData',attributes:{exclude:['cpfCnpj']}, include:[{association:'userData',attributes:{exclude:['password']}}]}] });
 
     if (!result) {
       return res.status(404).json({ message: message.animalNotFound});

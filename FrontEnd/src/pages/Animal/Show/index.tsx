@@ -9,8 +9,13 @@ import { DeleteAnimalDialog } from './DeleteDialog'
 import { Helmet } from 'react-helmet-async'
 import { AnimalDetail } from './AnimalDetail'
 import { actions } from '@Redux/animals/slice'
+import { Socket } from 'socket.io-client'
 
-export function ShowAnimal() {
+interface ShowAnimalProps {
+  socket: Socket
+}
+
+export function ShowAnimal({ socket }: ShowAnimalProps) {
   const { id } = useLocation().state
   const { showAnimalRequest } = actions
   const dispatch = useDispatch()
@@ -70,7 +75,12 @@ export function ShowAnimal() {
           {data?.ongData ? (
             <FormAnimal loading={loading} animalData={animalData} />
           ) : (
-            <AnimalDetail loading={loading} id={id} animalData={animalData} />
+            <AnimalDetail
+              socket={socket}
+              loading={loading}
+              id={id}
+              animalData={animalData}
+            />
           )}
         </>
       ) : (

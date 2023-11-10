@@ -5,18 +5,20 @@ import { Alert } from '@Components/Alert'
 import { Navbar } from '@Components/Navbar'
 import { Footer } from '@Components/Footer'
 import { lightTheme } from '@Themes/lightTheme'
+import { Socket } from 'socket.io-client'
 
 interface DefaultLayoutProps {
   container?: false | Breakpoint | undefined
+  socket: Socket
 }
 
-export function DefaultLayout({ container }: DefaultLayoutProps) {
+export function DefaultLayout({ container, socket }: DefaultLayoutProps) {
   return (
     <>
       {container ? (
         <>
           <Alert />
-          <Navbar />
+          <Navbar socket={socket} />
           <div
             style={{
               width: '100%',
@@ -40,7 +42,7 @@ export function DefaultLayout({ container }: DefaultLayoutProps) {
       ) : (
         <>
           <Alert />
-          <Navbar />
+          <Navbar socket={socket} />
           <div
             style={{
               width: '100%',

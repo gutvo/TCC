@@ -21,30 +21,35 @@ import socketIO from 'socket.io-client'
 import { AdoptedAnimal } from '@Pages/Animal/Adopted'
 import { AdoptedAnimalShow } from '@Pages/Animal/AdoptedShow'
 
-const socket = socketIO(import.meta.env.VITE_LINK as string, {
+export const socket = socketIO(import.meta.env.VITE_LINK as string, {
   autoConnect: false,
 })
 function MainRoutes() {
   const { data, isLogged } = useSelector((state: RootState) => state.users)
 
+  const type = data?.ongData ? 'ong' : 'user'
+
   useEffect(() => {
     if (data && isLogged) {
-      socket.on('connect', () => console.log('Usuário conectado'))
-      socket.auth = { userId: data.id }
+      // socket.on('connect', () => console.log('Usuário conectado'))
+      socket.auth = { userId: data.id, userName: data.name, type }
       socket.connect()
     }
-  }, [data, isLogged])
+  }, [data, isLogged, type])
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DefaultLayout container="lg" />}>
+        <Route
+          path="/"
+          element={<DefaultLayout socket={socket} container="lg" />}
+        >
           {isLogged && data?.ongData && (
             <>
               <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
             </>
           )}
-          <Route path="/animal" element={<ShowAnimal />} />
+          <Route path="/animal" element={<ShowAnimal socket={socket} />} />
           <Route path="/animais/adotados" element={<AdoptedAnimal />} />
           <Route path="/animal/adotado" element={<AdoptedAnimalShow />} />
 
@@ -63,11 +68,14 @@ function MainRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        <Route path="/" element={<DefaultLayout container="xl" />}>
+        <Route
+          path="/"
+          element={<DefaultLayout socket={socket} container="xl" />}
+        >
           <Route path="/animals" element={<ListAnimal />} />
         </Route>
 
-        <Route path="/" element={<DefaultLayout />}>
+        <Route path="/" element={<DefaultLayout socket={socket} />}>
           <Route path="/chat" element={<Chat socket={socket} />} />
 
           <Route path="/login" element={<Login />} />
