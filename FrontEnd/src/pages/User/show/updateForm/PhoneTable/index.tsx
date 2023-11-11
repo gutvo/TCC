@@ -23,17 +23,17 @@ export function PhoneTable() {
 
   const dispatch = useDispatch()
 
-  const ongData = useSelector((state: RootState) => state.users.data?.ongData)
+  const userData = useSelector((state: RootState) => state.users.data)
 
   const [phone, setPhone] = useState<phoneData[]>()
 
   const [editIndex, setEditIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    if (ongData) {
-      setPhone(ongData.phoneData)
+    if (userData) {
+      setPhone(userData.phoneData)
     }
-  }, [ongData, phone])
+  }, [userData, phone])
 
   return (
     <Box marginTop="2rem">

@@ -202,10 +202,10 @@ function* getCitys() {
   }
 }
 function* createPhone({ payload }: CreatePhoneActions) {
-  const { handlePhoneData, ongId, phone } = payload
+  const { handlePhoneData, userId, phone } = payload
   const { createPhoneSuccess, createPhoneFailure } = actions
   try {
-    const result: CreatePhoneDTO = yield api.post('/phone', { ongId, phone })
+    const result: CreatePhoneDTO = yield api.post('/phone', { userId, phone })
     yield put(createPhoneSuccess(result.data.data))
     toast.success(result.data.message)
     handlePhoneData('')

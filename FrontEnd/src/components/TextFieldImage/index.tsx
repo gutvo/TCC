@@ -5,6 +5,8 @@ import userNotFound from '@Images/userNotFound.png'
 import { Box, Skeleton } from '@mui/material'
 import { UploadFile } from '@mui/icons-material'
 import { api } from '@Services/backendApi'
+import { useSelector } from 'react-redux'
+import { RootState } from '@Redux/store'
 
 export interface TextFieldImageProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -39,22 +41,33 @@ export function TextFieldImage({
         },
       }
 
+  const haveImage = useSelector((state: RootState) => {
+    if (isProfile) {
+      return state.users.data?.image
+    } else {
+      return state.animals.animalData?.image
+    }
+  })
+
   const fetchAnimalImage = useCallback(async () => {
-    setLoading(true)
-    try {
-      const result: { data: Blob } = await api.get(
-        `/${animalId ? 'animal' : 'user'}/images/${animalId || profileEmail}`,
-        {
-          responseType: 'blob',
-        },
-      )
-      setImageUrl(URL.createObjectURL(result.data))
-    } catch (error) {
-      setImageUrl(null)
-    } finally {
+    if (haveImage) {
+      setLoading(true)
+      await api
+        .get(
+          `/${animalId ? 'animal' : 'user'}/images/${animalId || profileEmail}`,
+          {
+            responseType: 'blob',
+          },
+        )
+        .then((result: { data: Blob }) => {
+          setImageUrl(URL.createObjectURL(result.data))
+        })
+        .catch(() => {
+          setImageUrl(null)
+        })
       setLoading(false)
     }
-  }, [animalId, profileEmail])
+  }, [animalId, profileEmail, haveImage])
 
   useEffect(() => {
     if (animalId || profileEmail) {

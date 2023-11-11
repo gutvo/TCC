@@ -56,9 +56,10 @@ export function CreateAnimalForm() {
       <Box
         component="form"
         encType="multipart/form-data"
+        sx={{ display: 'flex', justifyContent: 'center' }}
         onSubmit={handleSubmit(handleAddProduct)}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={4} maxWidth="60rem">
           <Grid item xs={12} display="flex" justifyContent="center">
             <TextFieldImage register={register} name="imageData" />
           </Grid>

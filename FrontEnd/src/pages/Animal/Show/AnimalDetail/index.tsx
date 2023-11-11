@@ -1,5 +1,15 @@
 import { RootState } from '@Redux/store'
-import { Box, Button, Grid, useMediaQuery, useTheme } from '@mui/material'
+import {
+  Box,
+  Button,
+  Grid,
+  useMediaQuery,
+  useTheme,
+  Accordion,
+  AccordionSummary,
+  Typography,
+  AccordionDetails,
+} from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import animalNotFound from '@Images/isNotFound.jpg'
 import { toast } from 'react-toastify'
@@ -9,6 +19,7 @@ import { actions as adoptionActions } from '@Redux/adoptions/slice'
 import { useNavigate } from 'react-router-dom'
 import { AnimalData } from '@Interfaces/redux/animals'
 import { Socket } from 'socket.io-client'
+import { ExpandMore } from '@mui/icons-material'
 
 interface AnimalDetailProps {
   id: string
@@ -24,7 +35,7 @@ export function AnimalDetail({
 }: AnimalDetailProps) {
   const { breakpoints } = useTheme()
   const midiaQueryDownMd = useMediaQuery(breakpoints.down('sm'))
-  const midiaQueryDownSm = useMediaQuery(breakpoints.down('md'))
+  const midiaQueryUpMd = useMediaQuery(breakpoints.up('md'))
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -32,6 +43,7 @@ export function AnimalDetail({
   const { data, isLogged } = useSelector((state: RootState) => state.users)
 
   const [date, setDate] = useState('')
+  const [openDescription, setOpenDescription] = useState(false)
 
   function handleCreateRoom() {
     socket.emit('create.room', {
@@ -59,82 +71,131 @@ export function AnimalDetail({
     }
   }, [animalData])
 
+  function handleDescription() {
+    setOpenDescription(!openDescription)
+  }
+
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={midiaQueryUpMd ? 1 : 2}>
       <Grid textAlign="center" item xs={12} md={6}>
         <Box
           component="img"
           src={animalData?.previewImage || animalNotFound}
-          width="75%"
+          width={midiaQueryDownMd ? '300px' : '25rem'}
+          height={midiaQueryDownMd ? '300px' : '25rem'}
           borderRadius={2}
         />
+        {midiaQueryUpMd && (
+          <Grid container marginTop={1} spacing={1}>
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                sx={{ width: '90%' }}
+                variant="contained"
+                disabled={loading}
+                onClick={handleAdoptionRequest}
+              >
+                {loading ? 'Solicitando...' : 'Solicitar adoção de animal'}
+              </Button>
+            </Grid>
+            <Grid item xs={6} display="flex" justifyContent="center">
+              <Button
+                variant="outlined"
+                sx={{ width: '90%' }}
+                disabled={loading}
+                onClick={handleCreateRoom}
+              >
+                Conversar com Organização
+              </Button>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
+
       <Grid item xs={12} md={6}>
-        <Box marginLeft={midiaQueryDownMd ? 7 : midiaQueryDownSm ? 10 : 0}>
+        <Box>
           <TypographyDetail
+            border
             label="Nome:"
-            variant="h5"
+            variant="h6"
             value={animalData.name}
           />
           <TypographyDetail
+            border
             label="Data de nascimento:"
-            variant="h5"
+            variant="h6"
             value={date}
           />
           <TypographyDetail
+            border
             label="Cor:"
-            variant="h5"
+            variant="h6"
             value={animalData.color}
           />
           <TypographyDetail
+            border
             label="Raça:"
-            variant="h5"
+            variant="h6"
             value={animalData.race}
           />
-          <TypographyDetail label="Sexo:" variant="h5" value={animalData.sex} />
           <TypographyDetail
+            border
+            label="Sexo:"
+            variant="h6"
+            value={animalData.sex}
+          />
+          <TypographyDetail
+            border
             label="Tipo:"
-            variant="h5"
+            variant="h6"
             value={animalData.type}
           />
-          <TypographyDetail
-            label="Descrição:"
-            variant="h5"
-            noDescription={!animalData.description}
-            value={
-              animalData.description.length
-                ? animalData.description
-                : 'Sem descrição'
-            }
-          />
+          <Accordion
+            elevation={0}
+            expanded={openDescription}
+            sx={{ border: 'solid 1px #d4d4d4' }}
+            onChange={handleDescription}
+          >
+            <AccordionSummary expandIcon={<ExpandMore />}>
+              <Typography fontWeight="bold" variant="h6" sx={{ flexShrink: 0 }}>
+                Descrição:
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {animalData.description.length
+                  ? animalData.description
+                  : 'Sem descrição'}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </Box>
       </Grid>
-      <Grid item xs={12}>
-        <Grid container spacing={4}>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              sx={{ marginTop: '2rem' }}
-              variant="contained"
-              disabled={loading}
-              onClick={handleAdoptionRequest}
-            >
-              {loading ? 'Solicitando...' : 'Solicitar adoção de animal'}
-            </Button>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              fullWidth
-              variant="outlined"
-              sx={{ marginTop: '2rem' }}
-              disabled={loading}
-              onClick={handleCreateRoom}
-            >
-              Conversar com Organização
-            </Button>
+      {!midiaQueryUpMd && (
+        <Grid item xs={12} display="flex" justifyContent="center">
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Button
+                fullWidth
+                variant="contained"
+                disabled={loading}
+                onClick={handleAdoptionRequest}
+              >
+                {loading ? 'Solicitando...' : 'Solicitar adoção de animal'}
+              </Button>
+            </Grid>
+            <Grid item xs={6} display="flex" justifyContent="center">
+              <Button
+                variant="outlined"
+                disabled={loading}
+                onClick={handleCreateRoom}
+              >
+                Conversar com Organização
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
     </Grid>
   )
 }

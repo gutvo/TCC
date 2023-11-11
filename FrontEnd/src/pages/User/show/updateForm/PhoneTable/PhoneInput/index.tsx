@@ -27,7 +27,7 @@ export default function PhoneInput({
 }: PhoneInputProps) {
   const { createPhoneRequest, updatePhoneRequest } = actions
 
-  const ongId = useSelector((state: RootState) => state.users.data?.ongData?.id)
+  const userId = useSelector((state: RootState) => state.users.data?.id)
 
   // const styleUpdate = update && { '& fieldset': { border: 'none' } }
 
@@ -47,8 +47,8 @@ export default function PhoneInput({
       const { id, index, setEditIndex } = update
       return dispatch(updatePhoneRequest(phone, id, index, setEditIndex))
     }
-    if (ongId) {
-      dispatch(createPhoneRequest(phone, ongId, setPhone))
+    if (userId) {
+      dispatch(createPhoneRequest(phone, userId, setPhone))
     }
   }
 

@@ -7,6 +7,7 @@ interface TypographyDetailProps {
   sx?: SxProps
   variant?: TypographyVariant
   noDescription?: boolean
+  border?: boolean
 }
 
 export function TypographyDetail({
@@ -15,9 +16,19 @@ export function TypographyDetail({
   value,
   variant,
   noDescription,
+  border,
 }: TypographyDetailProps) {
   return (
-    <TypographyLabel variant={variant} sx={{ ...sx, marginBottom: 2 }}>
+    <TypographyLabel
+      variant={variant}
+      sx={{
+        ...sx,
+        marginBottom: border ? 1.5 : 2,
+        padding: 1,
+        border: border ? 'solid 1px #d4d4d4' : 'none',
+        borderRadius: 1,
+      }}
+    >
       {label}{' '}
       <span
         style={{

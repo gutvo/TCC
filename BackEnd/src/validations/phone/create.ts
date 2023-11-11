@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 
 const animalSchema = zod.object({
   phone: zod.string({ required_error: "O número de telefone é obrigatório" }),
-  ongId: zod.string({ required_error: "O ID da Organização é obrigatório" }),
+  userId: zod.string({ required_error: "O ID da Organização é obrigatório" }),
 });
 
 const createPhoneValidation = async (

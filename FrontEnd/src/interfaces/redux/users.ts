@@ -18,7 +18,7 @@ export interface userOngData {
 export interface phoneData {
   id: number
   phone: string
-  ongId: number
+  userId: number
 }
 
 export interface ongData {
@@ -29,7 +29,6 @@ export interface ongData {
   uf: string
   CEP: string
   cpfCnpj: string
-  phoneData: phoneData[]
 }
 
 export interface UserData {
@@ -42,6 +41,7 @@ export interface UserData {
   ongData: ongData | null
   createdAt: string
   updatedAt: string
+  phoneData: phoneData[]
 }
 
 export interface loginData {
@@ -163,7 +163,7 @@ export interface deleteActions {
 export interface CreatePhoneActions {
   type: typeof actions.createPhoneRequest.type
   payload: {
-    ongId: number
+    userId: number
     phone: string
     handlePhoneData: Dispatch<SetStateAction<string>>
   }

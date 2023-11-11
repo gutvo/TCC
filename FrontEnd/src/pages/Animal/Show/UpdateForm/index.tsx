@@ -61,9 +61,10 @@ export function FormAnimal({ animalData, loading }: FormAnimalProps) {
       <Box
         component="form"
         encType="multipart/form-data"
+        sx={{ display: 'flex', justifyContent: 'center' }}
         onSubmit={handleSubmit(handleUpdateProduct)}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={4} maxWidth="60rem">
           <input
             style={{ display: 'none' }}
             {...register('id', { required: true })}

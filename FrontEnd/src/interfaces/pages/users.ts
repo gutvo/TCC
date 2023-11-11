@@ -26,6 +26,8 @@ export interface ViaCepDTO {
 export interface ProfileFormData {
   name: string
   email: string
+  primaryPhone?: string
+  secondaryPhone?: string
   ongData: ongData | null
   imageData: FileList
 }

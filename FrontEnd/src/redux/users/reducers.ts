@@ -151,10 +151,10 @@ export const reducers = {
     },
     prepare: (
       phone: string,
-      ongId: number,
+      userId: number,
       handlePhoneData: Dispatch<SetStateAction<string>>,
     ) => {
-      return { payload: { phone, handlePhoneData, ongId } }
+      return { payload: { phone, handlePhoneData, userId } }
     },
   },
   createPhoneSuccess: {
@@ -162,7 +162,7 @@ export const reducers = {
       state: InitialState,
       action: PayloadAction<{ data: phoneData }>,
     ) => {
-      state.data?.ongData?.phoneData.push(action.payload.data)
+      state.data?.phoneData.push(action.payload.data)
       state.loading = false
     },
     prepare: (data: phoneData) => {
@@ -184,8 +184,8 @@ export const reducers = {
   },
   deletePhoneSuccess: {
     reducer: (state: InitialState, action: PayloadAction<number>) => {
-      if (state.data?.ongData) {
-        const { phoneData } = state.data.ongData
+      if (state.data) {
+        const { phoneData } = state.data
         phoneData.splice(action.payload, 1)
       }
       state.loading = false
@@ -218,7 +218,7 @@ export const reducers = {
       action: PayloadAction<{ index: number; phone: phoneData }>,
     ) => {
       if (state.data?.ongData) {
-        const { phoneData } = state.data.ongData
+        const { phoneData } = state.data
         phoneData[action.payload.index] = action.payload.phone
       }
       state.loading = false

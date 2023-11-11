@@ -26,7 +26,7 @@ const userRoutes = Router();
 userRoutes
   .route("/user")
   .post(createUserValidation, encryptPassword, Create)
-  .put(validateToken, updateUserValidation, Update)
+  .put(validateToken, updateUserValidation ,Update)
   .delete(validateToken, deleteUserValidation, Delete)
   .get(validateToken, showUserValidation, Show);
 

@@ -6,7 +6,7 @@ const Show = async (req: Request, res: Response) => {
   try {
     const email = req.query.email;
     
-    const result = await User.findOne({ where: { email } ,include:{association:'ongData',include:[{association:'phoneData'}]} });
+    const result = await User.findOne({ where: { email } ,include:[{association:'ongData'},{association:'phoneData'}] });
 
     if (!result) {
       return res.status(404).json({ message: message.userNotFound });

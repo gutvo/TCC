@@ -96,6 +96,7 @@ export function ProfileForm({
     const { email, name, ongData } = data
     setValue('name', name)
     setValue('email', email)
+
     if (ongData) {
       setValue('ongData', ongData)
       setCpfCnpj(ongData.cpfCnpj)
@@ -146,7 +147,7 @@ export function ProfileForm({
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} mobile={6}>
             <TextFieldStyled
               errors={errors.name}
               label="Nome"
@@ -155,7 +156,7 @@ export function ProfileForm({
               disabled={!editable}
             />
           </Grid>
-          <Grid xs={12} md={6} item>
+          <Grid xs={12} mobile={6} item>
             <TextFieldStyled
               errors={errors.email}
               label="Email"
