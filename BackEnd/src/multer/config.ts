@@ -1,5 +1,5 @@
 import multer from "multer";
-
+import { randomBytes } from 'crypto'
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -13,9 +13,7 @@ const storage = multer.diskStorage({
         const extensaoArquivo = file.originalname.split('.')[1];
 
         // Cria um código randômico que será o nome do arquivo
-        const novoNomeArquivo = require('crypto')
-            .randomBytes(64)
-            .toString('hex');
+        const novoNomeArquivo = randomBytes(64).toString('hex');
 
         // Indica o novo nome do arquivo:
         cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
