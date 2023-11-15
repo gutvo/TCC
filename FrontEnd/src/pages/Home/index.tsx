@@ -7,6 +7,7 @@ import { actions } from '@Redux/reports/slice'
 import { actions as animalActions } from '@Redux/animals/slice'
 import { CardAnimal } from '@Components/CardAnimal'
 import { Kpi } from './Kpi'
+import { firstName } from '@Functions'
 
 export function Home() {
   const dispatch = useDispatch()
@@ -39,7 +40,7 @@ export function Home() {
         marginBottom={4}
         color={palette.primary.dark}
       >
-        Bem-vindo ao nosso site{name ? ' ' + name?.split(' ')[0] : ''}!
+        Bem-vindo ao nosso site{name ? ' ' + firstName(name) : ''}!
       </Typography>
 
       <Kpi />

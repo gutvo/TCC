@@ -21,7 +21,7 @@ export function CardKpis({ label, value = 0 }: CardKpisProps) {
       }}
       component={Paper}
     >
-      <Typography variant="subtitle1" fontWeight="bold" color="white">
+      <Typography variant="h5" fontWeight="bold" color="white">
         {value} {label}
       </Typography>
     </Box>

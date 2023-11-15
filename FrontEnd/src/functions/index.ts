@@ -44,6 +44,14 @@ export function CepMask(value: string) {
   return value
 }
 
+export function firstName(value: string | undefined) {
+  if (value) {
+    return value.split(' ')[0]
+  } else {
+    return ''
+  }
+}
+
 export const encryptStorage = new EncryptStorage(
   import.meta.env.VITE_SECRET_KEY,
 )

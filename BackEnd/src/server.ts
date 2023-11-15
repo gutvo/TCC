@@ -82,12 +82,12 @@ io.on('connection', async(socket:SocketProps) => {
     }[] = [];
 
     if(type==='user'){
-      const result = await Room.findAll({where:{sender:userId},include:[{association:'ongData', attributes:['id','email','name'],as:'userData'}]})
+      const result = await Room.findAll({where:{sender:userId},include:[{association:'ongData', attributes:['id','email','name','image'],as:'userData'}]})
       result.map((item)=>{
         rooms.push(item.dataValues)
       })
     }else{
-      const result = await Room.findAll({where:{receiver:userId},include:[{association:'userData', attributes:['id','email','name']}]})
+      const result = await Room.findAll({where:{receiver:userId},include:[{association:'userData', attributes:['id','email','name','image']}]})
       result.map((item)=>{
         rooms.push(item.dataValues)
       })

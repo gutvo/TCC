@@ -4,6 +4,7 @@ import userReducer from './users/slice'
 import ongReducer from './ongs/slice'
 import adoptionReducer from './adoptions/slice'
 import reportReducer from './reports/slice'
+import chatReducer from './chats/slice'
 
 const rootReducer = combineReducers({
   animals: animalReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   ongs: ongReducer,
   adoptions: adoptionReducer,
   reports: reportReducer,
+  chats: chatReducer,
 })
 
 export default rootReducer

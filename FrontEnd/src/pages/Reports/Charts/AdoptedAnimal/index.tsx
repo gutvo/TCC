@@ -12,6 +12,25 @@ import { RootState } from '@Redux/store'
 import { differenceInYears } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+const initialArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+const xAxisData = [
+  'Janeiro',
+  'Fevereiro',
+  'Março',
+  'Abril',
+  'Maio',
+  'Junho',
+  'Julho',
+  'Agosto',
+  'Setembro',
+  'Outubro',
+  'Novembro',
+  'Dezembro',
+]
+
+const width = 1000
+const height = 400
 
 export function RecuedAdoptedAnimal() {
   const dispatch = useDispatch()
@@ -27,8 +46,6 @@ export function RecuedAdoptedAnimal() {
   const [chartYearOptions, setChartYearOptions] = useState<number[]>([
     new Date().getFullYear(),
   ])
-
-  const initialArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
   const [chartDataAdoptedData, setChartDataAdoptedData] =
     useState<number[]>(initialArray)
@@ -64,7 +81,7 @@ export function RecuedAdoptedAnimal() {
 
   useEffect(() => {
     formatChartData()
-  }, [animalData, formatChartData])
+  }, [formatChartData])
 
   useEffect(() => {
     if (data?.ongData?.id) {
@@ -87,24 +104,6 @@ export function RecuedAdoptedAnimal() {
       setChartYearOptions([...chartYearOptions, ...years])
     }
   }, [data?.createdAt, chartYearOptions])
-
-  const xAxisData = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-  ]
-
-  const width = 1000
-  const height = 400
 
   return (
     <>

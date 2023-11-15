@@ -1,55 +1,38 @@
 import { RootState } from '@Redux/store'
-import {
-  Avatar,
-  Box,
-  ListItemAvatar,
-  useTheme,
-  List,
-  ListItemText,
-  ListItem,
-  Badge,
-} from '@mui/material'
-import { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { Box, useTheme, List, ListItemText, ListItem } from '@mui/material'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Socket } from 'socket.io-client'
-import { messageProps, roomsProps } from '..'
+import { actions } from '@Redux/chats/slice'
+import { ListItemAvatar } from './ListItemAvatar'
+import { firstName } from '@Functions'
 
 interface NavigateBarProps {
   socket: Socket
-  setSelectedUser: (data: roomsProps) => void
-  setMessages: (data: messageProps[]) => void
-  selectedUser: roomsProps | null
 }
 
-export function NavigateBar({
-  socket,
-  setMessages,
-  setSelectedUser,
-  selectedUser,
-}: NavigateBarProps) {
+export function NavigateBar({ socket }: NavigateBarProps) {
+  const dispatch = useDispatch()
+  const { setMessages, setSelectedUser, setNotifications, setUsers } = actions
   const { palette } = useTheme()
   const { primary } = palette
-  const { data } = useSelector((state: RootState) => state.users)
-  const isOng = data?.ongData ? 'sender' : 'receiver'
 
-  const [users, setUsers] = useState<roomsProps[]>([])
-  const [notifications, setNotifications] = useState<number[]>([])
+  const { selectedUser, notifications, users } = useSelector(
+    (state: RootState) => state.chats,
+  )
+
+  const { data } = useSelector((state: RootState) => state.users)
+
+  const isOng = data?.ongData ? 'sender' : 'receiver'
 
   useEffect(() => {
     if (data?.id) {
       socket.emit('rooms', data?.id)
       socket.on('rooms.response', (users) => {
-        setUsers(users)
+        dispatch(setUsers(users))
       })
     }
-  }, [socket, data?.id])
-
-  useEffect(() => {
-    socket.on('get.notifications', (data) => {
-      setNotifications(notifications.concat(data))
-    })
-  }, [socket, notifications])
-  console.log(notifications)
+  }, [socket, data?.id, dispatch, setUsers])
 
   return (
     <Box
@@ -74,13 +57,13 @@ export function NavigateBar({
                   return
                 }
                 socket.emit('leave.room', item)
-                setSelectedUser(item)
-                setMessages([])
+                dispatch(setSelectedUser(item))
+                dispatch(setMessages([]))
 
                 const filteredNotifications = notifications.filter(
                   (itemFilter) => itemFilter !== item[isOng],
                 )
-                setNotifications(filteredNotifications)
+                dispatch(setNotifications(filteredNotifications))
               }}
               alignItems="center"
               sx={{
@@ -90,17 +73,25 @@ export function NavigateBar({
                 ':hover': { background: palette.primary.main },
               }}
             >
-              <ListItemAvatar>
-                <Badge badgeContent={countNotifications} color="error">
-                  <Avatar alt="Avatar" sizes="100%" />
-                </Badge>
-              </ListItemAvatar>
+              <ListItemAvatar
+                countNotifications={countNotifications}
+                email={
+                  isOng === 'receiver'
+                    ? item.ongData?.email
+                    : item.userData?.email
+                }
+                image={
+                  isOng === 'receiver'
+                    ? item.ongData?.image
+                    : item.userData?.image
+                }
+              />
 
               <ListItemText
                 primary={
                   item.ongData
-                    ? item.ongData?.name.split(' ')[0]
-                    : item.userData?.name.split(' ')[0]
+                    ? firstName(item.ongData?.name)
+                    : firstName(item.userData?.name)
                 }
                 sx={{ overflow: 'hidden', overflowWrap: 'break-word' }}
               />

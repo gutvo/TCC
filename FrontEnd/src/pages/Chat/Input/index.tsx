@@ -7,21 +7,26 @@ import {
 } from '@mui/material'
 import { Send } from '@mui/icons-material'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { Socket } from 'socket.io-client'
-import { roomsProps } from '..'
+import { actions } from '@Redux/chats/slice'
 
 interface InputProps {
   socket: Socket
-  selectedUser: roomsProps | null
 }
 
-export function Input({ selectedUser, socket }: InputProps) {
+export function Input({ socket }: InputProps) {
+  const { setNotifications } = actions
+  const dispatch = useDispatch()
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
   const { isLogged, data } = useSelector((state: RootState) => state.users)
+  const { selectedUser, notifications } = useSelector(
+    (state: RootState) => state.chats,
+  )
+  const isOng = data?.ongData ? 'sender' : 'receiver'
 
   function handleMessageSubmit() {
     if (message.trim() && isLogged && data && selectedUser) {
@@ -64,6 +69,10 @@ export function Input({ selectedUser, socket }: InputProps) {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
             handleMessageSubmit()
+            const filteredNotifications = notifications.filter(
+              (itemFilter) => itemFilter !== selectedUser?.[isOng],
+            )
+            dispatch(setNotifications(filteredNotifications))
           }
         }}
         value={message}

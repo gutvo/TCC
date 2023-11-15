@@ -18,7 +18,13 @@ export function Kpi() {
       <Grid item>
         <CardKpis
           value={dashboadHomeData?.countTotalOngs}
-          label="Organizações cadastrados"
+          label="Organizações"
+        />
+      </Grid>
+      <Grid item>
+        <CardKpis
+          value={dashboadHomeData?.countTotalAnimals}
+          label="Animais no total"
         />
       </Grid>
       <Grid item>
@@ -31,12 +37,6 @@ export function Kpi() {
         <CardKpis
           value={dashboadHomeData?.countAdoptedAnimals}
           label="Animais adotados"
-        />
-      </Grid>
-      <Grid item>
-        <CardKpis
-          value={dashboadHomeData?.countTotalAnimals}
-          label="Animais no total"
         />
       </Grid>
     </Grid>
