@@ -7,7 +7,6 @@ import http from 'http'
 import {Server,Socket} from 'socket.io'
 import { Message } from "./models/chats/messages";
 import { Room } from "./models/chats/rooms";
-import { type } from "os";
 
 dotenv.config();
 
@@ -70,7 +69,15 @@ io.use((socket: SocketProps,next)=>{
 
 io.on('connection', async(socket:SocketProps) => {
   const { userId, type } = socket
-  socket.join(`notfications${userId}`)
+  socket.join(`notifications${userId}`)
+
+  /*
+    socket.onAny((data,...args)=>{
+    console.log(data, args)
+  })  socket.onAny((data,...args)=>{
+    console.log(data, args)
+  })
+  */
 
   socket.on('rooms',async()=>{
     const rooms: {
@@ -108,9 +115,7 @@ io.on('connection', async(socket:SocketProps) => {
     socket.leave(room.name)
 })
 
-  socket.onAny((data,...args)=>{
-    console.log(data, args)
-  })
+
   socket.on('send.message',async(message:MessageProps,room:roomsProps)=>{ 
     await Message.create({
       email:message.email,
@@ -138,11 +143,11 @@ io.on('connection', async(socket:SocketProps) => {
   })
 
   socket.on('notifications',(id)=>{
-    socket.to(`notfications${id}`).emit('get.notifications',userId)
+    socket.to(`notifications${id}`).emit('get.notifications',userId)
   })
 
 
-  socket.on('disconnect',()=>{
-    console.log('user disconnected')
-  })
+  // socket.on('disconnect',()=>{
+  //   console.log('user disconnected')
+  // })
 });

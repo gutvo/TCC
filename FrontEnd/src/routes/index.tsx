@@ -17,13 +17,10 @@ import { RootState } from '@Redux/store'
 import { Adoption } from '@Pages/Animal/Adoption'
 import { Reports } from '@Pages/Reports'
 import { useEffect } from 'react'
-import socketIO from 'socket.io-client'
 import { AdoptedAnimal } from '@Pages/Animal/Adopted'
 import { AdoptedAnimalShow } from '@Pages/Animal/AdoptedShow'
+import { socket } from '@Functions'
 
-export const socket = socketIO(import.meta.env.VITE_LINK as string, {
-  autoConnect: false,
-})
 function MainRoutes() {
   const { data, isLogged } = useSelector((state: RootState) => state.users)
 
@@ -40,10 +37,7 @@ function MainRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<DefaultLayout socket={socket} container="lg" />}
-        >
+        <Route path="/" element={<DefaultLayout container="lg" />}>
           {isLogged && data?.ongData && (
             <>
               <Route path="/animal/cadastrar" element={<CreateAnimalForm />} />
@@ -68,15 +62,12 @@ function MainRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        <Route
-          path="/"
-          element={<DefaultLayout socket={socket} container="xl" />}
-        >
+        <Route path="/" element={<DefaultLayout container="xl" />}>
           <Route path="/animals" element={<ListAnimal />} />
         </Route>
 
-        <Route path="/" element={<DefaultLayout socket={socket} />}>
-          <Route path="/chat" element={<Chat socket={socket} />} />
+        <Route path="/" element={<DefaultLayout />}>
+          <Route path="/chat" element={<Chat />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<SignIn />} />

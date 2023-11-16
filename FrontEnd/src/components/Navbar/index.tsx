@@ -16,13 +16,9 @@ import { NavLinkList } from './NavLinkList'
 import { NavLinkButton } from './NavLinkButton'
 import { Profile } from './Profile'
 import { Notifications } from './Notifications'
-import { Socket } from 'socket.io-client'
+import { socket } from '@Functions'
 
-interface NavbarProps {
-  socket: Socket
-}
-
-export function Navbar({ socket }: NavbarProps) {
+export function Navbar() {
   const dispatch = useDispatch()
   const { breakpoints } = useTheme()
   const mobile = useMediaQuery(breakpoints.down('mobile'))

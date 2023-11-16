@@ -2,12 +2,12 @@ import '@mui/material/styles'
 
 declare module '@mui/material/styles' {
   interface Palette {
-    CustomTheme?: Palette['primary']
-    navLink?: Palette['primary']
+    Chat: Palette['primary']
+    navLink: Palette['primary']
   }
   interface PaletteOptions {
-    CustomTheme?: PaletteOptions['primary']
-    navLink?: PaletteOptions['primary']
+    Chat: PaletteOptions['primary']
+    navLink: PaletteOptions['primary']
   }
 }
 

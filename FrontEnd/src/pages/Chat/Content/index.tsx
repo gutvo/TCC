@@ -2,15 +2,11 @@ import { RootState } from '@Redux/store'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Socket } from 'socket.io-client'
 import { actions } from '@Redux/chats/slice'
 import { messageProps } from '@Interfaces/redux/chats'
+import { socket } from '@Functions'
 
-interface ContentProps {
-  socket: Socket
-}
-
-export function Content({ socket }: ContentProps) {
+export function Content() {
   const dispatch = useDispatch()
   const { setMessages } = actions
   const { palette } = useTheme()
@@ -30,13 +26,13 @@ export function Content({ socket }: ContentProps) {
         dispatch(setMessages(data))
       })
     }
-  }, [socket, selectedUser, setMessages, dispatch])
+  }, [selectedUser, setMessages, dispatch])
 
   useEffect(() => {
     socket.on('message.response', (data: messageProps) =>
       dispatch(setMessages([...messages, data])),
     )
-  }, [socket, messages, setMessages, dispatch])
+  }, [messages, setMessages, dispatch])
 
   useEffect(() => {
     if (messageListRef.current) {
@@ -50,7 +46,7 @@ export function Content({ socket }: ContentProps) {
       height="76vh"
       overflow="auto"
       sx={{
-        '::-webkit-scrollbar': { width: 0, height: 0 },
+        '::-webkit-scrollbar': { width: 20, height: 20 },
       }}
       ref={messageListRef}
     >

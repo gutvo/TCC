@@ -9,14 +9,10 @@ import { Send } from '@mui/icons-material'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
-import { Socket } from 'socket.io-client'
 import { actions } from '@Redux/chats/slice'
+import { socket } from '@Functions'
 
-interface InputProps {
-  socket: Socket
-}
-
-export function Input({ socket }: InputProps) {
+export function Input() {
   const { setNotifications } = actions
   const dispatch = useDispatch()
   const [message, setMessage] = useState('')
@@ -48,12 +44,16 @@ export function Input({ socket }: InputProps) {
       )
       setLoading(false)
       setMessage('')
+      const filteredNotifications = notifications.filter(
+        (itemFilter) => itemFilter !== selectedUser?.[isOng],
+      )
+      dispatch(setNotifications(filteredNotifications))
     }
   }
   return (
     <Box
       component="form"
-      height="15%"
+      // height="15%"
       display="flex"
       justifyContent="center"
       alignItems="center"
@@ -69,10 +69,6 @@ export function Input({ socket }: InputProps) {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault()
             handleMessageSubmit()
-            const filteredNotifications = notifications.filter(
-              (itemFilter) => itemFilter !== selectedUser?.[isOng],
-            )
-            dispatch(setNotifications(filteredNotifications))
           }
         }}
         value={message}

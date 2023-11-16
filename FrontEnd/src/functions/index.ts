@@ -1,4 +1,5 @@
 import { EncryptStorage } from 'encrypt-storage'
+import socketIO from 'socket.io-client'
 
 export function readFileAsBase64(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -55,3 +56,7 @@ export function firstName(value: string | undefined) {
 export const encryptStorage = new EncryptStorage(
   import.meta.env.VITE_SECRET_KEY,
 )
+
+export const socket = socketIO(import.meta.env.VITE_LINK as string, {
+  autoConnect: false,
+})

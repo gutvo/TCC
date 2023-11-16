@@ -6,18 +6,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Grid from '@mui/material/Grid'
-import { Socket } from 'socket.io-client'
 import { NavigateBar } from './NavigateBar'
 import { Input } from './Input'
 import { Content } from './Content'
 import { actions } from '@Redux/chats/slice'
+import { socket } from '@Functions'
 
-interface ChatProps {
-  socket: Socket
-}
-
-export function Chat({ socket }: ChatProps) {
+export function Chat() {
   const { setSelectedUser } = actions
+
   const dispatch = useDispatch()
 
   const room = useLocation()?.state?.room
@@ -45,18 +42,24 @@ export function Chat({ socket }: ChatProps) {
     if (selectedUser) {
       socket.emit('join.room', selectedUser)
     }
-  }, [socket, selectedUser])
+  }, [selectedUser])
 
   return (
     <Box>
       <Helmet title="Chat" />
-      <Grid container height="90vh">
-        <Grid width="25%" item>
-          <NavigateBar socket={socket} />
+      <Grid container minHeight="90vh">
+        <Grid xs={12} mobile={4} item>
+          <NavigateBar />
         </Grid>
-        <Grid width="75%" item>
-          <Content socket={socket} />
-          <Input socket={socket} />
+        <Grid item xs={12} mobile={8}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Content />
+            </Grid>
+            <Grid paddingY={2} item xs={12}>
+              <Input />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

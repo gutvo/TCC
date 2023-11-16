@@ -1,16 +1,33 @@
-import { grey, lightBlue, orange } from '@mui/material/colors'
+import { grey, lightBlue, orange, blue } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 
 const white = '#ffffff'
 
 export const lightTheme = createTheme({
   palette: {
+    // primary: {
+    //   main: blue[800],
+    //   light: blue[500],
+    //   dark: blue[900],
+    //   contrastText: white,
+    //   '100': blue[500],
+    // },
     secondary: {
       main: orange[500],
       light: orange[300],
       dark: orange[700],
       contrastText: white,
       '100': orange[500],
+    },
+    Chat: {
+      main: blue[600],
+      light: blue[500],
+      dark: blue[800],
+      contrastText: white,
+      // main: teal[800],
+      // light: teal[700],
+      // dark: teal[900],
+      // contrastText: white,
     },
 
     navLink: {

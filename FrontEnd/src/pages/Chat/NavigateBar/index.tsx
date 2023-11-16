@@ -1,21 +1,27 @@
 import { RootState } from '@Redux/store'
-import { Box, useTheme, List, ListItemText, ListItem } from '@mui/material'
+import {
+  Box,
+  useTheme,
+  List,
+  ListItemText,
+  ListItem,
+  Stack,
+  useMediaQuery,
+} from '@mui/material'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Socket } from 'socket.io-client'
 import { actions } from '@Redux/chats/slice'
 import { ListItemAvatar } from './ListItemAvatar'
-import { firstName } from '@Functions'
+import { firstName, socket } from '@Functions'
+import { roomsProps } from '@Interfaces/redux/chats'
 
-interface NavigateBarProps {
-  socket: Socket
-}
-
-export function NavigateBar({ socket }: NavigateBarProps) {
+export function NavigateBar() {
   const dispatch = useDispatch()
   const { setMessages, setSelectedUser, setNotifications, setUsers } = actions
-  const { palette } = useTheme()
-  const { primary } = palette
+  const { palette, breakpoints } = useTheme()
+  const { Chat } = palette
+
+  const mediaQueryUpMobile = useMediaQuery(breakpoints.up('mobile'))
 
   const { selectedUser, notifications, users } = useSelector(
     (state: RootState) => state.chats,
@@ -25,6 +31,20 @@ export function NavigateBar({ socket }: NavigateBarProps) {
 
   const isOng = data?.ongData ? 'sender' : 'receiver'
 
+  function handleChoiceUser(item: roomsProps) {
+    if (selectedUser?.id === item.id) {
+      return
+    }
+    socket.emit('leave.room', item)
+    dispatch(setSelectedUser(item))
+    dispatch(setMessages([]))
+
+    const filteredNotifications = notifications.filter(
+      (itemFilter) => itemFilter !== item[isOng],
+    )
+    dispatch(setNotifications(filteredNotifications))
+  }
+
   useEffect(() => {
     if (data?.id) {
       socket.emit('rooms', data?.id)
@@ -32,11 +52,11 @@ export function NavigateBar({ socket }: NavigateBarProps) {
         dispatch(setUsers(users))
       })
     }
-  }, [socket, data?.id, dispatch, setUsers])
+  }, [data?.id, dispatch, setUsers])
 
   return (
     <Box
-      bgcolor={palette.primary.dark}
+      bgcolor={palette.Chat.dark}
       color="white"
       height="100%"
       overflow="auto"
@@ -44,61 +64,123 @@ export function NavigateBar({ socket }: NavigateBarProps) {
         '::-webkit-scrollbar': { width: 0, height: 0 },
       }}
     >
-      <List>
-        {users.map((item) => {
-          const countNotifications = notifications.filter(
-            (filterItem) => filterItem === item[isOng],
-          ).length
-          return (
-            <ListItem
-              key={item.id}
-              onClick={() => {
-                if (selectedUser?.id === item.id) {
-                  return
-                }
-                socket.emit('leave.room', item)
-                dispatch(setSelectedUser(item))
-                dispatch(setMessages([]))
+      {mediaQueryUpMobile ? (
+        <List>
+          {users.map((item) => {
+            const countNotifications = notifications.filter(
+              (filterItem) => filterItem === item[isOng],
+            ).length
+            return (
+              <ListItem
+                key={item.id}
+                onClick={() => {
+                  if (selectedUser?.id === item.id) {
+                    return
+                  }
+                  socket.emit('leave.room', item)
+                  dispatch(setSelectedUser(item))
+                  dispatch(setMessages([]))
 
-                const filteredNotifications = notifications.filter(
-                  (itemFilter) => itemFilter !== item[isOng],
-                )
-                dispatch(setNotifications(filteredNotifications))
-              }}
-              alignItems="center"
-              sx={{
-                background:
-                  selectedUser?.id === item.id ? primary.main : primary.dark,
-                cursor: 'pointer',
-                ':hover': { background: palette.primary.main },
-              }}
-            >
-              <ListItemAvatar
-                countNotifications={countNotifications}
-                email={
-                  isOng === 'receiver'
-                    ? item.ongData?.email
-                    : item.userData?.email
-                }
-                image={
-                  isOng === 'receiver'
-                    ? item.ongData?.image
-                    : item.userData?.image
-                }
-              />
+                  const filteredNotifications = notifications.filter(
+                    (itemFilter) => itemFilter !== item[isOng],
+                  )
+                  dispatch(setNotifications(filteredNotifications))
+                }}
+                alignItems="center"
+                sx={{
+                  background:
+                    selectedUser?.id === item.id ? Chat.main : Chat.dark,
+                  cursor: 'pointer',
+                  ':hover': { background: palette.Chat.main },
+                }}
+              >
+                <ListItemAvatar
+                  countNotifications={countNotifications}
+                  email={
+                    isOng === 'receiver'
+                      ? item.ongData?.email
+                      : item.userData?.email
+                  }
+                  image={
+                    isOng === 'receiver'
+                      ? item.ongData?.image
+                      : item.userData?.image
+                  }
+                />
 
-              <ListItemText
-                primary={
-                  item.ongData
-                    ? firstName(item.ongData?.name)
-                    : firstName(item.userData?.name)
-                }
-                sx={{ overflow: 'hidden', overflowWrap: 'break-word' }}
-              />
-            </ListItem>
-          )
-        })}
-      </List>
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: 'h6',
+                    style: { fontWeight: 'bold' },
+                  }}
+                  primary={
+                    item.ongData
+                      ? firstName(item.ongData?.name)
+                      : firstName(item.userData?.name)
+                  }
+                  sx={{ overflow: 'hidden', overflowWrap: 'break-word' }}
+                />
+              </ListItem>
+            )
+          })}
+        </List>
+      ) : (
+        <Stack
+          spacing={1}
+          direction="row"
+          maxWidth={breakpoints.values.mobile}
+          overflow="auto"
+        >
+          {users.map((item) => {
+            const countNotifications = notifications.filter(
+              (filterItem) => filterItem === item[isOng],
+            ).length
+            return (
+              <ListItem
+                key={item.id}
+                onClick={() => handleChoiceUser(item)}
+                alignItems="center"
+                sx={{
+                  background:
+                    selectedUser?.id === item.id ? Chat.main : Chat.dark,
+                  cursor: 'pointer',
+                  ':hover': { background: palette.Chat.main },
+                }}
+              >
+                <ListItemAvatar
+                  countNotifications={countNotifications}
+                  email={
+                    isOng === 'receiver'
+                      ? item.ongData?.email
+                      : item.userData?.email
+                  }
+                  image={
+                    isOng === 'receiver'
+                      ? item.ongData?.image
+                      : item.userData?.image
+                  }
+                />
+
+                <ListItemText
+                  primaryTypographyProps={{
+                    variant: 'h6',
+                    style: { fontWeight: 'bold' },
+                  }}
+                  primary={
+                    item.ongData
+                      ? firstName(item.ongData?.name)
+                      : firstName(item.userData?.name)
+                  }
+                  sx={{
+                    overflow: 'hidden',
+                    overflowWrap: 'break-word',
+                  }}
+                />
+              </ListItem>
+            )
+          })}
+        </Stack>
+      )}
     </Box>
   )
 }
