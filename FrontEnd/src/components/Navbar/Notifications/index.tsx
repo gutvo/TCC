@@ -32,11 +32,12 @@ export function Notifications({ socket }: NotificationsProps) {
   const [filterUsers, setFilterUsers] = useState<roomsProps[]>([])
 
   const open = Boolean(anchorEl)
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
+
+  function handleClose() {
     setAnchorEl(null)
+  }
+  function handleClick(event: MouseEvent<HTMLButtonElement>) {
+    setAnchorEl(event.currentTarget)
   }
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export function Notifications({ socket }: NotificationsProps) {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        disabled={!notifications.length}
       >
         <Badge badgeContent={notifications.length} color="error">
           <NotificationIcon />
@@ -93,7 +95,13 @@ export function Notifications({ socket }: NotificationsProps) {
               (filterItem) => filterItem === item[isOng],
             ).length
             return (
-              <MenuItem key={id} onClick={() => handleJoinRoom(item)}>
+              <MenuItem
+                key={id}
+                onClick={() => {
+                  handleJoinRoom(item)
+                  handleClose()
+                }}
+              >
                 {item.ongData
                   ? item.ongData?.name.split(' ')[0]
                   : item.userData?.name.split(' ')[0]}
