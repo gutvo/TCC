@@ -1,5 +1,5 @@
 import { useState, SetStateAction, Dispatch } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   Box,
@@ -16,6 +16,7 @@ import {
 } from '@mui/material'
 import { RootState } from '@Redux/store'
 import { animalFilterProps } from '@Interfaces/redux/animals'
+import { actions } from '@Redux/users/slice'
 
 interface FilterProps {
   setAnimalFilter: Dispatch<SetStateAction<animalFilterProps>>
@@ -23,14 +24,15 @@ interface FilterProps {
 
 export function Filter({ setAnimalFilter }: FilterProps) {
   const { breakpoints } = useTheme()
+  const { choiceCity } = actions
+  const dispatch = useDispatch()
 
   const { filter } = useSelector((state: RootState) => state.animals)
-  const { data, citys } = useSelector((state: RootState) => state.users)
+  const { data, citys, city } = useSelector((state: RootState) => state.users)
 
   const [raceFilter, setRaceFilter] = useState(filter.race)
   const [sexFilter, setSexFilter] = useState(filter.sex)
   const [typeFilter, setTypeFilter] = useState(filter.type)
-  const [cityFilter, setCityFilter] = useState(filter.city)
 
   const typeOptions = ['Cachorro', 'Peixe', 'Gato', 'Outros', 'Todos']
   const sexOptions = ['Macho', 'Fêmea', 'Todos']
@@ -39,9 +41,9 @@ export function Filter({ setAnimalFilter }: FilterProps) {
       race: raceFilter,
       sex: sexFilter,
       type: typeFilter,
-      city: cityFilter,
     })
   }
+
   const gridBreakPointsXs = !data?.ongData && citys.length ? 4 : 6
 
   return (
@@ -145,10 +147,10 @@ export function Filter({ setAnimalFilter }: FilterProps) {
                 label="Cidade"
                 size="small"
                 variant="outlined"
-                value={cityFilter}
+                value={city}
                 onChange={(event) => {
                   const { value } = event.target
-                  setCityFilter(value)
+                  dispatch(choiceCity(value))
                   localStorage.setItem('city', `${value}`)
                 }}
               >

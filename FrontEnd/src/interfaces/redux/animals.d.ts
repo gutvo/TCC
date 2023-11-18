@@ -42,7 +42,6 @@ export interface animalFilterProps {
   race: string[]
   sex: string
   type: string
-  city: string
 }
 
 export interface InitialState {

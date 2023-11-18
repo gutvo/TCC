@@ -54,7 +54,12 @@ export function AdoptedAnimal() {
         <>
           {adoptedAnimalList.length ? (
             <Box>
-              <Grid container spacing={5} justifyContent="center">
+              <Grid
+                container
+                minHeight="58vh"
+                spacing={5}
+                justifyContent="center"
+              >
                 {adoptedAnimalList.map((item) => (
                   <CardAnimal
                     navigatePath="/animal/adotado"
@@ -71,7 +76,6 @@ export function AdoptedAnimal() {
                   height: '100%',
                   justifyContent: 'center',
                   paddingTop: 4,
-                  marginBottom: 4,
                 }}
                 page={Math.ceil(offset / limit) + 1}
                 color="secondary"

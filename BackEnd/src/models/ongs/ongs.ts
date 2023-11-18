@@ -9,7 +9,9 @@ export interface OngData extends Model {
     CEP:string
     cpfCnpj:string
     userId:number
-
+    userData?: {
+      name: string;
+    };
 }
 
 export const Ong = sequelize.define<OngData>('ongData', {

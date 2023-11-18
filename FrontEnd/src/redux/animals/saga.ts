@@ -16,6 +16,9 @@ import {
 } from '@Interfaces/redux/animals'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import { actions as userActions } from '@Redux/users/slice'
+
+const { choiceCity } = userActions
 
 function* listAnimals({ payload }: FetchAction) {
   const { listAnimalFailure, listAnimalSuccess } = actions
@@ -33,6 +36,7 @@ function* listAnimals({ payload }: FetchAction) {
     })
     const result = animals.data
 
+    yield put(choiceCity(city))
     yield put(listAnimalSuccess(result.data, result.pagination, filter))
   } catch (error) {
     yield put(listAnimalFailure())

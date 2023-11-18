@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../../models/users/user";
 import { message } from "../../dictionary";
-import { City } from "../../models/citys/city";
+import { City } from "../../models/citys";
 import { Ong } from "../../models/ongs/ongs";
 
 const Create = async (req: Request, res: Response) => {

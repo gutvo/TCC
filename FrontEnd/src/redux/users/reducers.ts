@@ -230,4 +230,12 @@ export const reducers = {
   updatePhoneFailure: (state: InitialState) => {
     state.loading = false
   },
+  choiceCity: {
+    reducer: (state: InitialState, action: PayloadAction<{ city: string }>) => {
+      state.city = action.payload.city
+    },
+    prepare: (city: string) => {
+      return { payload: { city } }
+    },
+  },
 }

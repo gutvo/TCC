@@ -19,7 +19,7 @@ export function ListAnimal() {
     (state: RootState) => state.animals,
   )
 
-  const { data } = useSelector((state: RootState) => state.users)
+  const { data, city } = useSelector((state: RootState) => state.users)
   const { filter } = useSelector((state: RootState) => state.animals)
 
   const [limit] = useState(pagination.limit)
@@ -29,8 +29,8 @@ export function ListAnimal() {
   const ongId = data?.ongData ? data.ongData?.id : null
 
   useEffect(() => {
-    dispatch(listAnimalRequest(offset, limit, ongId, animalFilter))
-  }, [dispatch, limit, offset, listAnimalRequest, ongId, animalFilter])
+    dispatch(listAnimalRequest(offset, limit, ongId, city, animalFilter))
+  }, [dispatch, limit, offset, listAnimalRequest, ongId, city, animalFilter])
 
   useEffect(() => {
     if (!list.length && offset) {
@@ -56,8 +56,13 @@ export function ListAnimal() {
       ) : (
         <>
           {list.length ? (
-            <Box>
-              <Grid container spacing={5} justifyContent="center">
+            <>
+              <Grid
+                container
+                minHeight="58vh"
+                spacing={5}
+                justifyContent="center"
+              >
                 {list.map((item) => (
                   <CardAnimal
                     navigatePath="/animal"
@@ -74,7 +79,6 @@ export function ListAnimal() {
                   height: '100%',
                   justifyContent: 'center',
                   paddingTop: 4,
-                  marginBottom: 4,
                 }}
                 page={Math.ceil(offset / limit) + 1}
                 color="secondary"
@@ -86,7 +90,7 @@ export function ListAnimal() {
                   setOffset(value * limit - limit)
                 }}
               />
-            </Box>
+            </>
           ) : (
             <Typography
               display="flex"

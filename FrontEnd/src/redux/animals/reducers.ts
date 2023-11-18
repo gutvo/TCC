@@ -19,9 +19,10 @@ export const reducers = {
       offset: number,
       limit: number,
       ongId: number | null,
+      city: string,
       filter: animalFilterProps,
     ) => {
-      return { payload: { offset, limit, ongId, filter } }
+      return { payload: { offset, limit, ongId, filter, city } }
     },
   },
 

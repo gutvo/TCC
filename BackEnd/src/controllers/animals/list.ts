@@ -31,6 +31,8 @@ const List = async (req: Request, res: Response) => {
    
     if (ongId) {
       where[Op.and].push({ ongId });
+    }else{
+      whereCity={city}
     }
 
 
@@ -43,9 +45,6 @@ const List = async (req: Request, res: Response) => {
       }
       if (filter?.type?.length && filter.type !== 'Todos') {
         where[Op.and].push({ type: filter.type });
-      }
-      if(filter?.city && !ongId){
-        whereCity = {city: filter.city}
       }
     } 
 

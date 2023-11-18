@@ -5,6 +5,12 @@ import { NavigateFunction } from 'react-router-dom'
 
 // Reducers
 
+export interface phoneData {
+  id: number
+  phone: string
+  userId: number
+}
+
 export interface userOngData {
   id: number
   road: string
@@ -18,13 +24,8 @@ export interface userOngData {
     email: string
     image: string
     previewImage?: string
+    phoneData: phoneData[]
   }
-}
-
-export interface phoneData {
-  id: number
-  phone: string
-  userId: number
 }
 
 export interface ongData {

@@ -3,17 +3,25 @@ import { actions } from './slice'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { api } from '@Services/backendApi'
-import { listActions, listOngDTO, showActions } from '@Interfaces/redux/ongs'
+import {
+  listActions,
+  listOngDTO,
+  listRoadNeighborhoodActions,
+  listRoadNeighborhoodDTO,
+  showActions,
+} from '@Interfaces/redux/ongs'
 import { OngDataDTO } from '@Interfaces/redux/users'
 
 function* listOng({ payload }: listActions) {
   const { listOngFailure, listOngSuccess } = actions
   const { offset, limit, filter, city } = payload
+
   try {
     const list: listOngDTO = yield api.get('/ongs', {
       params: { offset, limit, filter, city },
     })
-    yield put(listOngSuccess(list))
+
+    yield put(listOngSuccess(list, filter))
   } catch (error) {
     yield put(listOngFailure())
     if (axios.isAxiosError(error) && error.response) {
@@ -52,7 +60,29 @@ function* showOng({ payload }: showActions) {
   }
 }
 
+function* listRoadNeighborhood({ payload }: listRoadNeighborhoodActions) {
+  const { listRoadNeighborhoodFailure, listRoadNeighborhoodSuccess } = actions
+  const { city } = payload
+  try {
+    const { data }: listRoadNeighborhoodDTO = yield api.get(
+      'ong/road-neighborhood',
+      {
+        params: { city },
+      },
+    )
+    yield put(
+      listRoadNeighborhoodSuccess(data.road, data.neighborhood, data.name),
+    )
+  } catch (error) {
+    yield put(listRoadNeighborhoodFailure())
+    if (axios.isAxiosError(error) && error.response) {
+      toast.error(error.response.data.message)
+    }
+  }
+}
+
 export default all([
   takeLatest(actions.listOngRequest.type, listOng),
   takeLatest(actions.showOngRequest.type, showOng),
+  takeLatest(actions.listRoadNeighborhoodRequest.type, listRoadNeighborhood),
 ])

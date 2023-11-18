@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { City } from "../../models/citys/city";
+import { City } from "../../models/citys";
 import { message } from "../../dictionary";
 
 

@@ -173,8 +173,6 @@ function* showAdoptedAnimal({ payload }: showAdoptedAnimalAction) {
       yield put(showAdoptedAnimalSuccess(adoptedAnimalData))
     }
   } catch (error) {
-    console.log(console.log(error))
-
     yield put(showAdoptedAnimalFailure())
     if (axios.isAxiosError(error) && error.response) {
       toast.error(error.response.data.message)

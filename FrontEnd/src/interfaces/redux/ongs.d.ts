@@ -20,11 +20,13 @@ export interface userOngData {
 
 export interface OngFilter {
   name: string
-  city: string
+  road: string
+  neighborhood: string
 }
 interface OngPagination {
   offset: number
   limit: number
+  count: number
 }
 
 export interface InitialState {
@@ -32,14 +34,24 @@ export interface InitialState {
   data: userOngData[] | null
   ongData: userOngData | null
   pagination: OngPagination
+  roads: string[]
+  neighborhoods: string[]
+  names: string[]
+  filter: OngFilter
 }
 
 export interface listOngDTO {
   data: {
-    data: {
-      rows: userOngData[]
-      count: number
-    }
+    data: userOngData[]
+    pagination: OngPagination
+  }
+}
+
+export interface listRoadNeighborhoodDTO {
+  data: {
+    road: string[]
+    neighborhood: string[]
+    name: string[]
   }
 }
 
@@ -52,7 +64,7 @@ export interface listActions {
     offset: number
     limit: number
     filter: OngFilter
-    city: string
+    city: String
   }
 }
 
@@ -60,5 +72,12 @@ export interface showActions {
   type: typeof actions.listOngRequest.type
   payload: {
     id: number
+  }
+}
+
+export interface listRoadNeighborhoodActions {
+  type: typeof actions.listRoadNeighborhoodRequest.type
+  payload: {
+    city: string
   }
 }

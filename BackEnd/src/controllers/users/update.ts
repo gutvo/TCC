@@ -5,7 +5,7 @@ import { Ong } from "../../models/ongs/ongs";
 import { Op } from "sequelize";
 import fs from 'fs'
 import path from "path";
-import { City } from "../../models/citys/city";
+import { City } from "../../models/citys";
 
 const Update = async (req: Request, res: Response) => {
   try {

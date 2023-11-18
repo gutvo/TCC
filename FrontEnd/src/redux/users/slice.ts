@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { reducers } from './reducers'
 import { InitialState } from '@Interfaces/redux/users'
-
 const isLogged = !!localStorage.getItem('user')
 
 const localStorageCity = localStorage.getItem('city')

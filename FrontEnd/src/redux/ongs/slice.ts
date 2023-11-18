@@ -6,7 +6,15 @@ const initialState: InitialState = {
   loading: false,
   data: null,
   ongData: null,
-  pagination: { limit: 10, offset: 0 },
+  pagination: { limit: 10, offset: 0, count: 0 },
+  neighborhoods: [],
+  roads: [],
+  names: [],
+  filter: {
+    name: '',
+    neighborhood: '',
+    road: '',
+  },
 }
 
 const sliceUser = createSlice({

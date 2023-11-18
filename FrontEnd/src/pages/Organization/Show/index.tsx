@@ -20,7 +20,7 @@ import { Loading } from '@Components/Loading'
 import { TypographyDetail } from '@Components/TypographyDetail'
 import { socket } from '@Functions'
 import { roomsProps } from '@Interfaces/redux/chats'
-import { ExpandMore } from '@mui/icons-material'
+import { ArrowBack, ExpandMore } from '@mui/icons-material'
 
 export function ShowOng() {
   const id = useLocation().state
@@ -70,11 +70,25 @@ export function ShowOng() {
         <Loading />
       ) : (
         <Box>
+          <Box
+            marginBottom={2}
+            display="flex"
+            width="100%"
+            justifyContent="space-between"
+          >
+            <Button
+              onClick={() => {
+                navigate(-1)
+              }}
+            >
+              <ArrowBack fontSize="large" />
+            </Button>
+          </Box>
           {ongData ? (
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={6} md={4}>
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} display="flex" justifyContent="center">
                     <Box
                       component="img"
                       src={ongData.userData.previewImage || userNotFound}
@@ -96,7 +110,7 @@ export function ShowOng() {
                   )}
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={8}>
+              <Grid item xs={12} sm={6} md={8}>
                 <Grid container>
                   <Grid item xs={12}>
                     <TypographyDetail
@@ -156,17 +170,29 @@ export function ShowOng() {
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        {ongData.userData.phoneData.map((item, index) => {
-                          return (
-                            <TypographyDetail
-                              sx={{ marginBottom: 0.5, padding: 0 }}
-                              value={item.phone}
-                              label={`Telefone ${index + 1}:`}
-                              variant="subtitle1"
-                              key={item.id}
-                            />
-                          )
-                        })}
+                        {ongData.userData.phoneData.length ? (
+                          <>
+                            {ongData.userData.phoneData.map((item, index) => {
+                              return (
+                                <TypographyDetail
+                                  sx={{ marginBottom: 0.5, padding: 0 }}
+                                  value={item.phone}
+                                  label={`Telefone ${index + 1}:`}
+                                  variant="subtitle1"
+                                  key={item.id}
+                                />
+                              )
+                            })}
+                          </>
+                        ) : (
+                          <Typography
+                            color="red"
+                            fontWeight="bold"
+                            variant="h6"
+                          >
+                            Sem Telefones registrados
+                          </Typography>
+                        )}
                       </AccordionDetails>
                     </Accordion>
                   </Grid>
