@@ -1,23 +1,23 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../migrations/mysql";
-import { Ong } from "../ongs/ongs";
-import { Animal } from "../animals/animal";
-import { Phone } from "../ongs/phones";
-import { Adoption } from "../adoptions/adoptions";
-import { Room } from "../chats/rooms";
-import { Message } from "../chats/messages";
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../../migrations/mysql'
+import { Ong } from '../ongs/ongs'
+import { Animal } from '../animals/animal'
+import { Phone } from '../ongs/phones'
+import { Adoption } from '../adoptions/adoptions'
+import { Room } from '../chats/rooms'
+import { Message } from '../chats/messages'
 
 export interface UserData extends Model {
-  id: number;
-  name:string
-  email: string;
-  password: string;
-  ongId:number|null
-  image:string
+  id: number
+  name: string
+  email: string
+  password: string
+  ongId: number | null
+  image: string
 }
 
 export const User = sequelize.define<UserData>(
-  "userData",
+  'userData',
   {
     id: {
       primaryKey: true,
@@ -42,31 +42,56 @@ export const User = sequelize.define<UserData>(
     },
   },
   {
-    tableName: "user",
-  }
-);
+    tableName: 'user',
+  },
+)
 
-User.hasOne(Ong, { foreignKey: 'userId', as: 'ongData',onDelete:'CASCADE' })
-Ong.belongsTo(User,{ onDelete:'CASCADE',foreignKey: 'userId', targetKey:'id',as: 'userData'})
+User.hasOne(Ong, { foreignKey: 'userId', as: 'ongData', onDelete: 'CASCADE' })
+Ong.belongsTo(User, {
+  onDelete: 'CASCADE',
+  foreignKey: 'userId',
+  targetKey: 'id',
+  as: 'userData',
+})
 
-Ong.hasMany(Animal, {  foreignKey: 'ongId', onDelete:'CASCADE',})
-Animal.belongsTo(Ong,{  foreignKey: 'ongId', as: 'ongData'})
+Ong.hasMany(Animal, { foreignKey: 'ongId', onDelete: 'CASCADE' })
+Animal.belongsTo(Ong, { foreignKey: 'ongId', as: 'ongData' })
 
-User.hasMany(Phone, {  foreignKey: 'userId', onDelete:'CASCADE',as:'phoneData'})
-Phone.belongsTo(User,{  foreignKey: 'userId', as: 'userData'})
+User.hasMany(Phone, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE',
+  as: 'phoneData',
+})
+Phone.belongsTo(User, { foreignKey: 'userId', as: 'userData' })
 
-Adoption.belongsTo(Animal,{ foreignKey:'animalId',as:'animalData',onDelete:'CASCADE'})
-Adoption.belongsTo(User,{ foreignKey:'userId',as:'userData'})
-Adoption.belongsTo(Ong,{ foreignKey:'ongId',as:'ongData',onDelete:'CASCADE'})
+Adoption.belongsTo(Animal, {
+  foreignKey: 'animalId',
+  as: 'animalData',
+  onDelete: 'CASCADE',
+})
+Adoption.belongsTo(User, { foreignKey: 'userId', as: 'userData' })
+Adoption.belongsTo(Ong, {
+  foreignKey: 'ongId',
+  as: 'ongData',
+  onDelete: 'CASCADE',
+})
 
-User.hasMany(Room,{foreignKey:'receiver',as:'roomOngData'})
-Room.belongsTo(User,{foreignKey:'receiver', as:'ongData'})
+User.hasMany(Room, { foreignKey: 'receiver', as: 'roomOngData' })
+Room.belongsTo(User, { foreignKey: 'receiver', as: 'ongData' })
 
-User.hasMany(Room,{foreignKey:'sender',as:'roomUserData'})
-Room.belongsTo(User,{foreignKey:'sender', as:'userData'})
+User.hasMany(Room, { foreignKey: 'sender', as: 'roomUserData' })
+Room.belongsTo(User, { foreignKey: 'sender', as: 'userData' })
 
-Room.hasMany(Message,{foreignKey:'roomId',as:'messageData',onDelete:'CASCADE'})
-Message.belongsTo(Room,{foreignKey:'roomId', as:'roomData', targetKey:'id'})
+Room.hasMany(Message, {
+  foreignKey: 'roomId',
+  as: 'messageData',
+  onDelete: 'CASCADE',
+})
+Message.belongsTo(Room, {
+  foreignKey: 'roomId',
+  as: 'roomData',
+  targetKey: 'id',
+})
 
 // sequelize.sync({force:true});
 // sequelize.sync();

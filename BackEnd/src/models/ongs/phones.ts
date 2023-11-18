@@ -1,21 +1,25 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../migrations/mysql";
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../../migrations/mysql'
 
 export interface PhoneData extends Model {
-    id: number
-    phone: number
+  id: number
+  phone: number
 }
 
-export const Phone = sequelize.define<PhoneData>('phoneData', {
-      id: {
-        primaryKey: true,
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-      },
-      phone:{
-        type: DataTypes.STRING(20),
-    }
-},{
-    tableName: "phone",
+export const Phone = sequelize.define<PhoneData>(
+  'phoneData',
+  {
+    id: {
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+    },
+    phone: {
+      type: DataTypes.STRING(20),
+    },
+  },
+  {
+    tableName: 'phone',
     timestamps: false,
-  });
+  },
+)

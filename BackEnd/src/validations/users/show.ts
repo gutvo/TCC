@@ -1,26 +1,26 @@
 import zod, { ZodError } from 'zod'
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express'
 
 const validator = zod.object({
-  email: zod.string({required_error:'Email é obrigatório'})
-});
+  email: zod.string({ required_error: 'Email é obrigatório' }),
+})
 
 const showUserValidation = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    await validator.parseAsync(req.query);
-    return next();
+    await validator.parseAsync(req.query)
+    return next()
   } catch (error) {
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message || "Erro na validação";
-      return res.status(400).json({ message: errorMessage });
+      const errorMessage = error.errors[0]?.message || 'Erro na validação'
+      return res.status(400).json({ message: errorMessage })
     } else {
-      return res.status(500).json({ message: "Erro no servidor:"+error });
+      return res.status(500).json({ message: 'Erro no servidor:' + error })
     }
   }
-};
+}
 
-export default showUserValidation;
+export default showUserValidation

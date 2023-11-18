@@ -1,18 +1,18 @@
-import { Request, Response, NextFunction } from "express";
-import { sequelize } from "../../migrations/mysql";
+import { Request, Response, NextFunction } from 'express'
+import { sequelize } from '../../migrations/mysql'
 
 const validateSequelize = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    await sequelize.authenticate();
+    await sequelize.authenticate()
 
-    return next();
+    return next()
   } catch (error) {
-    return res.status(500).json({ message: "Erro no servidor:" + error });
+    return res.status(500).json({ message: 'Erro no servidor:' + error })
   }
-};
+}
 
-export default validateSequelize;
+export default validateSequelize

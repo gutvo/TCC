@@ -1,15 +1,15 @@
-import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../../migrations/mysql";
+import { DataTypes, Model } from 'sequelize'
+import { sequelize } from '../../migrations/mysql'
 
 export interface MessageData extends Model {
-  id: number;
-  email:string
-  message:string
-  room:string
+  id: number
+  email: string
+  message: string
+  room: string
 }
 
 export const Message = sequelize.define<MessageData>(
-  "messageData",
+  'messageData',
   {
     id: {
       primaryKey: true,
@@ -26,7 +26,7 @@ export const Message = sequelize.define<MessageData>(
     },
   },
   {
-    tableName: "message",
+    tableName: 'message',
     timestamps: false,
-  }
-);
+  },
+)

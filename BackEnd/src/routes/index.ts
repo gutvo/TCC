@@ -1,15 +1,15 @@
-import { Router } from "express";
-import animalRoutes from "./animals/routes";
-import userRoutes from "./users/routes";
-import generateTokenKey from "../validations/token/generatorKey";
-import ongRoutes from "./ongs/routes";
-import ListCity from "../controllers/city/list";
-import { upload } from "../multer/config";
-import adoptionRoutes from "./adoptions";
-import reportRoutes from "./reports/routes";
+import { Router } from 'express'
+import animalRoutes from './animals/routes'
+import userRoutes from './users/routes'
+import generateTokenKey from '../validations/token/generatorKey'
+import ongRoutes from './ongs/routes'
+import ListCity from '../controllers/city/list'
+import { upload } from '../multer/config'
+import adoptionRoutes from './adoptions'
+import reportRoutes from './reports/routes'
 
 // import validateSequelize from "../validations/sequelize/sequelize";
-const mainRoutes = Router();
+const mainRoutes = Router()
 
 // Pega todas as cidades registradas
 mainRoutes.get('/city', ListCity)
@@ -20,10 +20,10 @@ mainRoutes.get('/city', ListCity)
 mainRoutes.use(upload.single('imageData'))
 
 // rotas dos animais
-mainRoutes.use(animalRoutes);
+mainRoutes.use(animalRoutes)
 
 // rotas dos usuários
-mainRoutes.use(userRoutes);
+mainRoutes.use(userRoutes)
 
 // rotas das Organização
 
@@ -34,6 +34,6 @@ mainRoutes.use(adoptionRoutes)
 mainRoutes.use(reportRoutes)
 
 // Gerador de chaves para o .env
-mainRoutes.route("/generatekey").get(generateTokenKey);
+mainRoutes.route('/generatekey').get(generateTokenKey)
 
-export default mainRoutes;
+export default mainRoutes

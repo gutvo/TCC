@@ -1,22 +1,22 @@
-import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../../migrations/mysql";
+import { Model, DataTypes } from 'sequelize'
+import { sequelize } from '../../migrations/mysql'
 
 export interface AnimalData extends Model {
-  id: number;
-  name: string;
-  race: string;
-  color: string;
-  sex: "Macho" | "Fêmea";
-  description: string;
-  type: "Cachorro" | "Peixe" | "Gato" | "Outros";
-  birthday: number;
-  image: string;
-  ongId:number;
-  situation?:string
+  id: number
+  name: string
+  race: string
+  color: string
+  sex: 'Macho' | 'Fêmea'
+  description: string
+  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
+  birthday: number
+  image: string
+  ongId: number
+  situation?: string
 }
 
 export const Animal = sequelize.define<AnimalData>(
-  "animalData",
+  'animalData',
   {
     id: {
       primaryKey: true,
@@ -47,11 +47,11 @@ export const Animal = sequelize.define<AnimalData>(
     image: {
       type: DataTypes.STRING,
     },
-    situation:{
+    situation: {
       type: DataTypes.STRING,
-    }
+    },
   },
   {
-    tableName: "animal",
-  }
-);
+    tableName: 'animal',
+  },
+)

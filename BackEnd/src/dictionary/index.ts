@@ -1,44 +1,42 @@
-export const message={
-    animalNotFound: 'O animal não foi encontrado.',
-    serverError:'Erro no servidor.',
+export const message = {
+  animalNotFound: 'O animal não foi encontrado.',
+  serverError: 'Erro no servidor.',
 
-    ImageNotFound:'A imagem não encontrada.',
+  ImageNotFound: 'A imagem não encontrada.',
 
-    createAnimalSuccess:'Animal Cadastrado com sucesso!',
-    deleteAnimalSuccess:'O animal foi deletado com sucesso!',
-    updateAnimalSuccess:'As informações do animal foram alteradas com sucesso!',
-    
-    createAdoptionSuccess:'Pedido de adoção feito com sucesso!',
-    createAdoptionNotExists:'Seu pedido de adoção desse animal já foi feito.',
+  createAnimalSuccess: 'Animal Cadastrado com sucesso!',
+  deleteAnimalSuccess: 'O animal foi deletado com sucesso!',
+  updateAnimalSuccess: 'As informações do animal foram alteradas com sucesso!',
 
-    adoptedSuccess:'Animal foi adotado com sucesso!',
-    adoptedNotExists:'Pedido de adoção de animal não foi encontrado',
+  createAdoptionSuccess: 'Pedido de adoção feito com sucesso!',
+  createAdoptionNotExists: 'Seu pedido de adoção desse animal já foi feito.',
 
-    deleteAdoptionSuccess:'Pedido foi recusado com sucesso!',
+  adoptedSuccess: 'Animal foi adotado com sucesso!',
+  adoptedNotExists: 'Pedido de adoção de animal não foi encontrado',
 
-//--------------------------------------------------------------------
+  deleteAdoptionSuccess: 'Pedido foi recusado com sucesso!',
 
-    userNotFound:'A conta não foi encontrada.',
+  //--------------------------------------------------------------------
 
-    createUserSuccess:'A conta foi cadastrada com sucesso!',
-    createOngSuccess:'A Organização foi cadastrada com sucesso!',
+  userNotFound: 'A conta não foi encontrada.',
 
-    deleteUserSuccess:'Sua conta foi deletado com sucesso!',
+  createUserSuccess: 'A conta foi cadastrada com sucesso!',
+  createOngSuccess: 'A Organização foi cadastrada com sucesso!',
 
-    emailOrPasswordUser:'Email ou senha incorreto.',
+  deleteUserSuccess: 'Sua conta foi deletado com sucesso!',
 
-    createOngPhoneSuccess:'Telefone adicionado com sucesso!',
+  emailOrPasswordUser: 'Email ou senha incorreto.',
 
-    ongPhoneExist: 'Esse número de telefone ja foi cadastrado.',
+  createOngPhoneSuccess: 'Telefone adicionado com sucesso!',
 
-    ongPhoneExistDiferentCount:'Esse número de telefone ja foi cadastrado em outra conta.',
+  ongPhoneExist: 'Esse número de telefone ja foi cadastrado.',
 
-    ongPhoneNotFound:'O Telefone não foi encontrado.',
+  ongPhoneExistDiferentCount:
+    'Esse número de telefone ja foi cadastrado em outra conta.',
 
-    deleteOngPhoneSuccess:'O número de telefone foi deletado com sucesso!',
+  ongPhoneNotFound: 'O Telefone não foi encontrado.',
 
-    updateOngPhoneSuccess:'O número de telefone alterado com sucesso',
+  deleteOngPhoneSuccess: 'O número de telefone foi deletado com sucesso!',
 
-
+  updateOngPhoneSuccess: 'O número de telefone alterado com sucesso',
 }
-
