@@ -34,9 +34,6 @@ export interface ProfileFormData {
 
 export interface ProfileFormProps {
   data: UserData
-  handleUpdateUser: (data: ProfileFormData) => void
-  editable: boolean
-  setEditable: (data: boolean) => void
 }
 
 // Delete Dialog

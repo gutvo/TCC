@@ -134,7 +134,6 @@ io.on('connection', async(socket:SocketProps) => {
   })
 
 
-
   socket.on('get.messages',async(room:roomsProps)=>{
     if(room){
       const message = await Message.findAll({where:{roomId:room.id}})

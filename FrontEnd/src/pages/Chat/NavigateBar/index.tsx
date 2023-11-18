@@ -11,7 +11,7 @@ import {
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/chats/slice'
-import { ListItemAvatar } from './ListItemAvatar'
+import { ListItemAvatar } from '@Components/ListItemAvatar'
 import { firstName, socket } from '@Functions'
 import { roomsProps } from '@Interfaces/redux/chats'
 
@@ -47,10 +47,16 @@ export function NavigateBar() {
 
   useEffect(() => {
     if (data?.id) {
-      socket.emit('rooms', data?.id)
-      socket.on('rooms.response', (users) => {
+      function roomsResponse(users: roomsProps[]) {
         dispatch(setUsers(users))
-      })
+      }
+
+      socket.emit('rooms', data?.id)
+      socket.on('rooms.response', roomsResponse)
+
+      return () => {
+        socket.off('rooms.response', roomsResponse)
+      }
     }
   }, [data?.id, dispatch, setUsers])
 

@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react'
 import userNotFound from '@Images/userNotFound.png'
 
 interface ListItemAvatarProps {
-  countNotifications: number
+  countNotifications?: number
   email: string | undefined
   image: string | undefined
 }

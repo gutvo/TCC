@@ -1,4 +1,11 @@
-import { IconButton, Badge, MenuItem, Menu, Typography } from '@mui/material'
+import {
+  IconButton,
+  Badge,
+  ListItemButton,
+  Menu,
+  Typography,
+  List,
+} from '@mui/material'
 import { Notifications as NotificationIcon } from '@mui/icons-material'
 import { useEffect, MouseEvent, useState } from 'react'
 import { Socket } from 'socket.io-client'
@@ -42,10 +49,16 @@ export function Notifications({ socket }: NotificationsProps) {
 
   useEffect(() => {
     if (data?.id) {
-      socket.emit('rooms', data?.id)
-      socket.on('rooms.response', (users) => {
+      function roomResponse(users: roomsProps[]) {
         dispatch(setUsers(users))
-      })
+      }
+
+      socket.emit('rooms', data.id)
+      socket.on('rooms.response', roomResponse)
+
+      return () => {
+        socket.off('rooms.response', roomResponse)
+      }
     }
   }, [socket, data?.id, setUsers, dispatch])
 
@@ -54,12 +67,29 @@ export function Notifications({ socket }: NotificationsProps) {
       notifications.includes(user[isOng]),
     )
     setFilterUsers(usersFiltered)
-  }, [notifications, users, isOng])
+  }, [notifications, users, isOng, socket, data?.id])
 
   useEffect(() => {
-    socket.on('get.notifications', (notificationUserId: number) => {
+    const usersFiltered = users.find(
+      (user) => !notifications.includes(user[isOng]),
+    )
+    if (usersFiltered) {
+      if (data?.id) {
+        socket.emit('rooms', data.id)
+      }
+    }
+  }, [data?.id, isOng, notifications, socket, users])
+
+  useEffect(() => {
+    function getNotifications(notificationUserId: number) {
       dispatch(setNotifications([...notifications, notificationUserId]))
-    })
+    }
+
+    socket.on('get.notifications', getNotifications)
+
+    return () => {
+      socket.off('get.notifications', getNotifications)
+    }
   }, [socket, notifications, dispatch, setNotifications])
 
   return (
@@ -87,31 +117,67 @@ export function Notifications({ socket }: NotificationsProps) {
             'aria-labelledby': 'button',
           }}
         >
-          <Typography marginLeft={1}>Mensagens:</Typography>
-          {filterUsers.map((item) => {
-            const { id } = item
+          <Typography
+            marginX={1}
+            textAlign="center"
+            fontWeight="bold"
+            variant="h6"
+          >
+            Mensagens
+          </Typography>
 
-            const countNotifications = notifications.filter(
-              (filterItem) => filterItem === item[isOng],
-            ).length
-            return (
-              <MenuItem
-                key={id}
-                onClick={() => {
-                  handleJoinRoom(item)
-                  handleClose()
-                }}
-              >
-                {item.ongData
-                  ? item.ongData?.name.split(' ')[0]
-                  : item.userData?.name.split(' ')[0]}
-                :
-                <span style={{ marginLeft: 10, color: 'darkred' }}>
-                  {countNotifications}
-                </span>
-              </MenuItem>
-            )
-          })}
+          <List>
+            {filterUsers.map((item) => {
+              const { id } = item
+
+              const countNotifications = notifications.filter(
+                (filterItem) => filterItem === item[isOng],
+              ).length
+              return (
+                <ListItemButton
+                  key={id}
+                  onClick={() => {
+                    handleJoinRoom(item)
+                    handleClose()
+                  }}
+                >
+                  <Badge
+                    sx={{
+                      '& .MuiBadge-badge': {
+                        right: -12,
+                        top: 4,
+                      },
+                    }}
+                    badgeContent={countNotifications}
+                    color="error"
+                  >
+                    <Typography>
+                      {item.ongData
+                        ? item.ongData?.name.split(' ')[0]
+                        : item.userData?.name.split(' ')[0]}
+                    </Typography>
+                  </Badge>
+
+                  {/* <span
+                      style={{
+                        marginLeft: 6,
+                        color: 'white',
+                        backgroundColor: palette.error.dark,
+                        padding: 1,
+                        height: 22,
+                        width: 22,
+                        borderRadius: 100,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        display: 'flex',
+                      }}
+                    >
+                      {countNotifications}
+                    </span> */}
+                </ListItemButton>
+              )
+            })}
+          </List>
         </Menu>
       ) : null}
     </>

@@ -12,7 +12,13 @@ export interface userOngData {
   city: string
   CEP: string
   cpfCnpj: string
-  userData: { name: string; email: string }
+  userData: {
+    id: number
+    name: string
+    email: string
+    image: string
+    previewImage?: string
+  }
 }
 
 export interface phoneData {

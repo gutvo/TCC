@@ -1,13 +1,12 @@
-import { userOngData } from '@Interfaces/redux/users'
+import { userOngData } from '@Interfaces/redux/ongs'
 import {
-  Avatar,
   ListItem as ListItemMui,
-  ListItemAvatar,
   ListItemText,
   Typography,
 } from '@mui/material'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ListItemAvatar } from '@Components/ListItemAvatar'
 
 interface ListOngProps {
   OngData: userOngData
@@ -15,15 +14,17 @@ interface ListOngProps {
 
 export function ListItem({ OngData }: ListOngProps) {
   const navigation = useNavigate()
+
   return (
     <ListItemMui
       alignItems="flex-start"
       sx={{ cursor: 'pointer', ':hover': { background: '#d4d4d4' } }}
       onClick={() => navigation('/ong', { state: OngData.id })}
     >
-      <ListItemAvatar>
-        <Avatar alt="Avatar" sizes="100%" />
-      </ListItemAvatar>
+      <ListItemAvatar
+        email={OngData.userData.email}
+        image={OngData.userData.image}
+      />
       <ListItemText
         primary={OngData.userData.name}
         secondary={

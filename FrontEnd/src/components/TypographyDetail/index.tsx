@@ -1,13 +1,11 @@
-import { SxProps, TypographyVariant } from '@mui/material'
+import { TypographyProps } from '@mui/material'
 import { TypographyLabel } from './styles'
 
-interface TypographyDetailProps {
+interface TypographyDetailProps extends TypographyProps {
   label?: string
   value?: string
-  sx?: SxProps
-  variant?: TypographyVariant
   noDescription?: boolean
-  border?: boolean
+  haveBorder?: boolean
 }
 
 export function TypographyDetail({
@@ -16,18 +14,20 @@ export function TypographyDetail({
   value,
   variant,
   noDescription,
-  border,
+  haveBorder,
+  ...rest
 }: TypographyDetailProps) {
   return (
     <TypographyLabel
       variant={variant}
       sx={{
-        ...sx,
-        marginBottom: border ? 1.5 : 2,
+        marginBottom: haveBorder ? 1.5 : 2,
         padding: 1,
-        border: border ? 'solid 1px #d4d4d4' : 'none',
+        border: haveBorder ? 'solid 1px #d4d4d4' : 'none',
         borderRadius: 1,
+        ...sx,
       }}
+      {...rest}
     >
       {label}{' '}
       <span

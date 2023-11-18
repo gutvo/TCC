@@ -20,18 +20,28 @@ export function Content() {
   const messageListRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    function getMessages(data: messageProps[]) {
+      dispatch(setMessages(data))
+    }
     if (selectedUser) {
       socket.emit('get.messages', selectedUser)
-      socket.on('get.messages', (data) => {
-        dispatch(setMessages(data))
-      })
+      socket.on('get.messages', getMessages)
+
+      return () => {
+        socket.off('get.messages', getMessages)
+      }
     }
   }, [selectedUser, setMessages, dispatch])
 
   useEffect(() => {
-    socket.on('message.response', (data: messageProps) =>
-      dispatch(setMessages([...messages, data])),
-    )
+    function messageResponse(data: messageProps) {
+      return dispatch(setMessages([...messages, data]))
+    }
+    socket.on('message.response', messageResponse)
+
+    return () => {
+      socket.off('message.response', messageResponse)
+    }
   }, [messages, setMessages, dispatch])
 
   useEffect(() => {

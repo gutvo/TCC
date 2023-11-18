@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom'
 import { AnimalData } from '@Interfaces/redux/animals'
 import { Socket } from 'socket.io-client'
 import { ExpandMore } from '@mui/icons-material'
+import { roomsProps } from '@Interfaces/redux/chats'
 
 interface AnimalDetailProps {
   id: string
@@ -50,9 +51,16 @@ export function AnimalDetail({
       userId: data?.id,
       ongId: animalData.ongData?.userData.id,
     })
-    socket.on('create.room', (data) => {
+
+    function createRoom(data: roomsProps) {
       navigate('/chat', { state: { room: data } })
-    })
+    }
+
+    socket.on('create.room', createRoom)
+
+    return () => {
+      socket.off('create.room', createRoom)
+    }
   }
 
   function handleAdoptionRequest() {
@@ -115,37 +123,37 @@ export function AnimalDetail({
       <Grid item xs={12} md={6}>
         <Box>
           <TypographyDetail
-            border
+            haveBorder
             label="Nome:"
             variant="h6"
             value={animalData.name}
           />
           <TypographyDetail
-            border
+            haveBorder
             label="Data de nascimento:"
             variant="h6"
             value={date}
           />
           <TypographyDetail
-            border
+            haveBorder
             label="Cor:"
             variant="h6"
             value={animalData.color}
           />
           <TypographyDetail
-            border
+            haveBorder
             label="Raça:"
             variant="h6"
             value={animalData.race}
           />
           <TypographyDetail
-            border
+            haveBorder
             label="Sexo:"
             variant="h6"
             value={animalData.sex}
           />
           <TypographyDetail
-            border
+            haveBorder
             label="Tipo:"
             variant="h6"
             value={animalData.type}

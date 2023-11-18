@@ -14,7 +14,10 @@ const showOng = async(req:Request,res:Response)=>{
         include: [{
             model: User,
             as: 'userData',
-            attributes:['name','email']
+            attributes:['id','name','email','image'],
+            include:[{
+              association:'phoneData'
+            }]
           }],
       });
     return res.json({data:response})

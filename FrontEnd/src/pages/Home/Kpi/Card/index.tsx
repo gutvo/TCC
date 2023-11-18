@@ -16,7 +16,7 @@ export function CardKpis({ label, value = 0 }: CardKpisProps) {
         alignItems: 'center',
         justifyContent: 'center',
         width: '17rem',
-        height: '6rem',
+        height: '4.5rem',
         bgcolor: palette.secondary.dark,
       }}
       component={Paper}

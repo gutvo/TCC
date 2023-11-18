@@ -16,7 +16,7 @@ const listOng = async(req:Request,res:Response)=>{
         include: [{
             model: User,
             as: 'userData',
-            attributes:['name','email']
+            attributes:['id','name','email','image']
           }],
       });
       

@@ -1,4 +1,5 @@
 import { actions } from '@Redux/ongs/slice'
+import { phoneData } from './users'
 
 export interface userOngData {
   id: number
@@ -7,7 +8,14 @@ export interface userOngData {
   city: string
   CEP: string
   cpfCnpj: string
-  userData: { name: string; email: string }
+  userData: {
+    id: number
+    name: string
+    email: string
+    image: string
+    previewImage?: string
+    phoneData: phoneData[]
+  }
 }
 
 export interface OngFilter {

@@ -3,23 +3,27 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInformationsByCEP } from '@Services/othersApis'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { ProfileFormProps, ViaCepDTO } from '@Interfaces/pages/users'
+import {
+  ProfileFormProps,
+  ViaCepDTO,
+  ProfileFormData,
+} from '@Interfaces/pages/users'
 import { UserUpdate, updateUserFormSchema } from './validations'
 import { TextFieldStyled } from '@Components/TextFieldStyled'
 import { DeleteDialog } from './DeleteDialog'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
 import { CepInformation } from '@Components/CepInformations'
 import { CepMask, CnpjCpfMask } from '@Functions'
 import { TextFieldImage } from '@Components/TextFieldImage'
 import { toast } from 'react-toastify'
+import { actions } from '@Redux/users/slice'
 
-export function ProfileForm({
-  data,
-  handleUpdateUser,
-  editable,
-  setEditable,
-}: ProfileFormProps) {
+export function ProfileForm({ data }: ProfileFormProps) {
+  const dispatch = useDispatch()
+
+  const { updateUserRequest } = actions
+
   const {
     handleSubmit,
     register,
@@ -39,6 +43,11 @@ export function ProfileForm({
   const [cpfCnpj, setCpfCnpj] = useState('')
   const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
   const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
+  const [editable, setEditable] = useState(false)
+
+  function handleUpdateUser(data: ProfileFormData) {
+    dispatch(updateUserRequest(data, setEditable))
+  }
 
   async function onChangeCep(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

@@ -26,10 +26,24 @@ function* showOng({ payload }: showActions) {
   const { showOngFailure, showOngSuccess } = actions
   const { id } = payload
   try {
-    const data: OngDataDTO = yield api.get('/ong', {
+    const ong: OngDataDTO = yield api.get('/ong', {
       params: { id },
     })
-    yield put(showOngSuccess(data.data.data))
+
+    const data = ong.data.data.userData
+    if (data.image) {
+      const image: string = yield api
+        .get(`/user/images/${data.email}`, {
+          responseType: 'blob',
+        })
+        .then((response) => {
+          return URL.createObjectURL(response.data)
+        })
+      data.previewImage = image
+    } else {
+      data.previewImage = ''
+    }
+    yield put(showOngSuccess(ong.data.data))
   } catch (error) {
     yield put(showOngFailure())
     if (axios.isAxiosError(error) && error.response) {

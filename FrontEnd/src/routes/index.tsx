@@ -31,6 +31,8 @@ function MainRoutes() {
       // socket.on('connect', () => console.log('Usuário conectado'))
       socket.auth = { userId: data.id, userName: data.name, type }
       socket.connect()
+    } else {
+      socket.disconnect()
     }
   }, [data, isLogged, type])
 
