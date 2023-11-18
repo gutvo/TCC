@@ -1,7 +1,6 @@
 import { Request,Response } from "express";
 import { Animal } from "../../../models/animals/animal";
 import { Ong } from "../../../models/ongs/ongs";
-import { sequelize } from "../../../migrations/mysql";
 
 
 const DashboardHome = async(req:Request,res:Response)=>{

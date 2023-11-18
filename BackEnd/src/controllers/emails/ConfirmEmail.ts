@@ -1,12 +1,11 @@
-import { Request, Response } from "express";
-import { message } from "../../dictionary";
+// import { Request, Response } from "express";
 import {createTransport} from 'nodemailer'
 import dotenv from 'dotenv'
 
-const sendConfirmEmail = async (req:Request, res:Response) => {
+const sendConfirmEmail = async () => {
   dotenv.config()
 
-    var transporter = createTransport({
+    const transporter = createTransport({
         host: process.env.MAIL_HOST,
         port: parseInt(process.env.MAIL_PORT as string),
         auth: {

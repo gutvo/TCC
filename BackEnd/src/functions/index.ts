@@ -7,7 +7,7 @@ export function encrypt(password: string) {
   return bcrypt.hashSync(password, salt);
 }
 
-export function generateAccessToken(username: string, userpassword: String) {
+export function generateAccessToken(username: string, userpassword: string) {
   return jwt.sign(
     { name: username, password: userpassword },
     process.env.TOKEN_SECRET as string,

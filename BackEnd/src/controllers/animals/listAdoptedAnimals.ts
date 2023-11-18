@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
 import { Op } from 'sequelize';
 import { Adoption } from "../../models/adoptions/adoptions";
@@ -24,7 +23,7 @@ const ListAdoptedAnimals = async (req: Request, res: Response) => {
       filter = req.query.filter as animalFilterProps;
     }
 
-    let where: { [Op.and]: any[]} = {
+    const where: { [Op.and]: unknown[]} = {
       [Op.and]: [],
   };
    

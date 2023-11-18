@@ -9,7 +9,7 @@ import { Message } from "../chats/messages";
 
 export interface UserData extends Model {
   id: number;
-  name:String
+  name:string
   email: string;
   password: string;
   ongId:number|null

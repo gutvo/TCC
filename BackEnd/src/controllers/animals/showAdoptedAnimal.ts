@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Animal } from "../../models/animals/animal";
 import { message } from "../../dictionary";
 import { Adoption } from "../../models/adoptions/adoptions";
 

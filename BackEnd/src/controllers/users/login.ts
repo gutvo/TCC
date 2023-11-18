@@ -37,7 +37,7 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-function generateAccessToken(username: string, userpassword: String) {
+function generateAccessToken(username: string, userpassword: string) {
   return jwt.sign(
     { name: username, password: userpassword },
     process.env.TOKEN_SECRET as string,

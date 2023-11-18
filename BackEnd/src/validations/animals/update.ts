@@ -1,10 +1,6 @@
 import zod, { ZodError } from "zod";
 import { Request, Response, NextFunction } from "express";
 
-const getFormatedDate = (currentDate: String) => {
-  return currentDate.split("/").reverse().join("-");
-};
-
 const animalSchema = zod.object({
   id: zod.string({ required_error: "O ID é obrigatório" }),
   name: zod.string({ required_error: "O nome é obrigatório" }),

@@ -24,7 +24,7 @@ const List = async (req: Request, res: Response) => {
       filter = req.query.filter as animalFilterProps;
     }
 
-    let where: { [Op.and]: any[]} = {
+    const where: { [Op.and]: unknown[]} = {
       [Op.and]: [],
   };
    let whereCity = {}

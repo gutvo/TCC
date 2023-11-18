@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { Ong, OngData } from "../../models/ongs/ongs";
+import { Ong } from "../../models/ongs/ongs";
 
 
 const listFilterOptiosn = async(req:Request,res:Response)=>{

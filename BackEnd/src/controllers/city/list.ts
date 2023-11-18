@@ -13,7 +13,7 @@ const ListCity = async (req: Request, res: Response) => {
         } catch (error) {
           res.status(500).json({message:message.serverError});
         
-      };
+      }
   };
 
 export default ListCity

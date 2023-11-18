@@ -25,9 +25,7 @@ const Update = async (req: Request, res: Response) => {
     const newImage = req.file
 
     if(newImage){
-      let destinationPath
-
-        destinationPath = path.join(
+      const destinationPath = path.join(
           __dirname,
           `../../images/animals/${result.image||newImage.filename}`
         );

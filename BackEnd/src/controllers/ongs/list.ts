@@ -10,7 +10,7 @@ const listOng = async(req:Request,res:Response)=>{
     const city = req.query.city as string
     const filter = req.query.filter as {name?:string, road?:string, neighborhood?:string}
 
-    let where: { [Op.and]: any[]} = {
+    const where: { [Op.and]: unknown[]} = {
       [Op.and]: [],
   };
 
