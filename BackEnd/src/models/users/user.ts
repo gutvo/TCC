@@ -94,4 +94,4 @@ Message.belongsTo(Room, {
 })
 
 // sequelize.sync({force:true});
-// sequelize.sync();
+sequelize.sync()
