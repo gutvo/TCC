@@ -15,12 +15,15 @@ const List = async (req: Request, res: Response) => {
         model: User,
         as: 'userData',
         attributes: ['id', 'name', 'email'],
+        required:true
       },
       {
         model: Animal,
         as: 'animalData',
+        required:true
       },
     ],
+    // order:['animalId','ASC']
   })
 
   return res.json({

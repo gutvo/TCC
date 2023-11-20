@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useTheme } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@Redux/store'
@@ -11,10 +11,8 @@ import { firstName } from '@Functions'
 
 export function Home() {
   const dispatch = useDispatch()
-  const theme = useTheme()
   const { getDashboardDataRequest } = actions
   const { listRandomAnimalRequest } = animalActions
-  const { palette } = theme
 
   const name = useSelector((state: RootState) => state.users.data?.name)
   const city = useSelector((state: RootState) => state.users.city)
@@ -38,9 +36,8 @@ export function Home() {
         fontWeight="bold"
         textAlign="center"
         marginBottom={4}
-        color={palette.primary.dark}
       >
-        Bem-vindo ao nosso site{name ? ' ' + firstName(name) : ''}!
+        Bem-vindo ao site{name ? ' ' + firstName(name) : ''}!
       </Typography>
 
       <Kpi />

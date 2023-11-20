@@ -30,7 +30,7 @@ export function Kpi() {
       <Grid item>
         <CardKpis
           value={dashboadHomeData?.countAvailableAnimals}
-          label="Animais disponiveis"
+          label="Animais disponíveis"
         />
       </Grid>
       <Grid item>

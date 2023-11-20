@@ -79,7 +79,12 @@ export function Adoption() {
           userValue={userData}
         />
       )}
-      <Typography variant="h4" fontWeight="bold" textAlign="center">
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        marginBottom={4}
+      >
         Lista de pedidos para adoção
       </Typography>
       <TableContainer component={Paper}>

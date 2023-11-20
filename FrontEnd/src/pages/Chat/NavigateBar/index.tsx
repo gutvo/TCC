@@ -8,7 +8,7 @@ import {
   Stack,
   useMediaQuery,
 } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actions } from '@Redux/chats/slice'
 import { ListItemAvatar } from '@Components/ListItemAvatar'
@@ -20,6 +20,7 @@ export function NavigateBar() {
   const { setMessages, setSelectedUser, setNotifications, setUsers } = actions
   const { palette, breakpoints } = useTheme()
   const { Chat } = palette
+  const [oneTime, setOneTime] = useState(true)
 
   const mediaQueryUpMobile = useMediaQuery(breakpoints.up('mobile'))
 
@@ -46,19 +47,20 @@ export function NavigateBar() {
   }
 
   useEffect(() => {
-    if (data?.id) {
+    if (data?.id && oneTime) {
       function roomsResponse(users: roomsProps[]) {
         dispatch(setUsers(users))
+        setOneTime(false)
       }
 
       socket.emit('rooms', data?.id)
-      socket.on('rooms.response', roomsResponse)
+      socket.on('rooms', roomsResponse)
 
       return () => {
-        socket.off('rooms.response', roomsResponse)
+        socket.off('rooms', roomsResponse)
       }
     }
-  }, [data?.id, dispatch, setUsers])
+  }, [data?.id, dispatch, setUsers, oneTime])
 
   return (
     <Box

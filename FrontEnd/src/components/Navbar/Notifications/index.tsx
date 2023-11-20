@@ -23,6 +23,7 @@ export function Notifications({ socket }: NotificationsProps) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { setNotifications, setUsers } = actions
+  const [oneTime, setOneTIme] = useState(true)
 
   const { notifications, users } = useSelector(
     (state: RootState) => state.chats,
@@ -48,19 +49,19 @@ export function Notifications({ socket }: NotificationsProps) {
   }
 
   useEffect(() => {
-    if (data?.id) {
+    if (data?.id && oneTime) {
       function roomResponse(users: roomsProps[]) {
         dispatch(setUsers(users))
+        setOneTIme(false)
       }
-
       socket.emit('rooms', data.id)
-      socket.on('rooms.response', roomResponse)
-
-      return () => {
-        socket.off('rooms.response', roomResponse)
-      }
+      socket.on('rooms', roomResponse)
     }
-  }, [socket, data?.id, setUsers, dispatch])
+
+    return () => {
+      socket.off('rooms')
+    }
+  }, [socket, data?.id, setUsers, dispatch, oneTime])
 
   useEffect(() => {
     const usersFiltered = users.filter((user) =>

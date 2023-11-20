@@ -1,10 +1,11 @@
 import { RootState } from '@Redux/store'
-import { Box, Typography, Button, useTheme } from '@mui/material'
+import { Box, Button, useTheme } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { ProfileForm } from './updateForm'
 import { useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { PhoneTable } from './updateForm/PhoneTable'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function ShowUser() {
   const { palette } = useTheme()
@@ -60,7 +61,7 @@ export function ShowUser() {
           {pageType === 'phones' && <PhoneTable />}
         </>
       ) : (
-        <Typography>Erro de Perfil</Typography>
+        <TyphographyNoData label="Erro de Perfil." />
       )}
     </Box>
   )

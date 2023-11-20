@@ -56,41 +56,49 @@ export function AnimalDetail({
                 Informações do animal:
               </Typography>
               <TypographyDetail
+                haveBorder
                 label="Nome:"
                 variant="h6"
                 value={animalData.name}
               />
               <TypographyDetail
+                haveBorder
                 label="Data de nascimento:"
                 variant="h6"
                 value={date}
               />
               <TypographyDetail
+                haveBorder
                 label="Cor:"
                 variant="h6"
                 value={animalData.color}
               />
               <TypographyDetail
+                haveBorder
                 label="Raça:"
                 variant="h6"
                 value={animalData.race}
               />
               <TypographyDetail
+                haveBorder
                 label="Sexo:"
                 variant="h6"
                 value={animalData.sex}
               />
               <TypographyDetail
+                haveBorder
                 label="Tipo:"
                 variant="h6"
                 value={animalData.type}
               />
               <TypographyDetail
+                haveBorder
                 label="Adotado em:"
                 variant="h6"
                 value={adoptedDate}
               />
               <TypographyDetail
+                haveBorder
                 label="Descrição:"
                 variant="h6"
                 noDescription={!animalData.description}
@@ -109,11 +117,13 @@ export function AnimalDetail({
                 Informações do adotante:
               </Typography>
               <TypographyDetail
+                haveBorder
                 label="Nome:"
                 variant="h6"
                 value={adoptedAnimalData.userName}
               />
               <TypographyDetail
+                haveBorder
                 label="Email:"
                 variant="h6"
                 value={adoptedAnimalData.userEmail}

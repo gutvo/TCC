@@ -67,9 +67,7 @@ export function RecuedAdoptedAnimal() {
       )
 
       const filteredRescueAnimal = animalData.filter(
-        (item) =>
-          new Date(item.createdAt).getMonth() === count &&
-          item.situation === 'available',
+        (item) => new Date(item.createdAt).getMonth() === count,
       )
       chartRescueData.push(
         filteredRescueAnimal.length !== 0 ? filteredRescueAnimal.length : 0,

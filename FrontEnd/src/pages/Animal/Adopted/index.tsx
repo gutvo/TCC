@@ -8,6 +8,7 @@ import { Loading } from '@Components/Loading'
 import { CardAnimal } from '@Components/CardAnimal'
 import { Filter } from './Filter'
 import { animalFilterProps } from '@Interfaces/redux/adoptions'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function AdoptedAnimal() {
   const { listAdoptedAnimalsRequest } = actions
@@ -89,16 +90,7 @@ export function AdoptedAnimal() {
               />
             </Box>
           ) : (
-            <Typography
-              display="flex"
-              alignItems="center"
-              height="100vh"
-              variant="h3"
-              textAlign="center"
-              justifyContent="center"
-            >
-              Nenhum animal foi encontrado.
-            </Typography>
+            <TyphographyNoData label="Nenhum animal foi encontrado." />
           )}
         </>
       )}

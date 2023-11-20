@@ -35,7 +35,7 @@ export function AnimalDetail({
   socket,
 }: AnimalDetailProps) {
   const { breakpoints } = useTheme()
-  const midiaQueryDownMd = useMediaQuery(breakpoints.down('sm'))
+
   const midiaQueryUpMd = useMediaQuery(breakpoints.up('md'))
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -89,8 +89,8 @@ export function AnimalDetail({
         <Box
           component="img"
           src={animalData?.previewImage || animalNotFound}
-          width={midiaQueryDownMd ? '300px' : '25rem'}
-          height={midiaQueryDownMd ? '300px' : '25rem'}
+          width="25rem"
+          height="17rem"
           borderRadius={2}
         />
         {midiaQueryUpMd && (
@@ -170,11 +170,13 @@ export function AnimalDetail({
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {animalData.description.length
-                  ? animalData.description
-                  : 'Sem descrição'}
-              </Typography>
+              {animalData.description.length ? (
+                <Typography>{animalData.description}</Typography>
+              ) : (
+                <Typography color="red" fontWeight="bold" variant="h6">
+                  Sem descrição
+                </Typography>
+              )}
             </AccordionDetails>
           </Accordion>
         </Box>

@@ -70,7 +70,7 @@ export function DetailModal({
     >
       <Box
         sx={{
-          position: 'absolute' as 'absolute',
+          position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
@@ -109,19 +109,40 @@ export function DetailModal({
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TypographyDetail label="Nome:" value={animalValue?.name} />
-                <TypographyDetail label="Raça:" value={animalValue?.race} />
                 <TypographyDetail
+                  haveBorder
+                  label="Nome:"
+                  value={animalValue?.name}
+                />
+                <TypographyDetail
+                  haveBorder
+                  label="Raça:"
+                  value={animalValue?.race}
+                />
+                <TypographyDetail
+                  haveBorder
                   label="Nascimento:"
                   value={animalBirthDay || animalValue?.birthday}
                 />
-                <TypographyDetail label="Color:" value={animalValue?.color} />
-                <TypographyDetail label="Sexo:" value={animalValue?.sex} />
-                <TypographyDetail label="Tipo:" value={animalValue?.type} />
+                <TypographyDetail
+                  haveBorder
+                  label="Color:"
+                  value={animalValue?.color}
+                />
+                <TypographyDetail
+                  haveBorder
+                  label="Sexo:"
+                  value={animalValue?.sex}
+                />
+                <TypographyDetail
+                  haveBorder
+                  label="Tipo:"
+                  value={animalValue?.type}
+                />
               </Grid>
             </Grid>
           ) : (
-            <Grid container>
+            <Grid container spacing={2}>
               <Grid item xs={12} justifyContent="center" display="flex">
                 <Box
                   component="img"
@@ -130,8 +151,16 @@ export function DetailModal({
                 />
               </Grid>
               <Grid item xs={12}>
-                <TypographyDetail label="Nome:" value={userValue?.name} />
-                <TypographyDetail label="Email:" value={userValue?.email} />
+                <TypographyDetail
+                  haveBorder
+                  label="Nome:"
+                  value={userValue?.name}
+                />
+                <TypographyDetail
+                  haveBorder
+                  label="Email:"
+                  value={userValue?.email}
+                />
               </Grid>
             </Grid>
           )}

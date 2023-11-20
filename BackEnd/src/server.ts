@@ -71,15 +71,11 @@ io.use((socket: SocketProps, next) => {
 io.on('connection', async (socket: SocketProps) => {
   const { userId, type } = socket
   socket.join(`notifications${userId}`)
-
-  /*
-    socket.onAny((data,...args)=>{
-    console.log(data, args)
-  })  socket.onAny((data,...args)=>{
-    console.log(data, args)
-  })
-  */
-
+  
+  // socket.onAny((data,...args)=>{
+  //   console.log(data, args)
+  // })  
+  
   socket.on('rooms', async () => {
     const rooms: {
       id: number
@@ -117,7 +113,7 @@ io.on('connection', async (socket: SocketProps) => {
         rooms.push(item.dataValues)
       })
     }
-    socket.emit('rooms.response', rooms)
+    socket.emit('rooms', rooms)
   })
 
   socket.on('join.room', async (room: roomsProps) => {

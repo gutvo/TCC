@@ -107,7 +107,7 @@ export function Filter({ setOngFilter }: FilterProps) {
           />
         </Grid>
 
-        {citys.length && (
+        {citys.length ? (
           <Grid item xs={12} sm={4} md={4} lg={2}>
             <FormControl fullWidth>
               <InputLabel>Cidade</InputLabel>
@@ -138,7 +138,7 @@ export function Filter({ setOngFilter }: FilterProps) {
               </Select>
             </FormControl>
           </Grid>
-        )}
+        ) : null}
 
         <Grid item xs={12} sm={12} md={4} lg={1}>
           <Button

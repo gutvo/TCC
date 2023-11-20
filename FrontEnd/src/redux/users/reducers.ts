@@ -58,7 +58,7 @@ export const reducers = {
   logout: (state: InitialState) => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
-    localStorage.removeItem('remenberData')
+    // localStorage.removeItem('remenberData')
     state.data = null
     state.isLogged = false
   },

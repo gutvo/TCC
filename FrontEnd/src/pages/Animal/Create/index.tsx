@@ -166,7 +166,6 @@ export function CreateAnimalForm() {
               type="submit"
               fullWidth
             >
-              Cadastrar Animal
               {loading ? 'Cadastrando...' : 'Cadastrar Animal'}
             </Button>
           </Grid>

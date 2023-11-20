@@ -21,6 +21,7 @@ import { TypographyDetail } from '@Components/TypographyDetail'
 import { socket } from '@Functions'
 import { roomsProps } from '@Interfaces/redux/chats'
 import { ArrowBack, ExpandMore } from '@mui/icons-material'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function ShowOng() {
   const id = useLocation().state
@@ -211,11 +212,7 @@ export function ShowOng() {
               </Grid>
             </Grid>
           ) : (
-            <Box textAlign="center">
-              <Typography color="red" variant="h4">
-                Organização não encontrada
-              </Typography>
-            </Box>
+            <TyphographyNoData label="Organização não encontrada." />
           )}
         </Box>
       )}

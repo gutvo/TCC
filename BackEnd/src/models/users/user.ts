@@ -93,5 +93,5 @@ Message.belongsTo(Room, {
   targetKey: 'id',
 })
 
-// sequelize.sync({force:true});
-sequelize.sync()
+// sequelize.sync({ force: true })
+// sequelize.sync()

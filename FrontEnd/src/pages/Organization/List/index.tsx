@@ -9,6 +9,7 @@ import { ListItem } from './ListItem'
 import { Loading } from '@Components/Loading'
 import { Filter } from './Filter'
 import { OngFilter } from '@Interfaces/redux/ongs'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function ListOng() {
   const dispatch = useDispatch()
@@ -50,14 +51,13 @@ export function ListOng() {
         <Loading />
       ) : (
         <>
-          {data ? (
+          {data?.length ? (
             <>
               <Box sx={{ minHeight: '58vh' }}>
                 {data.map((item) => {
                   return <ListItem key={item.userData.email} OngData={item} />
                 })}
               </Box>
-
               <Pagination
                 boundaryCount={1}
                 sx={{
@@ -78,7 +78,7 @@ export function ListOng() {
               />
             </>
           ) : (
-            <Typography color="red">Nenhuma Ong Encontrada</Typography>
+            <TyphographyNoData label="Nenhuma Ong Encontrada." />
           )}
         </>
       )}

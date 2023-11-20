@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,6 +7,7 @@ import { ArrowBack } from '@mui/icons-material'
 import { Helmet } from 'react-helmet-async'
 import { AnimalDetail } from './AnimalDetail'
 import { actions } from '@Redux/adoptions/slice'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function AdoptedAnimalShow() {
   const { id } = useLocation().state
@@ -49,9 +50,7 @@ export function AdoptedAnimalShow() {
           adoptedAnimalData={animalData}
         />
       ) : (
-        <Typography variant="h4" textAlign="center">
-          Animal não foi encontrado.
-        </Typography>
+        <TyphographyNoData label="Animal não foi encontrado." />
       )}
     </Box>
   )

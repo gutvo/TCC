@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async'
 import { AnimalDetail } from './AnimalDetail'
 import { actions } from '@Redux/animals/slice'
 import { Socket } from 'socket.io-client'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 interface ShowAnimalProps {
   socket: Socket
@@ -84,9 +85,7 @@ export function ShowAnimal({ socket }: ShowAnimalProps) {
           )}
         </>
       ) : (
-        <Typography variant="h4" textAlign="center">
-          Animal não foi encontrado.
-        </Typography>
+        <TyphographyNoData label="Animal não foi encontrado." />
       )}
     </Box>
   )

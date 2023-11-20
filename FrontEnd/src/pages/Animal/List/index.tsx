@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async'
 import { Loading } from '@Components/Loading'
 import { animalFilterProps } from '@Interfaces/redux/animals'
 import { Filter } from './Filter'
+import { TyphographyNoData } from '@Components/TyphographyNoData'
 
 export function ListAnimal() {
   const dispatch = useDispatch()
@@ -92,16 +93,7 @@ export function ListAnimal() {
               />
             </>
           ) : (
-            <Typography
-              display="flex"
-              alignItems="center"
-              height="100vh"
-              variant="h3"
-              textAlign="center"
-              justifyContent="center"
-            >
-              Nenhum animal foi encontrado.
-            </Typography>
+            <TyphographyNoData label="Nenhum animal foi encontrado." />
           )}
         </>
       )}
