@@ -144,8 +144,8 @@ export const reducers = {
     reducer: (state: InitialState) => {
       state.loading = true
     },
-    prepare: (city: string) => {
-      return { payload: { city } }
+    prepare: (city: string, ongId: number | undefined) => {
+      return { payload: { city, ongId } }
     },
   },
 

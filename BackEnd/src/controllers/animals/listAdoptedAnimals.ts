@@ -3,7 +3,7 @@ import { message } from '../../dictionary'
 import { Op } from 'sequelize'
 import { Adoption } from '../../models/adoptions/adoptions'
 
-interface animalFilterProps {
+type animalFilterProps = {
   race?: string[]
   type?: 'Todos' | 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   sex?: 'Todos' | 'Macho' | 'Fêmea'
