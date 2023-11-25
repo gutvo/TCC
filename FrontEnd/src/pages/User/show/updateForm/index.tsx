@@ -40,6 +40,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
   const [loadingCEP, setLoadingCEP] = useState(false)
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
   const [inputCep, setInputCep] = useState('')
+  const [houseNumber, setHouseNumber] = useState('')
   const [cpfCnpj, setCpfCnpj] = useState('')
   const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
   const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
@@ -110,6 +111,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
       setValue('ongData', ongData)
       setCpfCnpj(ongData.cpfCnpj)
       setInputCep(ongData.CEP)
+      setHouseNumber(ongData.houseNumber)
 
       const { city, neighborhood, road, uf } = ongData
       setCEP({
@@ -178,7 +180,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
 
           {data.ongData ? (
             <>
-              <Grid xs={6} item>
+              <Grid xs={12} sm={4} item>
                 <TextFieldStyled
                   errors={errors.ongData?.cpfCnpj}
                   disabled={!editable}
@@ -196,7 +198,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
                   })}
                 />
               </Grid>
-              <Grid xs={6} item>
+              <Grid xs={12} sm={4} item>
                 <TextFieldStyled
                   loading={loadingCEP}
                   errors={errors.ongData?.CEP}
@@ -209,6 +211,31 @@ export function ProfileForm({ data }: ProfileFormProps) {
                   {...register('ongData.CEP', {
                     required: true,
                     onChange: onChangeCep,
+                  })}
+                />
+              </Grid>
+              <Grid xs={12} sm={4} item>
+                <TextFieldStyled
+                  disabled={!editable}
+                  errors={errors.ongData?.houseNumber}
+                  label="Numero da residência"
+                  customType="number"
+                  value={houseNumber}
+                  inputProps={{ min: 0, max: 9999 }}
+                  placeholder="Digite o numero da residência."
+                  {...register('ongData.houseNumber', {
+                    required: true,
+                    onChange: (e) => {
+                      const { value } = e.target
+                      if (!value) {
+                        setHouseNumber('')
+                        return
+                      }
+
+                      if (value < 9999 && value > 1) {
+                        setHouseNumber(value)
+                      }
+                    },
                   })}
                 />
               </Grid>

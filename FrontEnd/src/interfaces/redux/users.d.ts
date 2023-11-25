@@ -17,6 +17,7 @@ export interface userOngData {
   neighborhood: string
   city: string
   CEP: string
+  houseNumber: string
   cpfCnpj: string
   userData: {
     id: number
@@ -35,6 +36,7 @@ export interface ongData {
   city: string
   uf: string
   CEP: string
+  houseNumber: string
   cpfCnpj: string
 }
 

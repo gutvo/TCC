@@ -10,6 +10,9 @@ const userSchemas = zod.object({
   ongData: zod
     .object({
       road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+      houseNumber: zod
+      .string({ required_error: 'O número da residência é obrigatório.' })
+      .max(4),
       neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
       city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
       uf: zod.string().length(2, 'Só pode ter dois digitos'),

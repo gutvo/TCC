@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
-export interface OngData extends Model {
+export type OngData = {
   id: number
   road: string
   neighborhood: string
@@ -9,10 +9,11 @@ export interface OngData extends Model {
   CEP: string
   cpfCnpj: string
   userId: number
+  houseNumber:number
   userData?: {
     name: string
   }
-}
+} & Model
 
 export const Ong = sequelize.define<OngData>(
   'ongData',
@@ -49,6 +50,9 @@ export const Ong = sequelize.define<OngData>(
     userId: {
       type: DataTypes.INTEGER,
     },
+    houseNumber:{
+      type: DataTypes.STRING(6)
+    }
   },
   {
     tableName: 'ong',

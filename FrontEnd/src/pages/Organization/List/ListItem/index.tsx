@@ -35,7 +35,8 @@ export function ListItem({ OngData }: ListOngProps) {
               variant="body2"
               color="text.primary"
             >
-              Rua: {OngData.road} - Bairro: {OngData.neighborhood}
+              Rua: {OngData.road} - Número: {OngData.houseNumber} - Bairro:{' '}
+              {OngData.neighborhood}
             </Typography>
           </Fragment>
         }

@@ -15,7 +15,7 @@ const Create = async (req: Request, res: Response) => {
 
     let data
     if (ongData) {
-      const { road, neighborhood, city, CEP, uf, cpfCnpj } = ongData
+      const { road, neighborhood, city, CEP, uf, cpfCnpj, houseNumber } = ongData
       const cpfCnpjExist = await Ong.findOne({ where: { cpfCnpj } })
 
       if (cpfCnpjExist) {
@@ -35,6 +35,7 @@ const Create = async (req: Request, res: Response) => {
             CEP,
             uf,
             cpfCnpj,
+            houseNumber,
           },
         },
         {

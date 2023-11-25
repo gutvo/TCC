@@ -133,6 +133,14 @@ export function ShowOng() {
                   <Grid item xs={12}>
                     <TypographyDetail
                       haveBorder
+                      label="Número:"
+                      value={ongData.houseNumber}
+                      variant="h6"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TypographyDetail
+                      haveBorder
                       label="Bairro:"
                       value={ongData.neighborhood}
                       variant="h6"

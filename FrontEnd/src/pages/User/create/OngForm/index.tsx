@@ -27,6 +27,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
   const [CEP, setCEP] = useState<ViaCepDTO | null>()
   const [inputCep, setInputCep] = useState('')
   const [cpfCnpj, setCpfCnpj] = useState('')
+  const [houseNumber, setHouseNumber] = useState('')
   const [isInVisibleRoad, setIsInVisibleRoad] = useState(true)
   const [isInVisibleNeighborhood, setIsInVisibleNeighborhood] = useState(true)
 
@@ -142,6 +143,28 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
         {...register('ongData.CEP', {
           required: true,
           onChange: onChangeCep,
+        })}
+      />
+      <TextFieldStyled
+        errors={errors.ongData?.houseNumber}
+        label="Numero da residência"
+        customType="number"
+        value={houseNumber}
+        inputProps={{ min: 0, max: 9999 }}
+        placeholder="Digite o numero da residência."
+        {...register('ongData.houseNumber', {
+          required: true,
+          onChange: (e) => {
+            const { value } = e.target
+            if (!value) {
+              setHouseNumber('')
+              return
+            }
+
+            if (value < 9999 && value > 1) {
+              setHouseNumber(value)
+            }
+          },
         })}
       />
       <Box display={isInVisibleRoad || isInVisibleRoad ? 'none' : 'flex'}>
