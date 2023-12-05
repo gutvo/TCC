@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
-export interface AnimalData extends Model {
+export type AnimalData = {
   id: number
   name: string
   race: string
@@ -13,7 +13,7 @@ export interface AnimalData extends Model {
   image: string
   ongId: number
   situation?: string
-}
+} & Model
 
 export const Animal = sequelize.define<AnimalData>(
   'animalData',

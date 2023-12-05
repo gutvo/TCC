@@ -161,7 +161,7 @@ export function OngForm({ handleAddUser }: CreateFormProps) {
               return
             }
 
-            if (value < 9999 && value > 1) {
+            if (value <= 9999 && value >= 0) {
               setHouseNumber(value)
             }
           },
