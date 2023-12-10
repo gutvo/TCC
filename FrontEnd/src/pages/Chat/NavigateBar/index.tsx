@@ -119,14 +119,16 @@ export function NavigateBar() {
                 <ListItemText
                   primaryTypographyProps={{
                     variant: 'h6',
-                    style: { fontWeight: 'bold' },
+                    style: {
+                      fontWeight: 'bold',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                    },
                   }}
                   primary={
-                    item.ongData
-                      ? firstName(item.ongData?.name)
-                      : firstName(item.userData?.name)
+                    item.ongData ? item.ongData?.name : item.userData?.name
                   }
-                  sx={{ overflow: 'hidden', overflowWrap: 'break-word' }}
                 />
               </ListItem>
             )

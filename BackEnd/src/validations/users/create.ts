@@ -15,6 +15,9 @@ const userSchemas = zod.object({
       neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
       city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
       uf: zod.string().length(2, 'Só pode ter dois digitos'),
+      houseNumber: zod
+      .string({ required_error: 'O número da residência é obrigatório.' })
+      .max(4),
       CEP: zod
         .string({ invalid_type_error: 'CEP inválido' })
         .length(9, 'CEP inválido'),

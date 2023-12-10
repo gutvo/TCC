@@ -1,6 +1,15 @@
 import { AnimalData } from '@Interfaces/redux/animals'
-import { Close } from '@mui/icons-material'
-import { Modal, Box, Typography, IconButton, Grid } from '@mui/material'
+import { Close, ExpandMore } from '@mui/icons-material'
+import {
+  Modal,
+  Box,
+  Typography,
+  IconButton,
+  Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@mui/material'
 import {
   Dispatch,
   SetStateAction,
@@ -36,6 +45,12 @@ export function DetailModal({
   }
 
   const [imageUrl, setImageUrl] = useState<string | null>('')
+  const [openDescription, setOpenDescription] = useState(false)
+
+  function handleDescription() {
+    setOpenDescription(!openDescription)
+  }
+
   const animalBirthDay = new Date(
     animalValue?.birthday ? animalValue.birthday : '',
   ).toLocaleDateString('pt')
@@ -139,6 +154,27 @@ export function DetailModal({
                   label="Tipo:"
                   value={animalValue?.type}
                 />
+                <Accordion
+                  elevation={0}
+                  expanded={openDescription}
+                  sx={{ border: 'solid 1px #d4d4d4', marginBottom: 2 }}
+                  onChange={handleDescription}
+                >
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Typography fontWeight="bold" sx={{ flexShrink: 0 }}>
+                      Descrição:
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    {animalValue?.description.length ? (
+                      <Typography>{animalValue?.description}</Typography>
+                    ) : (
+                      <Typography color="red" fontWeight="bold">
+                        Sem descrição
+                      </Typography>
+                    )}
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
             </Grid>
           ) : (

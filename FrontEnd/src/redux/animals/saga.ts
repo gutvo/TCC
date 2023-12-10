@@ -138,10 +138,10 @@ function* deleteAnimal({ payload }: deleteActions) {
 
 function* listRandomAnimals({ payload }: FetchRandomAnimalAction) {
   const { listRandomAnimalFailure, listRandomAnimalSuccess } = actions
-  const { city } = payload
+  const { city, ongId } = payload
   try {
     const animals: fetchRandomAnimalDTO = yield api.get('/random/animal', {
-      params: { city },
+      params: { city, ongId },
     })
     const result = animals.data
 

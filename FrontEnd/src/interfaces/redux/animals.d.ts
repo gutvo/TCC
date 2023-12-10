@@ -137,5 +137,6 @@ export interface FetchRandomAnimalAction {
   type: typeof actions.listRandomAnimalRequest.type
   payload: {
     city: string
+    ongId: number | undefined
   }
 }

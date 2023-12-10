@@ -7,14 +7,14 @@ import { Adoption } from '../adoptions/adoptions'
 import { Room } from '../chats/rooms'
 import { Message } from '../chats/messages'
 
-export interface UserData extends Model {
+export type UserData = {
   id: number
   name: string
   email: string
   password: string
   ongId: number | null
   image: string
-}
+} & Model
 
 export const User = sequelize.define<UserData>(
   'userData',

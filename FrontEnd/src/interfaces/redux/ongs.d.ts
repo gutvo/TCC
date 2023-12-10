@@ -8,6 +8,7 @@ export interface userOngData {
   city: string
   CEP: string
   cpfCnpj: string
+  houseNumber: string
   userData: {
     id: number
     name: string

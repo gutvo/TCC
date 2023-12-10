@@ -14,7 +14,7 @@ export function Home() {
   const { getDashboardDataRequest } = actions
   const { listRandomAnimalRequest } = animalActions
 
-  const name = useSelector((state: RootState) => state.users.data?.name)
+  const data = useSelector((state: RootState) => state.users.data)
   const city = useSelector((state: RootState) => state.users.city)
 
   const list = useSelector((state: RootState) => state.animals.list)
@@ -25,9 +25,9 @@ export function Home() {
 
   useEffect(() => {
     if (city) {
-      dispatch(listRandomAnimalRequest(city))
+      dispatch(listRandomAnimalRequest(city, data?.ongData?.id))
     }
-  }, [listRandomAnimalRequest, dispatch, city])
+  }, [listRandomAnimalRequest, dispatch, city, data?.ongData?.id])
   return (
     <Box>
       <Helmet title="Home" />
@@ -37,7 +37,7 @@ export function Home() {
         textAlign="center"
         marginBottom={4}
       >
-        Bem-vindo ao site{name ? ' ' + firstName(name) : ''}!
+        Bem-vindo ao site{data?.name ? ' ' + firstName(data.name) : ''}!
       </Typography>
 
       <Kpi />
@@ -46,10 +46,16 @@ export function Home() {
         variant="h4"
         fontWeight="bold"
         // textAlign="center"
-        marginBottom={2}
+        marginBottom={data?.ongData ? 0 : 2}
       >
         Animais
       </Typography>
+      {data?.ongData ? (
+        <Typography marginBottom={2}>
+          Apenas será apresentado para os adotantes na tela home animais com
+          imagem.
+        </Typography>
+      ) : null}
 
       <Grid container spacing={2} display="flex" justifyContent="center">
         {list.map((item) => {

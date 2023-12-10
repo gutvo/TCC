@@ -23,7 +23,7 @@ export function Notifications({ socket }: NotificationsProps) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { setNotifications, setUsers } = actions
-  const [oneTime, setOneTIme] = useState(true)
+  const [oneTime, setOneTime] = useState(true)
 
   const { notifications, users } = useSelector(
     (state: RootState) => state.chats,
@@ -52,7 +52,7 @@ export function Notifications({ socket }: NotificationsProps) {
     if (data?.id && oneTime) {
       function roomResponse(users: roomsProps[]) {
         dispatch(setUsers(users))
-        setOneTIme(false)
+        setOneTime(false)
       }
       socket.emit('rooms', data.id)
       socket.on('rooms', roomResponse)
@@ -84,6 +84,7 @@ export function Notifications({ socket }: NotificationsProps) {
   useEffect(() => {
     function getNotifications(notificationUserId: number) {
       dispatch(setNotifications([...notifications, notificationUserId]))
+      setOneTime(true)
     }
 
     socket.on('get.notifications', getNotifications)

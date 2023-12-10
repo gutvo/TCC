@@ -1,10 +1,20 @@
-import { Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import animalNotFound from '@Images/isNotFound.jpg'
 import { TypographyDetail } from '@Components/TypographyDetail'
 import { useEffect, useState } from 'react'
 import { Loading } from '@Components/Loading'
 import { AdoptedAnimalData } from '@Interfaces/redux/adoptions'
 import { format } from 'date-fns'
+import { ExpandMore } from '@mui/icons-material'
 
 interface AnimalDetailProps {
   id: string
@@ -22,6 +32,11 @@ export function AnimalDetail({
   const { animalData } = adoptedAnimalData
   const [date, setDate] = useState('')
   const [adoptedDate, setAdoptedDate] = useState('')
+  const [openDescription, setOpenDescription] = useState(false)
+
+  function handleDescription() {
+    setOpenDescription(!openDescription)
+  }
 
   useEffect(() => {
     if (animalData) {
@@ -52,9 +67,6 @@ export function AnimalDetail({
           </Grid>
           <Grid item xs={12} md={6}>
             <Box marginLeft={midiaQueryDownMd ? 7 : midiaQueryDownSm ? 10 : 0}>
-              <Typography marginBottom={1} variant="h5" fontWeight="bold">
-                Informações do animal:
-              </Typography>
               <TypographyDetail
                 haveBorder
                 label="Nome:"
@@ -91,6 +103,32 @@ export function AnimalDetail({
                 variant="h6"
                 value={animalData.type}
               />
+
+              <Accordion
+                elevation={0}
+                expanded={openDescription}
+                sx={{ border: 'solid 1px #d4d4d4', marginBottom: 2 }}
+                onChange={handleDescription}
+              >
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  <Typography
+                    fontWeight="bold"
+                    variant="h6"
+                    sx={{ flexShrink: 0 }}
+                  >
+                    Descrição:
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  {animalData.description.length ? (
+                    <Typography>{animalData.description}</Typography>
+                  ) : (
+                    <Typography color="red" fontWeight="bold" variant="h6">
+                      Sem descrição
+                    </Typography>
+                  )}
+                </AccordionDetails>
+              </Accordion>
               <TypographyDetail
                 haveBorder
                 label="Adotado em:"
@@ -99,32 +137,13 @@ export function AnimalDetail({
               />
               <TypographyDetail
                 haveBorder
-                label="Descrição:"
-                variant="h6"
-                noDescription={!animalData.description}
-                value={
-                  animalData.description.length
-                    ? animalData.description
-                    : 'Sem descrição'
-                }
-              />
-              <Typography
-                marginBottom={1}
-                marginTop={2}
-                variant="h5"
-                fontWeight="bold"
-              >
-                Informações do adotante:
-              </Typography>
-              <TypographyDetail
-                haveBorder
-                label="Nome:"
+                label="Nome do Adotante:"
                 variant="h6"
                 value={adoptedAnimalData.userName}
               />
               <TypographyDetail
                 haveBorder
-                label="Email:"
+                label="Email do adotante:"
                 variant="h6"
                 value={adoptedAnimalData.userEmail}
               />

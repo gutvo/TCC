@@ -7,6 +7,17 @@ import { Op } from 'sequelize'
 const randomAnimal = async (req: Request, res: Response) => {
   try {
     const city = req.query.city as string
+    const ongId = req.query.ongId as string
+
+    let where ={}
+
+    console.log(ongId)
+
+    if(ongId){
+      where = {id:ongId}
+    }else{
+      where={city}
+    }
 
     const result = await Animal.findAll({
       where: {
@@ -15,7 +26,7 @@ const randomAnimal = async (req: Request, res: Response) => {
       },
       include: {
         association: 'ongData',
-        where: { city },
+        where,
       },
       order: sequelize.random(),
       limit: 4,
