@@ -3,15 +3,13 @@ import { sequelize } from '../../migrations/mysql'
 
 export type OngData = {
   id: string
-export type OngData = {
-  id: number
   road: string
   neighborhood: string
   city: string
   CEP: string
   cpfCnpj: string
   userId: number
-  houseNumber:number
+  houseNumber: number
   userData?: {
     name: string
   }
@@ -49,8 +47,8 @@ export const Ong = sequelize.define<OngData>(
     cpfCnpj: {
       type: DataTypes.STRING(18),
       allowNull: false
-    }
-    houseNumber:{
+    },
+    houseNumber: {
       type: DataTypes.STRING(6)
     }
   },
