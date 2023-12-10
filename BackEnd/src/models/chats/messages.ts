@@ -1,8 +1,8 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, type Model } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
 export interface MessageData extends Model {
-  id: number
+  id: string
   email: string
   message: string
   room: string
@@ -13,20 +13,23 @@ export const Message = sequelize.define<MessageData>(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     message: {
       type: DataTypes.TEXT,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
   {
     tableName: 'message',
-    timestamps: false,
-  },
+    timestamps: false
+  }
 )
+
+// Message.sync()

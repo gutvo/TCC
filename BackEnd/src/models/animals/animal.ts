@@ -1,8 +1,8 @@
-import { Model, DataTypes } from 'sequelize'
+import { type Model, DataTypes } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
 export interface AnimalData extends Model {
-  id: number
+  id: string
   name: string
   race: string
   color: string
@@ -20,38 +20,41 @@ export const Animal = sequelize.define<AnimalData>(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     race: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     color: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     sex: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     type: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     birthday: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATEONLY
     },
     image: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     situation: {
-      type: DataTypes.STRING,
-    },
+      type: DataTypes.STRING
+    }
   },
   {
-    tableName: 'animal',
-  },
+    tableName: 'animal'
+  }
 )
+
+// Animal.sync()

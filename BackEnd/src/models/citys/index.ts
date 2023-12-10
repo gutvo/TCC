@@ -1,8 +1,8 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, type Model } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
 export interface CityData extends Model {
-  id: number
+  id: string
   name: string
 }
 
@@ -11,18 +11,19 @@ export const City = sequelize.define<CityData>(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     label: {
       type: DataTypes.STRING,
-      unique: true,
-    },
+      unique: true
+    }
   },
   {
     tableName: 'city',
-    timestamps: false,
-  },
+    timestamps: false
+  }
 )
 
-// sequelize.sync();
+// City.sync()

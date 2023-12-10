@@ -1,8 +1,8 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, type Model } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
 export interface RoomData extends Model {
-  id: number
+  id: string
   name: string
   receiver: string
   sender: string
@@ -13,16 +13,19 @@ export const Room = sequelize.define<RoomData>(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
   {
     tableName: 'room',
-    timestamps: false,
-  },
+    timestamps: false
+  }
 )
+
+// Room.sync()

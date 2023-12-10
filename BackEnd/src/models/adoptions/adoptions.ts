@@ -1,8 +1,8 @@
-import { DataTypes, Model } from 'sequelize'
+import { DataTypes, type Model } from 'sequelize'
 import { sequelize } from '../../migrations/mysql'
 
 export interface AdoptionData extends Model {
-  id: number
+  id: string
   animalId: number
   userId: number
   ongId: number
@@ -16,35 +16,24 @@ export const Adoption = sequelize.define<AdoptionData>(
   {
     id: {
       primaryKey: true,
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-    },
-    animalId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    ongId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     confirm: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN
     },
     userName: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     userEmail: {
-      type: DataTypes.STRING,
-    },
+      type: DataTypes.STRING
+    }
   },
   {
     tableName: 'adoption',
-    timestamps: false,
-  },
+    timestamps: false
+  }
 )
 
-// sequelize.sync();
+// Adoption.sync();
