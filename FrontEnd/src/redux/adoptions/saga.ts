@@ -132,10 +132,11 @@ function* listAdoptedAnimals({ payload }: listAdoptedAnimalsActions) {
 function* showAdoptedAnimal({ payload }: showAdoptedAnimalAction) {
   const { showAdoptedAnimalFailure, showAdoptedAnimalSuccess } = actions
   try {
-    const animal: showAdoptedAnimalDTO = yield api.get(
+    const response: showAdoptedAnimalDTO = yield api.get(
       `/adopted/animal/${payload.id}`,
     )
-    const { data } = animal
+
+    const { data } = response.data
 
     let animalData
 

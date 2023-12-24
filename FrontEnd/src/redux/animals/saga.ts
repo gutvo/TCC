@@ -70,19 +70,20 @@ function* showAnimal({ payload }: showAction) {
     const animal: showAnimalDTO = yield api.get(`animal/${payload.id}`)
 
     const { data } = animal
+    console.log(data)
 
     let animalData
-    if (data.image) {
+    if (data.data.image) {
       const image: string = yield api
-        .get(`/animal/images/${data.id}`, {
+        .get(`/animal/images/${data.data.id}`, {
           responseType: 'blob',
         })
         .then((response) => {
           return URL.createObjectURL(response.data)
         })
-      animalData = { ...data, previewImage: image }
+      animalData = { ...data.data, previewImage: image }
     } else {
-      animalData = { ...data, previewImage: undefined }
+      animalData = { ...data.data, previewImage: undefined }
     }
 
     yield put(showAnimalSuccess(animalData))

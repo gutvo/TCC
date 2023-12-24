@@ -67,7 +67,7 @@ export interface fetchAnimalDTO {
 }
 
 export interface showAnimalDTO {
-  data: AnimalData
+  data: { data: AnimalData }
 }
 
 export interface createAnimalDTO {
