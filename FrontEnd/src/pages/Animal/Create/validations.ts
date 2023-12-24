@@ -1,7 +1,7 @@
 import * as zod from 'zod'
 
 export const newAnimalFormSchema = zod.object({
-  ongId: zod.number(),
+  ongId: zod.string(),
   name: zod.string().min(2, 'O nome é obrigatório'),
   // .max(24, 'Não pode passar de 24 caracteres'),
   race: zod.string().min(2, 'A raça é obrigatório'),

@@ -1,7 +1,7 @@
 import * as zod from 'zod'
 
 export const updateAnimalFormSchema = zod.object({
-  id: zod.number(),
+  id: zod.string(),
   name: zod.string().min(2, 'O nome é obrigatório'),
   race: zod.string().min(2, 'A raça é obrigatório'),
   color: zod.string().min(2, 'A color é obrigatório'),

@@ -10,7 +10,7 @@ export type AnimalData = {
   description: string
   type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
   birthday: number
-  image: string
+  image: string | null
   ongId: number
   situation?: string
 } & Model

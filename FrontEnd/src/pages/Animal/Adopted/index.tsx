@@ -21,7 +21,7 @@ export function AdoptedAnimal() {
   const [limit] = useState(pagination.limit)
   const [offset, setOffset] = useState(pagination.offset)
   const [animalFilter, setAnimalFilter] = useState<animalFilterProps>(filter)
-
+  console.log(adoptedAnimalList)
   useEffect(() => {
     if (data?.ongData?.id) {
       disptach(
