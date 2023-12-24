@@ -1,14 +1,12 @@
 import { Router } from 'express'
-import listOng from '../../controllers/ongs/list'
-import showOng from '../../controllers/ongs/show'
-import listFilterOptiosn from '../../controllers/ongs/listFilterOptiosn'
+import ongsControllers from '@Controllers/ongs'
 
 const ongRoutes = Router()
 
-ongRoutes.get('/ongs', listOng)
+ongRoutes.get('/ongs', ongsControllers.listController)
 
-ongRoutes.get('/ong', showOng)
+ongRoutes.get('/ong', ongsControllers.showController)
 
-ongRoutes.get('/ong/road-neighborhood', listFilterOptiosn)
+ongRoutes.get('/ong/road-neighborhood', ongsControllers.listAdressesFiltersController)
 
 export default ongRoutes
