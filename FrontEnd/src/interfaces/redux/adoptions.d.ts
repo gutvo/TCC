@@ -73,7 +73,7 @@ export interface deleteAdoptionDTO {
 }
 
 export interface showAdoptedAnimalDTO {
-  data: AdoptedAnimalData
+  data: { data: AdoptedAnimalData }
 }
 
 export interface listAdoptionAnimalDTO {

@@ -42,8 +42,7 @@ export default async function createService ({ email, name, ongData, password }:
         }
       },
       {
-        include: [{ association: 'userData' }]
-        // include: [{ association: User.associations.ongData }]
+        include: [{ association: User.associations.ongData }]
       }
     )
 
@@ -61,7 +60,8 @@ export default async function createService ({ email, name, ongData, password }:
   const formattedData = {
     id: data.id,
     email: data.email,
-    name: data.name
+    name: data.name,
+    ongData: ongData !== null && ongData
   }
 
   return {
