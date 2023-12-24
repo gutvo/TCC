@@ -13,7 +13,7 @@ export type UserData = {
   email: string
   password: string
   ongId: number | null
-  image: string
+  image: string | null
 } & Model
 
 export const User = sequelize.define<UserData>(

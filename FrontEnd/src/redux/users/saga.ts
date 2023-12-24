@@ -96,7 +96,7 @@ function* showUser({ payload }: showAction) {
     })
     const { data } = user
     let userData
-    if (user.data.image) {
+    if (user.data.data.image) {
       const image: string = yield api
         .get(`/user/images/${email}`, {
           responseType: 'blob',
@@ -104,9 +104,9 @@ function* showUser({ payload }: showAction) {
         .then((response) => {
           return URL.createObjectURL(response.data)
         })
-      userData = { ...data, previewImage: image }
+      userData = { ...data.data, previewImage: image }
     } else {
-      userData = { ...data, previewImage: '' }
+      userData = { ...data.data, previewImage: '' }
     }
 
     yield put(showUserSuccess(userData))

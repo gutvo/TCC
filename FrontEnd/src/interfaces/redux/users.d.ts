@@ -111,7 +111,7 @@ export interface createUserDTO {
 }
 
 export interface showUserDTO {
-  data: UserData
+  data: { data: UserData }
 }
 
 export interface updateUserDTO {

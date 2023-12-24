@@ -1,19 +1,19 @@
 import zod, { ZodError } from 'zod'
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 
 const validator = zod.object({
   id: zod.string({ required_error: 'ID é obrigatório' }),
-  email: zod.string({ required_error: 'O email é obrigatório' }),
+  email: zod.string({ required_error: 'O email é obrigatório' })
 })
 
 const deleteUserValidation = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     await validator.parseAsync(req.query)
-    return next()
+    next()
   } catch (error) {
     if (error instanceof ZodError) {
       const errorMessage = error.errors[0]?.message || 'Erro na validação'

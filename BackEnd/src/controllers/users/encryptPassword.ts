@@ -1,14 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 import { encrypt } from '../../functions'
 import { message } from '../../dictionary'
 
-const encryptPassword = (req: Request, res: Response, next: NextFunction) => {
+export default function encryptPassword (req: Request, res: Response, next: NextFunction) {
   try {
     req.body.password = encrypt(req.body.password)
-    return next()
+    next()
   } catch (error) {
     res.status(500).json({ message: message.serverError })
   }
 }
-
-export default encryptPassword
