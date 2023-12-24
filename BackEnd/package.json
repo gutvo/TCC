@@ -22,7 +22,7 @@
     "zod": "^3.21.4"
   },
   "scripts": {
-    "start": "nodemon -e ts,json,js src/server.ts",
+    "start": "nodemon -r tsconfig-paths/register -e ts,json,js src/server.ts",
     "lint": "eslint ./src --ext .ts",
     "lint:fix": "eslint ./src --ext .ts --fix",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
