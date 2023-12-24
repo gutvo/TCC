@@ -1,4 +1,4 @@
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { Phone, type PhoneData } from '../../models/ongs/phones'
 
 interface CreateServiceProps {

@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
-import { message } from '../../dictionary'
 import phonesServices from '@Services/phones'
 import { type PhoneData } from '@Models/ongs/phones'
+import translate from '@Dictionary'
 
 interface RequestProps {
   id: string
@@ -16,6 +16,6 @@ export default async function updateController (req: Request, res: Response) {
 
     return res.status(status).json({ data, message })
   } catch (error) {
-    res.status(500).json({ message: message.serverError })
+    res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }

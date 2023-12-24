@@ -1,4 +1,4 @@
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { Phone } from '../../models/ongs/phones'
 
 export default async function deleteService (id: string) {

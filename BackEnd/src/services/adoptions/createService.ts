@@ -1,4 +1,4 @@
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { Adoption } from '../../models/adoptions/adoptions'
 
 interface createProps {

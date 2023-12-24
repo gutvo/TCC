@@ -1,5 +1,5 @@
 import { User } from '../../models/users/user'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { City } from '../../models/cities'
 import { Ong, type OngData } from '../../models/ongs/ongs'
 

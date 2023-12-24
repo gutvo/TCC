@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { User } from '../../models/users/user'
 import { encrypt, generateAccessToken } from '../../functions'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 
 interface LoginServiceProps {
   email: string

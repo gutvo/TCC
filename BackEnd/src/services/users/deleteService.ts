@@ -1,5 +1,5 @@
 import { User } from '../../models/users/user'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { Op } from 'sequelize'
 import { Adoption } from '../../models/adoptions/adoptions'
 import { unlink } from 'fs'

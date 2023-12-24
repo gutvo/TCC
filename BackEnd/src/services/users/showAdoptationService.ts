@@ -1,5 +1,5 @@
 import { User } from '../../models/users/user'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 
 export default async function showAdoptationService (id: string) {
   const data = await User.findOne({

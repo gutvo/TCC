@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
-import { message } from '../../dictionary'
 import usersServices from '@Services/users'
+import translate from '@Dictionary'
 
 interface RequestProps {
   email: string
@@ -15,6 +15,6 @@ export default async function refreshTokenController (req: Request, res: Respons
 
     return res.status(status).json({ data, token, message })
   } catch (error) {
-    res.status(500).json({ message: message.serverError })
+    res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }

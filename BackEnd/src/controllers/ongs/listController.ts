@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
-import { message } from '../../dictionary'
 import { type OngsFilterProps } from '@Services/ongs/listService'
 import ongsServices from '@Services/ongs'
+import translate from '@Dictionary'
 
 export default async function listController (req: Request, res: Response) {
   try {
@@ -14,6 +14,6 @@ export default async function listController (req: Request, res: Response) {
 
     return res.json({ data, pagination })
   } catch (error) {
-    res.status(500).json({ message: message.serverError })
+    res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }

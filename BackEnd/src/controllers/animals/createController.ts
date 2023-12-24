@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
-import { message } from '../../dictionary'
 import animalsServices from '@Services/animals'
+import translate from '@Dictionary'
 
 interface animalDTO {
   name: string
@@ -23,6 +23,6 @@ export default async function createController (req: Request, res: Response) {
 
     return res.status(status).json({ message })
   } catch (error) {
-    res.status(500).json({ message: message.serverError })
+    res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 
 export default async function deleteService (id: string) {
   const result = await Animal.findOne({ where: { id } })

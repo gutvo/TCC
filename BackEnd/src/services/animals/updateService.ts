@@ -1,5 +1,5 @@
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import fs from 'fs'
 import path from 'path'
 

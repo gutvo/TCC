@@ -1,6 +1,6 @@
 import path from 'path'
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 
 export default async function showImageService (id: string) {
   const result = await Animal.findOne({ where: { id } })

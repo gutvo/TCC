@@ -1,5 +1,5 @@
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 
 export default async function showService (id: string) {
   const result = await Animal.findOne({

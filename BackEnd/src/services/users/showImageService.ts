@@ -1,5 +1,5 @@
 import path from 'path'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { User } from '../../models/users/user'
 
 export default async function showImageService (email: string) {

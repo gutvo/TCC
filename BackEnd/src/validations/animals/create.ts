@@ -1,5 +1,5 @@
 import zod, { ZodError } from 'zod'
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 
 const animalSchema = zod.object({
   name: zod.string({ required_error: 'O nome é obrigatório' }),
@@ -11,30 +11,30 @@ const animalSchema = zod.object({
     zod.literal('Cachorro'),
     zod.literal('Peixe'),
     zod.literal('Gato'),
-    zod.literal('Outros'),
+    zod.literal('Outros')
   ]),
   birthday: zod.string().superRefine((val, ctx) => {
     if (new Date(val) < new Date('1990-01-01') || new Date(val) > new Date()) {
       ctx.addIssue({
         code: zod.ZodIssueCode.custom,
-        message: 'Data Inválida',
+        message: 'Data Inválida'
       })
     }
-  }),
+  })
 })
 
 const createValidation = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     await animalSchema.parseAsync(req.body)
 
-    return next()
+    next()
   } catch (error) {
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message || 'Erro na validação'
+      const errorMessage = error.errors[0]?.message !== undefined ? error.errors[0]?.message : 'Erro na validação'
       return res.status(400).json({ message: errorMessage })
     } else {
       return res.status(500).json({ message: 'Erro no servidor:' })

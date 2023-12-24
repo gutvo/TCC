@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
-import { message } from '../../dictionary'
 import ongsServices from '@Services/ongs'
+import translate from '@Dictionary'
 
 export default async function showController (req: Request, res: Response) {
   try {
@@ -10,6 +10,6 @@ export default async function showController (req: Request, res: Response) {
 
     return res.json({ data })
   } catch (error) {
-    res.status(500).json({ message: message.serverError })
+    res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }

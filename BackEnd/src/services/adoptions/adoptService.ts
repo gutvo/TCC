@@ -1,5 +1,5 @@
 import { Adoption } from '../../models/adoptions/adoptions'
-import { message } from '../../dictionary'
+import { message } from '../../teste'
 import { Animal } from '../../models/animals/animal'
 import { Op } from 'sequelize'
 import { User } from '../../models/users/user'
