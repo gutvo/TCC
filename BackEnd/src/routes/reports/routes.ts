@@ -1,11 +1,10 @@
 import { Router } from 'express'
-import RescuedAdoptedAnimal from '../../controllers/reports/rescuedAdoptedAnimal'
-import DashboardHome from '../../controllers/reports/dashboardHome'
+import reportsControllers from '@Controllers/reports'
 
 const reportRoutes = Router()
 
-reportRoutes.get('/rescuedAdoptedAnimal', RescuedAdoptedAnimal)
+reportRoutes.get('/rescuedAdoptedAnimal', reportsControllers.rescuedAdoptedAnimalController)
 
-reportRoutes.get('/dashboardhome', DashboardHome)
+reportRoutes.get('/dashboardhome', reportsControllers.dashboardHomeController)
 
 export default reportRoutes
