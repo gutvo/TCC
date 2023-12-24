@@ -10,6 +10,7 @@ export type OngData = {
   cpfCnpj: string
   userId: number
   houseNumber: number
+  uf: string
   userData?: {
     name: string
   }
