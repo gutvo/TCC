@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt'
-import { type Request, type Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 export function encrypt (password: string) {
@@ -20,7 +19,7 @@ export function generateAccessToken (username: string, userpassword: string) {
   }
 }
 
-export function generateTokenKey (req: Request, res: Response) {
+export function generateTokenKey () {
   const caracteres =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let token = ''
@@ -30,5 +29,5 @@ export function generateTokenKey (req: Request, res: Response) {
     token += caracteres.charAt(indiceAleatorio)
   }
 
-  return res.send(token)
+  return token
 }
