@@ -14,6 +14,7 @@
         "@typescript-eslint/explicit-function-return-type":"off",
         "@typescript-eslint/no-misused-promises":"off",
         "@typescript-eslint/no-unsafe-argument":"off",
-        "no-console":"error"
+        "no-console":"error",
+        "@typescript-eslint/non-nullable-type-assertion-style":"off"
     }
 }
