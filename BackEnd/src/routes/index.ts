@@ -1,13 +1,13 @@
 import { Router } from 'express'
 import animalRoutes from './animals/routes'
 import userRoutes from './users/routes'
-import generateTokenKey from '../validations/token/generatorKey'
 import ongRoutes from './ongs/routes'
 import citiesControllers from '@Controllers/cities'
 import { upload } from '../multer/config'
 import adoptionRoutes from './adoptions/routes'
 import reportRoutes from './reports/routes'
 import phonesRoutes from './phones/routes'
+import { generateTokenKey } from 'functions'
 
 // import validateSequelize from "../validations/sequelize/sequelize";
 const mainRoutes = Router()

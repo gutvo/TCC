@@ -1,5 +1,6 @@
 import { User } from '../../models/users/user'
 import { generateAccessToken } from '../../functions'
+import translate from '@Dictionary'
 
 interface RefreshTokenServiceProps {
   email: string
@@ -10,13 +11,13 @@ export default async function refreshTokenService ({ email, password }: RefreshT
   const result = await User.findOne({ where: { email, password } })
 
   if (result === null) {
-    return { message: 'Email não encontrado', status: 404 }
+    return { message: translate({ id: 'users-user-not-found' }), status: 404 }
   }
 
   const token = generateAccessToken(email, password)
 
   return {
-    message: 'Usuario logado com sucesso',
+    message: translate({ id: 'users-refrese-token-success' }),
     data: result,
     token,
     status: 200

@@ -4,7 +4,7 @@ import translate from '@Dictionary'
 
 const animalSchema = zod.object({
   adoptionId: zod.string({
-    required_error: 'A id do pedido de adoção é necessário.'
+    required_error: translate({ id: 'validations-adoptions-adoption-id-requeire' })
   })
 })
 
@@ -18,12 +18,14 @@ const deleteValidation = async (
 
     next()
   } catch (error) {
-    const message = translate({ id: 'server-error' })
+    const messageError = translate({ id: 'server-error' })
+
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message !== undefined ? error.errors[0]?.message : message
-      return res.status(400).json({ message: errorMessage })
+      const validationError = error.errors[0]?.message !== undefined ?? messageError
+
+      return res.status(400).json({ message: validationError })
     } else {
-      return res.status(500).json({ message })
+      return res.status(500).json({ message: messageError })
     }
   }
 }

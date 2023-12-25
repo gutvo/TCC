@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import createValidation from '../../validations/animals/create'
-import validateToken from '../../validations/token/token'
+import validateToken from '../../validations/tokens/token'
 import deleteValidator from '../../validations/animals/delete'
 import updateValidation from '../../validations/animals/update'
 import animalsControllers from '@Controllers/animals'

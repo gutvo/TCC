@@ -1,15 +1,15 @@
-import { message } from '../../teste'
 import { Adoption } from '../../models/adoptions/adoptions'
+import translate from '@Dictionary'
 
 const deleteService = async (adoptionId: string) => {
   const result = await Adoption.findOne({ where: { id: adoptionId } })
 
   if (result === null) {
-    return { message: message.adoptedNotExists, status: 404 }
+    return { message: translate({ id: 'adoptions-adopted-not-found' }), status: 404 }
   }
 
   await result.destroy()
-  return { message: message.createAdoptionSuccess, status: 200 }
+  return { message: translate({ id: 'adoptions-delete-success' }), status: 200 }
 }
 
 export default deleteService

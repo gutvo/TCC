@@ -1,4 +1,4 @@
-import { message } from '../../teste'
+import translate from '@Dictionary'
 import { Adoption } from '../../models/adoptions/adoptions'
 
 export default async function ShowAdoptedService (id: string) {
@@ -16,7 +16,7 @@ export default async function ShowAdoptedService (id: string) {
   })
 
   if (result === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   }
 
   return { data: result, status: 200 }

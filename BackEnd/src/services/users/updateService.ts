@@ -1,10 +1,10 @@
 import { User } from '../../models/users/user'
-import { message } from '../../teste'
 import { Ong, type OngData } from '../../models/ongs/ongs'
 import { Op } from 'sequelize'
 import fs from 'fs'
 import path from 'path'
 import { City } from '../../models/cities'
+import translate from '@Dictionary'
 
 interface DataProps {
   id: number
@@ -27,7 +27,7 @@ export default async function updateService ({ data, newImage }: UpdateServicePr
   })
 
   if (result === null) {
-    return { message: message.userNotFound, status: 404 }
+    return { message: translate({ id: 'users-user-not-found' }), status: 404 }
   }
 
   await result.update({ ...data, updatedAt: new Date() })
@@ -36,7 +36,7 @@ export default async function updateService ({ data, newImage }: UpdateServicePr
     const ongResult = await Ong.findOne({ where: { userId: result.id } })
 
     if (ongResult === null) {
-      return { message: message.userNotFound, status: 404 }
+      return { message: translate({ id: 'users-ong-not-found' }), status: 404 }
     }
 
     const { cpfCnpj } = data.ongData
@@ -46,7 +46,7 @@ export default async function updateService ({ data, newImage }: UpdateServicePr
     })
 
     if (cpfCnpjExist !== null) {
-      return { message: 'Esse CPF/CNPJ já foi cadastrado', status: 409 }
+      return { message: translate({ id: 'users-cpf-cnpj-exist' }), status: 409 }
     }
     await ongResult.update(data.ongData)
 
@@ -76,7 +76,7 @@ export default async function updateService ({ data, newImage }: UpdateServicePr
   }
 
   return {
-    message: 'As informações foram alteradas com sucesso!',
+    message: translate({ id: 'users-update-success' }),
     data: result,
     status: 200
   }

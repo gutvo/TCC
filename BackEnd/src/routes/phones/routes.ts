@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import createPhoneValidation from '../../validations/phone/create'
-import updtatePhoneValidation from '../../validations/phone/update'
-import DeletePhoneValidations from '../../validations/phone/delete'
-import validateToken from '@Validations/token/token'
+import createPhoneValidation from '../../validations/phones/create'
+import updtatePhoneValidation from '../../validations/phones/update'
+import DeletePhoneValidations from '../../validations/phones/delete'
+import validateToken from '@Validations/tokens/token'
 import phonesControllers from '@Controllers/phones'
 
 const phonesRoutes = Router()

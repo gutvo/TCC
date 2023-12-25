@@ -1,7 +1,7 @@
 import { User } from '../../models/users/user'
-import { message } from '../../teste'
 import { City } from '../../models/cities'
 import { Ong, type OngData } from '../../models/ongs/ongs'
+import translate from '@Dictionary'
 
 interface CreateServiceProps {
   email: string
@@ -64,8 +64,10 @@ export default async function createService ({ email, name, ongData, password }:
     ongData: ongData !== null && ongData
   }
 
+  const message = ongData !== undefined ? translate({ id: 'users-create-ong-success' }) : translate({ id: 'users-create-adopter-success' })
+
   return {
-    message: ongData !== undefined ? message.createOngSuccess : message.createUserSuccess,
+    message,
     data: formattedData,
     status: 201
   }

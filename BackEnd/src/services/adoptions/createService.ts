@@ -1,5 +1,5 @@
-import { message } from '../../teste'
 import { Adoption } from '../../models/adoptions/adoptions'
+import translate from '@Dictionary'
 
 interface createProps {
   userId: string
@@ -13,10 +13,10 @@ const createService = async ({ userId, ongId, animalId }: createProps) => {
   })
 
   if (!created) {
-    return { message: message.createAdoptionNotExists, status: 400 }
+    return { message: translate({ id: 'adoptions-create-adoption-exist' }), status: 400 }
   }
 
-  return { data: result, message: message.createAdoptionSuccess, status: 201 }
+  return { data: result, message: translate({ id: 'adoptions-create-success' }), status: 201 }
 }
 
 export default createService

@@ -1,17 +1,18 @@
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 import { sequelize } from '../../migrations/mysql'
+import translate from '@Dictionary'
 
 const validateSequelize = async (
-  req: Request,
+  _: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     await sequelize.authenticate()
 
-    return next()
+    next()
   } catch (error) {
-    return res.status(500).json({ message: 'Erro no servidor:' + error })
+    return res.status(500).json({ message: translate({ id: 'server-error' }) })
   }
 }
 

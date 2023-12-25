@@ -2,10 +2,10 @@ import { Router } from 'express'
 import createUserValidation from '../../validations/users/create'
 import userLoginValidation from '../../validations/users/login'
 import updateUserValidation from '../../validations/users/update'
-import validateToken from '../../validations/token/token'
+import validateToken from '../../validations/tokens/token'
 import deleteUserValidation from '../../validations/users/detele'
 import showUserValidation from '../../validations/users/show'
-import refleshTokenValidation from '../../validations/token/refleshToken'
+import refleshTokenValidation from '../../validations/tokens/refreshToken'
 
 import usersControllers from '@Controllers/users'
 

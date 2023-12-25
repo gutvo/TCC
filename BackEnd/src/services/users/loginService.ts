@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { User } from '../../models/users/user'
 import { encrypt, generateAccessToken } from '../../functions'
-import { message } from '../../teste'
+import translate from '@Dictionary'
 
 interface LoginServiceProps {
   email: string
@@ -15,13 +15,13 @@ export default async function loginService ({ email, password }: LoginServicePro
   })
 
   if (result === null) {
-    return { message: message.emailOrPasswordUser, status: 404 }
+    return { message: translate({ id: 'users-email-or-password-not-found' }), status: 404 }
   }
 
   const comparation = await bcrypt.compare(password, result.password)
 
   if (!comparation) {
-    return { message: message.emailOrPasswordUser, status: 404 }
+    return { message: translate({ id: 'users-email-or-password-not-found' }), status: 404 }
   }
 
   const encryptPassword = encrypt(password)
@@ -31,7 +31,7 @@ export default async function loginService ({ email, password }: LoginServicePro
   const name = result.name.split(' ')[0]
 
   return {
-    message: `Bem vindo ${name}!`,
+    message: translate({ id: 'users-login-success', value: name }),
     data: result,
     token,
     status: 200

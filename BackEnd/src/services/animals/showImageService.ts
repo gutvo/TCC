@@ -1,15 +1,15 @@
 import path from 'path'
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../teste'
+import translate from '@Dictionary'
 
 export default async function showImageService (id: string) {
   const result = await Animal.findOne({ where: { id } })
 
   if (result === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   }
   if (result.image === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-image-not-found' }), status: 404 }
   }
 
   const imagePath = path.join(

@@ -1,46 +1,47 @@
 import zod, { ZodError } from 'zod'
-import { Request, Response, NextFunction } from 'express'
+import { type Request, type Response, type NextFunction } from 'express'
 import { cnpj, cpf } from 'cpf-cnpj-validator'
+import translate from '@Dictionary'
 
 const userSchemas = zod.object({
-  name: zod.string({ required_error: 'Nome é obrigatório' }),
+  name: zod.string({ required_error: translate({ id: 'validations-users-user-name-required' }) }),
   email: zod
-    .string({ required_error: 'E-mail é obrigatório' })
-    .email('E-mail inválido'),
+    .string({ required_error: translate({ id: 'validations-users-user-email-required' }) })
+    .email(translate({ id: 'validations-users-email-invalid' })),
   ongData: zod
     .object({
-      road: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
+      road: zod.string().min(4, translate({ id: 'validations-users-road-min-caracters' })),
       houseNumber: zod
-      .string({ required_error: 'O número da residência é obrigatório.' })
-      .max(4),
-      neighborhood: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-      city: zod.string().min(4, 'tem que ter no minímo 4 caracteres'),
-      uf: zod.string().length(2, 'Só pode ter dois digitos'),
+        .string({ required_error: translate({ id: 'validations-users-house-num-required' }) })
+        .max(4),
+      neighborhood: zod.string().min(4, translate({ id: 'validations-users-neighborhood-min-caracters' })),
+      city: zod.string().min(4, translate({ id: 'validations-users-city-min-caracters' })),
+      uf: zod.string().length(2, translate({ id: 'validations-users-uf-two-caracters' })),
       CEP: zod
-        .string({ invalid_type_error: 'CEP inválido' })
-        .length(9, 'CEP inválido'),
+        .string({ invalid_type_error: translate({ id: 'validations-users-user-cep-required' }) })
+        .length(9, translate({ id: 'validations-users-cep-invalid' })),
       cpfCnpj: zod.string().superRefine((val, ctx) => {
         if (val.length !== 14 && val.length < 18) {
           ctx.addIssue({
             code: zod.ZodIssueCode.custom,
-            message: 'Cpf ou CNPJ inválidos',
+            message: translate({ id: 'validations-users-cpf-cnpj-invalids' })
           })
         }
-      }),
+      })
     })
-    .optional(),
+    .optional()
 })
 
 const updateUserValidation = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const data = req.body
     await userSchemas.parseAsync(data)
 
-    if (data?.ongData) {
+    if (data?.ongData !== undefined) {
       const { cpfCnpj } = data.ongData
 
       let isValid
@@ -50,17 +51,20 @@ const updateUserValidation = async (
         isValid = cnpj.isValid(cpfCnpj)
       }
       if (!isValid) {
-        return res.status(400).json({ message: 'Cpf ou CNPJ inválidos' })
+        return res.status(400).json({ message: translate({ id: 'validations-users-cpf-cnpj-invalids' }) })
       }
     }
 
-    return next()
+    next()
   } catch (error) {
+    const messageError = translate({ id: 'server-error' })
+
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message || 'Erro na validação'
+      const errorMessage = error.errors[0]?.message ?? messageError
+
       return res.status(400).json({ message: errorMessage })
     } else {
-      return res.status(500).json({ message: 'Erro no servidor:' + error })
+      return res.status(500).json({ message: messageError })
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import validateToken from '../../validations/token/token'
+import validateToken from '../../validations/tokens/token'
 import createValidation from '../../validations/adoptions/create'
 import deleteValidation from '../../validations/adoptions/delete'
 import AdoptionsControllers from '@Controllers/adoptions'

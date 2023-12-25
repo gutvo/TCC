@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../teste'
+import translate from '@Dictionary'
 
 export default async function deleteService (id: string) {
   const result = await Animal.findOne({ where: { id } })
 
   if (result === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   }
 
   if (result.image !== null) {
@@ -24,5 +24,5 @@ export default async function deleteService (id: string) {
 
   await result.destroy()
 
-  return { message: message.deleteAnimalSuccess, status: 200 }
+  return { message: translate({ id: 'animals-delete-success' }), status: 200 }
 }

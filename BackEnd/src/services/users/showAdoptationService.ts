@@ -1,5 +1,5 @@
 import { User } from '../../models/users/user'
-import { message } from '../../teste'
+import translate from '@Dictionary'
 
 export default async function showAdoptationService (id: string) {
   const data = await User.findOne({
@@ -12,7 +12,7 @@ export default async function showAdoptationService (id: string) {
   })
 
   if (data === null) {
-    return { message: message.userNotFound, status: 404 }
+    return { message: translate({ id: 'users-user-not-found' }), status: 404 }
   }
 
   return { data, status: 200 }

@@ -1,7 +1,7 @@
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../teste'
 import fs from 'fs'
 import path from 'path'
+import translate from '@Dictionary'
 
 interface fileProps {
   filename: string
@@ -31,7 +31,7 @@ export default async function updateService ({ id, newImage, body }: UpdateServi
   const result = await Animal.findOne({ where: { id } })
 
   if (result === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   }
 
   await result.update({
@@ -60,7 +60,7 @@ export default async function updateService ({ id, newImage, body }: UpdateServi
   }
 
   return {
-    message: message.updateAnimalSuccess,
+    message: translate({ id: 'animals-update-success' }),
     data: result,
     status: 200
   }

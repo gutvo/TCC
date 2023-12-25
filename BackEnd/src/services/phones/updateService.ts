@@ -1,6 +1,6 @@
-import { message } from '../../teste'
 import { Phone, type PhoneData } from '../../models/ongs/phones'
 import { Op } from 'sequelize'
+import translate from '@Dictionary'
 
 interface UpdateServiceProps {
   id: string
@@ -13,16 +13,16 @@ export default async function updateService ({ phone, id }: UpdateServiceProps) 
   })
 
   if (confirmPhone !== null) {
-    return { message: message.ongPhoneExistDiferentCount, status: 400 }
+    return { message: translate({ id: 'phones-phone-exist-other-account' }), status: 400 }
   }
 
   const data = await Phone.findOne({ where: { id } })
 
   if (data === null) {
-    return { message: message.ongPhoneNotFound, status: 404 }
+    return { message: translate({ id: 'phones-phone-not-found' }), status: 404 }
   }
 
   await data.update({ phone })
 
-  return { data, message: message.updateOngPhoneSuccess, status: 200 }
+  return { data, message: translate({ id: 'phones-update-success' }), status: 200 }
 }

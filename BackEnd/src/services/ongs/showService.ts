@@ -1,3 +1,4 @@
+import translate from '@Dictionary'
 import { Ong } from '../../models/ongs/ongs'
 
 export default async function showService (id: string) {
@@ -13,5 +14,10 @@ export default async function showService (id: string) {
       }
     ]
   })
-  return { data: response }
+
+  if (response === null) {
+    return { message: translate({ id: 'ongs-ong-not-found' }), status: 404 }
+  }
+
+  return { data: response, status: 200 }
 }

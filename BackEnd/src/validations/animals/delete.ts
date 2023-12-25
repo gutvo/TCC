@@ -1,8 +1,9 @@
 import zod, { ZodError } from 'zod'
 import { type Request, type Response, type NextFunction } from 'express'
+import translate from '@Dictionary'
 
 const animalSchema = zod.object({
-  id: zod.string({ required_error: 'ID é obrigatório' })
+  id: zod.string({ required_error: translate({ id: 'validations-animals-animal-id-required' }) })
 })
 
 const deleteValidator = async (
@@ -15,11 +16,14 @@ const deleteValidator = async (
 
     next()
   } catch (error) {
+    const messageError = translate({ id: 'server-error' })
+
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message !== undefined ? error.errors[0]?.message : 'Erro na validação'
+      const errorMessage = error.errors[0]?.message ?? messageError
+
       return res.status(400).json({ message: errorMessage })
     } else {
-      // return res.status(500).json({ message: 'Erro no servidor:' + error })
+      return res.status(500).json({ message: messageError })
     }
   }
 }

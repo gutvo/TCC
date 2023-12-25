@@ -1,9 +1,9 @@
 import { User } from '../../models/users/user'
-import { message } from '../../teste'
 import { Op } from 'sequelize'
 import { Adoption } from '../../models/adoptions/adoptions'
 import { unlink } from 'fs'
 import path from 'path'
+import translate from '@Dictionary'
 
 interface DeleteServiceProps {
   id: string
@@ -14,7 +14,7 @@ export default async function deleteService ({ id, email }: DeleteServiceProps) 
   const result = await User.findOne({ where: { id, email } })
 
   if (result === null) {
-    return { message: message.userNotFound, status: 404 }
+    return { message: translate({ id: 'users-user-not-found' }), status: 404 }
   }
 
   await Adoption.destroy({
@@ -34,5 +34,5 @@ export default async function deleteService ({ id, email }: DeleteServiceProps) 
 
   await result.destroy()
 
-  return { message: 'O usuário foi deletado com sucesso', status: 200 }
+  return { message: translate({ id: 'users-delete-success' }), status: 200 }
 }

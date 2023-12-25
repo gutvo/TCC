@@ -1,7 +1,7 @@
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../teste'
 import path from 'path'
 import fs from 'fs'
+import translate from '@Dictionary'
 
 interface createProps {
   name: string
@@ -53,5 +53,5 @@ export default async function createService ({
       }
     })
   }
-  return { message: message.createAnimalSuccess, status: 201 }
+  return { message: translate({ id: 'animals-create-success' }), status: 201 }
 }

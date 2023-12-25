@@ -1,5 +1,5 @@
-import { message } from '../../teste'
 import { Phone, type PhoneData } from '../../models/ongs/phones'
+import translate from '@Dictionary'
 
 interface CreateServiceProps {
   phone: PhoneData
@@ -13,7 +13,7 @@ export default async function createService ({ phone, userId }: CreateServicePro
   })
 
   if (!created) {
-    return { message: message.ongPhoneExist, status: 400 }
+    return { message: translate({ id: 'phones-phone-exist' }), status: 400 }
   }
-  return { data: result, message: message.createOngPhoneSuccess, status: 201 }
+  return { data: result, message: translate({ id: 'phones-create-success' }), status: 201 }
 }

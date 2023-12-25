@@ -2,18 +2,18 @@ import zod, { ZodError } from 'zod'
 import { type Request, type Response, type NextFunction } from 'express'
 import translate from '@Dictionary'
 
-const validator = zod.object({
-  id: zod.string({ required_error: translate({ id: 'validations-users-user-id-required' }) }),
-  email: zod.string({ required_error: translate({ id: 'validations-users-user-email-required' }) })
+const animalSchema = zod.object({
+  id: zod.string({ required_error: translate({ id: 'validations-phones-phone-id-required' }) })
 })
 
-const deleteUserValidation = async (
+const DeletePhoneValidations = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    await validator.parseAsync(req.query)
+    await animalSchema.parseAsync(req.query)
+
     next()
   } catch (error) {
     const messageError = translate({ id: 'server-error' })
@@ -28,4 +28,4 @@ const deleteUserValidation = async (
   }
 }
 
-export default deleteUserValidation
+export default DeletePhoneValidations

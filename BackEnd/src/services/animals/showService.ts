@@ -1,5 +1,5 @@
 import { Animal } from '../../models/animals/animal'
-import { message } from '../../teste'
+import translate from '@Dictionary'
 
 export default async function showService (id: string) {
   const result = await Animal.findOne({
@@ -17,7 +17,7 @@ export default async function showService (id: string) {
   })
 
   if (result === null) {
-    return { message: message.animalNotFound, status: 404 }
+    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   }
   return { data: result, status: 200 }
 }
