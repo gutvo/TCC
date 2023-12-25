@@ -1,6 +1,4 @@
 node_modules
 .env
 
-src/images/animals/
-src/images/users/
-src/uploads/
+src/images/

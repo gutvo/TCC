@@ -19,6 +19,7 @@
     "path": "^0.12.7",
     "sequelize": "^6.31.1",
     "socket.io": "^4.7.2",
+    "uuid": "^9.0.1",
     "zod": "^3.21.4"
   },
   "scripts": {
@@ -40,6 +41,7 @@
     "@types/node": "^18.15.13",
     "@types/nodemailer": "^6.4.10",
     "@types/socket.io": "^3.0.2",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
