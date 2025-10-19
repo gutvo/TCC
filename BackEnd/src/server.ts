@@ -5,6 +5,7 @@ import MainRoutes from './routes/index'
 import cors from 'cors'
 import http from 'http'
 import { chat } from './chat'
+import { syncDatabase } from '@Models/index'
 
 dotenv.config()
 
@@ -22,6 +23,16 @@ server.use((req: Request, res: Response) => {
 
 export const serverHTTP = http.createServer(server)
 
-serverHTTP.listen(process.env.PORT)
+serverHTTP.listen(process.env.PORT, async () => {
+  try {
+    await syncDatabase()
+
+    // eslint-disable-next-line no-console
+    console.log('Servidor iniciado...')
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Erro ao sincronizar o banco:', error)
+  }
+})
 
 chat()

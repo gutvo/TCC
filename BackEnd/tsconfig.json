@@ -17,7 +17,8 @@
       "@Services/*": ["services/*"],
       "@Routes/*":["routes/*"],
       "@Dictionary":["dictionary/index.ts"],
-      "@Models/*": ["models/*"],
+      "@Models/*": ["database/models/*"],
+      "@Database/*":["database/*"]
     }
   }
 }

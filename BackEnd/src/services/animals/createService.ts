@@ -1,4 +1,4 @@
-import { Animal } from '../../models/animals/animal'
+// import { Animal } from '../../database/models/animals/animal'
 import path from 'path'
 import fs from 'fs'
 import translate from '@Dictionary'
@@ -27,18 +27,18 @@ export default async function createService ({
   type,
   file
 }: createProps) {
-  await Animal.create({
-    name,
-    race,
-    color,
-    sex,
-    type,
-    description,
-    birthday: new Date(birthday).toISOString().slice(0, 10),
-    image: file !== null ? file?.filename : null,
-    ongId,
-    situation: 'available'
-  })
+  // await Animal.create({
+  //   name,
+  //   race,
+  //   color,
+  //   sex,
+  //   type,
+  //   description,
+  //   birthday: new Date(birthday).toISOString().slice(0, 10),
+  //   image: file !== null ? file?.filename : null,
+  //   ongId,
+  //   situation: 'available'
+  // })
 
   if (file !== undefined) {
     const destinationPath = path.join(

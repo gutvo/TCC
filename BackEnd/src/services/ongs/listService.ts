@@ -1,5 +1,5 @@
-import { Ong } from '../../models/ongs/ongs'
-import { Op } from 'sequelize'
+// import { Ong } from '../../database/models/ongs/ongs'
+// import { Op } from 'sequelize'
 
 export interface OngsFilterProps {
   name?: string
@@ -15,50 +15,50 @@ interface listProps {
 }
 
 export default async function listService ({ filter, city, limit, offset }: listProps) {
-  const where: { [Op.and]: unknown[] } = {
-    [Op.and]: []
-  }
+  // const where: { [Op.and]: unknown[] } = {
+  //   [Op.and]: []
+  // }
 
-  const whereUser: { [Op.and]: unknown[] } = {
-    [Op.and]: []
-  }
+  // const whereUser: { [Op.and]: unknown[] } = {
+  //   [Op.and]: []
+  // }
 
-  if (filter !== undefined) {
-    if (filter?.name?.length !== 0) {
-      whereUser[Op.and].push({ name: filter.name })
-    }
+  // if (filter !== undefined) {
+  //   if (filter?.name?.length !== 0) {
+  //     whereUser[Op.and].push({ name: filter.name })
+  //   }
 
-    if (filter?.neighborhood?.length !== 0) {
-      where[Op.and].push({ neighborhood: filter.neighborhood })
-    }
+  //   if (filter?.neighborhood?.length !== 0) {
+  //     where[Op.and].push({ neighborhood: filter.neighborhood })
+  //   }
 
-    if (filter?.road?.length !== 0) {
-      where[Op.and].push({ road: filter.road })
-    }
-  }
+  //   if (filter?.road?.length !== 0) {
+  //     where[Op.and].push({ road: filter.road })
+  //   }
+  // }
 
-  if (city.length !== 0) {
-    where[Op.and].push({ city })
-  }
+  // if (city.length !== 0) {
+  //   where[Op.and].push({ city })
+  // }
 
-  const { rows, count } = await Ong.findAndCountAll({
-    where,
-    limit,
-    offset,
-    include: [
-      {
-        association: 'userData',
-        attributes: ['id', 'name', 'email', 'image'],
-        where: whereUser
-      }
-    ]
-  })
+  // const { rows, count } = await Ong.findAndCountAll({
+  //   where,
+  //   limit,
+  //   offset,
+  //   include: [
+  //     {
+  //       association: 'userData',
+  //       attributes: ['id', 'name', 'email', 'image'],
+  //       where: whereUser
+  //     }
+  //   ]
+  // })
 
-  const pagination = {
-    count,
-    limit,
-    offset
-  }
+  // const pagination = {
+  //   count,
+  //   limit,
+  //   offset
+  // }
 
-  return { data: rows, pagination }
+  // return { data: rows, pagination }
 }

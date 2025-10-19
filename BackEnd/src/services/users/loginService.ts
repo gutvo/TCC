@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { User } from '../../models/users/user'
+import { User } from '../../database/models/User'
 import { encrypt, generateAccessToken } from '../../functions'
 import translate from '@Dictionary'
 

@@ -1,4 +1,4 @@
-import { Phone, type PhoneData } from '../../models/ongs/phones'
+import { Phone, type PhoneData } from '../../database/models/ongs/phones'
 import { Op } from 'sequelize'
 import translate from '@Dictionary'
 

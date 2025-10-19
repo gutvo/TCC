@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from 'express'
-import { sequelize } from '../../migrations/mysql'
+import { sequelize } from '../../database'
 import translate from '@Dictionary'
 
 const validateSequelize = async (

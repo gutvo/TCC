@@ -1,4 +1,4 @@
-import { Animal } from '../../models/animals/animal'
+// import { Animal } from '../../database/models/animals/animal'
 import fs from 'fs'
 import path from 'path'
 import translate from '@Dictionary'
@@ -28,40 +28,40 @@ interface UpdateServiceProps {
 }
 
 export default async function updateService ({ id, newImage, body }: UpdateServiceProps) {
-  const result = await Animal.findOne({ where: { id } })
+  // const result = await Animal.findOne({ where: { id } })
 
-  if (result === null) {
-    return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
-  }
+  // if (result === null) {
+  //   return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
+  // }
 
-  await result.update({
-    ...body,
-    updatedAt: new Date()
-  })
+  // await result.update({
+  //   ...body,
+  //   updatedAt: new Date()
+  // })
 
-  if (newImage !== undefined) {
-    const destinationPath = path.join(
-      __dirname,
-        `../../images/animals/${result.image ?? newImage.filename}`
-    )
+  // if (newImage !== undefined) {
+  //   const destinationPath = path.join(
+  //     __dirname,
+  //       `../../images/animals/${result.image ?? newImage.filename}`
+  //   )
 
-    if (result.image === null) {
-      result.image = newImage.filename
-      await result.save()
-    }
+  //   if (result.image === null) {
+  //     result.image = newImage.filename
+  //     await result.save()
+  //   }
 
-    fs.copyFileSync(newImage.path, destinationPath)
+  //   fs.copyFileSync(newImage.path, destinationPath)
 
-    fs.unlink(newImage.path, error => {
-      if (error !== null) {
-        return { message: error.message, status: 500 }
-      }
-    })
-  }
+  //   fs.unlink(newImage.path, error => {
+  //     if (error !== null) {
+  //       return { message: error.message, status: 500 }
+  //     }
+  //   })
+  // }
 
-  return {
-    message: translate({ id: 'animals-update-success' }),
-    data: result,
-    status: 200
-  }
+  // return {
+  //   message: translate({ id: 'animals-update-success' }),
+  //   data: result,
+  //   status: 200
+  // }
 }
