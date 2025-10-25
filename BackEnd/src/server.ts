@@ -25,10 +25,8 @@ serverHTTP.listen(process.env.PORT, async () => {
   try {
     await syncDatabase()
 
-    // eslint-disable-next-line no-console
     console.log(`Servidor iniciado na porta: ${process.env.PORT}`)
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Erro ao sincronizar o banco:', error)
   }
 })
