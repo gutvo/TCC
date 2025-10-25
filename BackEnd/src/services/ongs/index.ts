@@ -1,11 +1,11 @@
-import listService from './listService'
-import listAdressesFiltersService from './listAdressesFiltersService'
-import showService from './showService'
+import listService from "./listService";
+import listAdressesFiltersService from "./listAdressesFiltersService";
+import showService from "./showService";
 
 const ongsServices = {
   listService,
   listAdressesFiltersService,
-  showService
-}
+  showService,
+};
 
-export default ongsServices
+export default ongsServices;

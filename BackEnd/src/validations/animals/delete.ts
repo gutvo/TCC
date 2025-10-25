@@ -1,31 +1,33 @@
-import zod, { ZodError } from 'zod'
-import { type Request, type Response, type NextFunction } from 'express'
-import translate from '@Dictionary'
+import zod, { ZodError } from "zod";
+import { type Request, type Response, type NextFunction } from "express";
+import translate from "@Dictionary";
 
 const animalSchema = zod.object({
-  id: zod.string({ required_error: translate({ id: 'validations-animals-animal-id-required' }) })
-})
+  id: zod.string({
+    required_error: translate({ id: "validations-animals-animal-id-required" }),
+  }),
+});
 
 const deleteValidator = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
-    await animalSchema.parseAsync(req.query)
+    await animalSchema.parseAsync(req.query);
 
-    next()
+    next();
   } catch (error) {
-    const messageError = translate({ id: 'server-error' })
+    const messageError = translate({ id: "server-error" });
 
     if (error instanceof ZodError) {
-      const errorMessage = error.errors[0]?.message ?? messageError
+      const errorMessage = error.errors[0]?.message ?? messageError;
 
-      return res.status(400).json({ message: errorMessage })
+      return res.status(400).json({ message: errorMessage });
     } else {
-      return res.status(500).json({ message: messageError })
+      return res.status(500).json({ message: messageError });
     }
   }
-}
+};
 
-export default deleteValidator
+export default deleteValidator;

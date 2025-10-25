@@ -1,11 +1,11 @@
-import createService from './createService'
-import deleteService from './deleteService'
-import updateService from './updateService'
+import createService from "./createService";
+import deleteService from "./deleteService";
+import updateService from "./updateService";
 
 const phonesServices = {
   createService,
   deleteService,
-  updateService
-}
+  updateService,
+};
 
-export default phonesServices
+export default phonesServices;

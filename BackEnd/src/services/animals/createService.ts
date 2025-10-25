@@ -1,22 +1,22 @@
 // import { Animal } from '../../database/models/animals/animal'
-import path from 'node:path'
-import fs from 'fs'
-import translate from '@Dictionary'
+import path from "node:path";
+import fs from "fs";
+import translate from "@Dictionary";
 
 interface createProps {
-  name: string
-  race: string
-  color: string
-  sex: 'Macho' | 'Fêmea'
-  description: string
-  type: 'Cachorro' | 'Peixe' | 'Gato' | 'Outros'
-  birthday: string
-  image: string
-  ongId: number
-  file?: Express.Multer.File
+  name: string;
+  race: string;
+  color: string;
+  sex: "Macho" | "Fêmea";
+  description: string;
+  type: "Cachorro" | "Peixe" | "Gato" | "Outros";
+  birthday: string;
+  image: string;
+  ongId: number;
+  file?: Express.Multer.File;
 }
 
-export default async function createService ({
+export default async function createService({
   name,
   race,
   birthday,
@@ -25,7 +25,7 @@ export default async function createService ({
   ongId,
   sex,
   type,
-  file
+  file,
 }: createProps) {
   // await Animal.create({
   //   name,
@@ -43,15 +43,15 @@ export default async function createService ({
   if (file !== undefined) {
     const destinationPath = path.join(
       __dirname,
-        `../../images/animals/${file.filename}`
-    )
-    fs.copyFileSync(file.path, destinationPath)
+      `../../images/animals/${file.filename}`,
+    );
+    fs.copyFileSync(file.path, destinationPath);
 
-    fs.unlink(file.path, error => {
+    fs.unlink(file.path, (error) => {
       if (error !== null) {
-        return { message: error.message, status: 500 }
+        return { message: error.message, status: 500 };
       }
-    })
+    });
   }
-  return { message: translate({ id: 'animals-create-success' }), status: 201 }
+  return { message: translate({ id: "animals-create-success" }), status: 201 };
 }

@@ -6,12 +6,11 @@
 //   userId: string
 // }
 
-export default async function createService (/* { phone, userId }: CreateServiceProps */) {
+export default async function createService(/* { phone, userId }: CreateServiceProps */) {
   // const [result, created] = await Phone.findOrCreate({
   //   where: { phone },
   //   defaults: { userId }
   // })
-
   // if (!created) {
   //   return { message: translate({ id: 'phones-phone-exist' }), status: 400 }
   // }

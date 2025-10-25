@@ -1,7 +1,7 @@
 // import { Animal } from '../../database/models/animals/animal'
-import translate from '@Dictionary'
+import translate from "@Dictionary";
 
-export default async function showService (id: string) {
+export default async function showService(id: string) {
   // const result = await Animal.findOne({
   //   where: { id },
   //   attributes: { exclude: ['createdAt', 'updatedAt'] },
@@ -15,7 +15,6 @@ export default async function showService (id: string) {
   //     }
   //   ]
   // })
-
   // if (result === null) {
   //   return { message: translate({ id: 'animals-animal-not-found' }), status: 404 }
   // }

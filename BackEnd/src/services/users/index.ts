@@ -1,11 +1,11 @@
-import createService from './createService'
-import deleteService from './deleteService'
-import loginService from './loginService'
-import refreshTokenService from './refreshTokenService'
-import showService from './showService'
-import showAdoptationService from './showAdoptationService'
-import showImageService from './showImageService'
-import updateService from './updateService'
+import createService from "./createService";
+import deleteService from "./deleteService";
+import loginService from "./loginService";
+import refreshTokenService from "./refreshTokenService";
+import showService from "./showService";
+import showAdoptationService from "./showAdoptationService";
+import showImageService from "./showImageService";
+import updateService from "./updateService";
 
 const usersServices = {
   createService,
@@ -15,7 +15,7 @@ const usersServices = {
   showService,
   showAdoptationService,
   showImageService,
-  updateService
-}
+  updateService,
+};
 
-export default usersServices
+export default usersServices;

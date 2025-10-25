@@ -1,9 +1,9 @@
-import listService from './listService'
-import findOrCreateService from './findOrCreateService'
+import listService from "./listService";
+import findOrCreateService from "./findOrCreateService";
 
 const roomsServices = {
   listService,
-  findOrCreateService
-}
+  findOrCreateService,
+};
 
-export default roomsServices
+export default roomsServices;

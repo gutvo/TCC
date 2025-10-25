@@ -1,9 +1,9 @@
 // import fs from 'fs'
 // import path from 'node:path'
 // import { Animal } from '../../database/models/animals/animal'
-import translate from '@Dictionary'
+import translate from "@Dictionary";
 
-export default async function deleteService (id: string) {
+export default async function deleteService(id: string) {
   // const result = await Animal.findOne({ where: { id } })
 
   // if (result === null) {
@@ -24,5 +24,5 @@ export default async function deleteService (id: string) {
 
   // await result.destroy()
 
-  return { message: translate({ id: 'animals-delete-success' }), status: 200 }
+  return { message: translate({ id: "animals-delete-success" }), status: 200 };
 }

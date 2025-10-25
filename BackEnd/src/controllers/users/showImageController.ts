@@ -1,13 +1,11 @@
-import { type Request, type Response } from 'express'
+import { type Request, type Response } from "express";
 // import usersServices from '@Services/users'
 // import translate from '@Dictionary'
 
-export default async function showImageController (req: Request, res: Response) {
+export default async function showImageController(req: Request, res: Response) {
   // try {
   //   const email = req.params.email
-
   //   const { message, status, data } = await usersServices.showImageService(email)
-
   //   if (data !== undefined) {
   //     res.sendFile(data, {
   //       headers: {

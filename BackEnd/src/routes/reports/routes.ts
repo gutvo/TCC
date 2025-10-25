@@ -1,10 +1,13 @@
-import { Router } from 'express'
-import reportsControllers from '@Controllers/reports'
+import { Router } from "express";
+import reportsControllers from "@Controllers/reports";
 
-const reportRoutes = Router()
+const reportRoutes = Router();
 
-reportRoutes.get('/rescuedAdoptedAnimal', reportsControllers.rescuedAdoptedAnimalController)
+reportRoutes.get(
+  "/rescuedAdoptedAnimal",
+  reportsControllers.rescuedAdoptedAnimalController,
+);
 
-reportRoutes.get('/dashboardhome', reportsControllers.dashboardHomeController)
+reportRoutes.get("/dashboardhome", reportsControllers.dashboardHomeController);
 
-export default reportRoutes
+export default reportRoutes;

@@ -1,9 +1,9 @@
-import rescuedAdoptedAnimalService from './rescuedAdoptedAnimalService'
-import dashboardHomeService from './dashboardHomeService'
+import rescuedAdoptedAnimalService from "./rescuedAdoptedAnimalService";
+import dashboardHomeService from "./dashboardHomeService";
 
 const reportsServices = {
   rescuedAdoptedAnimalService,
-  dashboardHomeService
-}
+  dashboardHomeService,
+};
 
-export default reportsServices
+export default reportsServices;

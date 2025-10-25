@@ -1,7 +1,7 @@
-import listController from './listController'
+import listController from "./listController";
 
 const citiesControllers = {
-  listController
-}
+  listController,
+};
 
-export default citiesControllers
+export default citiesControllers;

@@ -1,9 +1,9 @@
 // import { Adoption } from '../../database/models/adoptions/adoptions'
 
 interface listServiceProps {
-  offset: number
-  limit: number
-  ongId: string
+  offset: number;
+  limit: number;
+  ongId: string;
 }
 
 const listService = async ({ limit, offset, ongId }: listServiceProps) => {
@@ -30,6 +30,6 @@ const listService = async ({ limit, offset, ongId }: listServiceProps) => {
   //   },
   //   status: 200
   // }
-}
+};
 
-export default listService
+export default listService;

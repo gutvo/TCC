@@ -1,12 +1,12 @@
-import createService from './createService'
-import deleteService from './deleteService'
-import listAdoptedService from './listAdoptedService'
-import listRandomService from './listRandomService'
-import listService from './listService'
-import ShowAdoptedService from './showAdoptedService'
-import showImageService from './showImageService'
-import showService from './showService'
-import updateService from './updateService'
+import createService from "./createService";
+import deleteService from "./deleteService";
+import listAdoptedService from "./listAdoptedService";
+import listRandomService from "./listRandomService";
+import listService from "./listService";
+import ShowAdoptedService from "./showAdoptedService";
+import showImageService from "./showImageService";
+import showService from "./showService";
+import updateService from "./updateService";
 
 const animalsServices = {
   createService,
@@ -17,7 +17,7 @@ const animalsServices = {
   ShowAdoptedService,
   showImageService,
   showService,
-  updateService
-}
+  updateService,
+};
 
-export default animalsServices
+export default animalsServices;
