@@ -1,9 +1,7 @@
 // // import { Request, Response } from "express";
 // import { createTransport } from 'nodemailer'
-// import dotenv from 'dotenv'
 
 // const sendConfirmEmail = async () => {
-//   dotenv.config()
 
 //   const transporter = createTransport({
 //     host: process.env.MAIL_HOST,

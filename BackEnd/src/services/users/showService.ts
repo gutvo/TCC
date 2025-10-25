@@ -1,4 +1,4 @@
-import { User } from '../../models/users/user'
+import User from '../../database/models/User'
 import translate from '@Dictionary'
 
 export default async function showService (email: string) {

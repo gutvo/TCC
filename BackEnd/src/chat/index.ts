@@ -1,8 +1,8 @@
 import { serverHTTP } from '../server'
 import { Server, type Socket } from 'socket.io'
-import { Message } from '../models/chats/messages'
-import roomsServices from '@Services/rooms'
-import MessagesServices from '@Services/messages'
+// import { Message } from '../database/models/chats/messages'
+// import roomsServices from '@Services/rooms'
+// import MessagesServices from '@Services/messages'
 
 type SocketProps = {
   userId?: string
@@ -46,8 +46,8 @@ export function chat () {
   })
 
   io.on('connection', async (socket: SocketProps) => {
-    const { userId, type } = socket
-    await socket.join(`notifications${userId}`)
+    // const { userId, type } = socket
+    // await socket.join(`notifications${userId}`)
 
     // socket.onAny((data, ...args) => {
     //   console.log(data, args)
@@ -62,9 +62,9 @@ export function chat () {
         sender: number
       }> = []
 
-      const { result } = await roomsServices.listService({ id: userId, type })
+      // const { result } = await roomsServices.listService({ id: userId, type })
 
-      result.map(item => rooms.push(item.dataValues))
+      // result.map(item => rooms.push(item.dataValues))
 
       socket.emit('rooms', rooms)
     })
@@ -73,8 +73,8 @@ export function chat () {
       await socket.join(room.name)
 
       if (room !== null) {
-        const message = await Message.findAll({ where: { roomId: room.id } })
-        socket.emit('get.messages', message)
+        // const message = await Message.findAll({ where: { roomId: room.id } })
+        // socket.emit('get.messages', message)
       }
     })
 
@@ -83,30 +83,30 @@ export function chat () {
     })
 
     socket.on('send.message', async (message: MessageProps, room: roomsProps) => {
-      const { result } = await MessagesServices.createService({ message, roomId: room.id })
+      // const { result } = await MessagesServices.createService({ message, roomId: room.id })
 
-      io.to(room.name).emit('message.response', result)
+      // io.to(room.name).emit('message.response', result)
     })
 
     socket.on('create.room', async data => {
-      const { userId, ongId } = data
+      // const { userId, ongId } = data
 
-      const name = `${userId} - ${ongId}`
-      const { room } = await roomsServices.findOrCreateService({ name, receiver: ongId, sender: userId })
+      // const name = `${userId} - ${ongId}`
+      // const { room } = await roomsServices.findOrCreateService({ name, receiver: ongId, sender: userId })
 
-      socket.emit('create.room', room)
+      // socket.emit('create.room', room)
     })
 
     socket.on('get.messages', async (room: roomsProps) => {
       if (room !== null) {
-        const { data } = await MessagesServices.listService({ id: room.id })
-        socket.emit('get.messages', data)
+        // const { data } = await MessagesServices.listService({ id: room.id })
+        // socket.emit('get.messages', data)
       }
     })
 
-    socket.on('notifications', id => {
-      socket.to(`notifications${id}`).emit('get.notifications', userId)
-    })
+    // socket.on('notifications', id => {
+    // socket.to(`notifications${id}`).emit('get.notifications', userId)
+    // })
 
   // socket.on('disconnect',()=>{
   //   console.log('user disconnected')

@@ -1,7 +1,7 @@
-import { City } from '@Models/cities'
+// import { City } from '@Models/cities'
 
 export default async function ListCity () {
-  const data = await City.findAll()
+  // const data = await City.findAll()
 
-  return { data }
+  // return { data }
 }

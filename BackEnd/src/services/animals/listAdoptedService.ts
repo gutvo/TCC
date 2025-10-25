@@ -1,5 +1,5 @@
 import { Op } from 'sequelize'
-import { Adoption } from '../../models/adoptions/adoptions'
+// import { Adoption } from '../../database/models/adoptions/adoptions'
 
 interface animalFilterProps {
   race?: string[]
@@ -37,25 +37,25 @@ export default async function listAdoptedService ({ filter, limit, offset, ongId
     }
   }
 
-  const { rows, count } = await Adoption.findAndCountAll({
-    include: [
-      {
-        association: 'animalData',
-        where: { ...where, situation: 'adopted' },
-        include: [{ association: 'ongData' }]
-      },
-      { association: 'animalData' }
-    ],
-    offset,
-    limit
-  })
-  return {
-    data: rows,
-    pagination: {
-      offset,
-      count,
-      limit
-    },
-    status: 200
-  }
+  // const { rows, count } = await Adoption.findAndCountAll({
+  //   include: [
+  //     {
+  //       association: 'animalData',
+  //       where: { ...where, situation: 'adopted' },
+  //       include: [{ association: 'ongData' }]
+  //     },
+  //     { association: 'animalData' }
+  //   ],
+  //   offset,
+  //   limit
+  // })
+  // return {
+  //   data: rows,
+  //   pagination: {
+  //     offset,
+  //     count,
+  //     limit
+  //   },
+  //   status: 200
+  // }
 }

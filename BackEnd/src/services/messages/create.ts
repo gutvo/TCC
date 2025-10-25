@@ -1,4 +1,4 @@
-import { Message } from '@Models/chats/messages'
+// import { Message } from '@Models/chats/messages'
 
 interface MessageProps {
   id: string
@@ -13,11 +13,11 @@ interface CreateServiceProps {
 }
 
 export default async function createService ({ message, roomId }: CreateServiceProps) {
-  const result = await Message.create({
-    email: message.email,
-    message: message.message,
-    roomId
-  })
+  // const result = await Message.create({
+  //   email: message.email,
+  //   message: message.message,
+  //   roomId
+  // })
 
-  return { result }
+  // return { result }
 }

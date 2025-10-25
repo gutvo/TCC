@@ -1,4 +1,4 @@
-import { Animal } from '../../models/animals/animal'
+// import { Animal } from '../../database/models/animals/animal'
 import { Op } from 'sequelize'
 
 interface animalFilterProps {
@@ -40,22 +40,22 @@ export default async function listService ({ city, limit, offset, ongId, filter 
     }
   }
 
-  const { rows, count } = await Animal.findAndCountAll({
-    where: { ...where, situation: 'available' },
-    include: {
-      association: 'ongData',
-      where: whereCity
-    },
-    offset,
-    limit
-  })
+  // const { rows, count } = await Animal.findAndCountAll({
+  //   where: { ...where, situation: 'available' },
+  //   include: {
+  //     association: 'ongData',
+  //     where: whereCity
+  //   },
+  //   offset,
+  //   limit
+  // })
 
-  return {
-    data: rows,
-    pagination: {
-      offset,
-      count,
-      limit
-    }
-  }
+  // return {
+  //   data: rows,
+  //   pagination: {
+  //     offset,
+  //     count,
+  //     limit
+  //   }
+  // }
 }
