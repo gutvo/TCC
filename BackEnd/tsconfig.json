@@ -22,5 +22,7 @@
       "@Database": ["database/index.ts"],
       "@Utils/*": ["utils/*"]
     }
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.mts"], 
+  "exclude": ["node_modules", "eslint.config.mts"]
 }

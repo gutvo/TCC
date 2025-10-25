@@ -2,45 +2,44 @@
 // import { Op } from 'sequelize'
 
 export interface OngsFilterProps {
-  name?: string
-  road?: string
-  neighborhood?: string
+  name?: string;
+  road?: string;
+  neighborhood?: string;
 }
 
 interface listProps {
-  filter?: OngsFilterProps
-  city: string
-  limit: number
-  offset: number
+  filter?: OngsFilterProps;
+  city: string;
+  limit: number;
+  offset: number;
 }
 
-export default async function listService ({ filter, city, limit, offset }: listProps) {
+export default async function listService({
+  filter,
+  city,
+  limit,
+  offset,
+}: listProps) {
   // const where: { [Op.and]: unknown[] } = {
   //   [Op.and]: []
   // }
-
   // const whereUser: { [Op.and]: unknown[] } = {
   //   [Op.and]: []
   // }
-
   // if (filter !== undefined) {
   //   if (filter?.name?.length !== 0) {
   //     whereUser[Op.and].push({ name: filter.name })
   //   }
-
   //   if (filter?.neighborhood?.length !== 0) {
   //     where[Op.and].push({ neighborhood: filter.neighborhood })
   //   }
-
   //   if (filter?.road?.length !== 0) {
   //     where[Op.and].push({ road: filter.road })
   //   }
   // }
-
   // if (city.length !== 0) {
   //   where[Op.and].push({ city })
   // }
-
   // const { rows, count } = await Ong.findAndCountAll({
   //   where,
   //   limit,
@@ -53,12 +52,10 @@ export default async function listService ({ filter, city, limit, offset }: list
   //     }
   //   ]
   // })
-
   // const pagination = {
   //   count,
   //   limit,
   //   offset
   // }
-
   // return { data: rows, pagination }
 }

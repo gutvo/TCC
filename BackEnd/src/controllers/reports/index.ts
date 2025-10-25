@@ -1,9 +1,9 @@
-import dashboardHomeController from './dashboardHomeController'
-import rescuedAdoptedAnimalController from './rescuedAdoptedAnimalController'
+import dashboardHomeController from "./dashboardHomeController";
+import rescuedAdoptedAnimalController from "./rescuedAdoptedAnimalController";
 
 const reportsControllers = {
   dashboardHomeController,
-  rescuedAdoptedAnimalController
-}
+  rescuedAdoptedAnimalController,
+};
 
-export default reportsControllers
+export default reportsControllers;

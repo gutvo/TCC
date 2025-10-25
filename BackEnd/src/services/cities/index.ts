@@ -1,7 +1,7 @@
-import listService from './listService'
+import listService from "./listService";
 
 const citiesServices = {
-  listService
-}
+  listService,
+};
 
-export default citiesServices
+export default citiesServices;

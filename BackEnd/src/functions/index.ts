@@ -1,28 +1,25 @@
-import {randomBytes,scryptSync,timingSafeEqual} from 'node:crypto'
-import jwt from 'jsonwebtoken'
+import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import jwt from "jsonwebtoken";
 
-
-export function generateAccessToken (username: string, userpassword: string) {
-  const tokenSecret = process.env.TOKEN_SECRET
+export function generateAccessToken(username: string, userpassword: string) {
+  const tokenSecret = process.env.TOKEN_SECRET;
 
   if (tokenSecret !== undefined) {
-    return jwt.sign(
-      { name: username, password: userpassword },
-      tokenSecret,
-      { expiresIn: '10h' }
-    )
+    return jwt.sign({ name: username, password: userpassword }, tokenSecret, {
+      expiresIn: "10h",
+    });
   }
 }
 
-export function generateTokenKey () {
+export function generateTokenKey() {
   const caracteres =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  let token = ''
-  const tamanho = 70
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let token = "";
+  const tamanho = 70;
   for (let i = 0; i < tamanho; i++) {
-    const indiceAleatorio = Math.floor(Math.random() * caracteres.length)
-    token += caracteres.charAt(indiceAleatorio)
+    const indiceAleatorio = Math.floor(Math.random() * caracteres.length);
+    token += caracteres.charAt(indiceAleatorio);
   }
 
-  return token
+  return token;
 }

@@ -1,11 +1,11 @@
-import createController from './createController'
-import deleteController from './deleteController'
-import updateController from './updateController'
+import createController from "./createController";
+import deleteController from "./deleteController";
+import updateController from "./updateController";
 
 const phonesControllers = {
   createController,
   deleteController,
-  updateController
-}
+  updateController,
+};
 
-export default phonesControllers
+export default phonesControllers;

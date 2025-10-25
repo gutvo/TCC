@@ -1,9 +1,9 @@
-import createService from './create'
-import listService from './list'
+import createService from "./create";
+import listService from "./list";
 
 const MessagesServices = {
   createService,
-  listService
-}
+  listService,
+};
 
-export default MessagesServices
+export default MessagesServices;

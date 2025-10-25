@@ -3,21 +3,21 @@ import {
   Model,
   type CreationOptional,
   type InferAttributes,
-  type InferCreationAttributes
-} from 'sequelize'
-import sequelize from '..'
-import { type ModelsProps } from './type'
+  type InferCreationAttributes,
+} from "sequelize";
+import sequelize from "..";
+import { type ModelsProps } from "./type";
 
 class Phone extends Model<
-InferAttributes<Phone>,
-InferCreationAttributes<Phone>
+  InferAttributes<Phone>,
+  InferCreationAttributes<Phone>
 > {
-  declare id: CreationOptional<number>
-  declare ddi: string
-  declare number: string
+  declare id: CreationOptional<number>;
+  declare ddi: string;
+  declare number: string;
 
-  static associate (models: ModelsProps) {
-    Phone.hasMany(models.UserPhone, { foreignKey: 'phone_id', as: 'user' })
+  static associate(models: ModelsProps) {
+    Phone.hasMany(models.UserPhone, { foreignKey: "phone_id", as: "user" });
   }
 }
 
@@ -26,21 +26,20 @@ Phone.init(
     id: {
       type: DataTypes.INTEGER(),
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     ddi: {
       type: DataTypes.STRING(3),
-      allowNull: false
+      allowNull: false,
     },
     number: {
       type: DataTypes.STRING(20),
       validate: {
-        isNumeric: true
-      }
-    }
-
+        isNumeric: true,
+      },
+    },
   },
-  { sequelize, tableName: 'phones' }
-)
+  { sequelize, tableName: "phones" },
+);
 
-export default Phone
+export default Phone;

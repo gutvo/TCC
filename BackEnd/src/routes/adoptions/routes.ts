@@ -1,17 +1,17 @@
-import { Router } from 'express'
-import validateToken from '../../validations/tokens/token'
-import createValidation from '../../validations/adoptions/create'
-import deleteValidation from '../../validations/adoptions/delete'
-import AdoptionsControllers from '@Controllers/adoptions'
+import { Router } from "express";
+import validateToken from "../../validations/tokens/token";
+import createValidation from "../../validations/adoptions/create";
+import deleteValidation from "../../validations/adoptions/delete";
+import AdoptionsControllers from "@Controllers/adoptions";
 
-const adoptionRoutes = Router()
+const adoptionRoutes = Router();
 
 adoptionRoutes
-  .route('/adoption')
+  .route("/adoption")
   .all(validateToken)
   .post(createValidation, AdoptionsControllers.createController)
   .get(AdoptionsControllers.listController)
   .put(AdoptionsControllers.adoptController)
-  .delete(deleteValidation, AdoptionsControllers.deleteController)
+  .delete(deleteValidation, AdoptionsControllers.deleteController);
 
-export default adoptionRoutes
+export default adoptionRoutes;

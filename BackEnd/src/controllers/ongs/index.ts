@@ -1,11 +1,11 @@
-import listAdressesFiltersController from './listAdressesFiltersController'
-import listController from './listController'
-import showController from './showController'
+import listAdressesFiltersController from "./listAdressesFiltersController";
+import listController from "./listController";
+import showController from "./showController";
 
 const ongsControllers = {
   listAdressesFiltersController,
   listController,
-  showController
-}
+  showController,
+};
 
-export default ongsControllers
+export default ongsControllers;

@@ -1,8 +1,8 @@
-import { type Modules } from '../types'
-import ptBr from './ptBr'
+import { type Modules } from "../types";
+import ptBr from "./ptBr";
 
 const modules: Modules = {
-  ptBr
-}
+  ptBr,
+};
 
-export default modules
+export default modules;
