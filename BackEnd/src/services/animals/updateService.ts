@@ -1,7 +1,7 @@
 // import { Animal } from '../../database/models/animals/animal'
-import fs from 'fs'
-import path from 'path'
-import translate from '@Dictionary'
+// import fs from 'fs'
+// import path from 'node:path'
+// import translate from '@Dictionary'
 
 interface fileProps {
   filename: string

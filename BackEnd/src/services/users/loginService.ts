@@ -1,7 +1,8 @@
-import bcrypt from 'bcrypt'
-import { User } from '../../database/models/User'
-import { encrypt, generateAccessToken } from '../../functions'
+import encrypt from '@Utils/encrypt'
+import User from '../../database/models/User'
+import { generateAccessToken } from '../../functions'
 import translate from '@Dictionary'
+import compareEncrypt from '@Utils/compareEncrypt'
 
 interface LoginServiceProps {
   email: string
@@ -18,7 +19,7 @@ export default async function loginService ({ email, password }: LoginServicePro
     return { message: translate({ id: 'users-email-or-password-not-found' }), status: 404 }
   }
 
-  const comparation = await bcrypt.compare(password, result.password)
+  const comparation = compareEncrypt(password, result.password)
 
   if (!comparation) {
     return { message: translate({ id: 'users-email-or-password-not-found' }), status: 404 }

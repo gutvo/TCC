@@ -5,10 +5,10 @@ import {
   type InferAttributes,
   type InferCreationAttributes
 } from 'sequelize'
-import { sequelize } from '..'
+import sequelize from '..'
 import { type ModelsProps } from './type'
 
-export class User extends Model<
+class User extends Model<
 InferAttributes<User>,
 InferCreationAttributes<User>
 > {
@@ -57,16 +57,7 @@ User.init(
       type: DataTypes.INTEGER()
     }
   },
-  {
-    sequelize,
-    tableName: 'users',
-    timestamps: true,
-    underscored: true
-  }
+  { sequelize, tableName: 'users' }
 )
 
-// Associação
-// User.belongsTo(Ong, {
-//   foreignKey: 'ongId',
-//   as: 'ong'
-// })
+export default User

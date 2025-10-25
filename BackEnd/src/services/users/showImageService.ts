@@ -1,4 +1,4 @@
-// import path from 'path'
+// import path from 'node:path'
 // import { User } from '../../database/models/User'
 // import translate from '@Dictionary'
 

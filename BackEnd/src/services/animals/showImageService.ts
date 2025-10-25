@@ -1,6 +1,6 @@
-import path from 'path'
+// import path from 'node:path'
 // import { Animal } from '../../database/models/animals/animal'
-import translate from '@Dictionary'
+// import translate from '@Dictionary'
 
 export default async function showImageService (id: string) {
   // const result = await Animal.findOne({ where: { id } })

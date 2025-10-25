@@ -1,6 +1,6 @@
 // import { Animal } from '../../database/models/animals/animal'
-import { sequelize } from '../../database'
-import { Op } from 'sequelize'
+// import sequelize  from '../../database'
+// import { Op } from 'sequelize'
 
 interface RandomServiceProps {
   city: string

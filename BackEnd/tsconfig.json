@@ -15,10 +15,12 @@
       "@Controllers/*": ["controllers/*"],
       "@Validations/*": ["validations/*"],
       "@Services/*": ["services/*"],
-      "@Routes/*":["routes/*"],
-      "@Dictionary":["dictionary/index.ts"],
+      "@Routes/*": ["routes/*"],
+      "@Dictionary": ["dictionary/index.ts"],
       "@Models/*": ["database/models/*"],
-      "@Database/*":["database/*"]
+      "@Database/*": ["database/*"],
+      "@Database": ["database/index.ts"],
+      "@Utils/*": ["utils/*"]
     }
   }
 }

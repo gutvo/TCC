@@ -1,5 +1,5 @@
 import multer from 'multer'
-import { v4 as uuidv4 } from 'uuid'
+import { randomUUID } from 'node:crypto'
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
       const extensaoArquivo = file.originalname.split('.')[1]
 
       // Cria um código randômico que será o nome do arquivo
-      const novoNomeArquivo = uuidv4()
+      const novoNomeArquivo = randomUUID()
 
       // Indica o novo nome do arquivo:
       cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)

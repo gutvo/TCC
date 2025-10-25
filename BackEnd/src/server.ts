@@ -1,13 +1,11 @@
 import express, { type Request, type Response } from 'express'
-import dotenv from 'dotenv'
-import path from 'path'
+import path from 'node:path'
 import MainRoutes from './routes/index'
 import cors from 'cors'
 import http from 'http'
 import { chat } from './chat'
-import { syncDatabase } from '@Models/index'
+import syncDatabase from '@Utils/database/syncDatabase'
 
-dotenv.config()
 
 const server = express()
 server.use(express.json())
@@ -28,7 +26,7 @@ serverHTTP.listen(process.env.PORT, async () => {
     await syncDatabase()
 
     // eslint-disable-next-line no-console
-    console.log('Servidor iniciado...')
+    console.log(`Servidor iniciado na porta: ${process.env.PORT}`)
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Erro ao sincronizar o banco:', error)

@@ -2,7 +2,7 @@
 // import { Ong, type OngData } from '../../database/models/ongs/ongs'
 // import { Op } from 'sequelize'
 // import fs from 'fs'
-// import path from 'path'
+// import path from 'node:path'
 // import { City } from '../../database/models/cities'
 // import translate from '@Dictionary'
 

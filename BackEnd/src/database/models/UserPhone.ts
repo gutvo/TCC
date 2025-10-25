@@ -4,7 +4,7 @@ import {
   type InferAttributes,
   type InferCreationAttributes
 } from 'sequelize'
-import { sequelize } from '..'
+import sequelize from '..'
 import { type ModelsProps } from './type'
 
 export class UserPhone extends Model<
@@ -41,10 +41,5 @@ UserPhone.init(
       }
     }
   },
-  {
-    sequelize,
-    tableName: 'users_phones',
-    timestamps: true,
-    underscored: true
-  }
+  { sequelize, tableName: 'users_phones' }
 )

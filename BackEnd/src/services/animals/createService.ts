@@ -1,5 +1,5 @@
 // import { Animal } from '../../database/models/animals/animal'
-import path from 'path'
+import path from 'node:path'
 import fs from 'fs'
 import translate from '@Dictionary'
 

@@ -5,10 +5,10 @@ import {
   type InferAttributes,
   type InferCreationAttributes
 } from 'sequelize'
-import { sequelize } from '..'
+import sequelize from '..'
 import { type ModelsProps } from './type'
 
-export class Phone extends Model<
+class Phone extends Model<
 InferAttributes<Phone>,
 InferCreationAttributes<Phone>
 > {
@@ -40,10 +40,7 @@ Phone.init(
     }
 
   },
-  {
-    sequelize,
-    tableName: 'phones',
-    timestamps: true,
-    underscored: true
-  }
+  { sequelize, tableName: 'phones' }
 )
+
+export default Phone

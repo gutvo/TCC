@@ -2,7 +2,7 @@
 // import { Op } from 'sequelize'
 // import { Adoption } from '../../database/models/adoptions/adoptions'
 // import { unlink } from 'fs'
-// import path from 'path'
+// import path from 'node:path'
 // import translate from '@Dictionary'
 
 interface DeleteServiceProps {
